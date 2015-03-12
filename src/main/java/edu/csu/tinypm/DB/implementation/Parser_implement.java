@@ -34,10 +34,7 @@ public class Parser_implement implements Parser
     
     private String ERROR_MESSAGE = null;
     private Enforcer_implement ei = null;
-
     
-
-   
 
     public Parser_implement() 
     {
