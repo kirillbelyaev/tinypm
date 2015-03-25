@@ -90,6 +90,15 @@ public class Parser_implement implements Parser
     }
     
     
+    private void refillResultOutput_with_APP_PATH(Record[] r) 
+    {
+        if (r == null) return;
+        this.ResultOutput.clear();
+        for (int i=0; i < r.length; i++)
+            this.ResultOutput.add(r[i].getApp_PATH());
+    }
+    
+    
     private int obtain_DB_Handler()
     {
         if (this.db == null) //minimize the number of calls - do it only once
@@ -139,14 +148,14 @@ public class Parser_implement implements Parser
                 return -1;
             }    
             
-//        } else if (e.indexOf(PM_COMMANDS.UPDATE_APP_POLICY.toString()) == 0) 
-//        {
-//            if (this.parse_and_execute_ADD_APP_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
-//            {
-//                this.setERROR_MESSAGE(PM_ERRORS.UPDATE_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-//                return -1;
-//            }    
-//        
+        } else if (e.indexOf(PM_COMMANDS.SHOW_APPS.toString()) == 0) 
+        {
+            if (this.parse_and_execute_SHOW_APPS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.setERROR_MESSAGE(PM_ERRORS.SHOW_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                return -1;
+            }    
+        
         }    else if (e.indexOf(PM_COMMANDS.ADD_APP_POLICY.toString()) == 0) 
         {
             if (this.parse_and_execute_ADD_APP_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
@@ -246,6 +255,37 @@ public class Parser_implement implements Parser
         
         return -1;
     }
+    
+    
+    private Integer parse_and_execute_SHOW_APPS(String e)
+    {
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+        Record[] ra = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 1)
+        { 
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    ra = this.db.readRecordsOnAllAPPs();
+                    if (ra != null)
+                    {    
+                        this.setResultSize(ra.length);
+                        this.refillResultOutput_with_APP_PATH(ra);
+                        return 0;
+                    } else return DB_Constants.EMPTY_RESULT;
+                }    
+            } catch (RecordDAOException ex) 
+            {
+                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return -1;
+    }
+    
     
     
     private ArrayList<String> get_APP_POLICIES(String app)
@@ -349,6 +389,7 @@ public class Parser_implement implements Parser
             
             this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
             
+            if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
             
             try 
             {//execute the db layer
@@ -393,6 +434,7 @@ public class Parser_implement implements Parser
             
             this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), -1)); //-1 indicates remove instruction
             
+            if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
             
             try 
             {//execute the db layer

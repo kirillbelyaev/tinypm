@@ -40,14 +40,14 @@ public class Enforcer_implement implements Enforcer
             BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
             // read the output from the command
-            System.out.println("Here is the standard output of the command:\n");
+            System.out.println("Enforcer:executeCmd(): Here is the standard output of the command:\n");
             while ((s = stdInput.readLine()) != null) 
             {
                 System.out.println(s);
             }
             
             // read any errors from the attempted command
-            System.out.println("Here is the standard error of the command (if any):\n");
+            System.out.println("Enforcer:executeCmd(): Here is the standard error of the command (if any):\n");
             while ((s = stdError.readLine()) != null) 
             {
                 System.out.println(s);
@@ -57,19 +57,19 @@ public class Enforcer_implement implements Enforcer
             {
             	if (p.waitFor() != 0)
             	{
-            	System.out.println("Wait for subprocess termination returned non zero!");
+            	System.out.println("Enforcer:executeCmd(): Wait for subprocess termination returned non zero!");
             	return -1; //indicate an error
             	}
-            } catch (InterruptedException ie) {System.out.println("Wait for subprocess termination has been interrupted - exception happened."); return -1;} //indicate an error
+            } catch (InterruptedException ie) {System.out.println("Enforcer:executeCmd(): Wait for subprocess termination has been interrupted - exception happened."); return -1;} //indicate an error
             
             if (p.exitValue() != 0) //proper way of checking for execution error 
             {	
-            	System.out.println("command execution error occurred!");
+            	System.out.println("Enforcer:executeCmd(): command execution error occurred!");
             	return -1; //indicate an error
             }
         } catch (IOException e) 
         {
-            System.out.println("exception happened - here's what I know: ");
+            System.out.println("Enforcer:executeCmd(): exception happened - here's what I know: ");
             e.printStackTrace();
             return -1; //indicate an error
         }

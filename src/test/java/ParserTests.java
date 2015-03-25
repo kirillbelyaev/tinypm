@@ -61,6 +61,7 @@ public class ParserTests {
         String CMD_5 = "ADD_APP_POLICY CAP_KILL /bin/ping";
         String CMD_6 = "HELP";
         String CMD_7 = "EXIT";
+        String CMD_8 = "SHOW_APPS";
         
         Parser_implement p = new Parser_implement();
         
@@ -111,6 +112,12 @@ public class ParserTests {
         
         
         output = p.parse_and_execute_Command(CMD_2);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        
+        
+        output = p.parse_and_execute_Command(CMD_8);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.getERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.getResultOutput());

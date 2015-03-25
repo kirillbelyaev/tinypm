@@ -175,6 +175,12 @@ public class DBUnitTests {
         //output = db.checkIfRecordExists(r);
         //System.out.println("checkIfRecordExists: value is: " + output);
         
+        recs = (Record[]) db.readRecordsOnAllAPPs();
+        assertTrue("readRecordsOnAllAPPs: Reply has unexpected return:", Out = recs == null | recs != null);
+        if (recs != null)
+        {    
+            System.out.println("readRecordsOnAllAPPs: rec array index 0 app value is: " + recs[0].getApp_PATH());
+        }
         
         db.closeConnection();
         

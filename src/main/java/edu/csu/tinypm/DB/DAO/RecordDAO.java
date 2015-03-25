@@ -35,5 +35,7 @@ public interface RecordDAO extends DB_Base
     public void closeConnection() throws RecordDAOException;
     
     public Integer countDistinctAppCapRecords(Record r) throws RecordDAOException;
+    
+    public Record[] readRecordsOnAllAPPs() throws RecordDAOException;
      
 }

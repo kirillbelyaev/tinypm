@@ -176,6 +176,56 @@ public class RecordDAO_implement implements RecordDAO
                     return array;
     }
     
+    @Override
+    public Record[] readRecordsOnAllAPPs() throws RecordDAOException //table name, uid
+    {
+            if (this.conn == null) return null;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ArrayList <Record> rows = new ArrayList<Record>();
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_ALL_APPS_SQL);
+
+                    int index = 1;
+
+                    //ps.setString(index++, DB_Constants.COLUMN_APP_PATH);
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    while (rs.next()) 
+                    {
+                            if (DB_Constants.LC_DB_TABLE_NAME.equals(DB_Constants.LC_DB_TABLE_NAME))
+                            {
+                                    Record rec = new Record();
+                                    rec.setApp_PATH(rs.getString(DB_Constants.COLUMN_APP_PATH));
+                                    
+                                    //rec.setUID(rs.getString(DB_Constants.COLUMN_UID));
+                                    //rec.setCAP_Attr(rs.getString(DB_Constants.COLUMN_CAP_ATTR));
+                                    //rec.setStatus(rs.getString(DB_Constants.COLUMN_STATUS));
+
+                                    rows.add(rec);
+                                    
+                                    rec = null;	
+                            } else return null;
+                    }
+                        rs.close();
+                        rs = null;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    if (rows.isEmpty()) return null;
+
+                    Record [] array = new Record [ rows.size() ];
+                    rows.toArray(array);
+                    return array;
+    }
+    
     
     
 	private int checkIfRecordExists(Record r) throws RecordDAOException	

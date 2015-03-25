@@ -22,6 +22,7 @@ public interface Parser
     {
         EXIT,
         HELP,
+        SHOW_APPS,
         SHOW_APP_POLICIES,
         ADD_APP_POLICY,
         DELETE_APP_POLICY,
@@ -31,6 +32,7 @@ public interface Parser
     public enum PM_ERRORS
     {
         COUNT_APP_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
+        SHOW_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
         SHOW_APP_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
         UPDATE_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
         ADD_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
@@ -41,6 +43,7 @@ public interface Parser
           +  "The following are the commands you can apply at the PM prompt: \n"
           + PM_COMMANDS.HELP +  " : print this help info. \n"
           + PM_COMMANDS.EXIT + " : exit the PM shell. \n"
+          + PM_COMMANDS.SHOW_APPS + " : show a list of applications stored in the tinyPM db \n"   
           + PM_COMMANDS.COUNT_APP_POLICIES + " : show the number of policies for the APP.  (App_path argument is required) \n"
           + PM_COMMANDS.SHOW_APP_POLICIES + " : show the list of policies for the APP  (App_path argument is required) \n"
           + PM_COMMANDS.ADD_APP_POLICY + " : create a policy for the APP  (policy argument and App_path argument are required) \n"  

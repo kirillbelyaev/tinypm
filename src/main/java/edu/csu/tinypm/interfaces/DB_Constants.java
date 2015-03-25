@@ -46,7 +46,7 @@ public interface DB_Constants
         final String SELECT_COUNT_APP_CAP_SQL = "select count(*) as " + COUNT + " from " + LC_DB_TABLE_NAME + " where " + COLUMN_APP_PATH + " = ?";
         final String SELECT_ON_APP_SQL = "select * from " + LC_DB_TABLE_NAME + " where " + COLUMN_APP_PATH + " = ?";
         final String SELECT_ON_APP_AND_CAP_SQL = "select " + COLUMN_APP_PATH + " from " + LC_DB_TABLE_NAME + " where " + COLUMN_APP_PATH + " = ? and " + COLUMN_CAP_ATTR + " = ?";
-        
+        final String SELECT_ALL_APPS_SQL = "select distinct " + COLUMN_APP_PATH + " from " + LC_DB_TABLE_NAME;
         final String INSERT_LC_DB_SQL = "insert into " + LC_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
         
         //final String UPDATE_LC_DB_SQL = "update " + LC_DB_TABLE_NAME + " set " + COLUMN_UID + " = ?, " + COLUMN_APP_PATH + " = ?, " + COLUMN_CAP_ATTR + " = ?, " + COLUMN_STATUS + " = ? " + "where " +  COLUMN_APP_PATH + " = ? and " + COLUMN_CAP_ATTR + " = ?";
