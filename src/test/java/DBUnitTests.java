@@ -10,7 +10,7 @@ import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 import edu.csu.tinypm.DB.factory.RecordDAOFactory;
 import edu.csu.tinypm.DB.implementation.ConnManager;
 import edu.csu.tinypm.DB.implementation.DB_Dispatcher;
-import edu.csu.tinypm.DB.implementation.Parser_implement;
+import edu.csu.tinypm.implementation.Parser_implement;
 import edu.csu.tinypm.DB.implementation.RecordDAO_implement;
 import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
 import java.sql.SQLException;

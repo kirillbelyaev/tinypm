@@ -4,10 +4,12 @@ Kirill Belyaev. Copyright (c) @2015 Colorado State University
 Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
-package edu.csu.tinypm.DB.implementation;
+package edu.csu.tinypm.implementation;
 
 import edu.csu.tinypm.DB.DTO.Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
+import edu.csu.tinypm.DB.implementation.DB_Dispatcher;
+import edu.csu.tinypm.DB.implementation.RecordDAO_implement;
 import edu.csu.tinypm.interfaces.DB_Constants;
 import edu.csu.tinypm.interfaces.Parser;
 import java.sql.SQLException;

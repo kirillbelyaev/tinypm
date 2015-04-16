@@ -7,7 +7,7 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 package edu.csu.tinypm.machine;
 
 
-import edu.csu.tinypm.DB.implementation.Parser_implement;
+import edu.csu.tinypm.implementation.Parser_implement;
 import edu.csu.tinypm.interfaces.Parser;
 import java.util.Scanner;
 

@@ -4,7 +4,7 @@ Kirill Belyaev. Copyright (c) @2015 Colorado State University
 Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
-package edu.csu.tinypm.DB.implementation;
+package edu.csu.tinypm.implementation;
 
 import edu.csu.tinypm.interfaces.Enforcer;
 import java.io.BufferedReader;

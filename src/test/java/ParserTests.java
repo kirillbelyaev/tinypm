@@ -5,8 +5,7 @@ Kirill Belyaev. Copyright (c) @2015 Colorado State University
 Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
-import edu.csu.tinypm.DB.implementation.Parser_implement;
-import edu.csu.tinypm.interfaces.Parser;
+import edu.csu.tinypm.implementation.Parser_implement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
