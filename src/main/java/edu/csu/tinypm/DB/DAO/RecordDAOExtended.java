@@ -13,6 +13,7 @@ without exposing details of the database.
  */
 package edu.csu.tinypm.DB.DAO;
 
+import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
 import edu.csu.tinypm.DB.DTO.Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 
@@ -21,22 +22,14 @@ import edu.csu.tinypm.DB.exceptions.RecordDAOException;
  * @author kirill
  */
 public interface RecordDAOExtended extends DB_Base
-{   
-    public Record[] readRecordsOnAPP(Record r) throws RecordDAOException;
-    
+{      
     public int deleteRecordsOnAPPandCAP(Record r) throws RecordDAOException;
     
     public int writeRecord(Record r) throws RecordDAOException;
     
-    public int createTable_LC_DB() throws RecordDAOException;
-    
-    public int dropTable_LC_DB() throws RecordDAOException;
-    
     public void closeConnection() throws RecordDAOException;
     
     public Integer countDistinctAppCapRecords(Record r) throws RecordDAOException;
-    
-    public Record[] readRecordsOnAllAPPs() throws RecordDAOException;
     
     
     /* new API methods to support the policy class abstraction */
@@ -44,5 +37,15 @@ public interface RecordDAOExtended extends DB_Base
     public int createTable_APPS_DB() throws RecordDAOException;
     
     public int dropTable_APPS_DB() throws RecordDAOException;
+    
+      
+    
+    public Apps_Table_Record[] read_Apps_Table_Records_On_APP(Apps_Table_Record r) throws RecordDAOException;
+    
+    public Apps_Table_Record[] read_Apps_Table_Records_On_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException;
+    
+    public Apps_Table_Record[] read_Apps_Table_Records_On_All_APPs() throws RecordDAOException;
+    
+    
      
 }

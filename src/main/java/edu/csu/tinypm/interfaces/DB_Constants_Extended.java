@@ -64,4 +64,8 @@ public interface DB_Constants_Extended
         final String create_APPS_DB_SQL = "create table " + Apps_Table.APPS_DB_TABLE_NAME + APPS_DB_SCHEMA;
         final String drop_APPS_DB_SQL = "drop table if exists " + Apps_Table.APPS_DB_TABLE_NAME;
         
+        final String SELECT_FROM_APPS_DB_ON_APP_SQL = "select * from " + Apps_Table.APPS_DB_TABLE_NAME + " where " + Apps_Table.COLUMN_APP_PATH + " = ?";
+        
+        final String SELECT_FROM_APPS_DB_ALL_APPS_SQL = "select distinct " + Apps_Table.COLUMN_APP_PATH + " from " + Apps_Table.APPS_DB_TABLE_NAME;
+        
 }

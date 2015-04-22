@@ -16,8 +16,10 @@ package edu.csu.tinypm.DB.implementation;
 
 import edu.csu.tinypm.interfaces.DB_Constants;
 import edu.csu.tinypm.DB.DAO.RecordDAOExtended;
+import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
 import edu.csu.tinypm.DB.DTO.Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
+import edu.csu.tinypm.DB.interfaces.Apps_Table;
 import edu.csu.tinypm.interfaces.DB_Constants_Extended;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,39 +41,6 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     public RecordDAOExtended_implement(Connection c) //constructor
     {
 	conn = c;
-    }
-    
-    
-    @Override
-    public int createTable_LC_DB() throws RecordDAOException
-    {
-            Statement state = null;
-            
-            if (this.conn == null) return -1;
-
-            try 
-            {
-                    state = this.conn.createStatement();
-                    state.executeUpdate(DB_Constants.create_LC_DB_SQL);
-
-            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-
-                    return 0;
-    }
-    
-    @Override
-    public int dropTable_LC_DB() throws RecordDAOException
-    {
-            Statement state = null;
-            
-            if (this.conn == null) return -1;
-
-            try 
-            {
-                    state = this.conn.createStatement();
-                    state.executeUpdate(DB_Constants.drop_LC_DB_SQL);
-            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-                    return 0;
     }
     
     
@@ -126,106 +95,6 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     return count;
     }
     
-    
-    @Override
-    public Record[] readRecordsOnAPP(Record r) throws RecordDAOException //table name, uid
-    {
-            if (r == null) return null;
-            if (this.conn == null) return null;
-
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-
-            ArrayList <Record> rows = new ArrayList<Record>();
-
-            try 
-            {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_ON_APP_SQL);
-
-                    int index = 1;
-
-                    ps.setString(index++, r.getApp_PATH());
-
-                    this.conn.setAutoCommit(false);
-                    rs = ps.executeQuery();
-                    this.conn.setAutoCommit(true);
-
-                    while (rs.next()) 
-                    {
-                            if (DB_Constants.LC_DB_TABLE_NAME.equals(DB_Constants.LC_DB_TABLE_NAME))
-                            {
-                                    Record rec = new Record();
-                                    rec.setUID(rs.getString(DB_Constants.COLUMN_UID));
-                                    rec.setApp_PATH(rs.getString(DB_Constants.COLUMN_APP_PATH));
-                                    rec.setCAP_Attr(rs.getString(DB_Constants.COLUMN_CAP_ATTR));
-                                    rec.setStatus(rs.getString(DB_Constants.COLUMN_STATUS));
-
-                                    rows.add(rec);
-                                    
-                                    rec = null;	
-                            } else return null;
-                    }
-                        rs.close();
-                        rs = null;
-
-            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-
-                    if (rows.isEmpty()) return null;
-
-                    Record [] array = new Record [ rows.size() ];
-                    rows.toArray(array);
-                    return array;
-    }
-    
-    @Override
-    public Record[] readRecordsOnAllAPPs() throws RecordDAOException //table name, uid
-    {
-            if (this.conn == null) return null;
-
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-
-            ArrayList <Record> rows = new ArrayList<Record>();
-
-            try 
-            {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_ALL_APPS_SQL);
-
-                    int index = 1;
-
-                    //ps.setString(index++, DB_Constants.COLUMN_APP_PATH);
-
-                    this.conn.setAutoCommit(false);
-                    rs = ps.executeQuery();
-                    this.conn.setAutoCommit(true);
-
-                    while (rs.next()) 
-                    {
-                            if (DB_Constants.LC_DB_TABLE_NAME.equals(DB_Constants.LC_DB_TABLE_NAME))
-                            {
-                                    Record rec = new Record();
-                                    rec.setApp_PATH(rs.getString(DB_Constants.COLUMN_APP_PATH));
-                                    
-                                    //rec.setUID(rs.getString(DB_Constants.COLUMN_UID));
-                                    //rec.setCAP_Attr(rs.getString(DB_Constants.COLUMN_CAP_ATTR));
-                                    //rec.setStatus(rs.getString(DB_Constants.COLUMN_STATUS));
-
-                                    rows.add(rec);
-                                    
-                                    rec = null;	
-                            } else return null;
-                    }
-                        rs.close();
-                        rs = null;
-
-            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-
-                    if (rows.isEmpty()) return null;
-
-                    Record [] array = new Record [ rows.size() ];
-                    rows.toArray(array);
-                    return array;
-    }
     
     
     
@@ -425,6 +294,172 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
                     return 0;
     }
+    
+    
+    @Override
+    public Apps_Table_Record[] read_Apps_Table_Records_On_APP(Apps_Table_Record r) throws RecordDAOException       
+    {
+            if (r == null) return null;
+            if (this.conn == null) return null;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ArrayList <Apps_Table_Record> rows = new ArrayList<Apps_Table_Record>();
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_SQL);
+
+                    int index = 1;
+
+                    ps.setString(index++, r.getCOLUMN_APP_PATH());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    while (rs.next()) 
+                    {
+                            if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
+                            {
+                                    Apps_Table_Record rec = new Apps_Table_Record();
+                                    
+                                    rec.setCOLUMN_APP_DESC(rs.getString(Apps_Table.COLUMN_APP_DESC));
+                                    
+                                    rec.setCOLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
+                                    
+                                    rec.setCOLUMN_POLICY_CLASS_ID(rs.getString(Apps_Table.COLUMN_POLICY_CLASS_ID));
+                                    
+                                    rec.setCOLUMN_APP_CONTAINER_ID(rs.getString(Apps_Table.COLUMN_APP_CONTAINER_ID));
+                                    
+                                    rec.setCOLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
+
+                                    rows.add(rec);
+                                    
+                                    rec = null;	
+                            } else return null;
+                    }
+                        rs.close();
+                        rs = null;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    if (rows.isEmpty()) return null;
+
+                    Apps_Table_Record [] array = new Apps_Table_Record [ rows.size() ];
+                    rows.toArray(array);
+                    return array;
+    }
+    
+    
+    @Override
+    public Apps_Table_Record[] read_Apps_Table_Records_On_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException       
+    {
+            if (r == null) return null;
+            if (this.conn == null) return null;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ArrayList <Apps_Table_Record> rows = new ArrayList<Apps_Table_Record>();
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_SQL);
+
+                    int index = 1;
+
+                    ps.setString(index++, r.getCOLUMN_APP_PATH());
+                    
+                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    while (rs.next()) 
+                    {
+                            if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
+                            {
+                                    Apps_Table_Record rec = new Apps_Table_Record();
+                                    
+                                    rec.setCOLUMN_APP_DESC(rs.getString(Apps_Table.COLUMN_APP_DESC));
+                                    
+                                    rec.setCOLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
+                                    
+                                    rec.setCOLUMN_POLICY_CLASS_ID(rs.getString(Apps_Table.COLUMN_POLICY_CLASS_ID));
+                                    
+                                    rec.setCOLUMN_APP_CONTAINER_ID(rs.getString(Apps_Table.COLUMN_APP_CONTAINER_ID));
+                                    
+                                    rec.setCOLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
+
+                                    rows.add(rec);
+                                    
+                                    rec = null;	
+                            } else return null;
+                    }
+                        rs.close();
+                        rs = null;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    if (rows.isEmpty()) return null;
+
+                    Apps_Table_Record [] array = new Apps_Table_Record [ rows.size() ];
+                    rows.toArray(array);
+                    return array;
+    }
+   
+    
+    
+    @Override
+     public Apps_Table_Record[] read_Apps_Table_Records_On_All_APPs() throws RecordDAOException //table name, uid
+    {
+            if (this.conn == null) return null;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ArrayList <Apps_Table_Record> rows = new ArrayList<Apps_Table_Record>();
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ALL_APPS_SQL);
+
+                    int index = 1;
+
+                    //ps.setString(index++, DB_Constants.COLUMN_APP_PATH);
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    while (rs.next()) 
+                    {
+                            if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
+                            {
+                                    Apps_Table_Record rec = new Apps_Table_Record();
+                                    
+                                    rec.setCOLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
+
+                                    rows.add(rec);
+                                    
+                                    rec = null;	
+                            } else return null;
+                    }
+                        rs.close();
+                        rs = null;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    if (rows.isEmpty()) return null;
+
+                    Apps_Table_Record [] array = new Apps_Table_Record [ rows.size() ];
+                    rows.toArray(array);
+                    return array;
+    }
+    
     
     
 }
