@@ -10,7 +10,7 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
  * @author I829920 Kirill Belyaev @2013 SAP Labs LLC, Palo Alto, CA
  */
 
-package edu.csu.tinypm.interfaces;
+package edu.csu.tinypm.DB.interfaces;
 
 import edu.csu.tinypm.DB.interfaces.Apps_Table;
 

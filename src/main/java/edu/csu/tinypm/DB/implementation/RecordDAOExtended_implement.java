@@ -14,13 +14,11 @@ without exposing details of the database.
  */
 package edu.csu.tinypm.DB.implementation;
 
-import edu.csu.tinypm.interfaces.DB_Constants;
 import edu.csu.tinypm.DB.DAO.RecordDAOExtended;
 import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
-import edu.csu.tinypm.DB.DTO.Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 import edu.csu.tinypm.DB.interfaces.Apps_Table;
-import edu.csu.tinypm.interfaces.DB_Constants_Extended;
+import edu.csu.tinypm.DB.interfaces.DB_Constants_Extended;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

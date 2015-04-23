@@ -15,7 +15,6 @@ without exposing details of the database.
 package edu.csu.tinypm.DB.DAO;
 
 import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
-import edu.csu.tinypm.DB.DTO.Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 
 /**
