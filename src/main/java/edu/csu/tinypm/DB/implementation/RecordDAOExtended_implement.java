@@ -54,141 +54,66 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     this.conn.close();
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }	
     }
-    
-    
-    @Override
-    public Integer countDistinctAppCapRecords(Record r) throws RecordDAOException //table name, uid
+        
+    private int check_If_Apps_Table_Record_Exists(Apps_Table_Record r) throws RecordDAOException //on app_path and PCID
     {
+            if (r == null) return -1; //indicate error
             if (this.conn == null) return -1;
-            if (r == null) return -1;
 
             PreparedStatement ps = null;
             ResultSet rs = null;
 
-            int count = -1;
-
             try 
-            {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_COUNT_APP_CAP_SQL);
+            {	
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
 
                     int index = 1;
 
-                    ps.setString(index++, r.getApp_PATH());
+                    ps.setString(index++, r.getCOLUMN_APP_PATH());
+                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
                     this.conn.setAutoCommit(true);
 
-                    //rs = state.executeQuery(statement);
-
-                    while (rs.next()) 
+                    if (rs.next())
                     {
-                            if (DB_Constants.LC_DB_TABLE_NAME.equals(DB_Constants.LC_DB_TABLE_NAME)) 
-                            {
-                                    count = rs.getInt(DB_Constants.COUNT);
-                            } else return -1;
-                    }
-                        rs.close();
+                            rs.close();
+                            rs = null;
+                            System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
+                            return 1; //entry exists
+                    }	
 
-            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+                    rs.close();
+                    rs = null;
 
-                    return count;
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }    
+
+                    return 0; //no entry exists
     }
-    
-    
-    
-    
-	private int checkIfRecordExists(Record r) throws RecordDAOException	
-	{
-		if (r == null) return -1; //indicate error
-                if (this.conn == null) return -1;
-		
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		try 
-		{	
-			ps = this.conn.prepareStatement(DB_Constants.SELECT_ON_APP_AND_CAP_SQL);
-			
-			int index = 1;
-				
-			ps.setString(index++, r.getApp_PATH());
-			ps.setString(index++, r.getCAP_Attr());
-				
-			this.conn.setAutoCommit(false);
-			rs = ps.executeQuery();
-			this.conn.setAutoCommit(true);
-			
-			if (rs.next())
-			{
-				rs.close();
-                                rs = null;
-				System.out.println("checkRecordExists: entry exists!");
-				return 1; //entry exists
-			}	
-			
-			rs.close();
-                        rs = null;
-			
-		} catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }    
-			
-			return 0; //no entry exists
-	}
+        
         
     @Override
-        public int writeRecord(Record r) throws RecordDAOException
-	{
-		if (r == null) return -1;
-		
-		try
-		{	
-		if (this.checkIfRecordExists(r) == 0) //no record exists
-		{	
-			if (this.insertRecord(r) != 0) return -1;
-			
-		} else {//if record exists - just update it	
-			if (this.updateRecord(r) != 0) return -2;
-		}
-			
-		} catch (Exception e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-			return 0;
-	}
-        
-    
-        private int insertRecord(Record r) throws RecordDAOException
-	{
-		if (r == null) return -1;
-                if (this.conn == null) return -1;
-		
-		PreparedStatement ps = null;
-		
-		try 
-		{
-                        if (DB_Constants.LC_DB_TABLE_NAME.equals(DB_Constants.LC_DB_TABLE_NAME))
-                        {
-				ps = this.conn.prepareStatement(DB_Constants.INSERT_LC_DB_SQL);
+    public int write_Apps_Table_Record(Apps_Table_Record r) throws RecordDAOException
+    {
+            if (r == null) return -1;
 
-				int index = 1;
-				
-				ps.setString(index++, r.getUID());
-				ps.setString(index++, r.getApp_PATH());
-				ps.setString(index++, r.getCAP_Attr());
-				ps.setString(index++, r.getStatus());
-				
-				ps.addBatch();
-				this.conn.setAutoCommit(false);
-				ps.executeBatch();
-				this.conn.setAutoCommit(true);
-		
-			} else return -1;
-			
-		} catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-			
-			return 0;
-	}
-	
+            try
+            {	
+            if (this.check_If_Apps_Table_Record_Exists(r) == 0) //no record exists
+            {	
+                    if (this.insert_Apps_Table_Record(r) != 0) return -1;
+
+            } else {//if record exists - just update it	
+                    if (this.update_Apps_Table_Record_on_APP_and_PCID(r) != 0) return -2;
+            }
+
+            } catch (Exception e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+                    return 0;
+    }
+
     
-    private int updateRecord(Record r) throws RecordDAOException
+    private int insert_Apps_Table_Record(Apps_Table_Record r) throws RecordDAOException
     {
             if (r == null) return -1;
             if (this.conn == null) return -1;
@@ -197,16 +122,55 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             try 
             {
-                    if (DB_Constants.LC_DB_TABLE_NAME.equals(DB_Constants.LC_DB_TABLE_NAME))
-                    {	
-                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_LC_DB_SQL);
+                    if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
+                    {
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.INSERT_APPS_DB_SQL);
 
                             int index = 1;
 
-                            //ps.setString(index++, r.getUID());
-                            ps.setString(index++, r.getApp_PATH());
-                            ps.setString(index++, r.getCAP_Attr());
-                            //ps.setString(index++, r.getStatus());
+                            ps.setString(index++, r.getCOLUMN_APP_DESC());
+                            ps.setString(index++, r.getCOLUMN_APP_PATH());
+                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                            ps.setString(index++, r.getCOLUMN_APP_CONTAINER_ID());
+                            ps.setString(index++, r.getCOLUMN_STATUS());
+
+                            ps.addBatch();
+                            this.conn.setAutoCommit(false);
+                            ps.executeBatch();
+                            this.conn.setAutoCommit(true);
+
+                    } else return -1;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    return 0;
+    }
+    
+    
+    private int update_Apps_Table_Record_on_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException
+    {
+            if (r == null) return -1;
+            if (this.conn == null) return -1;
+
+            PreparedStatement ps = null;
+
+            try 
+            {
+                    if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
+                    {	
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_APPS_DB_ON_APP_AND_PCID_SQL);
+
+                            int index = 1;
+                            
+                            ps.setString(index++, r.getCOLUMN_APP_PATH());
+                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                            
+                            /*
+                            ps.setString(index++, r.getCOLUMN_APP_DESC());
+                            ps.setString(index++, r.getCOLUMN_APP_CONTAINER_ID());
+                            ps.setString(index++, r.getCOLUMN_STATUS());
+                            */
+                            
 
                             this.conn.setAutoCommit(false);
                             ps.executeUpdate();
@@ -216,13 +180,11 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
                     return 0;
-    }    
-
-    
+    }
     
     
     @Override
-    public int deleteRecordsOnAPPandCAP(Record r) throws RecordDAOException
+    public int delete_Apps_Table_Records_On_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException
     {
             if (r == null) return -1;
              if (this.conn == null) return -1;
@@ -232,12 +194,12 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
             
             try 
             {	
-                    ps = this.conn.prepareStatement(DB_Constants.DELETE_ON_APP_AND_CAP_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.DELETE_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
 
                     int index = 1;
 
-                    ps.setString(index++, r.getApp_PATH());
-                    ps.setString(index++, r.getCAP_Attr());
+                    ps.setString(index++, r.getCOLUMN_APP_PATH());
+                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     ps.executeUpdate();
@@ -372,7 +334,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     ps.setString(index++, r.getCOLUMN_APP_PATH());
                     
-                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                    //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -459,6 +421,47 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     rows.toArray(array);
                     return array;
     }
+     
+     
+    @Override
+      public Integer count_Distinct_Apps_Table_Records_on_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException
+    {
+            if (this.conn == null) return -1;
+            if (r == null) return -1;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            int count = -1;
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_COUNT_APPS_ON_PCID_SQL);
+
+                    int index = 1;
+
+                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    //rs = state.executeQuery(statement);
+
+                    while (rs.next()) 
+                    {
+                            if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
+                            {
+                                    count = rs.getInt(DB_Constants_Extended.COUNT);
+                            } else return -1;
+                    }
+                        rs.close();
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    return count;
+    }
+    
     
     
     

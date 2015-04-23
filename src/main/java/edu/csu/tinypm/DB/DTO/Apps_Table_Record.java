@@ -38,7 +38,7 @@ public Apps_Table_Record()
     }
 
     public void setCOLUMN_APP_DESC(String COLUMN_APP_DESC) {
-        this.COLUMN_APP_DESC = COLUMN_APP_DESC;
+        if (COLUMN_APP_DESC != null) this.COLUMN_APP_DESC = COLUMN_APP_DESC;
     }
 
     public String getCOLUMN_APP_PATH() {
@@ -46,7 +46,7 @@ public Apps_Table_Record()
     }
 
     public void setCOLUMN_APP_PATH(String COLUMN_APP_PATH) {
-        this.COLUMN_APP_PATH = COLUMN_APP_PATH;
+        if (COLUMN_APP_PATH != null) this.COLUMN_APP_PATH = COLUMN_APP_PATH;
     }
 
     public String getCOLUMN_POLICY_CLASS_ID() {
@@ -54,7 +54,7 @@ public Apps_Table_Record()
     }
 
     public void setCOLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) {
-        this.COLUMN_POLICY_CLASS_ID = COLUMN_POLICY_CLASS_ID;
+        if (COLUMN_POLICY_CLASS_ID != null) this.COLUMN_POLICY_CLASS_ID = COLUMN_POLICY_CLASS_ID;
     }
 
     public String getCOLUMN_APP_CONTAINER_ID() {
@@ -62,7 +62,7 @@ public Apps_Table_Record()
     }
 
     public void setCOLUMN_APP_CONTAINER_ID(String COLUMN_APP_CONTAINER_ID) {
-        this.COLUMN_APP_CONTAINER_ID = COLUMN_APP_CONTAINER_ID;
+        if (COLUMN_APP_CONTAINER_ID != null) this.COLUMN_APP_CONTAINER_ID = COLUMN_APP_CONTAINER_ID;
     }
 
     public String getCOLUMN_STATUS() {
@@ -70,18 +70,18 @@ public Apps_Table_Record()
     }
 
     public void setCOLUMN_STATUS(String COLUMN_STATUS) {
-        this.COLUMN_STATUS = COLUMN_STATUS;
+        if (COLUMN_STATUS != null) this.COLUMN_STATUS = COLUMN_STATUS;
     }
     
     
     
-     public void setStatusActive() 
+     public void set_Status_Active() 
     {
             Integer one = 1;
             this.COLUMN_STATUS = one.toString();
     }
 
-    public void setStatusInactive() 
+    public void set_Status_Inactive() 
     {
             Integer zero = 0;
             this.COLUMN_STATUS = zero.toString();
