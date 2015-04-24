@@ -6,12 +6,10 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
 import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
-import edu.csu.tinypm.DB.DTO.Record;
+import edu.csu.tinypm.DB.DTO.Policy_Classes_Table_Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
-import edu.csu.tinypm.DB.implementation.DB_Dispatcher;
 import edu.csu.tinypm.DB.implementation.DB_Dispatcher_Extended;
 import edu.csu.tinypm.DB.implementation.RecordDAOExtended_implement;
-import edu.csu.tinypm.DB.implementation.RecordDAO_implement;
 import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
 import java.sql.SQLException;
 import org.junit.After;
@@ -50,8 +48,24 @@ public class DBExtendedUnitTests {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    // @Test
-    // public void hello() {}
+     
+    @Test
+     public void small_tests() 
+     {
+         
+        System.out.println("--------------------------------------");
+        System.out.println("started small_tests... ");
+        
+        LinuxCAPPolicyContainer.LinuxCapabilities LCS[] = LinuxCAPPolicyContainer.LinuxCapabilities.values();
+        
+        System.out.println("LCS is: " + LCS[0]);
+        System.out.println("LCS is: " + LCS[1]);
+        System.out.println("LCS is: " + LCS[1].toString());
+      
+        System.out.println("--------------------------------------");
+        System.out.println("finished small_tests... ");
+      
+     }
     
     
     String CAP_ATTR = LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
@@ -62,7 +76,7 @@ public class DBExtendedUnitTests {
     private final String COLUMN_POLICY_CLASS_ID = "1";
     private final String COLUMN_APP_CONTAINER_ID = "1";
     private final String COLUMN_STATUS = "1";
-    
+    private final String COLUMN_POLICY_CLASS_NAME = "general applications policy class";
     
     @Test
     public void test_Apps_Table_Record() 
@@ -251,5 +265,49 @@ public class DBExtendedUnitTests {
         
     }
     
+     @Test
+     public void test_Policy_Classes_Table_Record() 
+    {
+        System.out.println("--------------------------------------");
+        System.out.println("started test_Policy_Classes_Table_Record... ");
+        
+        String value = null;
+        Policy_Classes_Table_Record r = new Policy_Classes_Table_Record();
+        
+        r.setCOLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.setCOLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
+        r.setCOLUMN_STATUS(this.COLUMN_STATUS);
+        
+        value = r.getCOLUMN_POLICY_CLASS_ID();
+	assertNotNull(value);
+	System.out.println("PCID is: " + value);
+        
+        value = r.getCOLUMN_POLICY_CLASS_NAME();
+	assertNotNull(value);
+	System.out.println("PC name is: " + value);
+        
+        value = r.getCOLUMN_STATUS();
+	assertNotNull(value);
+	System.out.println("status is: " + value);
+        
+        r.set_Status_Inactive();
+	value = r.getCOLUMN_STATUS();
+	assertNotNull(value);
+	System.out.println("status is: " + value);
+        
+        r.set_Status_Active();
+	value = r.getCOLUMN_STATUS();
+	assertNotNull(value);
+	System.out.println("status is: " + value);
+        
+        
+        System.out.println("cap index within enum array is: " + r.get_CAP_index(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_KILL.toString()) );
+        
+        
+         
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_Policy_Classes_Table_Record... ");
+    }
+     
     
 }

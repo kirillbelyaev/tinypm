@@ -12,8 +12,6 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 
 package edu.csu.tinypm.DB.interfaces;
 
-import edu.csu.tinypm.DB.interfaces.Apps_Table;
-
 /**
  *
  * @author I829920
