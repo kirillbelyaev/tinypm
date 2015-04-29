@@ -61,7 +61,15 @@ public class DBExtendedUnitTests {
         System.out.println("LCS is: " + LCS[0]);
         System.out.println("LCS is: " + LCS[1]);
         System.out.println("LCS is: " + LCS[1].toString());
-      
+        
+//        System.out.println("( " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + ", " + Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME + ", " + Policy_Classes_Table.COLUMN_STATUS + ", "); 
+//        for (int i = 0; i < LCS.length; i++)
+//            if (i != LCS.length -1)
+//                System.out.print(LCS[i] + ", ");
+//            else System.out.print(LCS[i] + " ) ");    
+        
+    
+        
         System.out.println("--------------------------------------");
         System.out.println("finished small_tests... ");
       
@@ -302,11 +310,41 @@ public class DBExtendedUnitTests {
         
         
         System.out.println("cap index within enum array is: " + r.get_CAP_index(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_KILL.toString()) );
+
+        System.out.println("Schema DDL is : " + r.produce_PCS_DB_DDL());
         
         
-         
         System.out.println("--------------------------------------");
         System.out.println("finished test_Policy_Classes_Table_Record... ");
+    }
+     
+     
+     @Test
+     public void test_Policy_Classes_Table_create_drop() throws RecordDAOException, SQLException 
+    {
+        System.out.println("--------------------------------------");
+        System.out.println("started test_Policy_Classes_Table_create_drop... ");
+
+        int output = -1;
+        boolean Out;
+        
+        DB_Dispatcher_Extended dd = new DB_Dispatcher_Extended();
+        RecordDAOExtended_implement db = null;
+
+        db = dd.dispatch_DB_Access();
+        
+	assertNotNull(db);
+        
+        output = db.drop_Table_PCS_DB();
+	assertTrue("drop_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+        output = db.create_Table_PCS_DB();
+	assertTrue("create_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+        db.closeConnection();
+        
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_Policy_Classes_Table_create_drop... ");
     }
      
     

@@ -12,6 +12,7 @@ communication between processes is usually done resorting to remote interfaces.
  */
 package edu.csu.tinypm.DB.DTO;
 
+import edu.csu.tinypm.DB.interfaces.Policy_Classes_Table;
 import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
 import java.io.Serializable;
 
@@ -78,6 +79,19 @@ public Policy_Classes_Table_Record()
         return -1;
     }
     
+    
+    public String produce_PCS_DB_DDL()
+    {
+        String Columns = "( " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + ", " + Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME + ", " + Policy_Classes_Table.COLUMN_STATUS + ", ";
+        
+        for (int i = 0; i < Policy_Classes_Table.LCS.length; i++)
+            if (i != Policy_Classes_Table.LCS.length - 1)
+                Columns = Columns.concat(Policy_Classes_Table.LCS[i].toString() + ", ");
+            else 
+                Columns = Columns.concat(Policy_Classes_Table.LCS[i].toString() + " ) ");  
+        
+        return Columns;
+    }     
     
 
     public String getCOLUMN_POLICY_CLASS_ID() {

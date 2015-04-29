@@ -19,6 +19,7 @@ import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 import edu.csu.tinypm.DB.interfaces.Apps_Table;
 import edu.csu.tinypm.DB.interfaces.DB_Constants_Extended;
+import edu.csu.tinypm.DB.interfaces.Policy_Classes_Table;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -461,6 +462,41 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     }
     
     
+      /* policy classes table operations */
     
+    @Override
+       public int create_Table_PCS_DB() throws RecordDAOException
+    {
+            Statement state = null;
+            
+            if (this.conn == null) return -1;
+
+            try 
+            {
+                    state = this.conn.createStatement();
+                    state.executeUpdate(DB_Constants_Extended.create_PCS_DB_SQL);
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    return 0;
+    } 
+       
+       
+    @Override
+       public int drop_Table_PCS_DB() throws RecordDAOException
+    {
+            Statement state = null;
+            
+            if (this.conn == null) return -1;
+
+            try 
+            {
+                    state = this.conn.createStatement();
+                    state.executeUpdate(DB_Constants_Extended.drop_PCS_DB_SQL);
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+                    return 0;
+    }
+       
+       
     
 }

@@ -29,6 +29,8 @@ public interface RecordDAOExtended extends DB_Base
     
     /* new API methods to support the policy class abstraction */
     
+    /* apps table operations */
+    
     public int createTable_APPS_DB() throws RecordDAOException;
     
     public int dropTable_APPS_DB() throws RecordDAOException;
@@ -45,6 +47,12 @@ public interface RecordDAOExtended extends DB_Base
     
     public int delete_Apps_Table_Records_On_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException;
     
+    
+     /* policy classes table operations */
+    
+    public int create_Table_PCS_DB() throws RecordDAOException;
+    
+    public int drop_Table_PCS_DB() throws RecordDAOException;
     
      
 }

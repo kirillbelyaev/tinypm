@@ -32,11 +32,11 @@ import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
  */
 public interface Policy_Classes_Table 
 {
-    final String APPS_DB_TABLE_NAME = "pcs_db";
-    final String APPS_DB_NAME = "pcs.db";
+    final String PCS_DB_TABLE_NAME = "pcs_db";
+    final String PCS_DB_NAME = "pcs.db";
     
     
-    final String COLUMN_POLICY_CLASS_NAME = "pc_name";
+    final String COLUMN_POLICY_CLASS_NAME = "class_name";
     final String COLUMN_POLICY_CLASS_ID = "PCID";
        
     final String COLUMN_STATUS = "status";
