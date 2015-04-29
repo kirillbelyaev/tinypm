@@ -84,33 +84,49 @@ public class Enforcer_implement implements Enforcer
     ArrayList<String> command = null;
     String caps = ""; 
     String ep= "+ep";
+    String rep= "-ep";
+    String all = "ALL";
     command = new ArrayList<String>();
     command.add(SETCAP_EXE);
-     
-    //System.out.println("enforcer.buildEnforcerCMDParams pl is: " + pl);
-    //for (String val : pl) 
-        //command.add(val);
+   
     
-    for (int i = 0; i < (pl.size()-1); i++)
+    if (pl.size() > 1) /* at least one cap is present */
     {
-        String cap = pl.get(i);
-        if (cap != null)
-        {    
-            caps = caps.concat(cap);
-            caps = caps.concat(",");
-            
+        for (int i = 0; i < (pl.size()-1); i++)
+        {
+            String cap = pl.get(i);
+            if (cap != null)
+            {    
+                caps = caps.concat(cap);
+                caps = caps.concat(",");
+
+            }
+            //System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
         }
-        //System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
+
+        caps = caps.substring(0, (caps.length()-1)); //remove the last , character
+        caps = caps.concat(ep);
+        System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
+
+        command.add(caps);
+        command.add(pl.get(pl.size()-1));
+        this.cmd = command;
+        System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
     }
     
-    caps = caps.substring(0, (caps.length()-1)); //remove the last , character
-    caps = caps.concat(ep);
-    System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
-    
-    command.add(caps);
-    command.add(pl.get(pl.size()-1));
-    this.cmd = command;
-    System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
+    if (pl.size() == 1) /* no cap argument present */
+    {
+        caps = caps.concat(all);
+        caps = caps.concat(rep);
+        
+        System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
+        
+        command.add(caps);
+        command.add(pl.get(pl.size()-1));
+        this.cmd = command;
+        System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
+        
+    }    
 } 
 
     

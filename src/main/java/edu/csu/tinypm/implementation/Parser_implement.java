@@ -343,11 +343,23 @@ public class Parser_implement implements Parser
         {    
             if (this.check_if_PolicyExists(app.trim(), p.trim()) == 0) return null;
             caps = this.get_APP_POLICIES(app.trim());
+            
+            
             if (caps != null)
             {    
                 caps.add(p.trim());
                 caps.add(app.trim());//add the application entry last
-            }    
+            }
+            
+            if (caps == null) //no record exists
+            {
+                caps = new ArrayList<String>();
+                caps.add(p.trim());
+                caps.add(app.trim());//add the application entry last
+            }
+            
+            System.out.println("return_modified_app_policies: (mode 1) caps are: " + caps);
+            
             return caps;
             
         }
@@ -360,7 +372,10 @@ public class Parser_implement implements Parser
             {    
                 caps.remove(p.trim());
                 caps.add(app.trim());//add the application entry last
-            }    
+            } 
+            
+            System.out.println("return_modified_app_policies: (mode -1) caps are: " + caps);
+            
             return caps;
             
         }
@@ -387,9 +402,18 @@ public class Parser_implement implements Parser
                 else return -1;
             } else return -1;
             
-            if (this.check_if_PolicyExists(this.rec.getApp_PATH(), this.rec.getCAP_Attr()) == 0) return -1; /*//return if policy already exists*/
+            System.out.println("parse_and_execute_ADD_APP_POLICY: commandParameters are: " + this.commandParameters);
             
-            this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
+            if (this.check_if_PolicyExists(this.rec.getApp_PATH(), this.rec.getCAP_Attr()) == 0) return -1; /*return if policy already exists*/
+            
+            //this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
+            
+            ArrayList<String> policies = this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1); //1 indicates add instruction
+            
+            if (policies != null) this.ei.buildEnforcerCMDParams(policies);
+            else return -1; /* return if return_modified_app_policies(() returned null */
+            
+            System.out.println("parse_and_execute_ADD_APP_POLICY: CMD string is: " + this.ei.getCmd());
             
             if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
             
@@ -432,9 +456,18 @@ public class Parser_implement implements Parser
                 else return -1;
             } else return -1;
             
+            System.out.println("parse_and_execute_DELETE_APP_POLICY: commandParameters are: " + this.commandParameters);
+            
             if (this.check_if_PolicyExists(this.rec.getApp_PATH(), this.rec.getCAP_Attr()) == -1) return -1; //return if policy does not exist
             
-            this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), -1)); //-1 indicates remove instruction
+            //this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), -1)); //-1 indicates remove instruction
+            
+            ArrayList<String> policies = this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), -1); //-1 indicates remove instruction
+            
+            if (policies != null) this.ei.buildEnforcerCMDParams(policies);
+            else return -1; /* return if return_modified_app_policies(() returned null */
+            
+            System.out.println("parse_and_execute_DELETE_APP_POLICY: CMD string is: " + this.ei.getCmd());
             
             if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
             

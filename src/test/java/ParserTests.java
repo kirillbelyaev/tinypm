@@ -62,6 +62,10 @@ public class ParserTests {
         String CMD_7 = "EXIT";
         String CMD_8 = "SHOW_APPS";
         
+        String CMD_9 = "ADD_APP_POLICY cap_net_raw /s/chopin/b/grad/kirill/ping";
+        
+        String CMD_10 = "DELETE_APP_POLICY cap_net_raw /s/chopin/b/grad/kirill/ping";
+        
         Parser_implement p = new Parser_implement();
         
         output = p.parse_and_execute_Command(CMD); 
@@ -92,6 +96,10 @@ public class ParserTests {
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.getERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        
+        
+        System.out.println("executing CMD 4 ------------------------- ");
+        
         
         output = p.parse_and_execute_Command(CMD_4);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
@@ -124,6 +132,13 @@ public class ParserTests {
         
         output = p.parse_and_execute_Command(CMD_6);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        
+        System.out.println("executing CMD 9 ------------------------- ");
+        
+        output = p.parse_and_execute_Command(CMD_9);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1 | output == Parser.INDICATE_IMMEDIATE_EXIT_STATUS);
         System.out.println("error mesage is: " + p.getERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.getResultOutput());
         

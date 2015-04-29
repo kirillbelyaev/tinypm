@@ -182,6 +182,13 @@ public class DBUnitTests {
             System.out.println("readRecordsOnAllAPPs: rec array index 0 app value is: " + recs[0].getApp_PATH());
         }
         
+        
+        output = db.dropTable_LC_DB();
+	assertTrue("dropTable: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+        output = db.createTable_LC_DB();
+	assertTrue("createTable_LC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
         db.closeConnection();
         
         
