@@ -11,6 +11,7 @@ import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 import edu.csu.tinypm.DB.implementation.DB_Dispatcher;
 import edu.csu.tinypm.DB.implementation.RecordDAO_implement;
 import edu.csu.tinypm.interfaces.DB_Constants;
+import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
 import edu.csu.tinypm.interfaces.Parser;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -100,6 +101,20 @@ public class Parser_implement implements Parser
             this.ResultOutput.add(r[i].getApp_PATH());
     }
     
+    private void refill_Result_Output_with_all_CAPS() 
+    {
+        LinuxCAPPolicyContainer.LinuxCapabilities LCS[] = LinuxCAPPolicyContainer.LinuxCapabilities.values();
+        
+        if (LCS == null) return;
+        
+        this.ResultOutput.clear();
+        
+        for (LinuxCAPPolicyContainer.LinuxCapabilities LCS1 : LCS) {
+            this.ResultOutput.add(LCS1.toString());
+            }
+    }
+    
+    
     
     private int obtain_DB_Handler()
     {
@@ -177,9 +192,15 @@ public class Parser_implement implements Parser
         }  else if (e.indexOf(PM_COMMANDS.HELP.toString()) == 0) 
         {
             this.parse_and_execute_HELP(e);
+            
+        }  else if (e.indexOf(PM_COMMANDS.SHOW_CAPS.toString()) == 0) 
+        {
+            this.parse_and_execute_SHOW_CAPS(e);
+            
         } else if (e.indexOf(PM_COMMANDS.EXIT.toString()) == 0) 
         {
             return  Parser.INDICATE_IMMEDIATE_EXIT_STATUS;
+            
         } else
         {
             this.parse_and_execute_HELP(e);
@@ -345,13 +366,13 @@ public class Parser_implement implements Parser
             caps = this.get_APP_POLICIES(app.trim());
             
             
-            if (caps != null)
+            if (caps != null) //record exists
             {    
                 caps.add(p.trim());
                 caps.add(app.trim());//add the application entry last
             }
             
-            if (caps == null) //no record exists
+            if (caps == null) //no record exists for that application
             {
                 caps = new ArrayList<String>();
                 caps.add(p.trim());
@@ -368,7 +389,8 @@ public class Parser_implement implements Parser
         {    
             if (this.check_if_PolicyExists(app.trim(), p.trim()) != 0) return null;
             caps = this.get_APP_POLICIES(app.trim());
-            if (caps != null) 
+            
+            if (caps != null) //record exists
             {    
                 caps.remove(p.trim());
                 caps.add(app.trim());//add the application entry last
@@ -499,6 +521,13 @@ public class Parser_implement implements Parser
         this.setResultSize(0);
         this.refillResultOutput("");
         this.setERROR_MESSAGE(Parser.HELP_MESSAGE);
+    }
+    
+    private void parse_and_execute_SHOW_CAPS(String e)
+    {
+        if (e == null || e.isEmpty()) return;
+        this.setResultSize(0);
+        this.refill_Result_Output_with_all_CAPS();
     }
     
     

@@ -90,7 +90,7 @@ public class Enforcer_implement implements Enforcer
     command.add(SETCAP_EXE);
    
     
-    if (pl.size() > 1) /* at least one cap is present */
+    if (pl.size() > 1) /* at least one cap is present besides the app string itself returned by return_modified_app_policies() */
     {
         for (int i = 0; i < (pl.size()-1); i++)
         {
@@ -114,7 +114,8 @@ public class Enforcer_implement implements Enforcer
         System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
     }
     
-    if (pl.size() == 1) /* no cap argument present */
+    if (pl.size() == 1) /* no cap argument present - only app string is returned by return_modified_app_policies()
+        - the case when a single capability is removed and no more capabilities are left */
     {
         caps = caps.concat(all);
         caps = caps.concat(rep);

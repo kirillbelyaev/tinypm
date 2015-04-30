@@ -22,6 +22,7 @@ public interface Parser
     {
         EXIT,
         HELP,
+        SHOW_CAPS,
         SHOW_APPS,
         SHOW_APP_POLICIES,
         ADD_APP_POLICY,
@@ -43,6 +44,7 @@ public interface Parser
           +  "The following are the commands you can apply at the PM prompt: \n"
           + PM_COMMANDS.HELP +  " : print this help info. \n"
           + PM_COMMANDS.EXIT + " : exit the PM shell. \n"
+          + PM_COMMANDS.SHOW_CAPS + " : show all available Linux capabilities supported by the kernel \n"
           + PM_COMMANDS.SHOW_APPS + " : show a list of applications stored in the tinyPM db \n"   
           + PM_COMMANDS.COUNT_APP_POLICIES + " : show the number of policies for the APP.  (App_path argument is required) \n"
           + PM_COMMANDS.SHOW_APP_POLICIES + " : show the list of policies for the APP  (App_path argument is required) \n"
