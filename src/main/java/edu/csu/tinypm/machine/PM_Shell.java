@@ -30,7 +30,7 @@ public void processUserInput() throws Exception
     { //shell loop starts
 
         showPrompt();
-        x = p.parse_and_execute_Command(keyboard.nextLine());
+        x = p.parse_and_execute_Command(keyboard.nextLine().trim());
         System.out.println(p.getERROR_MESSAGE());
         System.out.println(p.getResultOutput());
         if (x == Parser.INDICATE_IMMEDIATE_EXIT_STATUS) break;        

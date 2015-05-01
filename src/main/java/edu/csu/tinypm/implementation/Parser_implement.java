@@ -77,7 +77,7 @@ public class Parser_implement implements Parser
     
     private void refillResultOutput(String r) 
     {
-        if (r == null || r.isEmpty()) return;
+        if (r == null) return;
         this.ResultOutput.clear();
         this.ResultOutput.add(r);
     }
@@ -125,15 +125,25 @@ public class Parser_implement implements Parser
     @Override
     public int parse_and_execute_Command(String e)
     {
-        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+        
         if (this.obtain_DB_Handler() != 0) return -1;
+        
         this.setERROR_MESSAGE("");
+        this.refillResultOutput("");
         
         e = e.trim();
         
         if (e.isEmpty() || e.equals("")) 
         {
+            this.refillResultOutput("");
+            this.setERROR_MESSAGE("");
             return 0;
+        } else if (e.equals("\n")) 
+        {
+            this.refillResultOutput("");
+            this.setERROR_MESSAGE("");
+               
         } else if (e.indexOf(PM_COMMANDS.COUNT_APP_POLICIES.toString()) == 0) 
         {
             if (this.parse_and_execute_COUNT_APP_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
