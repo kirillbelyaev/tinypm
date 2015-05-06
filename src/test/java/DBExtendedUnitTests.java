@@ -309,6 +309,37 @@ public class DBExtendedUnitTests {
 	System.out.println("status is: " + value);
         
         
+        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.getCOLUMN_CAPS();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.remove_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.getCOLUMN_CAPS();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.getCOLUMN_CAPS();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.getCOLUMN_CAPS();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.remove_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.getCOLUMN_CAPS();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.getCOLUMN_CAPS();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        
         System.out.println("cap index within enum array is: " + r.get_CAP_index(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_KILL.toString()) );
 
         System.out.println("Schema DDL is : " + r.produce_PCS_DB_DDL());
@@ -346,6 +377,52 @@ public class DBExtendedUnitTests {
         System.out.println("--------------------------------------");
         System.out.println("finished test_Policy_Classes_Table_create_drop... ");
     }
+    
+     
+     @Test
+     public void test_Policy_Classes_Table_CRUD_operations() throws RecordDAOException, SQLException 
+    {
+        System.out.println("--------------------------------------");
+        System.out.println("started test_Policy_Classes_Table_CRUD_operations... ");
+        
+        int output = -1;
+        boolean Out;
+        
+        Policy_Classes_Table_Record r = new Policy_Classes_Table_Record();
+        DB_Dispatcher_Extended dd = new DB_Dispatcher_Extended();
+        RecordDAOExtended_implement db = null;
+
+        db = dd.dispatch_DB_Access();
+        
+	assertNotNull(db);
+        
+        output = db.drop_Table_PCS_DB();
+	assertTrue("drop_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+        output = db.create_Table_PCS_DB();
+	assertTrue("create_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+       
+        r.setCOLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        
+       
+        r.set_Status_Active();
+        
+        
+//        output = db.count_Distinct_Apps_Table_Records_on_APP_and_PCID(r);
+//	assertNotNull(output);
+//        System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
+        
+        
+        Policy_Classes_Table_Record[] recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
+        assertTrue("read_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
+	System.out.println("read_Policy_Classes_Table_Records_On_PCID: array value is: " + recs);
+        
+        
+        
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_Policy_Classes_Table_CRUD_operations... ");
+    }    
      
     
 }

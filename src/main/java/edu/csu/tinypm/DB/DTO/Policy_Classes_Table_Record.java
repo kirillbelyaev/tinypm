@@ -24,7 +24,9 @@ public class Policy_Classes_Table_Record implements Serializable
 {   
     private String COLUMN_POLICY_CLASS_NAME = "";
     private String COLUMN_POLICY_CLASS_ID = "";
-       
+    
+    private String COLUMN_CAPS = "";
+    
     private String COLUMN_STATUS = "";
     
     private LinuxCAPPolicyContainer.LinuxCapabilities LCS[] = LinuxCAPPolicyContainer.LinuxCapabilities.values();
@@ -37,7 +39,7 @@ public Policy_Classes_Table_Record()
 	}
 
     public String getCOLUMN_POLICY_CLASS_NAME() {
-        return COLUMN_POLICY_CLASS_NAME;
+        return this.COLUMN_POLICY_CLASS_NAME;
     }
 
     public void setCOLUMN_POLICY_CLASS_NAME(String COLUMN_POLICY_CLASS_NAME) {
@@ -45,7 +47,7 @@ public Policy_Classes_Table_Record()
     }
 
     public LinuxCAPPolicyContainer.LinuxCapabilities[] get_LCS() {
-        return LCS;
+        return this.LCS;
     }
 
     public void set_LCS(LinuxCAPPolicyContainer.LinuxCapabilities[] LCS) {
@@ -77,6 +79,51 @@ public Policy_Classes_Table_Record()
         }
         
         return -1;
+    }
+    
+    
+    public String getCOLUMN_CAPS() {
+        return this.COLUMN_CAPS;
+    }
+
+    public void setCOLUMN_CAPS(String COLUMN_CAPS) {
+        if (COLUMN_CAPS != null) this.COLUMN_CAPS = COLUMN_CAPS;
+    }
+    
+    
+    public void add_CAP(String COLUMN_CAPS) {
+        if (COLUMN_CAPS != null)
+        {
+            if (this.COLUMN_CAPS.indexOf(COLUMN_CAPS) == -1)
+            {
+                this.COLUMN_CAPS = this.COLUMN_CAPS.concat(COLUMN_CAPS);
+                this.COLUMN_CAPS = this.COLUMN_CAPS.concat(" ");
+            }    
+        }    
+    }
+    
+    public void remove_CAP(String COLUMN_CAPS) {
+        if (COLUMN_CAPS != null)
+        {
+            int start = this.COLUMN_CAPS.indexOf(COLUMN_CAPS);
+            int len = COLUMN_CAPS.length();
+            String first_half = null;
+            
+            if (start != -1)
+            {
+                if (start - 1 > 0)
+                    first_half = this.COLUMN_CAPS.substring(0, start - 1);
+                else first_half = "";
+                
+                String second_half = this.COLUMN_CAPS.substring(start + len +1); 
+                
+                this.COLUMN_CAPS = "";
+                
+                this.COLUMN_CAPS = this.COLUMN_CAPS.concat(first_half);
+                this.COLUMN_CAPS = this.COLUMN_CAPS.concat(second_half);
+                
+            }
+        }    
     }
     
     

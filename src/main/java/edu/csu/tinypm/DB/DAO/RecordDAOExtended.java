@@ -15,6 +15,7 @@ without exposing details of the database.
 package edu.csu.tinypm.DB.DAO;
 
 import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
+import edu.csu.tinypm.DB.DTO.Policy_Classes_Table_Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 
 /**
@@ -54,5 +55,6 @@ public interface RecordDAOExtended extends DB_Base
     
     public int drop_Table_PCS_DB() throws RecordDAOException;
     
+    public Policy_Classes_Table_Record[] read_Policy_Classes_Table_Records_On_PCID(Policy_Classes_Table_Record r) throws RecordDAOException;
      
 }

@@ -38,7 +38,7 @@ public interface Policy_Classes_Table
     
     final String COLUMN_POLICY_CLASS_NAME = "class_name";
     final String COLUMN_POLICY_CLASS_ID = "PCID";
-       
+    final String COLUMN_CAPS = "capabilities";  
     final String COLUMN_STATUS = "status";
     
     LinuxCAPPolicyContainer.LinuxCapabilities LCS[] = LinuxCAPPolicyContainer.LinuxCapabilities.values();

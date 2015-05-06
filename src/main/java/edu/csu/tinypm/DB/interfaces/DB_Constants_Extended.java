@@ -33,6 +33,8 @@ public interface DB_Constants_Extended
         
         final String COUNT = "COUNT";
         
+        final String ALL = " * ";
+        
         /* new API methods to support the policy class abstraction */
         
         /* apps table operations */
@@ -60,14 +62,17 @@ public interface DB_Constants_Extended
         
         /* policy classes table operations */
         
-        Policy_Classes_Table_Record pctr = new Policy_Classes_Table_Record();
+        //Policy_Classes_Table_Record pctr = new Policy_Classes_Table_Record();
         
-        final String PCS_DB_SCHEMA = pctr.produce_PCS_DB_DDL();
+        //final String PCS_DB_SCHEMA = pctr.produce_PCS_DB_DDL();
+        
+        final String PCS_DB_SCHEMA = "( " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + ", " + Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME + ", " + Policy_Classes_Table.COLUMN_CAPS + ", " + Policy_Classes_Table.COLUMN_STATUS + ") ";
         
         final String create_PCS_DB_SQL = "create table " + Policy_Classes_Table.PCS_DB_TABLE_NAME + PCS_DB_SCHEMA;
         
         final String drop_PCS_DB_SQL = "drop table if exists " + Policy_Classes_Table.PCS_DB_TABLE_NAME;
         
+        final String SELECT_FROM_PCS_DB_ON_PCID_SQL = "select " + ALL + " from " + Policy_Classes_Table.PCS_DB_TABLE_NAME  + " where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
         
        
         
