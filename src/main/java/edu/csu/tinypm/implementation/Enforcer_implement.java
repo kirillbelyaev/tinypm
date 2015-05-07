@@ -106,12 +106,14 @@ public class Enforcer_implement implements Enforcer
 
         caps = caps.substring(0, (caps.length()-1)); //remove the last , character
         caps = caps.concat(ep);
-        System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
+        
+        //System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
 
         command.add(caps);
         command.add(pl.get(pl.size()-1));
         this.cmd = command;
-        System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
+        
+        //System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
     }
     
     if (pl.size() == 1) /* no cap argument present - only app string is returned by return_modified_app_policies()
@@ -120,12 +122,13 @@ public class Enforcer_implement implements Enforcer
         caps = caps.concat(all);
         caps = caps.concat(rep);
         
-        System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
+        //System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
         
         command.add(caps);
         command.add(pl.get(pl.size()-1));
         this.cmd = command;
-        System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
+        
+        //System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
         
     }    
 } 
