@@ -12,8 +12,6 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 
 package edu.csu.tinypm.DB.interfaces;
 
-import edu.csu.tinypm.DB.DTO.Policy_Classes_Table_Record;
-
 /**
  *
  * @author I829920
@@ -73,6 +71,8 @@ public interface DB_Constants_Extended
         final String drop_PCS_DB_SQL = "drop table if exists " + Policy_Classes_Table.PCS_DB_TABLE_NAME;
         
         final String SELECT_FROM_PCS_DB_ON_PCID_SQL = "select " + ALL + " from " + Policy_Classes_Table.PCS_DB_TABLE_NAME  + " where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
+        
+        final String SELECT_FROM_PCS_DB_COUNT_POLICY_CLASSES_ON_PCID_SQL = "select distinct count(*) as " + COUNT + " from " + Policy_Classes_Table.PCS_DB_TABLE_NAME;
         
        
         

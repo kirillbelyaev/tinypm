@@ -555,6 +555,47 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     rows.toArray(array);
                     return array;
     }
+    
+    
+    @Override
+     public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
+    {
+            if (this.conn == null) return -1;
+            if (r == null) return -1;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            int count = -1;
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_PCS_DB_COUNT_POLICY_CLASSES_ON_PCID_SQL);
+
+                    int index = 1;
+
+                    //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    //rs = state.executeQuery(statement);
+
+                    while (rs.next()) 
+                    {
+                            if (Policy_Classes_Table.PCS_DB_TABLE_NAME.equals(Policy_Classes_Table.PCS_DB_TABLE_NAME))
+                            {
+                                    count = rs.getInt(DB_Constants_Extended.COUNT);
+                            } else return -1;
+                    }
+                        rs.close();
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    return count;
+    }
+    
       
     
 }

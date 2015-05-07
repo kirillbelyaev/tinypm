@@ -52,7 +52,7 @@ public class DBExtendedUnitTests {
     @Test
      public void small_tests() 
      {
-         
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started small_tests... ");
         
@@ -69,7 +69,7 @@ public class DBExtendedUnitTests {
 //            else System.out.print(LCS[i] + " ) ");    
         
     
-        
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished small_tests... ");
       
@@ -86,9 +86,12 @@ public class DBExtendedUnitTests {
     private final String COLUMN_STATUS = "1";
     private final String COLUMN_POLICY_CLASS_NAME = "general applications policy class";
     
+     //Policy_Classes_Table_Record
+    
     @Test
     public void test_Apps_Table_Record() 
     {
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started test_Apps_Table_Record... ");
         
@@ -131,6 +134,7 @@ public class DBExtendedUnitTests {
 	assertNotNull(value);
 	System.out.println("app container ID is: " + value);
         
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_Apps_Table_Record... ");
         
@@ -141,6 +145,7 @@ public class DBExtendedUnitTests {
     @Test
      public void test_Apps_Table_create_drop() throws RecordDAOException, SQLException 
     {
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started test_Apps_Table_create_drop... ");
 
@@ -162,6 +167,7 @@ public class DBExtendedUnitTests {
         
         db.closeConnection();
         
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_Apps_Table_create_drop... ");
     }
@@ -170,8 +176,9 @@ public class DBExtendedUnitTests {
     @Test
      public void test_Apps_Table_CRUD_operations() throws RecordDAOException, SQLException 
     {
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("started test_Apps_Table_operations... ");
+        System.out.println("started test_Apps_Table_CRUD_operations... ");
         
         int output = -1;
         boolean Out;
@@ -268,14 +275,16 @@ public class DBExtendedUnitTests {
         
         db.closeConnection();
         
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("finished test_Apps_Table_operations... ");
+        System.out.println("finished test_Apps_Table_CRUD_operations... ");
         
     }
     
      @Test
      public void test_Policy_Classes_Table_Record() 
     {
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started test_Policy_Classes_Table_Record... ");
         
@@ -344,7 +353,7 @@ public class DBExtendedUnitTests {
 
         System.out.println("Schema DDL is : " + r.produce_PCS_DB_DDL());
         
-        
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_Policy_Classes_Table_Record... ");
     }
@@ -353,6 +362,7 @@ public class DBExtendedUnitTests {
      @Test
      public void test_Policy_Classes_Table_create_drop() throws RecordDAOException, SQLException 
     {
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started test_Policy_Classes_Table_create_drop... ");
 
@@ -374,6 +384,7 @@ public class DBExtendedUnitTests {
         
         db.closeConnection();
         
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_Policy_Classes_Table_create_drop... ");
     }
@@ -382,6 +393,7 @@ public class DBExtendedUnitTests {
      @Test
      public void test_Policy_Classes_Table_CRUD_operations() throws RecordDAOException, SQLException 
     {
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started test_Policy_Classes_Table_CRUD_operations... ");
         
@@ -404,14 +416,16 @@ public class DBExtendedUnitTests {
         
        
         r.setCOLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.setCOLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
+        r.setCOLUMN_STATUS(this.COLUMN_STATUS);
         
        
         r.set_Status_Active();
         
         
-//        output = db.count_Distinct_Apps_Table_Records_on_APP_and_PCID(r);
-//	assertNotNull(output);
-//        System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
+        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID(r);
+	assertNotNull(output);
+        System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
         
         Policy_Classes_Table_Record[] recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
@@ -419,7 +433,7 @@ public class DBExtendedUnitTests {
 	System.out.println("read_Policy_Classes_Table_Records_On_PCID: array value is: " + recs);
         
         
-        
+        System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_Policy_Classes_Table_CRUD_operations... ");
     }    
