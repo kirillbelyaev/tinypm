@@ -422,6 +422,10 @@ public class DBExtendedUnitTests {
        
         r.set_Status_Active();
         
+        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        
+        
         
         output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID(r);
 	assertNotNull(output);
@@ -442,7 +446,25 @@ public class DBExtendedUnitTests {
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
+        recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
+        assertTrue("read_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
+	
+        if (recs != null)
+        {    
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   PCID is: " + recs[0].getCOLUMN_POLICY_CLASS_ID());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   class name is: " + recs[0].getCOLUMN_POLICY_CLASS_NAME());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   CAPS are: " + recs[0].getCOLUMN_CAPS());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   status is: " + recs[0].getCOLUMN_STATUS());
+        }
         
+        
+        output = db.delete_Policy_Classes_Table_Records_On_PCID(r);
+	assertTrue("delete_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("delete_Policy_Classes_Table_Records_On_PCID: value is: " + output);
+        
+        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID(r);
+	assertNotNull(output);
+        System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
         
         System.out.println("\n"); 

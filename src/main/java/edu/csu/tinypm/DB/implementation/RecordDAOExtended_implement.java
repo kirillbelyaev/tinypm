@@ -714,4 +714,32 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     }
     
     
+    @Override
+    public int delete_Policy_Classes_Table_Records_On_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
+    {
+            if (r == null) return -1;
+             if (this.conn == null) return -1;
+
+            String statement = null;
+            PreparedStatement ps = null;
+            
+            try 
+            {	
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.DELETE_FROM_PCS_DB_ON_PCID_SQL);
+
+                    int index = 1;
+
+                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    ps.executeUpdate();
+                    this.conn.setAutoCommit(true);
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    return 0;
+    }
+
+    
+    
 }
