@@ -59,5 +59,7 @@ public interface RecordDAOExtended extends DB_Base
     
     public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID(Policy_Classes_Table_Record r) throws RecordDAOException;
     
+    public int write_Policy_Classes_Table_Record(Policy_Classes_Table_Record r) throws RecordDAOException;
+    
      
 }

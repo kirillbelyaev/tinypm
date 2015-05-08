@@ -433,6 +433,18 @@ public class DBExtendedUnitTests {
 	System.out.println("read_Policy_Classes_Table_Records_On_PCID: array value is: " + recs);
         
         
+        output = db.write_Policy_Classes_Table_Record(r);
+        assertNotNull(output);
+        System.out.println("write_Policy_Classes_Table_Record: value is: " + output);
+        
+        
+        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID(r);
+	assertNotNull(output);
+        System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
+        
+        
+        
+        
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_Policy_Classes_Table_CRUD_operations... ");

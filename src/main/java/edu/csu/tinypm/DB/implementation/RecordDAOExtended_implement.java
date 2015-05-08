@@ -124,7 +124,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
             {
                     if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
                     {
-                            ps = this.conn.prepareStatement(DB_Constants_Extended.INSERT_APPS_DB_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.INSERT_INTO_APPS_DB_SQL);
 
                             int index = 1;
 
@@ -376,7 +376,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     
     
     @Override
-     public Apps_Table_Record[] read_Apps_Table_Records_On_All_APPs() throws RecordDAOException //table name, uid
+    public Apps_Table_Record[] read_Apps_Table_Records_On_All_APPs() throws RecordDAOException //table name, uid
     {
             if (this.conn == null) return null;
 
@@ -424,7 +424,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
      
      
     @Override
-      public Integer count_Distinct_Apps_Table_Records_on_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException
+    public Integer count_Distinct_Apps_Table_Records_on_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException
     {
             if (this.conn == null) return -1;
             if (r == null) return -1;
@@ -463,10 +463,10 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     }
     
     
-      /* policy classes table operations */
+    /* policy classes table operations */
     
     @Override
-       public int create_Table_PCS_DB() throws RecordDAOException
+    public int create_Table_PCS_DB() throws RecordDAOException
     {
             Statement state = null;
             
@@ -484,7 +484,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
        
        
     @Override
-       public int drop_Table_PCS_DB() throws RecordDAOException
+    public int drop_Table_PCS_DB() throws RecordDAOException
     {
             Statement state = null;
             
@@ -513,7 +513,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             try 
             {
-                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_PCS_DB_ON_PCID_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_ALL_FROM_PCS_DB_ON_PCID_SQL);
 
                     int index = 1;
 
@@ -558,7 +558,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     
     
     @Override
-     public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
+    public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
     {
             if (this.conn == null) return -1;
             if (r == null) return -1;
@@ -596,6 +596,122 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     return count;
     }
     
-      
+    private int check_If_Policy_Classes_Table_Record_Exists(Policy_Classes_Table_Record r) throws RecordDAOException //on PCID
+    {
+            if (r == null) return -1; //indicate error
+            if (this.conn == null) return -1;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            try 
+            {	
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_PCS_DB_ON_PCID_SQL);
+
+                    int index = 1;
+
+                    
+                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    if (rs.next())
+                    {
+                            rs.close();
+                            rs = null;
+                            //System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
+                            return 1; //entry exists
+                    }	
+
+                    rs.close();
+                    rs = null;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }    
+
+                    return 0; //no entry exists
+    }
+    
+    private int insert_Policy_Classes_Table_Record(Policy_Classes_Table_Record r) throws RecordDAOException
+    {
+            if (r == null) return -1;
+            if (this.conn == null) return -1;
+
+            PreparedStatement ps = null;
+
+            try 
+            {
+                    if (Policy_Classes_Table.PCS_DB_TABLE_NAME.equals(Policy_Classes_Table.PCS_DB_TABLE_NAME))
+                    {
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.INSERT_INTO_PCS_DB_SQL);
+
+                            int index = 1;
+
+                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_NAME());
+                            ps.setString(index++, r.getCOLUMN_CAPS());
+                            ps.setString(index++, r.getCOLUMN_STATUS());
+
+                            ps.addBatch();
+                            this.conn.setAutoCommit(false);
+                            ps.executeBatch();
+                            this.conn.setAutoCommit(true);
+
+                    } else return -1;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    return 0;
+    }
+    
+    
+    private int update_Policy_Classes_Table_Record_on_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
+    {
+            if (r == null) return -1;
+            if (this.conn == null) return -1;
+
+            PreparedStatement ps = null;
+
+            try 
+            {
+                    if (Policy_Classes_Table.PCS_DB_TABLE_NAME.equals(Policy_Classes_Table.PCS_DB_TABLE_NAME))
+                    {	
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_PCS_DB_ON_PCID_SQL);
+
+                            int index = 1;
+                            
+                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                            
+                            this.conn.setAutoCommit(false);
+                            ps.executeUpdate();
+                            this.conn.setAutoCommit(true);
+                    } else return -1;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    return 0;
+    }
+    
+    
+    @Override
+    public int write_Policy_Classes_Table_Record(Policy_Classes_Table_Record r) throws RecordDAOException
+    {
+            if (r == null) return -1;
+
+            try
+            {	
+            if (this.check_If_Policy_Classes_Table_Record_Exists(r) == 0) //no record exists
+            {	
+                    if (this.insert_Policy_Classes_Table_Record(r) != 0) return -1;
+
+            } else {//if record exists - just update it	
+                    if (this.update_Policy_Classes_Table_Record_on_PCID(r) != 0) return -2;
+            }
+
+            } catch (Exception e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+                    return 0;
+    }
+    
     
 }

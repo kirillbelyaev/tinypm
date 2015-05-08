@@ -53,7 +53,7 @@ public interface DB_Constants_Extended
         
         final String UPDATE_APPS_DB_ON_APP_AND_PCID_SQL = "update " + Apps_Table.APPS_DB_TABLE_NAME + " set " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ? "  + "where " + Apps_Table.COLUMN_APP_PATH + " = ? and " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ?";
         
-        final String INSERT_APPS_DB_SQL = "insert into " + Apps_Table.APPS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
+        final String INSERT_INTO_APPS_DB_SQL = "insert into " + Apps_Table.APPS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
         
         final String DELETE_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "delete from " + Apps_Table.APPS_DB_TABLE_NAME + " where " + Apps_Table.COLUMN_APP_PATH + " = ? and " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ?";
 
@@ -70,10 +70,24 @@ public interface DB_Constants_Extended
         
         final String drop_PCS_DB_SQL = "drop table if exists " + Policy_Classes_Table.PCS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_PCS_DB_ON_PCID_SQL = "select " + ALL + " from " + Policy_Classes_Table.PCS_DB_TABLE_NAME  + " where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
+        final String SELECT_ALL_FROM_PCS_DB_ON_PCID_SQL = "select " + ALL + " from " + Policy_Classes_Table.PCS_DB_TABLE_NAME  + " where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
         
         final String SELECT_FROM_PCS_DB_COUNT_POLICY_CLASSES_ON_PCID_SQL = "select distinct count(*) as " + COUNT + " from " + Policy_Classes_Table.PCS_DB_TABLE_NAME;
         
-       
+        final String SELECT_FROM_PCS_DB_ON_PCID_SQL = "select " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " from " + Policy_Classes_Table.PCS_DB_TABLE_NAME  + " where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
+        
+        final String INSERT_INTO_PCS_DB_SQL = "insert into " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
+        
+        final String UPDATE_PCS_DB_ON_PCID_SQL = "update " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " set " + Policy_Classes_Table.COLUMN_CAPS + " = ? "  + "where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
 }
