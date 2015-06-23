@@ -10,6 +10,7 @@ Data transfer object (DTO)[1][2] is an object that carries data between
 processes. The motivation for its use has to do with the fact that 
 communication between processes is usually done resorting to remote interfaces.
  */
+
 package edu.csu.tinypm.DB.DTO;
 
 import edu.csu.tinypm.DB.interfaces.Policy_Classes_Table;
@@ -20,6 +21,7 @@ import java.io.Serializable;
  *
  * @author kirill
  */
+
 public class Policy_Classes_Table_Record implements Serializable
 {   
     private String COLUMN_POLICY_CLASS_NAME = "";
