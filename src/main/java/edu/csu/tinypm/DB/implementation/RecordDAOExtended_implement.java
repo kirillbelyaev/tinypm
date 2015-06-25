@@ -527,7 +527,62 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     while (rs.next()) 
                     {
-                            if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
+                            if (Policy_Classes_Table.PCS_DB_TABLE_NAME.equals(Policy_Classes_Table.PCS_DB_TABLE_NAME))
+                            {
+                                    Policy_Classes_Table_Record rec = new Policy_Classes_Table_Record();
+                                    
+                                    rec.setCOLUMN_POLICY_CLASS_ID(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_ID));
+                                    
+                                    rec.setCOLUMN_POLICY_CLASS_NAME(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME));
+                                    
+                                    rec.setCOLUMN_CAPS(rs.getString(Policy_Classes_Table.COLUMN_CAPS));
+                                    
+                                    rec.setCOLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
+
+                                    rows.add(rec);
+                                    
+                                    rec = null;	
+                            } else return null;
+                    }
+                        rs.close();
+                        rs = null;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    if (rows.isEmpty()) return null;
+
+                    Policy_Classes_Table_Record [] array = new Policy_Classes_Table_Record [ rows.size() ];
+                    rows.toArray(array);
+                    return array;
+    }
+    
+    
+    @Override
+    public Policy_Classes_Table_Record[] read_Policy_Classes_Table_Records_On_All_Classes(Policy_Classes_Table_Record r) throws RecordDAOException       
+    {
+            if (r == null) return null;
+            if (this.conn == null) return null;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ArrayList <Policy_Classes_Table_Record> rows = new ArrayList<Policy_Classes_Table_Record>();
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_ALL_FROM_PCS_DB_SQL);
+                    
+                    int index = 1;
+
+                    //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    while (rs.next()) 
+                    {
+                            if (Policy_Classes_Table.PCS_DB_TABLE_NAME.equals(Policy_Classes_Table.PCS_DB_TABLE_NAME))
                             {
                                     Policy_Classes_Table_Record rec = new Policy_Classes_Table_Record();
                                     

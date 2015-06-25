@@ -458,6 +458,17 @@ public class DBExtendedUnitTests {
         }
         
         
+        recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_All_Classes(r);
+        assertTrue("read_Policy_Classes_Table_Records_On_All_Classes: Reply has unexpected return:", Out = recs == null | recs != null);
+	
+        if (recs != null)
+        {    
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   PCID is: " + recs[0].getCOLUMN_POLICY_CLASS_ID());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   class name is: " + recs[0].getCOLUMN_POLICY_CLASS_NAME());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   CAPS are: " + recs[0].getCOLUMN_CAPS());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   status is: " + recs[0].getCOLUMN_STATUS());
+        }
+        
         output = db.delete_Policy_Classes_Table_Records_On_PCID(r);
 	assertTrue("delete_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("delete_Policy_Classes_Table_Records_On_PCID: value is: " + output);

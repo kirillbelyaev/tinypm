@@ -53,6 +53,7 @@ public class ParserExtendedTests {
         
         String CMD = "";
         String CMD_0 = "COUNT_POLICY_CLASSES";
+        
         String CMD_1 = "COUNT_APP_POLICIES /bin/ping";
         String CMD_2 = "SHOW_APP_POLICIES /bin/ping";
         String CMD_3 = "ADD_APP_POLICY CAP_KILL  /bin/ping";
@@ -61,6 +62,9 @@ public class ParserExtendedTests {
         String CMD_6 = "HELP";
         String CMD_7 = "EXIT";
         String CMD_8 = "SHOW_APPS";
+        
+        String CMD_9 = "SHOW_POLICY_CLASSES";
+        
         
         Parser_Extended_implement p = new Parser_Extended_implement();
         
@@ -72,6 +76,11 @@ public class ParserExtendedTests {
         
         
         output = p.parse_and_execute_Command(CMD_0);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        
+        output = p.parse_and_execute_Command(CMD_9);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.getERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.getResultOutput());

@@ -11,6 +11,7 @@ import edu.csu.tinypm.DB.DTO.Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 import edu.csu.tinypm.DB.implementation.DB_Dispatcher_Extended;
 import edu.csu.tinypm.DB.implementation.RecordDAOExtended_implement;
+import edu.csu.tinypm.DB.interfaces.DB_Constants_Extended;
 
 import edu.csu.tinypm.interfaces.Parser_Extended;
 import java.sql.SQLException;
@@ -103,6 +104,15 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
+    private void refillResultOutput_with_POLICY_CLASS_NAME(Policy_Classes_Table_Record[] r) 
+    {
+        if (r == null) return;
+        this.ResultOutput.clear();
+        for (int i=0; i < r.length; i++)
+            this.ResultOutput.add(r[i].getCOLUMN_POLICY_CLASS_NAME());
+    }
+    
+    
     private int obtain_DB_Handler()
     {
         if (this.db == null) //minimize the number of calls - do it only once
@@ -154,13 +164,13 @@ public class Parser_Extended_implement implements Parser_Extended
                 return -1;
             }    
                
-//        } else if (e.indexOf(PM_COMMANDS.COUNT_APP_POLICIES.toString()) == 0) 
-//        {
-//            if (this.parse_and_execute_COUNT_APP_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
-//            {
-//                this.setERROR_MESSAGE(PM_ERRORS.COUNT_APP_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-//                return -1;
-//            }    
+        } else if (e.indexOf(PM_COMMANDS.SHOW_POLICY_CLASSES.toString()) == 0) 
+        {
+            if (this.parse_and_execute_SHOW_POLICY_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                  this.setERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                return -1;
+            }    
             
 //        } else if (e.indexOf(PM_COMMANDS.SHOW_APP_POLICIES.toString()) == 0) 
 //        {
@@ -552,7 +562,34 @@ public class Parser_Extended_implement implements Parser_Extended
     }        
     
     
-    
+    private Integer parse_and_execute_SHOW_POLICY_CLASSES(String e)
+    {
+        if (e == null || e.isEmpty()) return Parser_Extended.INDICATE_INVALID_ARGUMENT_VALUE;
+        Policy_Classes_Table_Record[] ra = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 1)
+        { 
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    ra = this.db.read_Policy_Classes_Table_Records_On_All_Classes(pcrec);
+                    if (ra != null)
+                    {    
+                        this.setResultSize(ra.length);
+                        this.refillResultOutput_with_POLICY_CLASS_NAME(ra);
+                        return 0;
+                    } else return DB_Constants_Extended.EMPTY_RESULT;
+                }    
+            } catch (RecordDAOException ex) 
+            {
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return -1;
+    }
     
     
     
