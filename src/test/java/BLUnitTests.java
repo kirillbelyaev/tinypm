@@ -5,7 +5,7 @@ Kirill Belyaev. Copyright (c) @2015 Colorado State University
 Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
-import edu.csu.tinypm.implementation.Parser_Extended_implement;
+import edu.csu.tinypm.implementation.Parser_implement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +17,9 @@ import static org.junit.Assert.*;
  *
  * @author kirill
  */
-public class ParserExtendedTests {
+public class BLUnitTests {
     
-    public ParserExtendedTests() {
+    public BLUnitTests() {
     }
     
     @BeforeClass
@@ -52,8 +52,7 @@ public class ParserExtendedTests {
         boolean Out;
         
         String CMD = "";
-        String CMD_0 = "COUNT_POLICY_CLASSES";
-        
+        String CMD_0 = "COUNT_APP_POLICIES";
         String CMD_1 = "COUNT_APP_POLICIES /bin/ping";
         String CMD_2 = "SHOW_APP_POLICIES /bin/ping";
         String CMD_3 = "ADD_APP_POLICY CAP_KILL  /bin/ping";
@@ -63,10 +62,7 @@ public class ParserExtendedTests {
         String CMD_7 = "EXIT";
         String CMD_8 = "SHOW_APPS";
         
-        String CMD_9 = "SHOW_POLICY_CLASSES";
-        
-        
-        Parser_Extended_implement p = new Parser_Extended_implement();
+        Parser_implement p = new Parser_implement();
         
         output = p.parse_and_execute_Command(CMD); 
 	//assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
@@ -76,11 +72,6 @@ public class ParserExtendedTests {
         
         
         output = p.parse_and_execute_Command(CMD_0);
-        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
-        
-        output = p.parse_and_execute_Command(CMD_9);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.getERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.getResultOutput());
