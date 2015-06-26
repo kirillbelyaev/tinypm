@@ -51,7 +51,8 @@ public interface Parser_Extended
         
          /* add new commands */
         COUNT_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
-        SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE
+        SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
+        CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2
         
         
     }
@@ -68,7 +69,8 @@ public interface Parser_Extended
           
           /* add new commands */
           + PM_COMMANDS.COUNT_POLICY_CLASSES + " : show the number of policy classes \n" 
-          + PM_COMMANDS.SHOW_POLICY_CLASSES + " : show the list of policy classes \n";
+          + PM_COMMANDS.SHOW_POLICY_CLASSES + " : show the list of policy classes \n"
+          + PM_COMMANDS.CREATE_POLICY_CLASS + " : create policy class (required arguments: policy ID (integer), policy_class_name) \n";  
     
     
     public int parse_and_execute_Command(String e);

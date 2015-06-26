@@ -736,6 +736,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                             int index = 1;
                             
+                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_NAME());
+                            
                             ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
                             
                             this.conn.setAutoCommit(false);

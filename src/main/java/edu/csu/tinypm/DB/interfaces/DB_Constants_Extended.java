@@ -80,7 +80,10 @@ public interface DB_Constants_Extended
         
         final String INSERT_INTO_PCS_DB_SQL = "insert into " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
         
-        final String UPDATE_PCS_DB_ON_PCID_SQL = "update " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " set " + Policy_Classes_Table.COLUMN_CAPS + " = ? "  + "where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
+        //final String UPDATE_PCS_DB_ON_PCID_SQL = "update " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " set " + Policy_Classes_Table.COLUMN_CAPS + " = ? "  + "where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
+        
+        final String UPDATE_PCS_DB_ON_PCID_SQL = "update " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " set " + Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME + " = ? "  + "where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
+        
         
         final String DELETE_FROM_PCS_DB_ON_PCID_SQL = "delete from " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
 

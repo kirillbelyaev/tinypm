@@ -170,6 +170,14 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                   this.setERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return -1;
+            }
+        
+        }    else if (e.indexOf(PM_COMMANDS.CREATE_POLICY_CLASS.toString()) == 0) 
+        {
+            if (this.parse_and_execute_CREATE_POLICY_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.setERROR_MESSAGE(PM_ERRORS.CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                return -1;
             }    
             
 //        } else if (e.indexOf(PM_COMMANDS.SHOW_APP_POLICIES.toString()) == 0) 
@@ -581,6 +589,46 @@ public class Parser_Extended_implement implements Parser_Extended
                         this.refillResultOutput_with_POLICY_CLASS_NAME(ra);
                         return 0;
                     } else return DB_Constants_Extended.EMPTY_RESULT;
+                }    
+            } catch (RecordDAOException ex) 
+            {
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return -1;
+    }
+    
+    
+    private Integer parse_and_execute_CREATE_POLICY_CLASS(String e)
+    {
+        if (e == null || e.isEmpty()) return Parser_Extended.INDICATE_INVALID_ARGUMENT_VALUE;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 3)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 1)
+                {    
+                    this.pcrec.setCOLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    this.pcrec.setCOLUMN_POLICY_CLASS_NAME(this.commandParameters.get(1));
+                }    
+                else return -1;
+            } else return -1;
+            
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != 0) 
+                        return -1;
+                    else
+                    {    
+                        this.setResultSize(0);
+                        this.refillResultOutput("");
+                        return 0;
+                    }
                 }    
             } catch (RecordDAOException ex) 
             {
