@@ -64,7 +64,7 @@ public interface DB_Constants_Extended
         
         //final String PCS_DB_SCHEMA = pctr.produce_PCS_DB_DDL();
         
-        final String PCS_DB_SCHEMA = "( " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + ", " + Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME + ", " + Policy_Classes_Table.COLUMN_CAPS + ", " + Policy_Classes_Table.COLUMN_STATUS + ") ";
+        final String PCS_DB_SCHEMA = "( " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + ", " + Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME + ", " + Policy_Classes_Table.COLUMN_POLICY_CLASS_POLICIES + ", " + Policy_Classes_Table.COLUMN_STATUS + ") ";
         
         final String create_PCS_DB_SQL = "create table " + Policy_Classes_Table.PCS_DB_TABLE_NAME + PCS_DB_SCHEMA;
         
@@ -80,7 +80,7 @@ public interface DB_Constants_Extended
         
         final String INSERT_INTO_PCS_DB_SQL = "insert into " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
         
-        //final String UPDATE_PCS_DB_ON_PCID_SQL = "update " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " set " + Policy_Classes_Table.COLUMN_CAPS + " = ? "  + "where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String UPDATE_PCS_DB_ON_PCID_AND_CAPS_SQL = "update " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " set " + Policy_Classes_Table.COLUMN_POLICY_CLASS_POLICIES + " = ? "  + "where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
         
         final String UPDATE_PCS_DB_ON_PCID_SQL = "update " + Policy_Classes_Table.PCS_DB_TABLE_NAME + " set " + Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME + " = ? "  + "where " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + " = ?";
         

@@ -13,6 +13,7 @@ import edu.csu.tinypm.DB.implementation.DB_Dispatcher_Extended;
 import edu.csu.tinypm.DB.implementation.RecordDAOExtended_implement;
 import edu.csu.tinypm.DB.interfaces.DB_Constants_Extended;
 
+
 import edu.csu.tinypm.interfaces.Parser_Extended;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class Parser_Extended_implement implements Parser_Extended
     
     private StringTokenizer tokenizer = null;
     private ArrayList <String> commandParameters = null;
-    private Record rec = null;
+
     private Policy_Classes_Table_Record pcrec = null;
     private DB_Dispatcher_Extended dd = null;
     private RecordDAOExtended_implement db = null;
@@ -54,7 +55,7 @@ public class Parser_Extended_implement implements Parser_Extended
     }
 
     private void setERROR_MESSAGE(String m) {
-        this.ERROR_MESSAGE = m;
+        if (m != null) this.ERROR_MESSAGE = m;
     }
     
     private int getResultSize() 
@@ -75,7 +76,7 @@ public class Parser_Extended_implement implements Parser_Extended
     
     private void setResultOutput(ArrayList r) 
     {
-        this.ResultOutput = r;
+        if (r != null) this.ResultOutput = r;
     }
     
     private void refillResultOutput(String r) 
@@ -108,8 +109,8 @@ public class Parser_Extended_implement implements Parser_Extended
     {
         if (r == null) return;
         this.ResultOutput.clear();
-        for (int i=0; i < r.length; i++)
-            this.ResultOutput.add(r[i].getCOLUMN_POLICY_CLASS_NAME());
+        for (int i = 0; i < r.length; i++)
+            this.ResultOutput.add(r[i].get_COLUMN_POLICY_CLASS_NAME());
     }
     
     
@@ -139,7 +140,7 @@ public class Parser_Extended_implement implements Parser_Extended
     {
         if (e == null) return Parser_Extended.INDICATE_INVALID_ARGUMENT_VALUE;
         
-        if (this.obtain_DB_Handler() != 0) return -1;
+        if (this.obtain_DB_Handler() != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         this.setERROR_MESSAGE("");
         this.refillResultOutput("");
@@ -150,35 +151,43 @@ public class Parser_Extended_implement implements Parser_Extended
         {
             this.refillResultOutput("");
             this.setERROR_MESSAGE("");
-            return 0;
+            return INDICATE_EXECUTION_SUCCESS;
         } else if (e.equals("\n")) 
         {
             this.refillResultOutput("");
             this.setERROR_MESSAGE("");
             
-        } else if (e.indexOf(PM_COMMANDS.COUNT_POLICY_CLASSES.toString()) == 0) 
+        } else if (e.indexOf(PM_COMMANDS.COUNT_POLICY_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_COUNT_POLICY_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
                 this.setERROR_MESSAGE(PM_ERRORS.COUNT_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                return -1;
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
                
-        } else if (e.indexOf(PM_COMMANDS.SHOW_POLICY_CLASSES.toString()) == 0) 
+        } else if (e.indexOf(PM_COMMANDS.SHOW_POLICY_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_SHOW_POLICY_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
                   this.setERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                return -1;
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
         
-        }    else if (e.indexOf(PM_COMMANDS.CREATE_POLICY_CLASS.toString()) == 0) 
+        }    else if (e.indexOf(PM_COMMANDS.CREATE_POLICY_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_CREATE_POLICY_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
                 this.setERROR_MESSAGE(PM_ERRORS.CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                return -1;
-            }    
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } 
+            
+        }    else if (e.indexOf(PM_COMMANDS.ADD_APP_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_ADD_APP_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.setERROR_MESSAGE(PM_ERRORS.ADD_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }
             
 //        } else if (e.indexOf(PM_COMMANDS.SHOW_APP_POLICIES.toString()) == 0) 
 //        {
@@ -223,7 +232,7 @@ public class Parser_Extended_implement implements Parser_Extended
             this.parse_and_execute_HELP(e);
         }    
         
-        return 0;
+        return INDICATE_EXECUTION_SUCCESS;
     }
     
 //    private Integer parse_and_execute_COUNT_APP_POLICIES(String e)
@@ -611,11 +620,149 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                 if (this.commandParameters.size() > 1)
                 {    
-                    this.pcrec.setCOLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
-                    this.pcrec.setCOLUMN_POLICY_CLASS_NAME(this.commandParameters.get(1));
+                    this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    this.pcrec.set_COLUMN_POLICY_CLASS_NAME(this.commandParameters.get(1));
+                    this.pcrec.set_UPDATE_COLUMN_to_POLICY_CLASS_NAME(); /* indicate the update column */
                 }    
-                else return -1;
-            } else return -1;
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS) 
+                        return -1;
+                    else
+                    {    
+                        this.setResultSize(0);
+                        this.refillResultOutput("");
+                        return INDICATE_EXECUTION_SUCCESS;
+                    }
+                }    
+            } catch (RecordDAOException ex) 
+            {
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
+    
+    private ArrayList<String> get_POLICY_CLASS_POLICIES(String pcid)
+    {
+        Policy_Classes_Table_Record pcr [] = null;
+        ArrayList<String> caps = null;
+        //String caps = null;
+
+        if (pcid == null || pcid.isEmpty()) return null;
+
+        this.pcrec.set_COLUMN_POLICY_CLASS_ID(pcid.trim());
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                pcr = this.db.read_Policy_Classes_Table_Records_On_PCID(this.pcrec);  
+            }    
+        } catch (RecordDAOException ex) 
+        {
+            Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (pcr != null)
+        {    
+            caps = new ArrayList<String>();
+            for (int i=0; i < pcr.length; i++)
+                caps.add(pcr[i].get_COLUMN_POLICY_CLASS_POLICIES());
+        }
+        
+        return caps;
+    }
+    
+    private int check_if_PolicyExists (String pcid, String p)
+    {
+        if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return -1;
+        
+        ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
+        
+        if (caps != null)
+            for (int i = 0; i < caps.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (caps.get(i).contains(p.trim())) return 0;
+        
+        return -1;
+    }
+    
+    
+    private ArrayList<String>  return_modified_Policy_Class_Policies (String pcid, String p, int mode)
+    {
+        if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return null;
+        ArrayList<String> caps = null;
+        
+        if (mode == 1)//add policy
+        {    
+            if (this.check_if_PolicyExists(pcid.trim(), p.trim()) == 0) return null;
+            caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
+            if (caps != null)
+            {    
+                caps.add(p.trim());
+                caps.add(pcid.trim());//add the application entry last
+            }    
+            return caps;
+            
+        }
+        
+         if (mode == -1)//remove policy
+        {    
+            if (this.check_if_PolicyExists(pcid.trim(), p.trim()) != 0) return null;
+            caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
+            if (caps != null) 
+            {    
+                caps.remove(p.trim());
+                caps.add(pcid.trim());//add the application entry last
+            }    
+            return caps;
+            
+        }
+    
+        return caps;
+    }
+    
+    
+    private Integer parse_and_execute_ADD_APP_POLICY(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 3)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 1)
+                {    
+                    this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(this.commandParameters.get(1));
+                    this.pcrec.set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES(); /* indicate the update column */
+                }    
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            if (this.check_if_PolicyExists(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES()) == INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
+            
+            ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
+            
+            if (caps != null) 
+            {  /* reset the policies in pc record */  
+                this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(caps.get(0).trim()); 
+                this.pcrec.add_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* do it once more */
+            
+            } else this.pcrec.add_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* if no policies exist */   
+            
+            //this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
+            
+            //if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
             
             try 
             {//execute the db layer
@@ -630,17 +777,14 @@ public class Parser_Extended_implement implements Parser_Extended
                         return 0;
                     }
                 }    
-            } catch (RecordDAOException ex) 
+            } catch (RecordDAOException rex) 
             {
-                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
         return -1;
     }
-    
-    
-    
     
     
 }

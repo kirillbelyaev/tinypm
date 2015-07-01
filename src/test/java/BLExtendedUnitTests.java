@@ -54,14 +54,16 @@ public class BLExtendedUnitTests {
         String CMD = "";
         String CMD_0 = "COUNT_POLICY_CLASSES";
         
+        /*
         String CMD_1 = "COUNT_APP_POLICIES /bin/ping";
         String CMD_2 = "SHOW_APP_POLICIES /bin/ping";
         String CMD_3 = "ADD_APP_POLICY CAP_KILL  /bin/ping";
         String CMD_4 = "DELETE_APP_POLICY CAP_KILL  /bin/ping";
-        String CMD_5 = "ADD_APP_POLICY CAP_KILL /bin/ping";
+        String CMD_5 = "ADD_APP_POLICY 1 CAP_KILL";
         String CMD_6 = "HELP";
         String CMD_7 = "EXIT";
         String CMD_8 = "SHOW_APPS";
+        */
         
         String CMD_9 = "SHOW_POLICY_CLASSES";
         String CMD_10 = "CREATE_POLICY_CLASS";
@@ -69,6 +71,8 @@ public class BLExtendedUnitTests {
         String CMD_12 = "CREATE_POLICY_CLASS A general_applications_policy_class";
         String CMD_13 = "CREATE_POLICY_CLASS 2 general_applications_policy_class_2";
         
+        
+        String CMD_5 = "ADD_APP_POLICY 1 CAP_KILL";
         
         Parser_Extended_implement p = new Parser_Extended_implement();
         
@@ -125,9 +129,15 @@ public class BLExtendedUnitTests {
         System.out.println("error mesage is: " + p.getERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.getResultOutput());
         
+        output = p.parse_and_execute_Command(CMD_5);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        
         
         /*------*/
         
+        /*
         output = p.parse_and_execute_Command(CMD_1);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.getERROR_MESSAGE());
@@ -183,6 +193,7 @@ public class BLExtendedUnitTests {
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1 | output == Parser.INDICATE_IMMEDIATE_EXIT_STATUS);
         System.out.println("error mesage is: " + p.getERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        */        
         
     }
     

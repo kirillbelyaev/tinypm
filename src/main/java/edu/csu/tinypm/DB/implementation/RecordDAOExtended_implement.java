@@ -517,7 +517,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     int index = 1;
 
-                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
                     
                     //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
 
@@ -531,13 +531,13 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             {
                                     Policy_Classes_Table_Record rec = new Policy_Classes_Table_Record();
                                     
-                                    rec.setCOLUMN_POLICY_CLASS_ID(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_ID));
                                     
-                                    rec.setCOLUMN_POLICY_CLASS_NAME(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME));
+                                    rec.set_COLUMN_POLICY_CLASS_NAME(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME));
                                     
-                                    rec.setCOLUMN_CAPS(rs.getString(Policy_Classes_Table.COLUMN_CAPS));
+                                    rec.set_COLUMN_POLICY_CLASS_POLICIES(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_POLICIES));
                                     
-                                    rec.setCOLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     
@@ -586,13 +586,13 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             {
                                     Policy_Classes_Table_Record rec = new Policy_Classes_Table_Record();
                                     
-                                    rec.setCOLUMN_POLICY_CLASS_ID(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_ID));
                                     
-                                    rec.setCOLUMN_POLICY_CLASS_NAME(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME));
+                                    rec.set_COLUMN_POLICY_CLASS_NAME(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME));
                                     
-                                    rec.setCOLUMN_CAPS(rs.getString(Policy_Classes_Table.COLUMN_CAPS));
+                                    rec.set_COLUMN_POLICY_CLASS_POLICIES(rs.getString(Policy_Classes_Table.COLUMN_POLICY_CLASS_POLICIES));
                                     
-                                    rec.setCOLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     
@@ -666,7 +666,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     int index = 1;
 
                     
-                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -703,10 +703,10 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                             int index = 1;
 
-                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
-                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_NAME());
-                            ps.setString(index++, r.getCOLUMN_CAPS());
-                            ps.setString(index++, r.getCOLUMN_STATUS());
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_NAME());
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_POLICIES());
+                            ps.setString(index++, r.get_COLUMN_STATUS());
 
                             ps.addBatch();
                             this.conn.setAutoCommit(false);
@@ -736,9 +736,44 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                             int index = 1;
                             
-                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_NAME());
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_NAME());
                             
-                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                            
+                            /*
+                            ps.setString(index++, r.getCOLUMN_CAPS());
+                            ps.setString(index++, r.getCOLUMN_STATUS());
+                            */
+                            
+                            this.conn.setAutoCommit(false);
+                            ps.executeUpdate();
+                            this.conn.setAutoCommit(true);
+                    } else return -1;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    return 0;
+    }
+    
+    private int update_Policy_Classes_Table_Record_on_PCID_and_CAPS(Policy_Classes_Table_Record r) throws RecordDAOException
+    {
+            if (r == null) return -1;
+            if (this.conn == null) return -1;
+
+            PreparedStatement ps = null;
+
+            try 
+            {
+                    if (Policy_Classes_Table.PCS_DB_TABLE_NAME.equals(Policy_Classes_Table.PCS_DB_TABLE_NAME))
+                    {	
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_PCS_DB_ON_PCID_SQL);
+
+                            int index = 1;
+                            
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_POLICIES());
+                            
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                            
                             
                             this.conn.setAutoCommit(false);
                             ps.executeUpdate();
@@ -758,13 +793,20 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             try
             {	
-            if (this.check_If_Policy_Classes_Table_Record_Exists(r) == 0) //no record exists
-            {	
-                    if (this.insert_Policy_Classes_Table_Record(r) != 0) return -1;
+                if (this.check_If_Policy_Classes_Table_Record_Exists(r) == 0) //no record exists
+                {	
+                        if (this.insert_Policy_Classes_Table_Record(r) != 0) return -1;
 
-            } else {//if record exists - just update it	
-                    if (this.update_Policy_Classes_Table_Record_on_PCID(r) != 0) return -2;
-            }
+                } else {//if record exists - just update it	
+
+                        if (r.get_UPDATE_COLUMN().equals(Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME)) /* check if the update column
+                            is a name column */
+                            if (this.update_Policy_Classes_Table_Record_on_PCID(r) != 0) return -2;
+
+                        if (r.get_UPDATE_COLUMN().equals(Policy_Classes_Table.COLUMN_POLICY_CLASS_POLICIES)) /* check if the update column
+                            is policies column */
+                            if (this.update_Policy_Classes_Table_Record_on_PCID_and_CAPS(r) != 0) return -2;
+                }
 
             } catch (Exception e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
                     return 0;
@@ -786,7 +828,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     int index = 1;
 
-                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     ps.executeUpdate();

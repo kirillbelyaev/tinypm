@@ -17,9 +17,12 @@ import java.util.ArrayList;
  */
 public interface Parser_Extended 
 {
+    /* we use macros to indicate the general method exit codes within the parser implementation */
     public int INDICATE_IMMEDIATE_EXIT_STATUS = -5;
     public int INDICATE_ARGUMENT_MISMATCH = -2;
     public int INDICATE_INVALID_ARGUMENT_VALUE = -6;
+    public int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
+    public int INDICATE_EXECUTION_SUCCESS = 0;
     
     public enum PM_COMMANDS 
     {
@@ -64,7 +67,7 @@ public interface Parser_Extended
           + PM_COMMANDS.SHOW_APPS + " : show a list of applications stored in the tinyPM db \n"   
           + PM_COMMANDS.COUNT_APP_POLICIES + " : show the number of policies for the APP.  (App_path argument is required) \n"
           + PM_COMMANDS.SHOW_APP_POLICIES + " : show the list of policies for the APP  (App_path argument is required) \n"
-          + PM_COMMANDS.ADD_APP_POLICY + " : create a policy for the APP  (policy argument and App_path argument are required) \n"  
+          + PM_COMMANDS.ADD_APP_POLICY + " : add a policy to a policy class (required arguments: policy ID (integer), policy (capability)) \n"  
           + PM_COMMANDS.DELETE_APP_POLICY + " : delete a policy for the APP  (policy argument and App_path argument are required) \n"
           
           /* add new commands */

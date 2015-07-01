@@ -282,7 +282,7 @@ public class DBExtendedUnitTests {
     }
     
      @Test
-     public void test_Policy_Classes_Table_Record() 
+    public void test_Policy_Classes_Table_Record() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -291,60 +291,78 @@ public class DBExtendedUnitTests {
         String value = null;
         Policy_Classes_Table_Record r = new Policy_Classes_Table_Record();
         
-        r.setCOLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.setCOLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
-        r.setCOLUMN_STATUS(this.COLUMN_STATUS);
+        r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
+        r.set_COLUMN_STATUS(this.COLUMN_STATUS);
         
-        value = r.getCOLUMN_POLICY_CLASS_ID();
+        
+        value = r.get_COLUMN_POLICY_CLASS_ID();
 	assertNotNull(value);
 	System.out.println("PCID is: " + value);
         
-        value = r.getCOLUMN_POLICY_CLASS_NAME();
+        value = r.get_COLUMN_POLICY_CLASS_NAME();
 	assertNotNull(value);
 	System.out.println("PC name is: " + value);
         
-        value = r.getCOLUMN_STATUS();
+        value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
         r.set_Status_Inactive();
-	value = r.getCOLUMN_STATUS();
+	value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
         r.set_Status_Active();
-	value = r.getCOLUMN_STATUS();
+	value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
+        r.set_UPDATE_COLUMN_to_POLICY_CLASS_ID();
         
-        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.getCOLUMN_CAPS();
+        value = r.get_UPDATE_COLUMN();
+	assertNotNull(value);
+	System.out.println("update column is: " + value);
+        
+        r.set_UPDATE_COLUMN_to_POLICY_CLASS_NAME();
+        
+        value = r.get_UPDATE_COLUMN();
+	assertNotNull(value);
+	System.out.println("update column is: " + value);
+        
+        r.set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES();
+        
+        value = r.get_UPDATE_COLUMN();
+	assertNotNull(value);
+	System.out.println("update column is: " + value);
+        
+        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.getCOLUMN_CAPS();
+        r.remove_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
-        value = r.getCOLUMN_CAPS();
+        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.getCOLUMN_CAPS();
+        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
-        value = r.getCOLUMN_CAPS();
+        r.remove_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.getCOLUMN_CAPS();
+        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
@@ -391,7 +409,7 @@ public class DBExtendedUnitTests {
     
      
      @Test
-     public void test_Policy_Classes_Table_CRUD_operations() throws RecordDAOException, SQLException 
+    public void test_Policy_Classes_Table_CRUD_operations() throws RecordDAOException, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -415,15 +433,15 @@ public class DBExtendedUnitTests {
 	assertTrue("create_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
        
-        r.setCOLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.setCOLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
-        r.setCOLUMN_STATUS(this.COLUMN_STATUS);
+        r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
+        r.set_COLUMN_STATUS(this.COLUMN_STATUS);
         
        
         r.set_Status_Active();
         
-        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        r.add_CAP(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
         
         
         
@@ -451,10 +469,10 @@ public class DBExtendedUnitTests {
 	
         if (recs != null)
         {    
-            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   PCID is: " + recs[0].getCOLUMN_POLICY_CLASS_ID());
-            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   class name is: " + recs[0].getCOLUMN_POLICY_CLASS_NAME());
-            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   CAPS are: " + recs[0].getCOLUMN_CAPS());
-            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   status is: " + recs[0].getCOLUMN_STATUS());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   PCID is: " + recs[0].get_COLUMN_POLICY_CLASS_ID());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   class name is: " + recs[0].get_COLUMN_POLICY_CLASS_NAME());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   CAPS are: " + recs[0].get_COLUMN_POLICY_CLASS_POLICIES());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
         
@@ -463,10 +481,10 @@ public class DBExtendedUnitTests {
 	
         if (recs != null)
         {    
-            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   PCID is: " + recs[0].getCOLUMN_POLICY_CLASS_ID());
-            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   class name is: " + recs[0].getCOLUMN_POLICY_CLASS_NAME());
-            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   CAPS are: " + recs[0].getCOLUMN_CAPS());
-            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   status is: " + recs[0].getCOLUMN_STATUS());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   PCID is: " + recs[0].get_COLUMN_POLICY_CLASS_ID());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   class name is: " + recs[0].get_COLUMN_POLICY_CLASS_NAME());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   CAPS are: " + recs[0].get_COLUMN_POLICY_CLASS_POLICIES());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
         output = db.delete_Policy_Classes_Table_Records_On_PCID(r);

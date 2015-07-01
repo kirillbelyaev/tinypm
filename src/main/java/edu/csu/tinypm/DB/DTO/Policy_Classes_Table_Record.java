@@ -23,16 +23,19 @@ import java.io.Serializable;
  */
 
 public class Policy_Classes_Table_Record implements Serializable
-{   
-    private String COLUMN_POLICY_CLASS_NAME = "";
-    private String COLUMN_POLICY_CLASS_ID = "";
+{
+    private String COLUMN_POLICY_CLASS_ID = ""; /* primary key */
     
-    private String COLUMN_CAPS = "";
+    private String COLUMN_POLICY_CLASS_NAME = "";
+    
+    private String COLUMN_POLICY_CLASS_POLICIES = "";
     
     private String COLUMN_STATUS = "";
     
     private LinuxCAPPolicyContainer.LinuxCapabilities LCS[] = LinuxCAPPolicyContainer.LinuxCapabilities.values();
     
+    /* set to indicate which field to update when calling write_Policy_Classes_Table_Record() */
+    private String UPDATE_COLUMN = "";
     
     
 public Policy_Classes_Table_Record()
@@ -40,11 +43,33 @@ public Policy_Classes_Table_Record()
             
 	}
 
-    public String getCOLUMN_POLICY_CLASS_NAME() {
+
+    public String get_UPDATE_COLUMN() {
+        return this.UPDATE_COLUMN;
+    }
+    
+    public void set_UPDATE_COLUMN_to_POLICY_CLASS_ID() {
+        this.UPDATE_COLUMN = Policy_Classes_Table.COLUMN_POLICY_CLASS_ID;
+    }
+    
+    public void set_UPDATE_COLUMN_to_POLICY_CLASS_NAME() {
+        this.UPDATE_COLUMN = Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME;
+    }
+    
+    public void set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES() {
+        this.UPDATE_COLUMN = Policy_Classes_Table.COLUMN_POLICY_CLASS_POLICIES;
+    }
+
+
+    public void set_UPDATE_COLUMN_to_STATUS() {
+        this.UPDATE_COLUMN = Policy_Classes_Table.COLUMN_STATUS;
+    }
+    
+    public String get_COLUMN_POLICY_CLASS_NAME() {
         return this.COLUMN_POLICY_CLASS_NAME;
     }
 
-    public void setCOLUMN_POLICY_CLASS_NAME(String COLUMN_POLICY_CLASS_NAME) {
+    public void set_COLUMN_POLICY_CLASS_NAME(String COLUMN_POLICY_CLASS_NAME) {
         if (COLUMN_POLICY_CLASS_NAME != null) this.COLUMN_POLICY_CLASS_NAME = COLUMN_POLICY_CLASS_NAME;
     }
 
@@ -84,45 +109,45 @@ public Policy_Classes_Table_Record()
     }
     
     
-    public String getCOLUMN_CAPS() {
-        return this.COLUMN_CAPS;
+    public String get_COLUMN_POLICY_CLASS_POLICIES() {
+        return this.COLUMN_POLICY_CLASS_POLICIES;
     }
 
-    public void setCOLUMN_CAPS(String COLUMN_CAPS) {
-        if (COLUMN_CAPS != null) this.COLUMN_CAPS = COLUMN_CAPS;
+    public void set_COLUMN_POLICY_CLASS_POLICIES(String COLUMN_CAPS) {
+        if (COLUMN_CAPS != null) this.COLUMN_POLICY_CLASS_POLICIES = COLUMN_CAPS;
     }
     
     
-    public void add_CAP(String COLUMN_CAPS) {
+    public void add_POLICY_CLASS_POLICY(String COLUMN_CAPS) {
         if (COLUMN_CAPS != null)
         {
-            if (this.COLUMN_CAPS.indexOf(COLUMN_CAPS) == -1)
+            if (!this.COLUMN_POLICY_CLASS_POLICIES.contains(COLUMN_CAPS))
             {
-                this.COLUMN_CAPS = this.COLUMN_CAPS.concat(COLUMN_CAPS);
-                this.COLUMN_CAPS = this.COLUMN_CAPS.concat(" ");
+                this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(COLUMN_CAPS);
+                this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(" ");
             }    
         }    
     }
     
-    public void remove_CAP(String COLUMN_CAPS) {
+    public void remove_POLICY_CLASS_POLICY(String COLUMN_CAPS) {
         if (COLUMN_CAPS != null)
         {
-            int start = this.COLUMN_CAPS.indexOf(COLUMN_CAPS);
+            int start = this.COLUMN_POLICY_CLASS_POLICIES.indexOf(COLUMN_CAPS);
             int len = COLUMN_CAPS.length();
             String first_half = null;
             
             if (start != -1)
             {
                 if (start - 1 > 0)
-                    first_half = this.COLUMN_CAPS.substring(0, start - 1);
+                    first_half = this.COLUMN_POLICY_CLASS_POLICIES.substring(0, start - 1);
                 else first_half = "";
                 
-                String second_half = this.COLUMN_CAPS.substring(start + len +1); 
+                String second_half = this.COLUMN_POLICY_CLASS_POLICIES.substring(start + len +1); 
                 
-                this.COLUMN_CAPS = "";
+                this.COLUMN_POLICY_CLASS_POLICIES = "";
                 
-                this.COLUMN_CAPS = this.COLUMN_CAPS.concat(first_half);
-                this.COLUMN_CAPS = this.COLUMN_CAPS.concat(second_half);
+                this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(first_half);
+                this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(second_half);
                 
             }
         }    
@@ -143,11 +168,11 @@ public Policy_Classes_Table_Record()
     }     
     
 
-    public String getCOLUMN_POLICY_CLASS_ID() {
+    public String get_COLUMN_POLICY_CLASS_ID() {
         return this.COLUMN_POLICY_CLASS_ID;
     }
 
-    public void setCOLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) {
+    public void set_COLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) {
         //if (COLUMN_POLICY_CLASS_ID != null) this.COLUMN_POLICY_CLASS_ID = COLUMN_POLICY_CLASS_ID;
         
         Integer id = null;
@@ -169,11 +194,11 @@ public Policy_Classes_Table_Record()
     }
 
 
-    public String getCOLUMN_STATUS() {
+    public String get_COLUMN_STATUS() {
         return this.COLUMN_STATUS;
     }
 
-    public void setCOLUMN_STATUS(String COLUMN_STATUS) {
+    public void set_COLUMN_STATUS(String COLUMN_STATUS) {
         if (COLUMN_STATUS != null) this.COLUMN_STATUS = COLUMN_STATUS;
     }
     
