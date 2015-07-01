@@ -30,7 +30,7 @@ public interface Parser_Extended
         HELP,
         SHOW_APPS,
         SHOW_APP_POLICIES,
-        ADD_APP_POLICY,
+        ADD_CLASS_POLICY,
         DELETE_APP_POLICY,
         COUNT_APP_POLICIES,
         
@@ -67,7 +67,7 @@ public interface Parser_Extended
           + PM_COMMANDS.SHOW_APPS + " : show a list of applications stored in the tinyPM db \n"   
           + PM_COMMANDS.COUNT_APP_POLICIES + " : show the number of policies for the APP.  (App_path argument is required) \n"
           + PM_COMMANDS.SHOW_APP_POLICIES + " : show the list of policies for the APP  (App_path argument is required) \n"
-          + PM_COMMANDS.ADD_APP_POLICY + " : add a policy to a policy class (required arguments: policy ID (integer), policy (capability)) \n"  
+          + PM_COMMANDS.ADD_CLASS_POLICY + " : add a policy to a policy class (required arguments: policy ID (integer), policy (capability)) \n"  
           + PM_COMMANDS.DELETE_APP_POLICY + " : delete a policy for the APP  (policy argument and App_path argument are required) \n"
           
           /* add new commands */
@@ -78,7 +78,7 @@ public interface Parser_Extended
     
     public int parse_and_execute_Command(String e);
     
-    public ArrayList getResultOutput();
+    public ArrayList get_ResultOutput();
     
     
 }

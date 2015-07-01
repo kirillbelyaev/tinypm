@@ -50,36 +50,36 @@ public class Parser_Extended_implement implements Parser_Extended
         this.ei = new Enforcer_implement();
     }
      
-    public String getERROR_MESSAGE() {
+    public String get_ERROR_MESSAGE() {
         return this.ERROR_MESSAGE;
     }
 
-    private void setERROR_MESSAGE(String m) {
+    private void set_ERROR_MESSAGE(String m) {
         if (m != null) this.ERROR_MESSAGE = m;
     }
     
-    private int getResultSize() 
+    private int get_ResultSize() 
     {
         return this.resultSize;
     }
 
-    private void setResultSize(int n) 
+    private void set_ResultSize(int n) 
     {
         this.resultSize = n;
     }
     
     @Override
-    public ArrayList getResultOutput() 
+    public ArrayList get_ResultOutput() 
     {
         return this.ResultOutput;
     }
     
-    private void setResultOutput(ArrayList r) 
+    private void set_ResultOutput(ArrayList r) 
     {
         if (r != null) this.ResultOutput = r;
     }
     
-    private void refillResultOutput(String r) 
+    private void refill_ResultOutput(String r) 
     {
         if (r == null) return;
         this.ResultOutput.clear();
@@ -87,7 +87,7 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
-    private void refillResultOutput_with_CAP_Attr(Record[] r) 
+    private void refill_ResultOutput_with_CAP_Attr(Record[] r) 
     {
         if (r == null) return;
         this.ResultOutput.clear();
@@ -96,7 +96,7 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
-    private void refillResultOutput_with_APP_PATH(Record[] r) 
+    private void refill_ResultOutput_with_APP_PATH(Record[] r) 
     {
         if (r == null) return;
         this.ResultOutput.clear();
@@ -105,12 +105,24 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
-    private void refillResultOutput_with_POLICY_CLASS_NAME(Policy_Classes_Table_Record[] r) 
+    private void refill_ResultOutput_with_POLICY_CLASS_ID_AND_NAME(Policy_Classes_Table_Record[] r) 
     {
         if (r == null) return;
         this.ResultOutput.clear();
+        String row = null;
         for (int i = 0; i < r.length; i++)
-            this.ResultOutput.add(r[i].get_COLUMN_POLICY_CLASS_NAME());
+        {
+            row = " PCID: ";
+            row = row.concat(r[i].get_COLUMN_POLICY_CLASS_ID());
+            row = row.concat(" | ");
+            row = row.concat(" Class Name: ");
+            row = row.concat(r[i].get_COLUMN_POLICY_CLASS_NAME());
+            
+            this.ResultOutput.add(row);
+            
+            row = null;
+            //this.ResultOutput.add(r[i].get_COLUMN_POLICY_CLASS_NAME());
+        }    
     }
     
     
@@ -123,15 +135,15 @@ public class Parser_Extended_implement implements Parser_Extended
                 try 
                 {
                         this.db = this.dd.dispatch_DB_Access();
-                } catch (SQLException ex) 
+                } catch (SQLException sex) 
                 {
-                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, sex);
                 }
             }
         }
         
-        if (this.db != null) return 0;
-        else return -1;   
+        if (this.db != null) return INDICATE_EXECUTION_SUCCESS;
+        else return INDICATE_CONDITIONAL_EXIT_STATUS;   
     }        
     
     
@@ -142,26 +154,26 @@ public class Parser_Extended_implement implements Parser_Extended
         
         if (this.obtain_DB_Handler() != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        this.setERROR_MESSAGE("");
-        this.refillResultOutput("");
+        this.set_ERROR_MESSAGE("");
+        this.refill_ResultOutput("");
         
         e = e.trim();
         
         if (e.isEmpty() || e.equals("")) 
         {
-            this.refillResultOutput("");
-            this.setERROR_MESSAGE("");
+            this.refill_ResultOutput("");
+            this.set_ERROR_MESSAGE("");
             return INDICATE_EXECUTION_SUCCESS;
         } else if (e.equals("\n")) 
         {
-            this.refillResultOutput("");
-            this.setERROR_MESSAGE("");
+            this.refill_ResultOutput("");
+            this.set_ERROR_MESSAGE("");
             
         } else if (e.indexOf(PM_COMMANDS.COUNT_POLICY_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_COUNT_POLICY_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.setERROR_MESSAGE(PM_ERRORS.COUNT_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
                
@@ -169,7 +181,7 @@ public class Parser_Extended_implement implements Parser_Extended
         {
             if (this.parse_and_execute_SHOW_POLICY_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                  this.setERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                  this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
         
@@ -177,15 +189,15 @@ public class Parser_Extended_implement implements Parser_Extended
         {
             if (this.parse_and_execute_CREATE_POLICY_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.setERROR_MESSAGE(PM_ERRORS.CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
             
-        }    else if (e.indexOf(PM_COMMANDS.ADD_APP_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        }    else if (e.indexOf(PM_COMMANDS.ADD_CLASS_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_ADD_APP_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_ADD_CLASS_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.setERROR_MESSAGE(PM_ERRORS.ADD_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.ADD_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
             
@@ -221,10 +233,10 @@ public class Parser_Extended_implement implements Parser_Extended
 //                return -1;
 //            }    
             
-        }  else if (e.indexOf(PM_COMMANDS.HELP.toString()) == 0) 
+        }  else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_HELP(e);
-        } else if (e.indexOf(PM_COMMANDS.EXIT.toString()) == 0) 
+        } else if (e.indexOf(PM_COMMANDS.EXIT.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             return  Parser_Extended.INDICATE_IMMEDIATE_EXIT_STATUS;
         } else
@@ -510,9 +522,9 @@ public class Parser_Extended_implement implements Parser_Extended
     private void parse_and_execute_HELP(String e)
     {
         if (e == null || e.isEmpty()) return;
-        this.setResultSize(0);
-        this.refillResultOutput("");
-        this.setERROR_MESSAGE(Parser_Extended.HELP_MESSAGE);
+        this.set_ResultSize(0);
+        this.refill_ResultOutput("");
+        this.set_ERROR_MESSAGE(Parser_Extended.HELP_MESSAGE);
     }
     
     
@@ -529,8 +541,6 @@ public class Parser_Extended_implement implements Parser_Extended
         {
             this.commandParameters.clear();
         }    
-        
-        //if (this.rec == null) this.rec = new Record();
         
         if (this.pcrec == null) this.pcrec = new Policy_Classes_Table_Record();
         
@@ -565,17 +575,17 @@ public class Parser_Extended_implement implements Parser_Extended
                 if (this.db != null)
                 {    
                     count = this.db.count_Distinct_Policy_Classes_Table_Records_on_PCID(this.pcrec);
-                    this.setResultSize(count);
-                    this.refillResultOutput(count.toString());
-                    return 0;
+                    this.set_ResultSize(count);
+                    this.refill_ResultOutput(count.toString());
+                    return INDICATE_EXECUTION_SUCCESS;
                 }    
-            } catch (RecordDAOException ex) 
+            } catch (RecordDAOException rex) 
             {
-                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
-        return -1;
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
     }        
     
     
@@ -594,18 +604,18 @@ public class Parser_Extended_implement implements Parser_Extended
                     ra = this.db.read_Policy_Classes_Table_Records_On_All_Classes(pcrec);
                     if (ra != null)
                     {    
-                        this.setResultSize(ra.length);
-                        this.refillResultOutput_with_POLICY_CLASS_NAME(ra);
-                        return 0;
+                        this.set_ResultSize(ra.length);
+                        this.refill_ResultOutput_with_POLICY_CLASS_ID_AND_NAME(ra);
+                        return INDICATE_EXECUTION_SUCCESS;
                     } else return DB_Constants_Extended.EMPTY_RESULT;
                 }    
-            } catch (RecordDAOException ex) 
+            } catch (RecordDAOException rex) 
             {
-                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
-        return -1;
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
@@ -632,17 +642,17 @@ public class Parser_Extended_implement implements Parser_Extended
                 if (this.db != null)
                 {    
                     if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS) 
-                        return -1;
+                        return  INDICATE_CONDITIONAL_EXIT_STATUS;
                     else
                     {    
-                        this.setResultSize(0);
-                        this.refillResultOutput("");
+                        this.set_ResultSize(0);
+                        this.refill_ResultOutput("");
                         return INDICATE_EXECUTION_SUCCESS;
                     }
                 }    
-            } catch (RecordDAOException ex) 
+            } catch (RecordDAOException rex) 
             {
-                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
@@ -666,9 +676,9 @@ public class Parser_Extended_implement implements Parser_Extended
             {    
                 pcr = this.db.read_Policy_Classes_Table_Records_On_PCID(this.pcrec);  
             }    
-        } catch (RecordDAOException ex) 
+        } catch (RecordDAOException rex) 
         {
-            Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
         }
         
         if (pcr != null)
@@ -683,16 +693,16 @@ public class Parser_Extended_implement implements Parser_Extended
     
     private int check_if_PolicyExists (String pcid, String p)
     {
-        if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return -1;
+        if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
         
         if (caps != null)
             for (int i = 0; i < caps.size(); i++)
                 //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-                if (caps.get(i).contains(p.trim())) return 0;
+                if (caps.get(i).contains(p.trim())) return INDICATE_EXECUTION_SUCCESS;
         
-        return -1;
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
@@ -703,7 +713,7 @@ public class Parser_Extended_implement implements Parser_Extended
         
         if (mode == 1)//add policy
         {    
-            if (this.check_if_PolicyExists(pcid.trim(), p.trim()) == 0) return null;
+            if (this.check_if_PolicyExists(pcid.trim(), p.trim()) == INDICATE_EXECUTION_SUCCESS) return null;
             caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
             if (caps != null)
             {    
@@ -716,7 +726,7 @@ public class Parser_Extended_implement implements Parser_Extended
         
          if (mode == -1)//remove policy
         {    
-            if (this.check_if_PolicyExists(pcid.trim(), p.trim()) != 0) return null;
+            if (this.check_if_PolicyExists(pcid.trim(), p.trim()) != INDICATE_EXECUTION_SUCCESS) return null;
             caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
             if (caps != null) 
             {    
@@ -731,7 +741,7 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
-    private Integer parse_and_execute_ADD_APP_POLICY(String e)
+    private Integer parse_and_execute_ADD_CLASS_POLICY(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
@@ -768,13 +778,13 @@ public class Parser_Extended_implement implements Parser_Extended
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != 0) 
-                        return -1;
+                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS) 
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     else
                     {    
-                        this.setResultSize(0);
-                        this.refillResultOutput("");
-                        return 0;
+                        this.set_ResultSize(0);
+                        this.refill_ResultOutput("");
+                        return INDICATE_EXECUTION_SUCCESS;
                     }
                 }    
             } catch (RecordDAOException rex) 
@@ -783,7 +793,7 @@ public class Parser_Extended_implement implements Parser_Extended
             }
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
-        return -1;
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     

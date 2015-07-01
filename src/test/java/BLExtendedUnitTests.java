@@ -79,60 +79,60 @@ public class BLExtendedUnitTests {
         output = p.parse_and_execute_Command(CMD); 
 	//assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         //System.out.println("output is: " + output);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         
         output = p.parse_and_execute_Command(CMD_0);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_9);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_10);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_11);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         
         output = p.parse_and_execute_Command(CMD_9);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_12);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_9);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_13);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_9);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_5);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("error mesage is: " + p.getERROR_MESSAGE());
-        System.out.println("parser.getResultOutput is: " + p.getResultOutput());
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         
         /*------*/
