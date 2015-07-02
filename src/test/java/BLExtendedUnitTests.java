@@ -72,7 +72,9 @@ public class BLExtendedUnitTests {
         String CMD_13 = "CREATE_POLICY_CLASS 2 general_applications_policy_class_2";
         
         
-        String CMD_5 = "ADD_APP_POLICY 1 CAP_KILL";
+        String CMD_5 = "ADD_POLICY_CLASS_POLICY 1 CAP_KILL";
+        
+        String CMD_6 = "SHOW_POLICY_CLASS_POLICIES 1";
         
         Parser_Extended_implement p = new Parser_Extended_implement();
         
@@ -133,6 +135,13 @@ public class BLExtendedUnitTests {
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        output = p.parse_and_execute_Command(CMD_6);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        
         
         
         /*------*/

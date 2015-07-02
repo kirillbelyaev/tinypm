@@ -29,8 +29,8 @@ public interface Parser_Extended
         EXIT,
         HELP,
         SHOW_APPS,
-        SHOW_APP_POLICIES,
-        ADD_CLASS_POLICY,
+        SHOW_POLICY_CLASS_POLICIES,
+        ADD_POLICY_CLASS_POLICY,
         DELETE_APP_POLICY,
         COUNT_APP_POLICIES,
         
@@ -47,9 +47,9 @@ public interface Parser_Extended
     {
         COUNT_APP_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
         SHOW_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
-        SHOW_APP_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
+        SHOW_POLICY_CLASS_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
         UPDATE_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
-        ADD_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
+        ADD_POLICY_CLASS_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
         DELETE_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
         
          /* add new commands */
@@ -66,8 +66,8 @@ public interface Parser_Extended
           + PM_COMMANDS.EXIT + " : exit the PM shell. \n"
           + PM_COMMANDS.SHOW_APPS + " : show a list of applications stored in the tinyPM db \n"   
           + PM_COMMANDS.COUNT_APP_POLICIES + " : show the number of policies for the APP.  (App_path argument is required) \n"
-          + PM_COMMANDS.SHOW_APP_POLICIES + " : show the list of policies for the APP  (App_path argument is required) \n"
-          + PM_COMMANDS.ADD_CLASS_POLICY + " : add a policy to a policy class (required arguments: policy ID (integer), policy (capability)) \n"  
+          + PM_COMMANDS.SHOW_POLICY_CLASS_POLICIES + " : show the list of policies for the policy class  (required arguments: policy ID (integer)) \n"
+          + PM_COMMANDS.ADD_POLICY_CLASS_POLICY + " : add a policy to a policy class (required arguments: policy ID (integer), policy (capability)) \n"  
           + PM_COMMANDS.DELETE_APP_POLICY + " : delete a policy for the APP  (policy argument and App_path argument are required) \n"
           
           /* add new commands */

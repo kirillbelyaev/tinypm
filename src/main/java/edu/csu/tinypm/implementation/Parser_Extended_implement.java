@@ -4,6 +4,8 @@ Kirill Belyaev. Copyright (c) @2015 Colorado State University
 Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
+/* Parser interface represents the BL (Business Logic) layer commands available to the user shell*/ 
+
 package edu.csu.tinypm.implementation;
 
 import edu.csu.tinypm.DB.DTO.Policy_Classes_Table_Record;
@@ -87,12 +89,12 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
-    private void refill_ResultOutput_with_CAP_Attr(Record[] r) 
+    private void refill_ResultOutput_with_POLICY_CLASS_POLICIES(ArrayList<String> r) 
     {
         if (r == null) return;
         this.ResultOutput.clear();
-        for (int i=0; i < r.length; i++)
-            this.ResultOutput.add(r[i].getCAP_Attr());
+        for (int i = 0; i < r.size(); i++)
+            this.ResultOutput.add(r.get(i));        
     }
     
     
@@ -150,7 +152,7 @@ public class Parser_Extended_implement implements Parser_Extended
     @Override
     public int parse_and_execute_Command(String e)
     {
-        if (e == null) return Parser_Extended.INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null) return INDICATE_INVALID_ARGUMENT_VALUE;
         
         if (this.obtain_DB_Handler() != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
@@ -193,21 +195,21 @@ public class Parser_Extended_implement implements Parser_Extended
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
             
-        }    else if (e.indexOf(PM_COMMANDS.ADD_CLASS_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        }    else if (e.indexOf(PM_COMMANDS.ADD_POLICY_CLASS_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_ADD_CLASS_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_ADD_POLICY_CLASS_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.ADD_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.ADD_POLICY_CLASS_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
             
-//        } else if (e.indexOf(PM_COMMANDS.SHOW_APP_POLICIES.toString()) == 0) 
-//        {
-//            if (this.parse_and_execute_SHOW_APP_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
-//            {
-//                this.setERROR_MESSAGE(PM_ERRORS.SHOW_APP_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-//                return -1;
-//            }    
+        } else if (e.indexOf(PM_COMMANDS.SHOW_POLICY_CLASS_POLICIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_SHOW_POLICY_CLASS_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASS_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }    
 //            
 //        } else if (e.indexOf(PM_COMMANDS.SHOW_APPS.toString()) == 0) 
 //        {
@@ -531,7 +533,7 @@ public class Parser_Extended_implement implements Parser_Extended
     
     private int tokenize_and_build_command_parameters(String e)
     {
-        if (e == null || e.isEmpty()) return Parser_Extended.INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         int count = -1;
         
         if (this.commandParameters == null)
@@ -564,7 +566,7 @@ public class Parser_Extended_implement implements Parser_Extended
     
     private Integer parse_and_execute_COUNT_POLICY_CLASSES(String e)
     {
-        if (e == null || e.isEmpty()) return Parser_Extended.INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         Integer count = null;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
@@ -591,7 +593,7 @@ public class Parser_Extended_implement implements Parser_Extended
     
     private Integer parse_and_execute_SHOW_POLICY_CLASSES(String e)
     {
-        if (e == null || e.isEmpty()) return Parser_Extended.INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         Policy_Classes_Table_Record[] ra = null;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
@@ -621,7 +623,7 @@ public class Parser_Extended_implement implements Parser_Extended
     
     private Integer parse_and_execute_CREATE_POLICY_CLASS(String e)
     {
-        if (e == null || e.isEmpty()) return Parser_Extended.INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 3)
@@ -741,7 +743,7 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
-    private Integer parse_and_execute_ADD_CLASS_POLICY(String e)
+    private Integer parse_and_execute_ADD_POLICY_CLASS_POLICY(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
@@ -770,6 +772,8 @@ public class Parser_Extended_implement implements Parser_Extended
             
             } else this.pcrec.add_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* if no policies exist */   
             
+            //System.out.println("policies are: " + this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES());
+            
             //this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
             
             //if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
@@ -795,6 +799,32 @@ public class Parser_Extended_implement implements Parser_Extended
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
+    
+    private Integer parse_and_execute_SHOW_POLICY_CLASS_POLICIES(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        ArrayList<String> caps = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 2)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 0)
+                    caps = this.get_POLICY_CLASS_POLICIES(this.commandParameters.get(0).trim());
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            if (caps != null)
+            {
+                this.set_ResultSize(caps.size());
+                this.refill_ResultOutput_with_POLICY_CLASS_POLICIES(caps);
+                return INDICATE_EXECUTION_SUCCESS;
+            } else return DB_Constants_Extended.EMPTY_RESULT;
+            
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+    }
+
     
     
 }

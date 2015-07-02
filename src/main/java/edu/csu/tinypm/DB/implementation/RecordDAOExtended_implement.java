@@ -766,7 +766,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
             {
                     if (Policy_Classes_Table.PCS_DB_TABLE_NAME.equals(Policy_Classes_Table.PCS_DB_TABLE_NAME))
                     {	
-                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_PCS_DB_ON_PCID_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_PCS_DB_ON_PCID_AND_CAPS_SQL);
 
                             int index = 1;
                             
