@@ -28,29 +28,28 @@ public interface Parser_Extended
     {
         EXIT,
         HELP,
-        SHOW_APPS,
+        SHOW_POLICY_CLASS_APPS,
         SHOW_POLICY_CLASS_POLICIES,
         ADD_POLICY_CLASS_POLICY,
-        DELETE_APP_POLICY,
-        COUNT_APP_POLICIES,
+        REMOVE_POLICY_CLASS_POLICY,
+        COUNT_POLICY_CLASS_APPS,
         
         /* add new commands */
         SHOW_POLICY_CLASSES,
         COUNT_POLICY_CLASSES,
-        //SHOW_POLICY_CLASS_POLICIES,
         CREATE_POLICY_CLASS,
-        DELETE_POLICY_CLASS //not recommended for implementation
+        DELETE_POLICY_CLASS /* NOT recommended for implementation due to
+        management problems with orphaned applications */
         
     }
     
     public enum PM_ERRORS
     {
-        COUNT_APP_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
-        SHOW_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
+        COUNT_POLICY_CLASS_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
+        SHOW_POLICY_CLASS_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
         SHOW_POLICY_CLASS_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
-        UPDATE_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
         ADD_POLICY_CLASS_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
-        DELETE_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
+        REMOVE_POLICY_CLASS_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
         
          /* add new commands */
         COUNT_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
@@ -64,16 +63,16 @@ public interface Parser_Extended
           +  "The following are the commands you can apply at the PM prompt: \n"
           + PM_COMMANDS.HELP +  " : print this help info. \n"
           + PM_COMMANDS.EXIT + " : exit the PM shell. \n"
-          + PM_COMMANDS.SHOW_APPS + " : show a list of applications stored in the tinyPM db \n"   
-          + PM_COMMANDS.COUNT_APP_POLICIES + " : show the number of policies for the APP.  (App_path argument is required) \n"
-          + PM_COMMANDS.SHOW_POLICY_CLASS_POLICIES + " : show the list of policies for the policy class  (required arguments: policy ID (integer)) \n"
-          + PM_COMMANDS.ADD_POLICY_CLASS_POLICY + " : add a policy to a policy class (required arguments: policy ID (integer), policy (capability)) \n"  
-          + PM_COMMANDS.DELETE_APP_POLICY + " : delete a policy for the APP  (policy argument and App_path argument are required) \n"
+          + PM_COMMANDS.SHOW_POLICY_CLASS_APPS + " : show a list of applications that belong to a policy class (required arguments: policy_class_ID (integer)) \n"   
+          + PM_COMMANDS.COUNT_POLICY_CLASS_APPS + " : show the number of apps that belong to a policy class  (required arguments: policy_class_ID (integer)) \n"
+          + PM_COMMANDS.SHOW_POLICY_CLASS_POLICIES + " : show the list of policies associated with the policy class  (required arguments: policy_class_ID (integer)) \n"
+          + PM_COMMANDS.ADD_POLICY_CLASS_POLICY + " : add a policy to a policy class (required arguments: policy_class_ID (integer), policy) \n"  
+          + PM_COMMANDS.REMOVE_POLICY_CLASS_POLICY + " : remove a policy from a policy class  (required arguments: policy_class_ID (integer), policy) \n"
           
           /* add new commands */
           + PM_COMMANDS.COUNT_POLICY_CLASSES + " : show the number of policy classes \n" 
           + PM_COMMANDS.SHOW_POLICY_CLASSES + " : show the list of policy classes \n"
-          + PM_COMMANDS.CREATE_POLICY_CLASS + " : create policy class (required arguments: policy ID (integer), policy_class_name) \n";  
+          + PM_COMMANDS.CREATE_POLICY_CLASS + " : create policy class (required arguments: policy class ID (integer), policy_class_name) \n";  
     
     
     public int parse_and_execute_Command(String e);

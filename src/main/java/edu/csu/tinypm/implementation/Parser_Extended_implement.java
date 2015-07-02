@@ -187,7 +187,7 @@ public class Parser_Extended_implement implements Parser_Extended
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
         
-        }    else if (e.indexOf(PM_COMMANDS.CREATE_POLICY_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.CREATE_POLICY_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_CREATE_POLICY_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
@@ -195,7 +195,7 @@ public class Parser_Extended_implement implements Parser_Extended
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
             
-        }    else if (e.indexOf(PM_COMMANDS.ADD_POLICY_CLASS_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.ADD_POLICY_CLASS_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_ADD_POLICY_CLASS_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
             {
@@ -209,33 +209,15 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                 this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASS_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }    
-//            
-//        } else if (e.indexOf(PM_COMMANDS.SHOW_APPS.toString()) == 0) 
-//        {
-//            if (this.parse_and_execute_SHOW_APPS(e) == INDICATE_ARGUMENT_MISMATCH)
-//            {
-//                this.setERROR_MESSAGE(PM_ERRORS.SHOW_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-//                return -1;
-//            }    
-//        
-//        }    else if (e.indexOf(PM_COMMANDS.ADD_APP_POLICY.toString()) == 0) 
-//        {
-//            if (this.parse_and_execute_ADD_APP_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
-//            {
-//                this.setERROR_MESSAGE(PM_ERRORS.ADD_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-//                return -1;
-//            }
-//            
-//        } else if (e.indexOf(PM_COMMANDS.DELETE_APP_POLICY.toString()) == 0) 
-//        {
-//            if (this.parse_and_execute_DELETE_APP_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
-//            {
-//                this.setERROR_MESSAGE(PM_ERRORS.DELETE_APP_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-//                return -1;
-//            }    
-            
-        }  else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
+            }
+        } else if (e.indexOf(PM_COMMANDS.REMOVE_POLICY_CLASS_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_REMOVE_POLICY_CLASS_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(PM_ERRORS.REMOVE_POLICY_CLASS_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }                 
+        } else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_HELP(e);
         } else if (e.indexOf(PM_COMMANDS.EXIT.toString()) == INDICATE_EXECUTION_SUCCESS) 
@@ -249,277 +231,6 @@ public class Parser_Extended_implement implements Parser_Extended
         return INDICATE_EXECUTION_SUCCESS;
     }
     
-//    private Integer parse_and_execute_COUNT_APP_POLICIES(String e)
-//    {
-//        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
-//        Integer count = null;
-//        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
-//        //System.out.println("num_tokens is: " + num_tokens);
-//        if (num_tokens == 2)
-//        {    
-//            if (this.commandParameters != null)
-//            {
-//                if (this.commandParameters.size() > 0)
-//                    this.rec.setApp_PATH(this.commandParameters.get(0));
-//                else return -1;
-//            } else return -1;
-//            
-//            try 
-//            {//execute the db layer
-//                if (this.db != null)
-//                {    
-//                    count = this.db.countDistinctAppCapRecords(this.rec);
-//                    this.setResultSize(count);
-//                    this.refillResultOutput(count.toString());
-//                    return 0;
-//                }    
-//            } catch (RecordDAOException ex) 
-//            {
-//                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }  else return INDICATE_ARGUMENT_MISMATCH;
-//        
-//        return -1;
-//    }        
-    
-    
-//    private Integer parse_and_execute_SHOW_APP_POLICIES(String e)
-//    {
-//        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
-//        Record[] ra = null;
-//        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
-//        //System.out.println("num_tokens is: " + num_tokens);
-//        if (num_tokens == 2)
-//        {    
-//            if (this.commandParameters != null)
-//            {
-//                if (this.commandParameters.size() > 0)
-//                    this.rec.setApp_PATH(this.commandParameters.get(0));
-//                else return -1;
-//            } else return -1;
-//            
-//            try 
-//            {//execute the db layer
-//                if (this.db != null)
-//                {    
-//                    ra = this.db.readRecordsOnAPP(this.rec);
-//                    if (ra != null)
-//                    {    
-//                        this.setResultSize(ra.length);
-//                        this.refillResultOutput_with_CAP_Attr(ra);
-//                        return 0;
-//                    } else return DB_Constants.EMPTY_RESULT;
-//                }    
-//            } catch (RecordDAOException ex) 
-//            {
-//                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }  else return INDICATE_ARGUMENT_MISMATCH;
-//        
-//        return -1;
-//    }
-    
-    
-//    private Integer parse_and_execute_SHOW_APPS(String e)
-//    {
-//        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
-//        Record[] ra = null;
-//        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
-//        //System.out.println("num_tokens is: " + num_tokens);
-//        if (num_tokens == 1)
-//        { 
-//            try 
-//            {//execute the db layer
-//                if (this.db != null)
-//                {    
-//                    ra = this.db.readRecordsOnAllAPPs();
-//                    if (ra != null)
-//                    {    
-//                        this.setResultSize(ra.length);
-//                        this.refillResultOutput_with_APP_PATH(ra);
-//                        return 0;
-//                    } else return DB_Constants.EMPTY_RESULT;
-//                }    
-//            } catch (RecordDAOException ex) 
-//            {
-//                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }  else return INDICATE_ARGUMENT_MISMATCH;
-//        
-//        return -1;
-//    }
-    
-    
-    
-//    private ArrayList<String> get_APP_POLICIES(String app)
-//    {
-//        Record[] ra = null;
-//        ArrayList<String> caps = null;
-//
-//        if (app == null || app.isEmpty()) return null;
-//
-//        this.rec.setApp_PATH(app.trim());
-//
-//        try 
-//        {//execute the db layer
-//            if (this.db != null)
-//            {    
-//                ra = this.db.readRecordsOnAPP(this.rec);  
-//            }    
-//        } catch (RecordDAOException ex) 
-//        {
-//            Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        if (ra != null)
-//        {    
-//            caps = new ArrayList<String>();
-//            for (int i=0; i < ra.length; i++)
-//                caps.add(ra[i].getCAP_Attr());
-//        }
-//        
-//        return caps;
-//    }
-//    
-    
-//    private int check_if_PolicyExists (String app, String p)
-//    {
-//        if (app == null || app.isEmpty() || p == null || p.isEmpty()) return -1;
-//        
-//        ArrayList<String> caps = this.get_APP_POLICIES(app.trim());
-//        
-//        if (caps != null)
-//            for (int i = 0; i < caps.size(); i++)
-//                if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-//        
-//        return -1;
-//    }
-//    
-//    private ArrayList<String>  return_modified_app_policies (String app, String p, int mode)
-//    {
-//        if (app == null || app.isEmpty() || p == null || p.isEmpty()) return null;
-//        ArrayList<String> caps = null;
-//        
-//        if (mode == 1)//add policy
-//        {    
-//            if (this.check_if_PolicyExists(app.trim(), p.trim()) == 0) return null;
-//            caps = this.get_APP_POLICIES(app.trim());
-//            if (caps != null)
-//            {    
-//                caps.add(p.trim());
-//                caps.add(app.trim());//add the application entry last
-//            }    
-//            return caps;
-//            
-//        }
-//        
-//         if (mode == -1)//remove policy
-//        {    
-//            if (this.check_if_PolicyExists(app.trim(), p.trim()) != 0) return null;
-//            caps = this.get_APP_POLICIES(app.trim());
-//            if (caps != null) 
-//            {    
-//                caps.remove(p.trim());
-//                caps.add(app.trim());//add the application entry last
-//            }    
-//            return caps;
-//            
-//        }
-//    
-//        return caps;
-//    }
-    
-    
-    
-//    private Integer parse_and_execute_ADD_APP_POLICY(String e)
-//    {
-//        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
-//        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
-//        //System.out.println("num_tokens is: " + num_tokens);
-//        if (num_tokens == 3)
-//        {    
-//            if (this.commandParameters != null)
-//            {
-//                if (this.commandParameters.size() > 1)
-//                {    
-//                    this.rec.setApp_PATH(this.commandParameters.get(1));
-//                    this.rec.setCAP_Attr(this.commandParameters.get(0));
-//                }    
-//                else return -1;
-//            } else return -1;
-//            
-//            if (this.check_if_PolicyExists(this.rec.getApp_PATH(), this.rec.getCAP_Attr()) == 0) return -1; /*//return if policy already exists*/
-//            
-//            this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
-//            
-//            if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
-//            
-//            try 
-//            {//execute the db layer
-//                if (this.db != null)
-//                {    
-//                    if (this.db.writeRecord(this.rec) != 0) 
-//                        return -1;
-//                    else
-//                    {    
-//                        this.setResultSize(0);
-//                        this.refillResultOutput("");
-//                        return 0;
-//                    }
-//                }    
-//            } catch (RecordDAOException ex) 
-//            {
-//                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }  else return INDICATE_ARGUMENT_MISMATCH;
-//        
-//        return -1;
-//    }
-//    
-//    private Integer parse_and_execute_DELETE_APP_POLICY(String e)
-//    {
-//        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
-//        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
-//        //System.out.println("num_tokens is: " + num_tokens);
-//        if (num_tokens == 3)
-//        {    
-//            if (this.commandParameters != null)
-//            {
-//                if (this.commandParameters.size() > 1)
-//                {    
-//                    this.rec.setApp_PATH(this.commandParameters.get(1));
-//                    this.rec.setCAP_Attr(this.commandParameters.get(0));
-//                }    
-//                else return -1;
-//            } else return -1;
-//            
-//            if (this.check_if_PolicyExists(this.rec.getApp_PATH(), this.rec.getCAP_Attr()) == -1) return -1; //return if policy does not exist
-//            
-//            this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), -1)); //-1 indicates remove instruction
-//            
-//            if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
-//            
-//            try 
-//            {//execute the db layer
-//                if (this.db != null)
-//                {    
-//                    if (this.db.deleteRecordsOnAPPandCAP(this.rec) != 0) 
-//                        return -1;
-//                    else
-//                    {    
-//                        this.setResultSize(0);
-//                        this.refillResultOutput("");
-//                        return 0;
-//                    }
-//                }    
-//            } catch (RecordDAOException ex) 
-//            {
-//                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }  else return INDICATE_ARGUMENT_MISMATCH;
-//        
-//        return -1;
-//    }
     
     private void parse_and_execute_HELP(String e)
     {
@@ -767,7 +478,7 @@ public class Parser_Extended_implement implements Parser_Extended
             
             if (caps != null) 
             {  /* reset the policies in pc record */  
-                this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(caps.get(0).trim()); 
+                this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(caps.get(0)); 
                 this.pcrec.add_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* do it once more */
             
             } else this.pcrec.add_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* if no policies exist */   
@@ -811,7 +522,7 @@ public class Parser_Extended_implement implements Parser_Extended
             if (this.commandParameters != null)
             {
                 if (this.commandParameters.size() > 0)
-                    caps = this.get_POLICY_CLASS_POLICIES(this.commandParameters.get(0).trim());
+                    caps = this.get_POLICY_CLASS_POLICIES(this.commandParameters.get(0));
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
@@ -825,6 +536,63 @@ public class Parser_Extended_implement implements Parser_Extended
         }  else return INDICATE_ARGUMENT_MISMATCH;
     }
 
+    private Integer parse_and_execute_REMOVE_POLICY_CLASS_POLICY(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 3)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 1)
+                {    
+                    this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(this.commandParameters.get(1));
+                    this.pcrec.set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES(); /* indicate the update column */
+                }    
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            if (this.check_if_PolicyExists(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES()) == INDICATE_CONDITIONAL_EXIT_STATUS) return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
+            policy does not exist */
+            
+            ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
+            
+            if (caps != null) 
+            {  /* reset the policies in pc record */  
+                this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(caps.get(0)); 
+                this.pcrec.remove_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* do it once more */
+            
+            } else return DB_Constants_Extended.EMPTY_RESULT; /* if no policies exist */   
+            
+            //System.out.println("policies are: " + this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES());
+            
+            //this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
+            
+            //if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
+            
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS) 
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    else
+                    {    
+                        this.set_ResultSize(0);
+                        this.refill_ResultOutput("");
+                        return INDICATE_EXECUTION_SUCCESS;
+                    }
+                }    
+            } catch (RecordDAOException rex) 
+            {
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
     
     
 }

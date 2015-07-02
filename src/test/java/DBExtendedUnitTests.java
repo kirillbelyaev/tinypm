@@ -366,10 +366,27 @@ public class DBExtendedUnitTests {
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
+        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.remove_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        
+        
         
         System.out.println("cap index within enum array is: " + r.get_CAP_index(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_KILL.toString()) );
 
-        System.out.println("Schema DDL is : " + r.produce_PCS_DB_DDL());
+        //System.out.println("Schema DDL is : " + r.produce_PCS_DB_DDL());
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
