@@ -288,6 +288,14 @@ public class DBExtendedUnitTests {
         System.out.println("--------------------------------------");
         System.out.println("started test_Policy_Classes_Table_Record... ");
         
+        String caps = " CAP_CHOWN CAP_AUDIT_WRITE CAP_AUDIT_CONTROL ";
+        String morecaps = "CAP_CHOWN CAP_AUDIT_WRITE CAP_AUDIT_CONTROL";
+        String cap = " CAP_CHOWN ";
+        String invalidcap = " CAP_CHOW ";
+        String morecap = "CAP_CHOWN";
+
+        int intValue = -1;
+        
         String value = null;
         Policy_Classes_Table_Record r = new Policy_Classes_Table_Record();
         
@@ -308,12 +316,12 @@ public class DBExtendedUnitTests {
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
-        r.set_Status_Inactive();
+        r.set_COLUMN_STATUS_Inactive();
 	value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
-        r.set_Status_Active();
+        r.set_COLUMN_STATUS_Active();
 	value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
 	System.out.println("status is: " + value);
@@ -381,10 +389,29 @@ public class DBExtendedUnitTests {
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
+        r.remove_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
         
         
         
-        System.out.println("cap index within enum array is: " + r.get_CAP_index(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_KILL.toString()) );
+        intValue = r.check_if_Capability_is_valid(cap);
+        System.out.println("return is: " + intValue);
+        
+        intValue = r.check_if_Capability_is_valid(invalidcap);
+        System.out.println("return is: " + intValue);
+        
+        intValue = r.check_if_Capabilities_are_valid(caps);
+        System.out.println("return is: " + intValue);
+        
+        intValue = r.check_if_Capabilities_are_valid(morecaps);
+        System.out.println("return is: " + intValue);
+        
+        intValue = r.check_if_Capabilities_are_valid(morecap);
+        System.out.println("return is: " + intValue);
+        
+        //System.out.println("cap index within enum array is: " + r.check_if_Capability_is_valid(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_KILL.toString()) );
 
         //System.out.println("Schema DDL is : " + r.produce_PCS_DB_DDL());
         
@@ -455,7 +482,7 @@ public class DBExtendedUnitTests {
         r.set_COLUMN_STATUS(this.COLUMN_STATUS);
         
        
-        r.set_Status_Active();
+        r.set_COLUMN_STATUS_Active();
         
         r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());

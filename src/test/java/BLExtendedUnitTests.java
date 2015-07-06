@@ -80,7 +80,7 @@ public class BLExtendedUnitTests {
         
         String CMD_8 = "ADD_POLICY_CLASS_POLICY 1 CAP_DAC_OVERRIDE";
         
-        String CMD_4 = "REMOVE_POLICY_CLASS_POLICY 1 CAP_KILL";
+        String CMD_4 = "REMOVE_POLICY_CLASS_POLICY 1 CAP_CHOWN";
         
         Parser_Extended_implement p = new Parser_Extended_implement();
         
