@@ -14,6 +14,7 @@ import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 import edu.csu.tinypm.DB.implementation.DB_Dispatcher_Extended;
 import edu.csu.tinypm.DB.implementation.RecordDAOExtended_implement;
 import edu.csu.tinypm.DB.interfaces.DB_Constants_Extended;
+import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
 
 
 import edu.csu.tinypm.interfaces.Parser_Extended;
@@ -128,6 +129,23 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
+    private void refill_Result_Output_with_all_Capabilities() 
+    {
+        LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();
+        
+        if (LCS == null) return;
+        
+        this.ResultOutput.clear();
+        
+        this.ResultOutput.add("Linux Capabilities (consult the capabilities (7) manual page for an overview of Linux capabilities) are:");
+        
+        for (LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS1 : LCS) {
+            this.ResultOutput.add(LCS1.toString());
+            }
+    }
+    
+    
+    
     private int obtain_DB_Handler()
     {
         if (this.db == null) //minimize the number of calls - do it only once
@@ -216,7 +234,11 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                 this.set_ERROR_MESSAGE(PM_ERRORS.REMOVE_POLICY_CLASS_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }                 
+            }
+        }  else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            this.parse_and_execute_SHOW_CAPABILITIES(e);
+                
         } else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_HELP(e);
@@ -238,6 +260,14 @@ public class Parser_Extended_implement implements Parser_Extended
         this.set_ResultSize(0);
         this.refill_ResultOutput("");
         this.set_ERROR_MESSAGE(Parser_Extended.HELP_MESSAGE);
+    }
+    
+    
+    private void parse_and_execute_SHOW_CAPABILITIES(String e)
+    {
+        if (e == null || e.isEmpty()) return;
+        this.set_ResultSize(0);
+        this.refill_Result_Output_with_all_Capabilities();
     }
     
     

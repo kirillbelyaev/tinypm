@@ -10,7 +10,7 @@ package edu.csu.tinypm.interfaces;
  *
  * @author kirill
  */
-public interface LinuxCAPPolicyContainer {
+public interface LinuxCapabilitiesPolicyContainer {
     
     public enum LinuxCapabilities 
     {

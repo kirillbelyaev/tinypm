@@ -82,6 +82,15 @@ public class BLExtendedUnitTests {
         
         String CMD_4 = "REMOVE_POLICY_CLASS_POLICY 1 CAP_CHOWN";
         
+        String CMD_3 = "SHOW_CAPABILITIES abc";
+        
+        String CMD_2 = "SHOW_CAPABILITIES";
+        
+        String CMD_1 = "HELP";
+        
+        String CMD_14 = "EXIT";
+        
+        
         Parser_Extended_implement p = new Parser_Extended_implement();
         
         output = p.parse_and_execute_Command(CMD); 
@@ -190,13 +199,25 @@ public class BLExtendedUnitTests {
         System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
+        output = p.parse_and_execute_Command(CMD_3);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
+        output = p.parse_and_execute_Command(CMD_2);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
+        output = p.parse_and_execute_Command(CMD_1);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
-        
-        
-        
-        
+        output = p.parse_and_execute_Command(CMD_14);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         
         

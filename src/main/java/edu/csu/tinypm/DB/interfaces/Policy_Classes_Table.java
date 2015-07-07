@@ -24,7 +24,7 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
  */
 package edu.csu.tinypm.DB.interfaces;
 
-import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
+import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
 
 /**
  *
@@ -41,6 +41,6 @@ public interface Policy_Classes_Table
     final String COLUMN_POLICY_CLASS_POLICIES = "capabilities";  
     final String COLUMN_STATUS = "status";
     
-    LinuxCAPPolicyContainer.LinuxCapabilities LCS[] = LinuxCAPPolicyContainer.LinuxCapabilities.values();
+    LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();
     
 }

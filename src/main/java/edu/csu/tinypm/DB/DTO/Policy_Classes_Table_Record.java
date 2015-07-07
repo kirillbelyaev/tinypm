@@ -14,7 +14,7 @@ communication between processes is usually done resorting to remote interfaces.
 package edu.csu.tinypm.DB.DTO;
 
 import edu.csu.tinypm.DB.interfaces.Policy_Classes_Table;
-import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
+import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
 import java.io.Serializable;
 
 /**
@@ -32,7 +32,7 @@ public class Policy_Classes_Table_Record implements Serializable
     
     private String COLUMN_STATUS = "";
     
-    private LinuxCAPPolicyContainer.LinuxCapabilities LCS[] = LinuxCAPPolicyContainer.LinuxCapabilities.values();
+    private LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();
     
     /* set to indicate which field to update when calling write_Policy_Classes_Table_Record() */
     private String UPDATE_COLUMN = "";
@@ -73,11 +73,11 @@ public Policy_Classes_Table_Record()
         if (COLUMN_POLICY_CLASS_NAME != null) this.COLUMN_POLICY_CLASS_NAME = COLUMN_POLICY_CLASS_NAME;
     }
 
-    public LinuxCAPPolicyContainer.LinuxCapabilities[] get_LCS() {
+    public LinuxCapabilitiesPolicyContainer.LinuxCapabilities[] get_LCS() {
         return this.LCS;
     }
 
-    public void set_LCS(LinuxCAPPolicyContainer.LinuxCapabilities[] LCS) {
+    public void set_LCS(LinuxCapabilitiesPolicyContainer.LinuxCapabilities[] LCS) {
         this.LCS = LCS;
     }
     
@@ -87,7 +87,7 @@ public Policy_Classes_Table_Record()
         if (cap == null) return -1;
         if (cap.isEmpty()) return -1;
         
-        for (LinuxCAPPolicyContainer.LinuxCapabilities LCS1 : LCS) {
+        for (LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS1 : LCS) {
             if (LCS1.toString().equals(cap.trim())) {
                 //return LCS1.ordinal();  
                 return 0; //Found

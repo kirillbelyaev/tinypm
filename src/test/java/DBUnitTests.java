@@ -12,7 +12,7 @@ import edu.csu.tinypm.DB.implementation.ConnManager;
 import edu.csu.tinypm.DB.implementation.DB_Dispatcher;
 import edu.csu.tinypm.implementation.Parser_implement;
 import edu.csu.tinypm.DB.implementation.RecordDAO_implement;
-import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
+import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
 import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -54,7 +54,7 @@ public class DBUnitTests {
     
     Integer UID = 805;
     String APP_PATH = "/bin/ping";
-    String CAP_ATTR = LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
+    String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
     String STATUS = "1";
     
     @Test

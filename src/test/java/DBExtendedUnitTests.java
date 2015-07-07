@@ -10,7 +10,7 @@ import edu.csu.tinypm.DB.DTO.Policy_Classes_Table_Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 import edu.csu.tinypm.DB.implementation.DB_Dispatcher_Extended;
 import edu.csu.tinypm.DB.implementation.RecordDAOExtended_implement;
-import edu.csu.tinypm.interfaces.LinuxCAPPolicyContainer;
+import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
 import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -56,7 +56,7 @@ public class DBExtendedUnitTests {
         System.out.println("--------------------------------------");
         System.out.println("started small_tests... ");
         
-        LinuxCAPPolicyContainer.LinuxCapabilities LCS[] = LinuxCAPPolicyContainer.LinuxCapabilities.values();
+        LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();
         
         System.out.println("LCS is: " + LCS[0]);
         System.out.println("LCS is: " + LCS[1]);
@@ -76,7 +76,7 @@ public class DBExtendedUnitTests {
      }
     
     
-    String CAP_ATTR = LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
+    String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
     
     //Apps_Table_Record
     private final String COLUMN_APP_DESC = "icmp ping tool";
@@ -344,52 +344,52 @@ public class DBExtendedUnitTests {
 	assertNotNull(value);
 	System.out.println("update column is: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
+        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
@@ -484,8 +484,8 @@ public class DBExtendedUnitTests {
        
         r.set_COLUMN_STATUS_Active();
         
-        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        r.add_POLICY_CLASS_POLICY(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
         
         
         

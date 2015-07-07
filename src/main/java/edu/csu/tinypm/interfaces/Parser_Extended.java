@@ -28,11 +28,12 @@ public interface Parser_Extended
     {
         EXIT,
         HELP,
+        SHOW_CAPABILITIES,
         SHOW_POLICY_CLASS_APPS,
+        COUNT_POLICY_CLASS_APPS,
         SHOW_POLICY_CLASS_POLICIES,
         ADD_POLICY_CLASS_POLICY,
         REMOVE_POLICY_CLASS_POLICY,
-        COUNT_POLICY_CLASS_APPS,
         
         /* add new commands */
         SHOW_POLICY_CLASSES,
@@ -63,6 +64,7 @@ public interface Parser_Extended
           +  "The following are the commands you can apply at the PM prompt: \n"
           + PM_COMMANDS.HELP +  " : print this help info. \n"
           + PM_COMMANDS.EXIT + " : exit the PM shell. \n"
+          + PM_COMMANDS.SHOW_CAPABILITIES + " : show all available Linux capabilities supported by the OS kernel \n"  
           + PM_COMMANDS.SHOW_POLICY_CLASS_APPS + " : show a list of applications that belong to a policy class (required arguments: policy_class_ID (integer)) \n"   
           + PM_COMMANDS.COUNT_POLICY_CLASS_APPS + " : show the number of apps that belong to a policy class  (required arguments: policy_class_ID (integer)) \n"
           + PM_COMMANDS.SHOW_POLICY_CLASS_POLICIES + " : show the list of policies associated with the policy class  (required arguments: policy_class_ID (integer)) \n"
