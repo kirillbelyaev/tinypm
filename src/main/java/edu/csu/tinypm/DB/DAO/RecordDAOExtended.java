@@ -24,7 +24,14 @@ import edu.csu.tinypm.DB.exceptions.RecordDAOException;
  */
 
 public interface RecordDAOExtended extends DB_Base
-{      
+{  
+    /* we use macros to indicate the general method exit codes within the DAO implementation */
+    final int EMPTY_RESULT = -8;
+    final int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
+    final int INDICATE_EXECUTION_SUCCESS = 0;
+    final int RECORD_EXISTS = 1;
+    final int INDICATE_SQL_EXCEPTION = -2;
+    
     public void closeConnection() throws RecordDAOException;
     
     

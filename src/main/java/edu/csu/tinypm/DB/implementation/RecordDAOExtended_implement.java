@@ -470,7 +470,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     {
             Statement state = null;
             
-            if (this.conn == null) return -1;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             try 
             {
@@ -479,7 +479,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     } 
        
        
@@ -488,14 +488,14 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     {
             Statement state = null;
             
-            if (this.conn == null) return -1;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             try 
             {
                     state = this.conn.createStatement();
                     state.executeUpdate(DB_Constants_Extended.drop_PCS_DB_SQL);
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
        
     
@@ -615,8 +615,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     @Override
     public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
     {
-            if (this.conn == null) return -1;
-            if (r == null) return -1;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
             ResultSet rs = null;
@@ -642,9 +642,10 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             if (Policy_Classes_Table.PCS_DB_TABLE_NAME.equals(Policy_Classes_Table.PCS_DB_TABLE_NAME))
                             {
                                     count = rs.getInt(DB_Constants_Extended.COUNT);
-                            } else return -1;
+                            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
-                        rs.close();
+                        
+                    rs.close();
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
@@ -653,8 +654,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     
     private int check_If_Policy_Classes_Table_Record_Exists(Policy_Classes_Table_Record r) throws RecordDAOException //on PCID
     {
-            if (r == null) return -1; //indicate error
-            if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
             ResultSet rs = null;
@@ -665,7 +666,6 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     int index = 1;
 
-                    
                     ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
@@ -677,7 +677,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             rs.close();
                             rs = null;
                             //System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
-                            return 1; //entry exists
+                            return RECORD_EXISTS; //entry exists
                     }	
 
                     rs.close();
@@ -685,13 +685,13 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }    
 
-                    return 0; //no entry exists
+                    return EMPTY_RESULT; //no entry exists
     }
     
     private int insert_Policy_Classes_Table_Record(Policy_Classes_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
-            if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
 
@@ -713,18 +713,18 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             ps.executeBatch();
                             this.conn.setAutoCommit(true);
 
-                    } else return -1;
+                    } else return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
     
     
     private int update_Policy_Classes_Table_Record_on_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
-            if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
 
@@ -748,17 +748,17 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             this.conn.setAutoCommit(false);
                             ps.executeUpdate();
                             this.conn.setAutoCommit(true);
-                    } else return -1;
+                    } else return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
     
-    private int update_Policy_Classes_Table_Record_on_PCID_and_CAPS(Policy_Classes_Table_Record r) throws RecordDAOException
+    private int update_Policy_Classes_Table_Record_on_PCID_and_POLICIES(Policy_Classes_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
-            if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
 
@@ -778,46 +778,47 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             this.conn.setAutoCommit(false);
                             ps.executeUpdate();
                             this.conn.setAutoCommit(true);
-                    } else return -1;
+                    } else return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
     
     
     @Override
     public int write_Policy_Classes_Table_Record(Policy_Classes_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             try
             {	
-                if (this.check_If_Policy_Classes_Table_Record_Exists(r) == 0) //no record exists
+                if (this.check_If_Policy_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
                 {	
-                        if (this.insert_Policy_Classes_Table_Record(r) != 0) return -1;
+                        if (this.insert_Policy_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-                } else {//if record exists - just update it	
+                } else if (this.check_If_Policy_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
+                {//if record exists - just update it	
 
                         if (r.get_UPDATE_COLUMN().equals(Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME)) /* check if the update column
                             is a name column */
-                            if (this.update_Policy_Classes_Table_Record_on_PCID(r) != 0) return -2;
+                            if (this.update_Policy_Classes_Table_Record_on_PCID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (r.get_UPDATE_COLUMN().equals(Policy_Classes_Table.COLUMN_POLICY_CLASS_POLICIES)) /* check if the update column
                             is policies column */
-                            if (this.update_Policy_Classes_Table_Record_on_PCID_and_CAPS(r) != 0) return -2;
+                            if (this.update_Policy_Classes_Table_Record_on_PCID_and_POLICIES(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
 
             } catch (Exception e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
     
     
     @Override
     public int delete_Policy_Classes_Table_Records_On_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
-             if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             String statement = null;
             PreparedStatement ps = null;
@@ -835,8 +836,15 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     this.conn.setAutoCommit(true);
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-
-                    return 0;
+            
+            /*
+            Possible refactoring to every method to obtain the int exit code. 
+            but that defeats the purpose of using specialized exception class.
+            
+            } catch(SQLException e) { System.out.println("Exception: " + e.getMessage() ); return INDICATE_SQL_EXCEPTION;}
+            */        
+                    
+                    return INDICATE_EXECUTION_SUCCESS;
     }
 
     
