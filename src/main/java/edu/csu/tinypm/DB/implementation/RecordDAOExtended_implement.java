@@ -613,10 +613,9 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     
     
     @Override
-    public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID(Policy_Classes_Table_Record r) throws RecordDAOException
+    public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID() throws RecordDAOException
     {
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
             ResultSet rs = null;

@@ -332,7 +332,7 @@ public class Parser_Extended_implement implements Parser_Extended
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    count = this.db.count_Distinct_Policy_Classes_Table_Records_on_PCID(this.pcrec);
+                    count = this.db.count_Distinct_Policy_Classes_Table_Records_on_PCID();
                     this.set_ResultSize(count);
                     this.refill_ResultOutput(count.toString());
                     return INDICATE_EXECUTION_SUCCESS;

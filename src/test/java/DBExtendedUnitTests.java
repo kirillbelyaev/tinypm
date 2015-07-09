@@ -489,7 +489,7 @@ public class DBExtendedUnitTests {
         
         
         
-        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID(r);
+        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
@@ -504,7 +504,7 @@ public class DBExtendedUnitTests {
         System.out.println("write_Policy_Classes_Table_Record: value is: " + output);
         
         
-        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID(r);
+        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
@@ -535,7 +535,7 @@ public class DBExtendedUnitTests {
 	assertTrue("delete_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("delete_Policy_Classes_Table_Records_On_PCID: value is: " + output);
         
-        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID(r);
+        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
