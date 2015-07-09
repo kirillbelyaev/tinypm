@@ -98,39 +98,39 @@ public class DBExtendedUnitTests {
         Apps_Table_Record r = new Apps_Table_Record();
         String value = null;
         
-        r.setCOLUMN_APP_DESC(this.COLUMN_APP_DESC);
-        r.setCOLUMN_APP_PATH(this.COLUMN_APP_PATH);
-        r.setCOLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.setCOLUMN_APP_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
+        r.set_COLUMN_APP_DESC(this.COLUMN_APP_DESC);
+        r.set_COLUMN_APP_PATH(this.COLUMN_APP_PATH);
+        r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_APP_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
         r.set_Status_Active();
         
-        value = r.getCOLUMN_STATUS();
+        value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
-        r.setCOLUMN_STATUS(null);
-	value = r.getCOLUMN_STATUS();
+        r.set_COLUMN_STATUS(null);
+	value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
         r.set_Status_Inactive();
-	value = r.getCOLUMN_STATUS();
+	value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
-        value = r.getCOLUMN_APP_PATH();
+        value = r.get_COLUMN_APP_PATH();
 	assertNotNull(value);
 	System.out.println("app path is: " + value);
         
-        value = r.getCOLUMN_APP_DESC();
+        value = r.get_COLUMN_APP_DESC();
 	assertNotNull(value);
 	System.out.println("app desc is: " + value);
         
-        value = r.getCOLUMN_POLICY_CLASS_ID();
+        value = r.get_COLUMN_POLICY_CLASS_ID();
 	assertNotNull(value);
 	System.out.println("PCID is: " + value);
         
-        value = r.getCOLUMN_APP_CONTAINER_ID();
+        value = r.get_COLUMN_APP_CONTAINER_ID();
 	assertNotNull(value);
 	System.out.println("app container ID is: " + value);
         
@@ -197,11 +197,11 @@ public class DBExtendedUnitTests {
         output = db.createTable_APPS_DB();
 	assertTrue("createTable_APPS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        r.setCOLUMN_APP_PATH(this.COLUMN_APP_PATH);
-        r.setCOLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_APP_PATH(this.COLUMN_APP_PATH);
+        r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
         
-        r.setCOLUMN_APP_DESC(this.COLUMN_APP_DESC);
-        r.setCOLUMN_APP_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
+        r.set_COLUMN_APP_DESC(this.COLUMN_APP_DESC);
+        r.set_COLUMN_APP_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
         r.set_Status_Active();
         
         
@@ -229,11 +229,11 @@ public class DBExtendedUnitTests {
 	
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].getCOLUMN_APP_DESC());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].getCOLUMN_APP_PATH());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].getCOLUMN_POLICY_CLASS_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].getCOLUMN_APP_CONTAINER_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].getCOLUMN_STATUS());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_APP_DESC());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_APP_PATH());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_POLICY_CLASS_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_APP_CONTAINER_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
         recs = (Apps_Table_Record[]) db.read_Apps_Table_Records_On_All_APPs();
@@ -241,7 +241,7 @@ public class DBExtendedUnitTests {
         
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_All_APPs: rec array index 0 app value is: " + recs[0].getCOLUMN_APP_PATH());
+            System.out.println("read_Apps_Table_Records_On_All_APPs: rec array index 0 app value is: " + recs[0].get_COLUMN_APP_PATH());
         }
         
         
@@ -260,11 +260,11 @@ public class DBExtendedUnitTests {
 	
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].getCOLUMN_APP_DESC());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].getCOLUMN_APP_PATH());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].getCOLUMN_POLICY_CLASS_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].getCOLUMN_APP_CONTAINER_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].getCOLUMN_STATUS());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_APP_DESC());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_APP_PATH());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_POLICY_CLASS_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_APP_CONTAINER_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
         

@@ -69,8 +69,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     int index = 1;
 
-                    ps.setString(index++, r.getCOLUMN_APP_PATH());
-                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_APP_PATH());
+                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -128,11 +128,11 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                             int index = 1;
 
-                            ps.setString(index++, r.getCOLUMN_APP_DESC());
-                            ps.setString(index++, r.getCOLUMN_APP_PATH());
-                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
-                            ps.setString(index++, r.getCOLUMN_APP_CONTAINER_ID());
-                            ps.setString(index++, r.getCOLUMN_STATUS());
+                            ps.setString(index++, r.get_COLUMN_APP_DESC());
+                            ps.setString(index++, r.get_COLUMN_APP_PATH());
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_APP_CONTAINER_ID());
+                            ps.setString(index++, r.get_COLUMN_STATUS());
 
                             ps.addBatch();
                             this.conn.setAutoCommit(false);
@@ -162,8 +162,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                             int index = 1;
                             
-                            ps.setString(index++, r.getCOLUMN_APP_PATH());
-                            ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_APP_PATH());
+                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
                             
                             /*
                             ps.setString(index++, r.getCOLUMN_APP_DESC());
@@ -198,8 +198,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     int index = 1;
 
-                    ps.setString(index++, r.getCOLUMN_APP_PATH());
-                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_APP_PATH());
+                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     ps.executeUpdate();
@@ -275,7 +275,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     int index = 1;
 
-                    ps.setString(index++, r.getCOLUMN_APP_PATH());
+                    ps.setString(index++, r.get_COLUMN_APP_PATH());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -287,15 +287,15 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             {
                                     Apps_Table_Record rec = new Apps_Table_Record();
                                     
-                                    rec.setCOLUMN_APP_DESC(rs.getString(Apps_Table.COLUMN_APP_DESC));
+                                    rec.set_COLUMN_APP_DESC(rs.getString(Apps_Table.COLUMN_APP_DESC));
                                     
-                                    rec.setCOLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
+                                    rec.set_COLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
                                     
-                                    rec.setCOLUMN_POLICY_CLASS_ID(rs.getString(Apps_Table.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(Apps_Table.COLUMN_POLICY_CLASS_ID));
                                     
-                                    rec.setCOLUMN_APP_CONTAINER_ID(rs.getString(Apps_Table.COLUMN_APP_CONTAINER_ID));
+                                    rec.set_COLUMN_APP_CONTAINER_ID(rs.getString(Apps_Table.COLUMN_APP_CONTAINER_ID));
                                     
-                                    rec.setCOLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     
@@ -332,7 +332,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     int index = 1;
 
-                    ps.setString(index++, r.getCOLUMN_APP_PATH());
+                    ps.setString(index++, r.get_COLUMN_APP_PATH());
                     
                     //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
 
@@ -346,15 +346,15 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             {
                                     Apps_Table_Record rec = new Apps_Table_Record();
                                     
-                                    rec.setCOLUMN_APP_DESC(rs.getString(Apps_Table.COLUMN_APP_DESC));
+                                    rec.set_COLUMN_APP_DESC(rs.getString(Apps_Table.COLUMN_APP_DESC));
                                     
-                                    rec.setCOLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
+                                    rec.set_COLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
                                     
-                                    rec.setCOLUMN_POLICY_CLASS_ID(rs.getString(Apps_Table.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(Apps_Table.COLUMN_POLICY_CLASS_ID));
                                     
-                                    rec.setCOLUMN_APP_CONTAINER_ID(rs.getString(Apps_Table.COLUMN_APP_CONTAINER_ID));
+                                    rec.set_COLUMN_APP_CONTAINER_ID(rs.getString(Apps_Table.COLUMN_APP_CONTAINER_ID));
                                     
-                                    rec.setCOLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     
@@ -403,7 +403,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             {
                                     Apps_Table_Record rec = new Apps_Table_Record();
                                     
-                                    rec.setCOLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
+                                    rec.set_COLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
 
                                     rows.add(rec);
                                     
@@ -440,7 +440,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                     int index = 1;
 
-                    ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();

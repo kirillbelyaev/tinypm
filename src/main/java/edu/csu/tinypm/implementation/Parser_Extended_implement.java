@@ -656,7 +656,7 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                 if (this.commandParameters.size() > 0)
                 {    
-                    this.apprec.setCOLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    this.apprec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
                 }    
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;  

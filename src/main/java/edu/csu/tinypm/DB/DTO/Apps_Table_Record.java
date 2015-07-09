@@ -33,27 +33,27 @@ public Apps_Table_Record()
 	}
     
     
-    public String getCOLUMN_APP_DESC() {
+    public String get_COLUMN_APP_DESC() {
         return this.COLUMN_APP_DESC;
     }
 
-    public void setCOLUMN_APP_DESC(String COLUMN_APP_DESC) {
+    public void set_COLUMN_APP_DESC(String COLUMN_APP_DESC) {
         if (COLUMN_APP_DESC != null) this.COLUMN_APP_DESC = COLUMN_APP_DESC;
     }
 
-    public String getCOLUMN_APP_PATH() {
+    public String get_COLUMN_APP_PATH() {
         return this.COLUMN_APP_PATH;
     }
 
-    public void setCOLUMN_APP_PATH(String COLUMN_APP_PATH) {
+    public void set_COLUMN_APP_PATH(String COLUMN_APP_PATH) {
         if (COLUMN_APP_PATH != null) this.COLUMN_APP_PATH = COLUMN_APP_PATH;
     }
 
-    public String getCOLUMN_POLICY_CLASS_ID() {
+    public String get_COLUMN_POLICY_CLASS_ID() {
         return this.COLUMN_POLICY_CLASS_ID;
     }
 
-    public void setCOLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) {
+    public void set_COLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) {
         //if (COLUMN_POLICY_CLASS_ID != null) this.COLUMN_POLICY_CLASS_ID = COLUMN_POLICY_CLASS_ID;
         
         Integer id = null;
@@ -73,19 +73,19 @@ public Apps_Table_Record()
         }   
     }
 
-    public String getCOLUMN_APP_CONTAINER_ID() {
+    public String get_COLUMN_APP_CONTAINER_ID() {
         return this.COLUMN_APP_CONTAINER_ID;
     }
 
-    public void setCOLUMN_APP_CONTAINER_ID(String COLUMN_APP_CONTAINER_ID) {
+    public void set_COLUMN_APP_CONTAINER_ID(String COLUMN_APP_CONTAINER_ID) {
         if (COLUMN_APP_CONTAINER_ID != null) this.COLUMN_APP_CONTAINER_ID = COLUMN_APP_CONTAINER_ID;
     }
 
-    public String getCOLUMN_STATUS() {
+    public String get_COLUMN_STATUS() {
         return this.COLUMN_STATUS;
     }
 
-    public void setCOLUMN_STATUS(String COLUMN_STATUS) {
+    public void set_COLUMN_STATUS(String COLUMN_STATUS) {
         if (COLUMN_STATUS != null) this.COLUMN_STATUS = COLUMN_STATUS;
     }
     
