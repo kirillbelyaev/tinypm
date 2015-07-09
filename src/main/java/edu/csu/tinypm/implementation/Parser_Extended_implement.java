@@ -8,12 +8,13 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 
 package edu.csu.tinypm.implementation;
 
+import edu.csu.tinypm.DB.DAO.RecordDAOExtended;
+import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
 import edu.csu.tinypm.DB.DTO.Policy_Classes_Table_Record;
 import edu.csu.tinypm.DB.DTO.Record;
 import edu.csu.tinypm.DB.exceptions.RecordDAOException;
 import edu.csu.tinypm.DB.implementation.DB_Dispatcher_Extended;
 import edu.csu.tinypm.DB.implementation.RecordDAOExtended_implement;
-import edu.csu.tinypm.DB.interfaces.DB_Constants_Extended;
 import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
 
 
@@ -35,6 +36,8 @@ public class Parser_Extended_implement implements Parser_Extended
     private ArrayList <String> commandParameters = null;
 
     private Policy_Classes_Table_Record pcrec = null;
+    private Apps_Table_Record apprec = null;
+    
     private DB_Dispatcher_Extended dd = null;
     private RecordDAOExtended_implement db = null;
     
@@ -238,7 +241,15 @@ public class Parser_Extended_implement implements Parser_Extended
         }  else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_SHOW_CAPABILITIES(e);
-                
+            
+        
+        } else if (e.indexOf(PM_COMMANDS.COUNT_POLICY_CLASS_APPS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_COUNT_POLICY_CLASS_APPS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_POLICY_CLASS_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }                 
         } else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_HELP(e);
@@ -285,7 +296,11 @@ public class Parser_Extended_implement implements Parser_Extended
             this.commandParameters.clear();
         }    
         
+        
+        /* initialize the records only once and then reuse in other methods to save memory */ 
         if (this.pcrec == null) this.pcrec = new Policy_Classes_Table_Record();
+        
+        if (this.apprec == null) this.apprec = new Apps_Table_Record();
         
         this.tokenizer = new StringTokenizer(e, " ");
         
@@ -350,7 +365,7 @@ public class Parser_Extended_implement implements Parser_Extended
                         this.set_ResultSize(ra.length);
                         this.refill_ResultOutput_with_POLICY_CLASS_ID_AND_NAME(ra);
                         return INDICATE_EXECUTION_SUCCESS;
-                    } else return DB_Constants_Extended.EMPTY_RESULT;
+                    } else return RecordDAOExtended.EMPTY_RESULT;
                 }    
             } catch (RecordDAOException rex) 
             {
@@ -561,7 +576,7 @@ public class Parser_Extended_implement implements Parser_Extended
                 this.set_ResultSize(caps.size());
                 this.refill_ResultOutput_with_POLICY_CLASS_POLICIES(caps);
                 return INDICATE_EXECUTION_SUCCESS;
-            } else return DB_Constants_Extended.EMPTY_RESULT;
+            } else return RecordDAOExtended.EMPTY_RESULT;
             
         }  else return INDICATE_ARGUMENT_MISMATCH;
     }
@@ -594,7 +609,7 @@ public class Parser_Extended_implement implements Parser_Extended
                 this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(caps.get(0)); 
                 this.pcrec.remove_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* do it once more */
             
-            } else return DB_Constants_Extended.EMPTY_RESULT; /* if no policies exist */   
+            } else return RecordDAOExtended.EMPTY_RESULT; /* if no policies exist */   
             
             //System.out.println("policies are: " + this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES());
             
@@ -623,6 +638,47 @@ public class Parser_Extended_implement implements Parser_Extended
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
+    
+    
+    /* apps table operations */
+    
+    private Integer parse_and_execute_COUNT_POLICY_CLASS_APPS(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        Integer count = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        
+        if (num_tokens == 2)
+        { 
+            
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 0)
+                {    
+                    this.apprec.setCOLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                }    
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;  
+            
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    count = this.db.count_Distinct_Apps_Table_Records_on_PCID(this.apprec);
+                    this.set_ResultSize(count);
+                    this.refill_ResultOutput(count.toString());
+                    return INDICATE_EXECUTION_SUCCESS;
+                }    
+            } catch (RecordDAOException rex) 
+            {
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }        
+    
     
     
 }

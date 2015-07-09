@@ -205,7 +205,7 @@ public class DBExtendedUnitTests {
         r.set_Status_Active();
         
         
-        output = db.count_Distinct_Apps_Table_Records_on_APP_and_PCID(r);
+        output = db.count_Distinct_Apps_Table_Records_on_PCID(r);
 	assertNotNull(output);
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         
@@ -245,7 +245,7 @@ public class DBExtendedUnitTests {
         }
         
         
-        output = db.count_Distinct_Apps_Table_Records_on_APP_and_PCID(r);
+        output = db.count_Distinct_Apps_Table_Records_on_PCID(r);
 	assertNotNull(output);
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         
@@ -268,7 +268,7 @@ public class DBExtendedUnitTests {
         }
         
         
-        output = db.count_Distinct_Apps_Table_Records_on_APP_and_PCID(r);
+        output = db.count_Distinct_Apps_Table_Records_on_PCID(r);
 	assertNotNull(output);
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         

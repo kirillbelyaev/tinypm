@@ -54,7 +54,23 @@ public Apps_Table_Record()
     }
 
     public void setCOLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) {
-        if (COLUMN_POLICY_CLASS_ID != null) this.COLUMN_POLICY_CLASS_ID = COLUMN_POLICY_CLASS_ID;
+        //if (COLUMN_POLICY_CLASS_ID != null) this.COLUMN_POLICY_CLASS_ID = COLUMN_POLICY_CLASS_ID;
+        
+        Integer id = null;
+        
+        if (COLUMN_POLICY_CLASS_ID != null)
+        {
+           try
+           {//check if string is a number    
+               id = Integer.valueOf(COLUMN_POLICY_CLASS_ID);
+               this.COLUMN_POLICY_CLASS_ID = id.toString();
+               id = null;
+           } catch (NumberFormatException nfex)
+           {
+               //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
+               System.out.println("Apps_Table_Record.setCOLUMN_POLICY_CLASS_ID(): ID string is not a number! ");
+           }    
+        }   
     }
 
     public String getCOLUMN_APP_CONTAINER_ID() {

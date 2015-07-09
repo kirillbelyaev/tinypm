@@ -91,6 +91,13 @@ public class BLExtendedUnitTests {
         String CMD_14 = "EXIT";
         
         
+        String CMD_15 = "COUNT_POLICY_CLASS_APPS";
+        
+        String CMD_16 = "COUNT_POLICY_CLASS_APPS 1";
+        
+        String CMD_17 = "COUNT_POLICY_CLASS_APPS 2";
+        
+        
         Parser_Extended_implement p = new Parser_Extended_implement();
         
         output = p.parse_and_execute_Command(CMD); 
@@ -215,6 +222,23 @@ public class BLExtendedUnitTests {
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         output = p.parse_and_execute_Command(CMD_14);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        
+        output = p.parse_and_execute_Command(CMD_15);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        output = p.parse_and_execute_Command(CMD_16);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        
+        output = p.parse_and_execute_Command(CMD_17);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());

@@ -25,9 +25,7 @@ public interface DB_Constants_Extended
 	final String SQLITE_DRV = "org.sqlite.JDBC";
 	final String DB_URI = "jdbc:sqlite:" + Apps_Table.APPS_DB_NAME;
 	
-	final String charSet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";   
-        
-        final int EMPTY_RESULT = -8;
+	final String charSet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
         
         final String COUNT = "COUNT";
         
@@ -47,7 +45,7 @@ public interface DB_Constants_Extended
         
         final String SELECT_FROM_APPS_DB_ALL_APPS_SQL = "select distinct " + Apps_Table.COLUMN_APP_PATH + " from " + Apps_Table.APPS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_APPS_DB_COUNT_APPS_ON_PCID_SQL = "select count(*) as " + COUNT + " from " + Apps_Table.APPS_DB_TABLE_NAME + " where " + Apps_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
+        final String SELECT_FROM_APPS_DB_COUNT_APPS_ON_PCID_SQL = "select count(*) as " + COUNT + " from " + Apps_Table.APPS_DB_TABLE_NAME + " where " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ?";
         
         final String SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "select " + Apps_Table.COLUMN_APP_PATH + " from " + Apps_Table.APPS_DB_TABLE_NAME  + " where " + Apps_Table.COLUMN_APP_PATH + " = ? and " + Apps_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
         

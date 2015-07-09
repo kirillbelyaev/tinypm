@@ -229,7 +229,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     {
             Statement state = null;
             
-            if (this.conn == null) return -1;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             try 
             {
@@ -238,7 +238,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     } 
     
     
@@ -247,14 +247,14 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     {
             Statement state = null;
             
-            if (this.conn == null) return -1;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             try 
             {
                     state = this.conn.createStatement();
                     state.executeUpdate(DB_Constants_Extended.drop_APPS_DB_SQL);
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
     
     
@@ -424,10 +424,10 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
      
      
     @Override
-    public Integer count_Distinct_Apps_Table_Records_on_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException
+    public Integer count_Distinct_Apps_Table_Records_on_PCID(Apps_Table_Record r) throws RecordDAOException
     {
-            if (this.conn == null) return -1;
-            if (r == null) return -1;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
             ResultSet rs = null;
@@ -453,7 +453,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
                             {
                                     count = rs.getInt(DB_Constants_Extended.COUNT);
-                            } else return -1;
+                            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                         rs.close();
 

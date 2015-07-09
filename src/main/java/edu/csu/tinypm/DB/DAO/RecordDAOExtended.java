@@ -49,7 +49,7 @@ public interface RecordDAOExtended extends DB_Base
     
     public Apps_Table_Record[] read_Apps_Table_Records_On_All_APPs() throws RecordDAOException;
     
-    public Integer count_Distinct_Apps_Table_Records_on_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException;
+    public Integer count_Distinct_Apps_Table_Records_on_PCID(Apps_Table_Record r) throws RecordDAOException;
      
     public int write_Apps_Table_Record(Apps_Table_Record r) throws RecordDAOException;
     
