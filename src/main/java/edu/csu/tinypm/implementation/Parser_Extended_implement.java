@@ -359,7 +359,7 @@ public class Parser_Extended_implement implements Parser_Extended
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    ra = this.db.read_Policy_Classes_Table_Records_On_All_Classes(pcrec);
+                    ra = this.db.read_Policy_Classes_Table_Records_On_All_Classes();
                     if (ra != null)
                     {    
                         this.set_ResultSize(ra.length);

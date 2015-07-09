@@ -558,9 +558,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     
     
     @Override
-    public Policy_Classes_Table_Record[] read_Policy_Classes_Table_Records_On_All_Classes(Policy_Classes_Table_Record r) throws RecordDAOException       
+    public Policy_Classes_Table_Record[] read_Policy_Classes_Table_Records_On_All_Classes() throws RecordDAOException       
     {
-            if (r == null) return null;
             if (this.conn == null) return null;
 
             PreparedStatement ps = null;

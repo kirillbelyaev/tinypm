@@ -520,7 +520,7 @@ public class DBExtendedUnitTests {
         }
         
         
-        recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_All_Classes(r);
+        recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_All_Classes();
         assertTrue("read_Policy_Classes_Table_Records_On_All_Classes: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
