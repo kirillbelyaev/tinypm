@@ -380,6 +380,11 @@ public class Parser_Extended_implement implements Parser_Extended
     private Integer parse_and_execute_CREATE_POLICY_CLASS(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 3)
@@ -422,10 +427,13 @@ public class Parser_Extended_implement implements Parser_Extended
     {
         Policy_Classes_Table_Record pcr [] = null;
         ArrayList<String> caps = null;
-        //String caps = null;
 
         if (pcid == null || pcid.isEmpty()) return null;
-
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.pcrec == null) return null;
+        
         this.pcrec.set_COLUMN_POLICY_CLASS_ID(pcid.trim());
 
         try 
@@ -502,6 +510,11 @@ public class Parser_Extended_implement implements Parser_Extended
     private Integer parse_and_execute_ADD_POLICY_CLASS_POLICY(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 3)
@@ -559,6 +572,11 @@ public class Parser_Extended_implement implements Parser_Extended
     private Integer parse_and_execute_SHOW_POLICY_CLASS_POLICIES(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
         ArrayList<String> caps = null;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
@@ -567,7 +585,10 @@ public class Parser_Extended_implement implements Parser_Extended
             if (this.commandParameters != null)
             {
                 if (this.commandParameters.size() > 0)
-                    caps = this.get_POLICY_CLASS_POLICIES(this.commandParameters.get(0));
+                { 
+                    this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
+                } 
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
@@ -584,6 +605,11 @@ public class Parser_Extended_implement implements Parser_Extended
     private Integer parse_and_execute_REMOVE_POLICY_CLASS_POLICY(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 3)
@@ -645,6 +671,12 @@ public class Parser_Extended_implement implements Parser_Extended
     private Integer parse_and_execute_COUNT_POLICY_CLASS_APPS(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.apprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        
         Integer count = null;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
