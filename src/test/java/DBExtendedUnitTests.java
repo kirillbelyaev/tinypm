@@ -245,6 +245,15 @@ public class DBExtendedUnitTests {
         }
         
         
+        recs = (Apps_Table_Record[]) db.read_Apps_Table_Records_On_PCID(r);
+        assertTrue("read_Apps_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
+        
+        if (recs != null)
+        {    
+            System.out.println("read_Apps_Table_Records_On_PCID: rec array index 0 app value is: " + recs[0].get_COLUMN_APP_PATH());
+        }
+        
+        
         output = db.count_Distinct_Apps_Table_Records_on_PCID(r);
 	assertNotNull(output);
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);

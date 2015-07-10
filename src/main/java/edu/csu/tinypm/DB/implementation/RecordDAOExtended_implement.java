@@ -372,6 +372,64 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     rows.toArray(array);
                     return array;
     }
+    
+    
+    
+    @Override
+    public Apps_Table_Record[] read_Apps_Table_Records_On_PCID(Apps_Table_Record r) throws RecordDAOException       
+    {
+            if (r == null) return null;
+            if (this.conn == null) return null;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ArrayList <Apps_Table_Record> rows = new ArrayList<Apps_Table_Record>();
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_PCID_SQL);
+
+                    int index = 1;
+
+                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    while (rs.next()) 
+                    {
+                            if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
+                            {
+                                    Apps_Table_Record rec = new Apps_Table_Record();
+                                    
+                                    rec.set_COLUMN_APP_DESC(rs.getString(Apps_Table.COLUMN_APP_DESC));
+                                    
+                                    rec.set_COLUMN_APP_PATH(rs.getString(Apps_Table.COLUMN_APP_PATH));
+                                    
+                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(Apps_Table.COLUMN_POLICY_CLASS_ID));
+                                    
+                                    rec.set_COLUMN_APP_CONTAINER_ID(rs.getString(Apps_Table.COLUMN_APP_CONTAINER_ID));
+                                    
+                                    rec.set_COLUMN_STATUS(rs.getString(Apps_Table.COLUMN_STATUS));
+
+                                    rows.add(rec);
+                                    
+                                    rec = null;	
+                            } else return null;
+                    }
+                        rs.close();
+                        rs = null;
+
+            } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
+
+                    if (rows.isEmpty()) return null;
+
+                    Apps_Table_Record [] array = new Apps_Table_Record [ rows.size() ];
+                    rows.toArray(array);
+                    return array;
+    }
    
     
     

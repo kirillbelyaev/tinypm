@@ -93,21 +93,12 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
-    private void refill_ResultOutput_with_POLICY_CLASS_POLICIES(ArrayList<String> r) 
+    private void refill_ResultOutput(ArrayList<String> r) 
     {
         if (r == null) return;
         this.ResultOutput.clear();
         for (int i = 0; i < r.size(); i++)
             this.ResultOutput.add(r.get(i));        
-    }
-    
-    
-    private void refill_ResultOutput_with_APP_PATH(Record[] r) 
-    {
-        if (r == null) return;
-        this.ResultOutput.clear();
-        for (int i=0; i < r.length; i++)
-            this.ResultOutput.add(r[i].getApp_PATH());
     }
     
     
@@ -249,7 +240,14 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                 this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_POLICY_CLASS_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }                 
+            } 
+        } else if (e.indexOf(PM_COMMANDS.SHOW_POLICY_CLASS_APPS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_SHOW_POLICY_CLASS_APPS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASS_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }                     
         } else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_HELP(e);
@@ -595,7 +593,7 @@ public class Parser_Extended_implement implements Parser_Extended
             if (caps != null)
             {
                 this.set_ResultSize(caps.size());
-                this.refill_ResultOutput_with_POLICY_CLASS_POLICIES(caps);
+                this.refill_ResultOutput(caps);
                 return INDICATE_EXECUTION_SUCCESS;
             } else return RecordDAOExtended.EMPTY_RESULT;
             
@@ -709,7 +707,77 @@ public class Parser_Extended_implement implements Parser_Extended
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;
-    }        
+    } 
+    
+    
+    private ArrayList<String> get_POLICY_CLASS_APPS(String pcid)
+    {
+        Apps_Table_Record[] appsr = null;
+        ArrayList<String> apps = null;
+
+        if (pcid == null || pcid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.apprec == null) return null;
+        
+        this.apprec.set_COLUMN_POLICY_CLASS_ID(pcid.trim());
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                appsr = this.db.read_Apps_Table_Records_On_PCID(this.apprec);  
+            }    
+        } catch (RecordDAOException rex) 
+        {
+            Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (appsr != null)
+        {    
+            apps = new ArrayList<String>();
+            for (int i=0; i < appsr.length; i++)
+                apps.add(appsr[i].get_COLUMN_APP_PATH());
+        }
+        
+        return apps;
+    }
+    
+    
+    private Integer parse_and_execute_SHOW_POLICY_CLASS_APPS(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.apprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> apps = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 2)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 0)
+                { 
+                    this.apprec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    apps = this.get_POLICY_CLASS_APPS(this.apprec.get_COLUMN_POLICY_CLASS_ID().trim());
+                } 
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            if (apps != null)
+            {
+                this.set_ResultSize(apps.size());
+                this.refill_ResultOutput(apps);
+                return INDICATE_EXECUTION_SUCCESS;
+            } else return RecordDAOExtended.EMPTY_RESULT;
+            
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+    }
+
     
     
     
