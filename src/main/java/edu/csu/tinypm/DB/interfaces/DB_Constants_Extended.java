@@ -47,12 +47,12 @@ public interface DB_Constants_Extended
         
         final String SELECT_FROM_APPS_DB_COUNT_APPS_ON_PCID_SQL = "select count(*) as " + COUNT + " from " + Apps_Table.APPS_DB_TABLE_NAME + " where " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ?";
         
-        final String SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "select " + Apps_Table.COLUMN_APP_PATH + " from " + Apps_Table.APPS_DB_TABLE_NAME  + " where " + Apps_Table.COLUMN_APP_PATH + " = ? and " + Apps_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
+        final String SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "select " + ALL + " from " + Apps_Table.APPS_DB_TABLE_NAME  + " where " + Apps_Table.COLUMN_APP_PATH + " = ? and " + Apps_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
         
         final String SELECT_FROM_APPS_DB_ON_PCID_SQL = "select " + ALL + " from " + Apps_Table.APPS_DB_TABLE_NAME  + " where " + Apps_Table.COLUMN_POLICY_CLASS_ID  + " = ?";
         
         
-        final String UPDATE_APPS_DB_ON_APP_AND_PCID_SQL = "update " + Apps_Table.APPS_DB_TABLE_NAME + " set " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ? "  + "where " + Apps_Table.COLUMN_APP_PATH + " = ? and " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String UPDATE_APPS_DB_ON_APP_AND_PCID_SET_PCID_SQL = "update " + Apps_Table.APPS_DB_TABLE_NAME + " set " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ? "  + "where " + Apps_Table.COLUMN_APP_PATH + " = ? and " + Apps_Table.COLUMN_POLICY_CLASS_ID + " = ?";
         
         final String INSERT_INTO_APPS_DB_SQL = "insert into " + Apps_Table.APPS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
         

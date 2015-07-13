@@ -57,8 +57,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
         
     private int check_If_Apps_Table_Record_Exists(Apps_Table_Record r) throws RecordDAOException //on app_path and PCID
     {
-            if (r == null) return -1; //indicate error
-            if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
             ResultSet rs = null;
@@ -80,8 +80,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     {
                             rs.close();
                             rs = null;
-                            System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
-                            return 1; //entry exists
+                            return RECORD_EXISTS; //entry exists
                     }	
 
                     rs.close();
@@ -89,34 +88,39 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }    
 
-                    return 0; //no entry exists
+                    return EMPTY_RESULT; //no entry exists
     }
         
         
     @Override
     public int write_Apps_Table_Record(Apps_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             try
             {	
-            if (this.check_If_Apps_Table_Record_Exists(r) == 0) //no record exists
-            {	
-                    if (this.insert_Apps_Table_Record(r) != 0) return -1;
+                if (this.check_If_Apps_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
+                {	
+                        if (this.insert_Apps_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            } else {//if record exists - just update it	
-                    if (this.update_Apps_Table_Record_on_APP_and_PCID(r) != 0) return -2;
-            }
+
+                } else if (this.check_If_Apps_Table_Record_Exists(r) == RECORD_EXISTS) 
+                {/* record exists */
+                    /* if record exists - just update it */	
+                    if (r.get_UPDATE_COLUMN().equals(Apps_Table.COLUMN_POLICY_CLASS_ID)) /* check if the update column
+                            is a PCID column */
+                        if (this.update_Apps_Table_Record_on_APP_and_PCID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
 
             } catch (Exception e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
 
     
     private int insert_Apps_Table_Record(Apps_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
-            if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
 
@@ -139,18 +143,18 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             ps.executeBatch();
                             this.conn.setAutoCommit(true);
 
-                    } else return -1;
+                    } else return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
     
     
     private int update_Apps_Table_Record_on_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
-            if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             PreparedStatement ps = null;
 
@@ -158,7 +162,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
             {
                     if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
                     {	
-                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_APPS_DB_ON_APP_AND_PCID_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_APPS_DB_ON_APP_AND_PCID_SET_PCID_SQL);
 
                             int index = 1;
                             
@@ -175,11 +179,11 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                             this.conn.setAutoCommit(false);
                             ps.executeUpdate();
                             this.conn.setAutoCommit(true);
-                    } else return -1;
+                    } else return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
     
     

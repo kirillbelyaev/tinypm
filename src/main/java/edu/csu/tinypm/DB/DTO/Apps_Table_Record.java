@@ -12,6 +12,7 @@ communication between processes is usually done resorting to remote interfaces.
  */
 package edu.csu.tinypm.DB.DTO;
 
+import edu.csu.tinypm.DB.interfaces.Apps_Table;
 import java.io.Serializable;
 
 /**
@@ -27,11 +28,29 @@ public class Apps_Table_Record implements Serializable
     private String COLUMN_APP_CONTAINER_ID = "";
     private String COLUMN_STATUS = "";
     
+    /* set to indicate which field to update when calling write_Apps_Table_Record() */
+    private String UPDATE_COLUMN = "";
+    
+    
 public Apps_Table_Record()
 	{
             
 	}
     
+    public String get_UPDATE_COLUMN() {
+        return this.UPDATE_COLUMN;
+    }
+    
+    public void set_UPDATE_COLUMN_to_POLICY_CLASS_ID() {
+        this.UPDATE_COLUMN = Apps_Table.COLUMN_POLICY_CLASS_ID;
+    }
+    
+    
+    public void set_UPDATE_COLUMN_to_STATUS() {
+        this.UPDATE_COLUMN = Apps_Table.COLUMN_STATUS;
+    }
+
+
     
     public String get_COLUMN_APP_DESC() {
         return this.COLUMN_APP_DESC;
@@ -68,7 +87,7 @@ public Apps_Table_Record()
            } catch (NumberFormatException nfex)
            {
                //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
-               System.out.println("Apps_Table_Record.setCOLUMN_POLICY_CLASS_ID(): ID string is not a number! ");
+               System.out.println("Apps_Table_Record.setCOLUMN_POLICY_CLASS_ID(): PCID string is not a number! ");
            }    
         }   
     }
