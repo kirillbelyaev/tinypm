@@ -124,7 +124,9 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
                     /* if record exists - just update it */	
                     if (r.get_UPDATE_COLUMN().equals(Apps_Table.COLUMN_POLICY_CLASS_ID)) /* check if the update column
                             is a PCID column */
+                    {
                         if (this.update_Apps_Table_Record_on_APP_and_PCID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    }    
                 }
 
             } catch (Exception e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
@@ -181,8 +183,9 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
                             int index = 1;
                             
-                            ps.setString(index++, r.get_COLUMN_APP_PATH());
                             ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_APP_PATH());
+                            
                             
                             /*
                             ps.setString(index++, r.getCOLUMN_APP_DESC());

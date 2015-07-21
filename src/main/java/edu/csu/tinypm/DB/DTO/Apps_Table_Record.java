@@ -14,6 +14,7 @@ package edu.csu.tinypm.DB.DTO;
 
 import edu.csu.tinypm.DB.interfaces.Apps_Table;
 import java.io.Serializable;
+import java.io.*;
 
 /**
  *
@@ -50,6 +51,10 @@ public Apps_Table_Record()
         this.UPDATE_COLUMN = Apps_Table.COLUMN_STATUS;
     }
 
+    
+    public void set_UPDATE_COLUMN_to_APP_PATH() {
+        this.UPDATE_COLUMN = Apps_Table.COLUMN_APP_PATH;
+    }
 
     
     public String get_COLUMN_APP_DESC() {
@@ -64,17 +69,27 @@ public Apps_Table_Record()
         return this.COLUMN_APP_PATH;
     }
 
-    public void set_COLUMN_APP_PATH(String COLUMN_APP_PATH) {
-        if (COLUMN_APP_PATH != null) this.COLUMN_APP_PATH = COLUMN_APP_PATH;
+    public void set_COLUMN_APP_PATH(String COLUMN_APP_PATH) 
+    {
+        if (COLUMN_APP_PATH != null)
+        {
+            if (!COLUMN_APP_PATH.isEmpty())
+            {    
+                File f = new File(COLUMN_APP_PATH);
+                
+                /* set only if an app is an actual file, does exist and not 
+                a directory */
+                if (f.isFile()) this.COLUMN_APP_PATH = COLUMN_APP_PATH;
+            }
+        }
     }
 
     public String get_COLUMN_POLICY_CLASS_ID() {
         return this.COLUMN_POLICY_CLASS_ID;
     }
 
-    public void set_COLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) {
-        //if (COLUMN_POLICY_CLASS_ID != null) this.COLUMN_POLICY_CLASS_ID = COLUMN_POLICY_CLASS_ID;
-        
+    public void set_COLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) 
+    {    
         Integer id = null;
         
         if (COLUMN_POLICY_CLASS_ID != null)
