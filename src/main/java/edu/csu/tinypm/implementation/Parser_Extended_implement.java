@@ -247,7 +247,14 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                 this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASS_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }                     
+            }
+        } else if (e.indexOf(PM_COMMANDS.MOVE_APP_TO_POLICY_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_MOVE_APP_TO_POLICY_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(PM_ERRORS.MOVE_APP_TO_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }                         
         } else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_HELP(e);
@@ -778,7 +785,52 @@ public class Parser_Extended_implement implements Parser_Extended
         }  else return INDICATE_ARGUMENT_MISMATCH;
     }
 
-    
+    private Integer parse_and_execute_MOVE_APP_TO_POLICY_CLASS(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.apprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 3)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 1)
+                { 
+                    this.apprec.set_COLUMN_APP_PATH(this.commandParameters.get(0));
+                    this.apprec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(1));
+                    this.apprec.set_UPDATE_COLUMN_to_POLICY_CLASS_ID(); /* indicate the update column */
+                } 
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    if (this.db.write_Apps_Table_Record(this.apprec) == INDICATE_EXECUTION_SUCCESS) {    
+                        this.set_ResultSize(0);
+                        this.refill_ResultOutput("");
+                        return INDICATE_EXECUTION_SUCCESS;
+                    } else
+                        return  INDICATE_CONDITIONAL_EXIT_STATUS;
+                }    
+            } catch (RecordDAOException rex) 
+            {
+                Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }
+            
+            
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+
     
     
 }

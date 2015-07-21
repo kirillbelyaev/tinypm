@@ -65,12 +65,19 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             try 
             {	
-                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
+                    /* too specific selection - an app record with a particular pcid might surely not exist
+                    but there might be a record with a different pcid thus creating several
+                    records of an app belonging to different policy classes that is NOT what we want */     
+                    //ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
+                
+                    /* we have to make sure that only a single app record with app_path column exists in the db */
+                    ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_SQL);
 
                     int index = 1;
 
                     ps.setString(index++, r.get_COLUMN_APP_PATH());
-                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                    
+                    //ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -96,9 +103,17 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     public int write_Apps_Table_Record(Apps_Table_Record r) throws RecordDAOException
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            Policy_Classes_Table_Record pcr = null;
 
             try
-            {	
+            {
+                pcr = new Policy_Classes_Table_Record();
+                
+                pcr.set_COLUMN_POLICY_CLASS_ID(r.get_COLUMN_POLICY_CLASS_ID());
+                
+                if (this.check_If_Policy_Classes_Table_Record_Exists(pcr) == EMPTY_RESULT) return INDICATE_CONDITIONAL_EXIT_STATUS; //no record exists
+                
                 if (this.check_If_Apps_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
                 {	
                         if (this.insert_Apps_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -162,7 +177,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
             {
                     if (Apps_Table.APPS_DB_TABLE_NAME.equals(Apps_Table.APPS_DB_TABLE_NAME))
                     {	
-                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_APPS_DB_ON_APP_AND_PCID_SET_PCID_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants_Extended.UPDATE_APPS_DB_ON_APP_SET_PCID_SQL);
 
                             int index = 1;
                             
@@ -190,8 +205,8 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
     @Override
     public int delete_Apps_Table_Records_On_APP_and_PCID(Apps_Table_Record r) throws RecordDAOException
     {
-            if (r == null) return -1;
-             if (this.conn == null) return -1;
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
             String statement = null;
             PreparedStatement ps = null;
@@ -211,7 +226,7 @@ public class RecordDAOExtended_implement implements RecordDAOExtended
 
             } catch(SQLException e) { throw new RecordDAOException( "Exception: " + e.getMessage(), e ); }
 
-                    return 0;
+                    return INDICATE_EXECUTION_SUCCESS;
     }
 
     

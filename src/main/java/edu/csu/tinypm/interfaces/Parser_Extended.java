@@ -56,7 +56,8 @@ public interface Parser_Extended
          /* add new commands */
         COUNT_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
         SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
-        CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2
+        CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
+        MOVE_APP_TO_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2
         
         
     }
@@ -71,7 +72,9 @@ public interface Parser_Extended
           + PM_COMMANDS.SHOW_POLICY_CLASS_POLICIES + " : show the list of policies associated with the policy class  (required arguments: policy_class_ID (integer)) \n"
           + PM_COMMANDS.ADD_POLICY_CLASS_POLICY + " : add a policy to a policy class (required arguments: policy_class_ID (integer), policy) \n"  
           + PM_COMMANDS.REMOVE_POLICY_CLASS_POLICY + " : remove a policy from a policy class  (required arguments: policy_class_ID (integer), policy) \n"
+          + PM_COMMANDS.MOVE_APP_TO_POLICY_CLASS + " : move an app to a policy class  (required arguments: app_path, policy_class_ID (integer)) \n"
           
+            
           /* add new commands */
           + PM_COMMANDS.COUNT_POLICY_CLASSES + " : show the number of policy classes \n" 
           + PM_COMMANDS.SHOW_POLICY_CLASSES + " : show the list of policy classes \n"
