@@ -456,10 +456,20 @@ public class Parser_Extended_implement implements Parser_Extended
         {    
             caps = new ArrayList<String>();
             for (int i = 0; i < pcr.length; i++)
-                caps.add(pcr[i].get_COLUMN_POLICY_CLASS_POLICIES());
+            {
+                /* let us make sure that a policy class record does have policies */
+                if (!pcr[i].check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty())
+                    caps.add(pcr[i].get_COLUMN_POLICY_CLASS_POLICIES()); /* add non-empty
+                policies only */
+            }    
         }
         
-        return caps;
+        /* let us ensure that we return only non-empty policies */
+        if (caps != null)
+            if ( !caps.isEmpty() ) return caps;
+            else return null;
+        
+        return null; /* return NULL by default */
     }
     
     private int check_if_Policy_Exists (String pcid, String p)
@@ -522,8 +532,8 @@ public class Parser_Extended_implement implements Parser_Extended
                     this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
                     this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(this.commandParameters.get(1));
                     this.pcrec.set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES(); /* indicate the update column */
-                }    
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
+                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
             if (this.check_if_Policy_Exists(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES()) == INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
@@ -584,8 +594,8 @@ public class Parser_Extended_implement implements Parser_Extended
                 { 
                     this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
                     caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
-                } 
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
+                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
             if (caps != null)
@@ -617,8 +627,8 @@ public class Parser_Extended_implement implements Parser_Extended
                     this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
                     this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(this.commandParameters.get(1));
                     this.pcrec.set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES(); /* indicate the update column */
-                }    
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
+                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
             if (this.check_if_Policy_Exists(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES()) == INDICATE_CONDITIONAL_EXIT_STATUS) return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
@@ -799,6 +809,8 @@ public class Parser_Extended_implement implements Parser_Extended
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
+            
+            /* Time to call the enforcer before proceeding to the DB layer */
             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
             if (this.ei.build_EnforcerCMDParameters(this.prepare_EnforcerParameters(this.apprec.get_COLUMN_POLICY_CLASS_ID(), this.apprec.get_COLUMN_APP_PATH())) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
             

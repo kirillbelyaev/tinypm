@@ -134,6 +134,13 @@ public Policy_Classes_Table_Record()
     public String get_COLUMN_POLICY_CLASS_POLICIES() {
         return this.COLUMN_POLICY_CLASS_POLICIES;
     }
+    
+    
+    public boolean check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty() {
+        if (this.get_COLUMN_POLICY_CLASS_POLICIES().isEmpty() ) return true;
+        else return false;
+    }
+    
 
     public void set_COLUMN_POLICY_CLASS_POLICIES(String COLUMN_CAPS) {
         if (COLUMN_CAPS != null)

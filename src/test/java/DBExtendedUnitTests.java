@@ -312,6 +312,7 @@ public class DBExtendedUnitTests {
         String morecap = "CAP_CHOWN";
 
         int intValue = -1;
+        boolean boolValue = false;
         
         String value = null;
         Policy_Classes_Table_Record r = new Policy_Classes_Table_Record();
@@ -361,20 +362,40 @@ public class DBExtendedUnitTests {
 	assertNotNull(value);
 	System.out.println("update column is: " + value);
         
+        
+        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
         r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
+        
+        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
         
         r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
+        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
+        
         r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
+        
+        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
         
         r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
         value = r.get_COLUMN_POLICY_CLASS_POLICIES();
