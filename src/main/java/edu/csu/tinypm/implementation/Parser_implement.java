@@ -399,9 +399,9 @@ public class Parser_implement implements Parser
             
             if (this.check_if_PolicyExists(this.rec.getApp_PATH(), this.rec.getCAP_Attr()) == 0) return -1; /*//return if policy already exists*/
             
-            this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
+            this.ei.build_EnforcerCMDParameters(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
             
-            if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
+            if (this.ei.execute_CMD() != 0) return -1; //terminate if libcap execution involves error
             
             try 
             {//execute the db layer
@@ -444,9 +444,9 @@ public class Parser_implement implements Parser
             
             if (this.check_if_PolicyExists(this.rec.getApp_PATH(), this.rec.getCAP_Attr()) == -1) return -1; //return if policy does not exist
             
-            this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), -1)); //-1 indicates remove instruction
+            this.ei.build_EnforcerCMDParameters(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), -1)); //-1 indicates remove instruction
             
-            if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
+            if (this.ei.execute_CMD() != 0) return -1; //terminate if libcap execution involves error
             
             try 
             {//execute the db layer

@@ -278,7 +278,7 @@ public Policy_Classes_Table_Record()
            } catch (NumberFormatException nfex)
            {
                //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
-               System.out.println("Policy_Classes_Table_Record.setCOLUMN_POLICY_CLASS_ID(): PCID string is not a number! ");
+               System.out.println("Policy_Classes_Table_Record.set_COLUMN_POLICY_CLASS_ID(): PCID string is not a number! ");
            }    
         }    
     }

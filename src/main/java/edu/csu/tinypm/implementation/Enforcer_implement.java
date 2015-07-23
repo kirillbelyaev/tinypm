@@ -20,70 +20,87 @@ import java.util.List;
 public class Enforcer_implement implements Enforcer
 {
     
-    private List<String> cmd = null;
-
-    public List<String> getCmd() 
-    {
-        return cmd;
-    }
+    private List<String> CMD = null;
 
     @Override
-    public int executeCmd()
+    public List<String> get_CMD() 
+    {
+        return this.CMD;
+    }
+    
+    
+    @Override
+    public void set_CMD(List <String> l) 
+    {
+        if (l != null) this.CMD = l;
+    }
+    
+
+    @Override
+    public int execute_CMD()
 {
-	String s = null;
-	try {   
-            ProcessBuilder pb = new ProcessBuilder(this.cmd);
-            Process p = pb.start();
-            
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+    if (this.get_CMD() == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+    
+    String s = null;
+    
+    try 
+    {   
+        ProcessBuilder pb = new ProcessBuilder(this.get_CMD());
+        Process p = pb.start();
 
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-            // read the output from the command
-            System.out.println("Enforcer:executeCmd(): Here is the standard output of the command:\n");
-            while ((s = stdInput.readLine()) != null) 
-            {
-                System.out.println(s);
-            }
-            
-            // read any errors from the attempted command
-            System.out.println("Enforcer:executeCmd(): Here is the standard error of the command (if any):\n");
-            while ((s = stdError.readLine()) != null) 
-            {
-                System.out.println(s);
-            }
-            
-            try 
-            {
-            	if (p.waitFor() != 0)
-            	{
-            	System.out.println("Enforcer:executeCmd(): Wait for subprocess termination returned non zero!");
-            	return -1; //indicate an error
-            	}
-            } catch (InterruptedException ie) {System.out.println("Enforcer:executeCmd(): Wait for subprocess termination has been interrupted - exception happened."); return -1;} //indicate an error
-            
-            if (p.exitValue() != 0) //proper way of checking for execution error 
-            {	
-            	System.out.println("Enforcer:executeCmd(): command execution error occurred!");
-            	return -1; //indicate an error
-            }
-        } catch (IOException e) 
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+        // read the output from the command
+        System.out.println("Enforcer:execute_Cmd(): Here is the standard output of the command:\n");
+        
+        while ((s = stdInput.readLine()) != null) 
         {
-            System.out.println("Enforcer:executeCmd(): exception happened - here's what I know: ");
-            e.printStackTrace();
-            return -1; //indicate an error
+            System.out.println(s);
         }
-			return 0;
+
+        // read any errors from the attempted command
+        System.out.println("Enforcer:execute_Cmd(): Here is the standard error of the command (if any):\n");
+        
+        while ((s = stdError.readLine()) != null) 
+        {
+            System.out.println(s);
+        }
+
+        try 
+        {
+            if (p.waitFor() != INDICATE_EXECUTION_SUCCESS)
+            {
+            System.out.println("Enforcer:execute_Cmd(): Wait for subprocess termination returned non zero!");
+            return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate an error
+            }
+        } catch (InterruptedException ie) {System.out.println("Enforcer:execute_Cmd(): Wait for subprocess termination has been interrupted - exception happened."); return INDICATE_CONDITIONAL_EXIT_STATUS;} //indicate an error
+
+        if (p.exitValue() != INDICATE_EXECUTION_SUCCESS) //proper way of checking for execution error 
+        {	
+            System.out.println("Enforcer:execute_Cmd(): command execution error occurred!");
+            return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate an error
+        }
+    } catch (IOException e) 
+    {
+        System.out.println("Enforcer:execute_Cmd(): exception happened - here's what I know: ");
+        e.printStackTrace();
+        return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate an error
+    }
+                    return INDICATE_EXECUTION_SUCCESS;
 }
     
 
     @Override
-    public void buildEnforcerCMDParams (ArrayList<String> pl)
+    public int build_EnforcerCMDParameters (ArrayList<String> pl)
 {
-    if (pl == null) return;
+    if (pl == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
     ArrayList<String> command = null;
+    
     String caps = ""; 
-    String ep= "+ep";
+    String ep = "+ep";
+    
     command = new ArrayList<String>();
     command.add(SETCAP_EXE);
      
@@ -105,12 +122,15 @@ public class Enforcer_implement implements Enforcer
     
     caps = caps.substring(0, (caps.length()-1)); //remove the last , character
     caps = caps.concat(ep);
-    System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
+    System.out.println("enforcer.build_EnforcerCMDParams caps is: " + caps);
     
     command.add(caps);
     command.add(pl.get(pl.size()-1));
-    this.cmd = command;
-    System.out.println("enforcer.buildEnforcerCMDParams cmd is: " + this.getCmd());
+    
+    this.set_CMD(command);
+    System.out.println("enforcer.build_EnforcerCMDParams cmd is: " + this.get_CMD());
+    
+    return INDICATE_EXECUTION_SUCCESS;
 } 
 
     

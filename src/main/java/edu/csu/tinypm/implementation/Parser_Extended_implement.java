@@ -455,14 +455,14 @@ public class Parser_Extended_implement implements Parser_Extended
         if (pcr != null)
         {    
             caps = new ArrayList<String>();
-            for (int i=0; i < pcr.length; i++)
+            for (int i = 0; i < pcr.length; i++)
                 caps.add(pcr[i].get_COLUMN_POLICY_CLASS_POLICIES());
         }
         
         return caps;
     }
     
-    private int check_if_PolicyExists (String pcid, String p)
+    private int check_if_Policy_Exists (String pcid, String p)
     {
         if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
@@ -477,37 +477,28 @@ public class Parser_Extended_implement implements Parser_Extended
     }
     
     
-    private ArrayList<String>  return_modified_Policy_Class_Policies (String pcid, String p, int mode)
+    private ArrayList<String>  prepare_EnforcerParameters (String pcid, String app)
     {
-        if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return null;
-        ArrayList<String> caps = null;
+        if (pcid == null || pcid.isEmpty() || app == null || app.isEmpty()) return null;
         
-        if (mode == 1)//add policy
-        {    
-            if (this.check_if_PolicyExists(pcid.trim(), p.trim()) == INDICATE_EXECUTION_SUCCESS) return null;
-            caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
-            if (caps != null)
-            {    
-                caps.add(p.trim());
-                caps.add(pcid.trim());//add the application entry last
-            }    
-            return caps;
-            
-        }
+        ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
         
-         if (mode == -1)//remove policy
-        {    
-            if (this.check_if_PolicyExists(pcid.trim(), p.trim()) != INDICATE_EXECUTION_SUCCESS) return null;
-            caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
-            if (caps != null) 
-            {    
-                caps.remove(p.trim());
-                caps.add(pcid.trim());//add the application entry last
-            }    
-            return caps;
+        String policies[] = null;
+        
+        if (caps != null)
+        { 
+            /* obtain the policies in the 1st element */
+            policies = caps.get(0).trim().split(" "); 
             
-        }
-    
+            /* let's reuse the list */
+            caps.clear();
+            
+            for (int i = 0; i < policies.length; i++)
+                caps.add(policies[i].trim());
+                        
+            caps.add(app.trim()); //add the application entry last
+        }    
+        
         return caps;
     }
     
@@ -535,7 +526,7 @@ public class Parser_Extended_implement implements Parser_Extended
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            if (this.check_if_PolicyExists(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES()) == INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
+            if (this.check_if_Policy_Exists(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES()) == INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             
             ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
             
@@ -630,7 +621,7 @@ public class Parser_Extended_implement implements Parser_Extended
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            if (this.check_if_PolicyExists(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES()) == INDICATE_CONDITIONAL_EXIT_STATUS) return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
+            if (this.check_if_Policy_Exists(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES()) == INDICATE_CONDITIONAL_EXIT_STATUS) return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
             policy does not exist */
             
             ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
@@ -794,7 +785,7 @@ public class Parser_Extended_implement implements Parser_Extended
         if (this.apprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
-        //System.out.println("num_tokens is: " + num_tokens);
+       
         if (num_tokens == 3)
         {    
             if (this.commandParameters != null)
@@ -804,9 +795,14 @@ public class Parser_Extended_implement implements Parser_Extended
                     this.apprec.set_COLUMN_APP_PATH(this.commandParameters.get(0));
                     this.apprec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(1));
                     this.apprec.set_UPDATE_COLUMN_to_POLICY_CLASS_ID(); /* indicate the update column */
-                } 
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
+                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
+            if (this.ei.build_EnforcerCMDParameters(this.prepare_EnforcerParameters(this.apprec.get_COLUMN_POLICY_CLASS_ID(), this.apprec.get_COLUMN_APP_PATH())) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
             
             
             try 

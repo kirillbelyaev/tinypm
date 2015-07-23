@@ -10,6 +10,7 @@ Data transfer object (DTO)[1][2] is an object that carries data between
 processes. The motivation for its use has to do with the fact that 
 communication between processes is usually done resorting to remote interfaces.
  */
+
 package edu.csu.tinypm.DB.DTO;
 
 import edu.csu.tinypm.DB.interfaces.Apps_Table;
@@ -80,6 +81,7 @@ public Apps_Table_Record()
                 /* set only if an app is an actual file, does exist and not 
                 a directory */
                 if (f.isFile()) this.COLUMN_APP_PATH = COLUMN_APP_PATH;
+                else System.out.println("Apps_Table_Record.set_COLUMN_APP_PATH(): app does not exist in the filesystem! ");
             }
         }
     }
@@ -102,7 +104,7 @@ public Apps_Table_Record()
            } catch (NumberFormatException nfex)
            {
                //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
-               System.out.println("Apps_Table_Record.setCOLUMN_POLICY_CLASS_ID(): PCID string is not a number! ");
+               System.out.println("Apps_Table_Record.set_COLUMN_POLICY_CLASS_ID(): PCID string is not a number! ");
            }    
         }   
     }

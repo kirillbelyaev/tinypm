@@ -81,6 +81,7 @@ public class DBExtendedUnitTests {
     //Apps_Table_Record
     private final String COLUMN_APP_DESC = "icmp ping tool";
     private final String COLUMN_APP_PATH = "/bin/ping";
+    private final String COLUMN_APP_PATH_INVALID = "/bin/x/ping";
     private final String COLUMN_POLICY_CLASS_ID = "1";
     private final String COLUMN_APP_CONTAINER_ID = "1";
     private final String COLUMN_STATUS = "1";
@@ -121,6 +122,13 @@ public class DBExtendedUnitTests {
         value = r.get_COLUMN_APP_PATH();
 	assertNotNull(value);
 	System.out.println("app path is: " + value);
+        
+        r.set_COLUMN_APP_PATH(this.COLUMN_APP_PATH_INVALID);
+        
+        value = r.get_COLUMN_APP_PATH();
+	assertNotNull(value);
+	System.out.println("app path is: " + value);
+        
         
         value = r.get_COLUMN_APP_DESC();
 	assertNotNull(value);

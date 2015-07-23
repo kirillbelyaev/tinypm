@@ -7,6 +7,7 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 package edu.csu.tinypm.interfaces;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,11 +15,19 @@ import java.util.ArrayList;
  */
 public interface Enforcer 
 {
+    /* we use macros to indicate the general method exit codes within the implementation */
+    public int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
+    public int INDICATE_EXECUTION_SUCCESS = 0;
+    
     final String SETCAP_EXE = "/sbin/setcap";
     
-    public int executeCmd();
+    public List<String> get_CMD();
     
-    public void buildEnforcerCMDParams (ArrayList<String> pl);
+    public void set_CMD(List <String> l);
+    
+    public int execute_CMD();
+    
+    public int build_EnforcerCMDParameters (ArrayList<String> pl);
     
     
     
