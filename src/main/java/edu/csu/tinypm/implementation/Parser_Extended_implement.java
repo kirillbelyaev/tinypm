@@ -522,7 +522,7 @@ public class Parser_Extended_implement implements Parser_Extended
         if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
-        //System.out.println("num_tokens is: " + num_tokens);
+        
         if (num_tokens == 3)
         {    
             if (this.commandParameters != null)
@@ -545,13 +545,8 @@ public class Parser_Extended_implement implements Parser_Extended
                 this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(caps.get(0)); 
                 this.pcrec.add_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* do it once more */
             
-            } else this.pcrec.add_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* if no policies exist */   
-            
-            //System.out.println("policies are: " + this.pcrec.get_COLUMN_POLICY_CLASS_POLICIES());
-            
-            //this.ei.buildEnforcerCMDParams(this.return_modified_app_policies(this.rec.getApp_PATH(), this.rec.getCAP_Attr(), 1)); //1 indicates add instruction
-            
-            //if (this.ei.executeCmd() != 0) return -1; //terminate if libcap execution involves error
+            } else this.pcrec.add_POLICY_CLASS_POLICY(this.commandParameters.get(1)); /* if no policies exist */       
+
             
             try 
             {//execute the db layer
@@ -570,6 +565,27 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                 Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
+            
+                /* after updating policies for a policy class in the DB layer we
+                finally proceed to the enforcer section */
+                ArrayList<String> apps = this.get_POLICY_CLASS_APPS(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
+
+                /* no apps - no enforcement! */
+                if (apps != null)
+                {
+                    /* Time to call the enforcer after proceeding to the DB layer */
+                    /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
+
+                    /* execute enforcer for every app that belongs to a policy class */
+                    for (int i = 0; i < apps.size(); i++)
+                    {    
+                        if (this.ei.build_EnforcerCMDParameters(this.prepare_EnforcerParameters(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                        if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
+
+                    }
+                }   
+            
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -666,6 +682,27 @@ public class Parser_Extended_implement implements Parser_Extended
             {
                 Logger.getLogger(Parser_Extended_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
+            
+                /* after updating policies for a policy class in the DB layer we
+                finally proceed to the enforcer section */
+                ArrayList<String> apps = this.get_POLICY_CLASS_APPS(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
+
+                /* no apps - no enforcement! */
+                if (apps != null)
+                {
+                    /* Time to call the enforcer after proceeding to the DB layer */
+                    /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
+
+                    /* execute enforcer for every app that belongs to a policy class */
+                    for (int i = 0; i < apps.size(); i++)
+                    {    
+                        if (this.ei.build_EnforcerCMDParameters(this.prepare_EnforcerParameters(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                        if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
+
+                    }
+                }
+                
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;

@@ -90,12 +90,12 @@ public class BLExtendedUnitTests {
         
         
         String CMD_19 = "MOVE_APP_TO_POLICY_CLASS 1";
-        String CMD_20 = "MOVE_APP_TO_POLICY_CLASS /bin/ping 1";
-        String CMD_21 = "MOVE_APP_TO_POLICY_CLASS /bin/ping 2";
+        String CMD_20 = "MOVE_APP_TO_POLICY_CLASS  /s/chopin/b/grad/kirill/apps/ping 1";
+        String CMD_21 = "MOVE_APP_TO_POLICY_CLASS  /s/chopin/b/grad/kirill/apps/ping 2";
         
         String CMD_22 = "SHOW_POLICY_CLASS_APPS 2";
         
-        String CMD_23 = "MOVE_APP_TO_POLICY_CLASS /bin/ping 3";
+        String CMD_23 = "MOVE_APP_TO_POLICY_CLASS  /s/chopin/b/grad/kirill/apps/ping 3";
         
         String CMD_24 = "SHOW_POLICY_CLASS_APPS 3";
         
