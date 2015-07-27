@@ -23,7 +23,7 @@ public interface DB_Constants_Extended
 	final String BASEDIR = "/var/tmp/";
 	
 	final String SQLITE_DRV = "org.sqlite.JDBC";
-	final String DB_URI = "jdbc:sqlite:" + Apps_Table.APPS_DB_NAME;
+	final String DB_URI = "jdbc:sqlite:tinypm.db";
 	
 	final String charSet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
         
