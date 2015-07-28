@@ -6,7 +6,7 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 
 package edu.csu.tinypm.machine;
 
-import edu.csu.tinypm.DB.interfaces.DB_Constants_Extended;
+import edu.csu.tinypm.DB.interfaces.DB_Constants;
 import java.io.File;
 
 /**
@@ -19,15 +19,15 @@ public class Main
 public static void main(String[] args)  throws Exception 
 {
 
-File lcdb = new File(DB_Constants_Extended.DB_URI);
+File db = new File(DB_Constants.DB_NAME);
 PM_Shell sh = new PM_Shell();
 
-if(lcdb.exists())
+if (db.exists())
 {
     sh.process_UserInput();
 } else
 {
-    System.out.println("PM Database " + DB_Constants_Extended.DB_URI + " does not exist! Exiting.");
+    System.out.println("PM Database " + DB_Constants.DB_NAME + " does not exist! Exiting.");
 }    
 
 

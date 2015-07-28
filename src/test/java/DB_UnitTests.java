@@ -5,11 +5,11 @@ Kirill Belyaev. Copyright (c) @2015 Colorado State University
 Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
-import edu.csu.tinypm.DB.DTO.Apps_Table_Record;
-import edu.csu.tinypm.DB.DTO.Policy_Classes_Table_Record;
-import edu.csu.tinypm.DB.exceptions.RecordDAOException;
-import edu.csu.tinypm.DB.implementation.DB_Dispatcher_Extended;
-import edu.csu.tinypm.DB.implementation.RecordDAOExtended_implement;
+import edu.csu.tinypm.DB.DTO.AppsTableRecord;
+import edu.csu.tinypm.DB.DTO.PolicyClassesTableRecord;
+import edu.csu.tinypm.DB.exceptions.RecordDAO_Exception;
+import edu.csu.tinypm.DB.implementation.DB_Dispatcher;
+import edu.csu.tinypm.DB.implementation.RecordDAO_implement;
 import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
 import java.sql.SQLException;
 import org.junit.After;
@@ -24,9 +24,9 @@ import org.junit.Ignore;
  *
  * @author kirill
  */
-public class DBExtendedUnitTests {
+public class DB_UnitTests {
     
-    public DBExtendedUnitTests() {
+    public DB_UnitTests() {
     }
     
     @BeforeClass
@@ -96,7 +96,7 @@ public class DBExtendedUnitTests {
         System.out.println("--------------------------------------");
         System.out.println("started test_Apps_Table_Record... ");
         
-        Apps_Table_Record r = new Apps_Table_Record();
+        AppsTableRecord r = new AppsTableRecord();
         String value = null;
         
         r.set_COLUMN_APP_DESC(this.COLUMN_APP_DESC);
@@ -151,7 +151,7 @@ public class DBExtendedUnitTests {
     
     
     @Test
-     public void test_Apps_Table_create_drop() throws RecordDAOException, SQLException 
+    public void test_Apps_Table_create_drop() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -160,8 +160,8 @@ public class DBExtendedUnitTests {
         int output = -1;
         boolean Out;
         
-        DB_Dispatcher_Extended dd = new DB_Dispatcher_Extended();
-        RecordDAOExtended_implement db = null;
+        DB_Dispatcher dd = new DB_Dispatcher();
+        RecordDAO_implement db = null;
 
         db = dd.dispatch_DB_Access();
         
@@ -182,7 +182,7 @@ public class DBExtendedUnitTests {
      
      
     @Test
-     public void test_Apps_Table_CRUD_operations() throws RecordDAOException, SQLException 
+    public void test_Apps_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -191,9 +191,9 @@ public class DBExtendedUnitTests {
         int output = -1;
         boolean Out;
         
-        Apps_Table_Record r = new Apps_Table_Record();
-        DB_Dispatcher_Extended dd = new DB_Dispatcher_Extended();
-        RecordDAOExtended_implement db = null;
+        AppsTableRecord r = new AppsTableRecord();
+        DB_Dispatcher dd = new DB_Dispatcher();
+        RecordDAO_implement db = null;
 
         db = dd.dispatch_DB_Access();
         
@@ -218,7 +218,7 @@ public class DBExtendedUnitTests {
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         
         
-        Apps_Table_Record[] recs = (Apps_Table_Record[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
+        AppsTableRecord[] recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
         assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	System.out.println("read_Apps_Table_Records_On_APP_and_PCID: array value is: " + recs);
         
@@ -232,7 +232,7 @@ public class DBExtendedUnitTests {
         System.out.println("write_Apps_Table_Record: value is: " + output);
         
         
-        recs = (Apps_Table_Record[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
+        recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
         assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
@@ -244,7 +244,7 @@ public class DBExtendedUnitTests {
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
-        recs = (Apps_Table_Record[]) db.read_Apps_Table_Records_On_All_APPs();
+        recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_All_APPs();
         assertTrue("read_Apps_Table_Records_On_All_APPs: Reply has unexpected return:", Out = recs == null | recs != null);
         
         if (recs != null)
@@ -253,7 +253,7 @@ public class DBExtendedUnitTests {
         }
         
         
-        recs = (Apps_Table_Record[]) db.read_Apps_Table_Records_On_PCID(r);
+        recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_PCID(r);
         assertTrue("read_Apps_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
         
         if (recs != null)
@@ -272,7 +272,7 @@ public class DBExtendedUnitTests {
         System.out.println("delete_Apps_Table_Records_On_APP_and_PCID: value is: " + output);
         
         
-        recs = (Apps_Table_Record[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
+        recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
         assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
@@ -315,7 +315,7 @@ public class DBExtendedUnitTests {
         boolean boolValue = false;
         
         String value = null;
-        Policy_Classes_Table_Record r = new Policy_Classes_Table_Record();
+        PolicyClassesTableRecord r = new PolicyClassesTableRecord();
         
         r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
         r.set_COLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
@@ -460,7 +460,7 @@ public class DBExtendedUnitTests {
      
      
      @Test
-     public void test_Policy_Classes_Table_create_drop() throws RecordDAOException, SQLException 
+     public void test_Policy_Classes_Table_create_drop() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -469,8 +469,8 @@ public class DBExtendedUnitTests {
         int output = -1;
         boolean Out;
         
-        DB_Dispatcher_Extended dd = new DB_Dispatcher_Extended();
-        RecordDAOExtended_implement db = null;
+        DB_Dispatcher dd = new DB_Dispatcher();
+        RecordDAO_implement db = null;
 
         db = dd.dispatch_DB_Access();
         
@@ -491,7 +491,7 @@ public class DBExtendedUnitTests {
     
      
      @Test
-    public void test_Policy_Classes_Table_CRUD_operations() throws RecordDAOException, SQLException 
+    public void test_Policy_Classes_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -500,9 +500,9 @@ public class DBExtendedUnitTests {
         int output = -1;
         boolean Out;
         
-        Policy_Classes_Table_Record r = new Policy_Classes_Table_Record();
-        DB_Dispatcher_Extended dd = new DB_Dispatcher_Extended();
-        RecordDAOExtended_implement db = null;
+        PolicyClassesTableRecord r = new PolicyClassesTableRecord();
+        DB_Dispatcher dd = new DB_Dispatcher();
+        RecordDAO_implement db = null;
 
         db = dd.dispatch_DB_Access();
         
@@ -532,7 +532,7 @@ public class DBExtendedUnitTests {
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
         
-        Policy_Classes_Table_Record[] recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
+        PolicyClassesTableRecord[] recs = (PolicyClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
         assertTrue("read_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	System.out.println("read_Policy_Classes_Table_Records_On_PCID: array value is: " + recs);
         
@@ -546,7 +546,7 @@ public class DBExtendedUnitTests {
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
-        recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
+        recs = (PolicyClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
         assertTrue("read_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
@@ -558,7 +558,7 @@ public class DBExtendedUnitTests {
         }
         
         
-        recs = (Policy_Classes_Table_Record[]) db.read_Policy_Classes_Table_Records_On_All_Classes();
+        recs = (PolicyClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_All_Classes();
         assertTrue("read_Policy_Classes_Table_Records_On_All_Classes: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)

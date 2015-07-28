@@ -11,7 +11,7 @@ package edu.csu.tinypm.DB.exceptions;
  *
  */
 
-public class RecordDAOException extends DAOException
+public class RecordDAO_Exception extends DAO_Exception
 {
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class RecordDAOException extends DAOException
 	 * 
 	 * @param message
 	 */
-	public RecordDAOException(String message)
+	public RecordDAO_Exception(String message)
 	{
 		super(message);
 	}
@@ -34,7 +34,7 @@ public class RecordDAOException extends DAOException
 	 * @param message
 	 * @param cause
 	 */
-	public RecordDAOException(String message, Throwable cause)
+	public RecordDAO_Exception(String message, Throwable cause)
 	{
 		super(message, cause);
 	}

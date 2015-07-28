@@ -11,7 +11,7 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 
 package edu.csu.tinypm.DB.implementation;
 
-import edu.csu.tinypm.DB.interfaces.DB_Constants_Extended;
+import edu.csu.tinypm.DB.interfaces.DB_Constants;
 import java.sql.*;
 
 
@@ -25,7 +25,7 @@ public class ConnManager
         {
             try
             {
-                Class<?> jdbcDriverClass = Class.forName( DB_Constants_Extended.SQLITE_DRV );
+                Class<?> jdbcDriverClass = Class.forName(DB_Constants.SQLITE_DRV );
                 driver = (Driver) jdbcDriverClass.newInstance();
                 DriverManager.registerDriver( driver );
             }
@@ -36,7 +36,7 @@ public class ConnManager
             }
         }
 
-	return DriverManager.getConnection(DB_Constants_Extended.DB_URI);
+	return DriverManager.getConnection(DB_Constants.DB_URI);
   
     }
 
@@ -46,8 +46,8 @@ public class ConnManager
 		 Connection conn = null;
 		try 
 		{
-			Class.forName(DB_Constants_Extended.SQLITE_DRV);
-			conn = DriverManager.getConnection(DB_Constants_Extended.DB_URI);
+			Class.forName(DB_Constants.SQLITE_DRV);
+			conn = DriverManager.getConnection(DB_Constants.DB_URI);
 		} catch (Exception e) { throw new SQLException( "Exception: " + e.getMessage(), e ); }	
 		
 		return conn;

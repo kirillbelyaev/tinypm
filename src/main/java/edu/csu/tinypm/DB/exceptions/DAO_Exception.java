@@ -10,7 +10,7 @@ package edu.csu.tinypm.DB.exceptions;
  *
  */
 
-public class DAOException extends Exception
+public class DAO_Exception extends Exception
 {
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class DAOException extends Exception
 	 * 
 	 * @param message
 	 */
-	public DAOException(String message)
+	public DAO_Exception(String message)
 	{
 		super(message);
 	}
@@ -34,7 +34,7 @@ public class DAOException extends Exception
 	 * @param message
 	 * @param throwable
 	 */
-	public DAOException(String message, Throwable throwable)
+	public DAO_Exception(String message, Throwable throwable)
 	{
 		super(message);
 		this.throwable = throwable;

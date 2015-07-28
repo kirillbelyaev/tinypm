@@ -13,7 +13,7 @@ communication between processes is usually done resorting to remote interfaces.
 
 package edu.csu.tinypm.DB.DTO;
 
-import edu.csu.tinypm.DB.interfaces.Policy_Classes_Table;
+import edu.csu.tinypm.DB.interfaces.PolicyClassesTable;
 import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
 import java.io.Serializable;
 
@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @author kirill
  */
 
-public class Policy_Classes_Table_Record implements Serializable
+public class PolicyClassesTableRecord implements Record, Serializable
 {
     private String COLUMN_POLICY_CLASS_ID = ""; /* primary key */
     
@@ -38,7 +38,7 @@ public class Policy_Classes_Table_Record implements Serializable
     private String UPDATE_COLUMN = "";
     
     
-public Policy_Classes_Table_Record()
+public PolicyClassesTableRecord()
 	{
             
 	}
@@ -49,20 +49,20 @@ public Policy_Classes_Table_Record()
     }
     
     public void set_UPDATE_COLUMN_to_POLICY_CLASS_ID() {
-        this.UPDATE_COLUMN = Policy_Classes_Table.COLUMN_POLICY_CLASS_ID;
+        this.UPDATE_COLUMN = PolicyClassesTable.COLUMN_POLICY_CLASS_ID;
     }
     
     public void set_UPDATE_COLUMN_to_POLICY_CLASS_NAME() {
-        this.UPDATE_COLUMN = Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME;
+        this.UPDATE_COLUMN = PolicyClassesTable.COLUMN_POLICY_CLASS_NAME;
     }
     
     public void set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES() {
-        this.UPDATE_COLUMN = Policy_Classes_Table.COLUMN_POLICY_CLASS_POLICIES;
+        this.UPDATE_COLUMN = PolicyClassesTable.COLUMN_POLICY_CLASS_POLICIES;
     }
 
 
     public void set_UPDATE_COLUMN_to_STATUS() {
-        this.UPDATE_COLUMN = Policy_Classes_Table.COLUMN_STATUS;
+        this.UPDATE_COLUMN = PolicyClassesTable.COLUMN_STATUS;
     }
     
     public String get_COLUMN_POLICY_CLASS_NAME() {
@@ -255,13 +255,13 @@ public Policy_Classes_Table_Record()
     
     public String produce_PCS_DB_DDL()
     {
-        String Columns = "( " + Policy_Classes_Table.COLUMN_POLICY_CLASS_ID + ", " + Policy_Classes_Table.COLUMN_POLICY_CLASS_NAME + ", " + Policy_Classes_Table.COLUMN_STATUS + ", ";
+        String Columns = "( " + PolicyClassesTable.COLUMN_POLICY_CLASS_ID + ", " + PolicyClassesTable.COLUMN_POLICY_CLASS_NAME + ", " + PolicyClassesTable.COLUMN_STATUS + ", ";
         
-        for (int i = 0; i < Policy_Classes_Table.LCS.length; i++)
-            if (i != Policy_Classes_Table.LCS.length - 1)
-                Columns = Columns.concat(Policy_Classes_Table.LCS[i].toString() + ", ");
+        for (int i = 0; i < PolicyClassesTable.LCS.length; i++)
+            if (i != PolicyClassesTable.LCS.length - 1)
+                Columns = Columns.concat(PolicyClassesTable.LCS[i].toString() + ", ");
             else 
-                Columns = Columns.concat(Policy_Classes_Table.LCS[i].toString() + " ) ");  
+                Columns = Columns.concat(PolicyClassesTable.LCS[i].toString() + " ) ");  
         
         return Columns;
     }     

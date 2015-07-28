@@ -24,23 +24,22 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
  */
 package edu.csu.tinypm.DB.interfaces;
 
-import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
+import edu.csu.tinypm.DB.DTO.Record;
 
 /**
  *
  * @author kirill
  */
-public interface Policy_Classes_Table 
+public interface AppsTable extends Record
 {
-    final String PCS_DB_TABLE_NAME = "pcs_db";
-    final String PCS_DB_NAME = "pcs.db";
+    final String APPS_DB_TABLE_NAME = "apps_db";
+    final String APPS_DB_NAME = "apps.db";
     
-    
-    final String COLUMN_POLICY_CLASS_NAME = "class_name";
+    final String COLUMN_APP_DESC = "description";
+    final String COLUMN_APP_PATH = "app_path";
     final String COLUMN_POLICY_CLASS_ID = "PCID";
-    final String COLUMN_POLICY_CLASS_POLICIES = "capabilities";  
+    final String COLUMN_APP_CONTAINER_ID = "ACID";
     final String COLUMN_STATUS = "status";
     
-    LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();
     
 }

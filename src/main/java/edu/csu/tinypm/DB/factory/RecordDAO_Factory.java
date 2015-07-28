@@ -15,7 +15,7 @@ package edu.csu.tinypm.DB.factory;
 import edu.csu.tinypm.DB.implementation.RecordDAO_implement;
 import java.sql.Connection;
 
-public class RecordDAOFactory
+public class RecordDAO_Factory
 {
 
 	/**

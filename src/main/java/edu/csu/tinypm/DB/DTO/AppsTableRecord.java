@@ -13,7 +13,7 @@ communication between processes is usually done resorting to remote interfaces.
 
 package edu.csu.tinypm.DB.DTO;
 
-import edu.csu.tinypm.DB.interfaces.Apps_Table;
+import edu.csu.tinypm.DB.interfaces.AppsTable;
 import java.io.Serializable;
 import java.io.*;
 
@@ -21,7 +21,7 @@ import java.io.*;
  *
  * @author kirill
  */
-public class Apps_Table_Record implements Serializable
+public class AppsTableRecord implements Record, Serializable
 {
     
     private String COLUMN_APP_DESC = "";
@@ -34,7 +34,7 @@ public class Apps_Table_Record implements Serializable
     private String UPDATE_COLUMN = "";
     
     
-public Apps_Table_Record()
+public AppsTableRecord()
 	{
             
 	}
@@ -44,17 +44,17 @@ public Apps_Table_Record()
     }
     
     public void set_UPDATE_COLUMN_to_POLICY_CLASS_ID() {
-        this.UPDATE_COLUMN = Apps_Table.COLUMN_POLICY_CLASS_ID;
+        this.UPDATE_COLUMN = AppsTable.COLUMN_POLICY_CLASS_ID;
     }
     
     
     public void set_UPDATE_COLUMN_to_STATUS() {
-        this.UPDATE_COLUMN = Apps_Table.COLUMN_STATUS;
+        this.UPDATE_COLUMN = AppsTable.COLUMN_STATUS;
     }
 
     
     public void set_UPDATE_COLUMN_to_APP_PATH() {
-        this.UPDATE_COLUMN = Apps_Table.COLUMN_APP_PATH;
+        this.UPDATE_COLUMN = AppsTable.COLUMN_APP_PATH;
     }
 
     

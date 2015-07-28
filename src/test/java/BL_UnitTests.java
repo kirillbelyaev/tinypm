@@ -5,7 +5,7 @@ Kirill Belyaev. Copyright (c) @2015 Colorado State University
 Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
-import edu.csu.tinypm.implementation.Parser_Extended_implement;
+import edu.csu.tinypm.implementation.Parser_implement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +17,9 @@ import static org.junit.Assert.*;
  *
  * @author kirill
  */
-public class BLExtendedUnitTests {
+public class BL_UnitTests {
     
-    public BLExtendedUnitTests() {
+    public BL_UnitTests() {
     }
     
     @BeforeClass
@@ -100,7 +100,7 @@ public class BLExtendedUnitTests {
         String CMD_24 = "SHOW_POLICY_CLASS_APPS 3";
         
         
-        Parser_Extended_implement p = new Parser_Extended_implement();
+        Parser_implement p = new Parser_implement();
         
         System.out.println("command is: " + CMD);
         output = p.parse_and_execute_Command(CMD); 

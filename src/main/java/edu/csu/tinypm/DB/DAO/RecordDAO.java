@@ -11,31 +11,67 @@ some type of database or other persistence mechanism. By mapping application
 calls to the persistence layer, DAO provide some specific data operations 
 without exposing details of the database.
  */
+
 package edu.csu.tinypm.DB.DAO;
 
-import edu.csu.tinypm.DB.DTO.Record;
-import edu.csu.tinypm.DB.exceptions.RecordDAOException;
+import edu.csu.tinypm.DB.DTO.AppsTableRecord;
+import edu.csu.tinypm.DB.DTO.PolicyClassesTableRecord;
+import edu.csu.tinypm.DB.exceptions.RecordDAO_Exception;
 
 /**
  *
  * @author kirill
  */
+
 public interface RecordDAO extends DB_Base
-{   
-    public Record[] readRecordsOnAPP(Record r) throws RecordDAOException;
+{  
+    /* we use macros to indicate the general method exit codes within the DAO implementation */
+    final int EMPTY_RESULT = -8;
+    final int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
+    final int INDICATE_EXECUTION_SUCCESS = 0;
+    final int RECORD_EXISTS = 1;
+    final int INDICATE_SQL_EXCEPTION = -2;
     
-    public int deleteRecordsOnAPPandCAP(Record r) throws RecordDAOException;
+    public void closeConnection() throws RecordDAO_Exception;
     
-    public int writeRecord(Record r) throws RecordDAOException;
     
-    public int createTable_LC_DB() throws RecordDAOException;
+    /* new API methods to support the policy class abstraction */
     
-    public int dropTable_LC_DB() throws RecordDAOException;
+    /* apps table operations */
     
-    public void closeConnection() throws RecordDAOException;
+    public int createTable_APPS_DB() throws RecordDAO_Exception;
     
-    public Integer countDistinctAppCapRecords(Record r) throws RecordDAOException;
+    public int dropTable_APPS_DB() throws RecordDAO_Exception;
     
-    public Record[] readRecordsOnAllAPPs() throws RecordDAOException;
+    public AppsTableRecord[] read_Apps_Table_Records_On_APP(AppsTableRecord r) throws RecordDAO_Exception;
+    
+    public AppsTableRecord[] read_Apps_Table_Records_On_APP_and_PCID(AppsTableRecord r) throws RecordDAO_Exception;
+    
+    public AppsTableRecord[] read_Apps_Table_Records_On_PCID(AppsTableRecord r) throws RecordDAO_Exception;
+    
+    public AppsTableRecord[] read_Apps_Table_Records_On_All_APPs() throws RecordDAO_Exception;
+    
+    public Integer count_Distinct_Apps_Table_Records_on_PCID(AppsTableRecord r) throws RecordDAO_Exception;
+     
+    public int write_Apps_Table_Record(AppsTableRecord r) throws RecordDAO_Exception;
+    
+    public int delete_Apps_Table_Records_On_APP_and_PCID(AppsTableRecord r) throws RecordDAO_Exception;
+    
+    
+     /* policy classes table operations */
+    
+    public int create_Table_PCS_DB() throws RecordDAO_Exception;
+    
+    public int drop_Table_PCS_DB() throws RecordDAO_Exception;
+    
+    public PolicyClassesTableRecord[] read_Policy_Classes_Table_Records_On_PCID(PolicyClassesTableRecord r) throws RecordDAO_Exception;
+    
+    public PolicyClassesTableRecord[] read_Policy_Classes_Table_Records_On_All_Classes() throws RecordDAO_Exception;
+    
+    public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID() throws RecordDAO_Exception;
+    
+    public int write_Policy_Classes_Table_Record(PolicyClassesTableRecord r) throws RecordDAO_Exception;
+    
+    public int delete_Policy_Classes_Table_Records_On_PCID(PolicyClassesTableRecord r) throws RecordDAO_Exception;
      
 }

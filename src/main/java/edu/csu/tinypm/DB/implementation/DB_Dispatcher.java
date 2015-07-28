@@ -6,7 +6,7 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 
 package edu.csu.tinypm.DB.implementation;
 
-import edu.csu.tinypm.DB.factory.RecordDAOFactory;
+import edu.csu.tinypm.DB.factory.RecordDAO_Factory;
 import java.sql.SQLException;
 
 /**
@@ -17,14 +17,14 @@ public class DB_Dispatcher
 {
     
     private ConnManager cm = null;
-    private RecordDAOFactory factory = null;
+    private RecordDAO_Factory factory = null;
     private RecordDAO_implement db = null;
     
     
     public RecordDAO_implement dispatch_DB_Access() throws SQLException
     {
         this.cm = new ConnManager();
-        this.factory = new RecordDAOFactory();
+        this.factory = new RecordDAO_Factory();
         
         if (this.cm == null && this.factory == null) return null;
         
