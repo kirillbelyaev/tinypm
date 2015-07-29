@@ -27,7 +27,7 @@ public interface Enforcer
     
     public int execute_CMD();
     
-    public int build_EnforcerCMDParameters (ArrayList<String> pl);
+    public int build_EnforcerCMD_Parameters (ArrayList<String> pl);
     
     
     

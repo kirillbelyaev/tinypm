@@ -93,7 +93,7 @@ public class Enforcer_implement implements Enforcer
     
 
     @Override
-    public int build_EnforcerCMDParameters (ArrayList<String> pl)
+    public int build_EnforcerCMD_Parameters (ArrayList<String> pl)
 {
     if (pl == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
     ArrayList<String> command = null;

@@ -57,8 +57,15 @@ public interface Parser
         COUNT_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
         SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
         CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
-        MOVE_APP_TO_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2
+        MOVE_APP_TO_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
         
+        /* additional error messages */
+        Enforcer_CMD_Parameters_ERROR,
+        Enforcer_execute_CMD_ERROR,
+        DB_Layer_WRITE_RECORD_ERROR,
+        DB_Layer_POLICY_EXISTS_ERROR,
+        DB_Layer_POLICY_DOES_NOT_EXIST_ERROR,
+        DB_Layer_NO_POLICIES_EXIST_ERROR
         
     }
     
@@ -78,7 +85,7 @@ public interface Parser
           /* add new commands */
           + PM_COMMANDS.COUNT_POLICY_CLASSES + " : show the number of policy classes \n" 
           + PM_COMMANDS.SHOW_POLICY_CLASSES + " : show the list of policy classes \n"
-          + PM_COMMANDS.CREATE_POLICY_CLASS + " : create policy class (required arguments: policy class ID (integer), policy_class_name) \n";  
+          + PM_COMMANDS.CREATE_POLICY_CLASS + " : create/rename policy class (required arguments: policy class ID (integer), policy_class_name_description) \n";  
     
     
     public int parse_and_execute_Command(String e);
