@@ -531,6 +531,10 @@ public class Parser_implement implements Parser
                 {    
                     this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
                     this.pcrec.set_COLUMN_POLICY_CLASS_POLICIES(this.commandParameters.get(1));
+                    
+                    this.pcrec.set_COLUMN_POLICY_CLASS_NAME(""); /* make blank in case a policy is added to non-existent
+                    policy class therefore triggering the creation of new policy class record */
+                    
                     this.pcrec.set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES(); /* indicate the update column */
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -557,48 +561,49 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS)
-                    { 
-                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
-                    }    
-                    else
+                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) == INDICATE_EXECUTION_SUCCESS)
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
+                        
+                        /* after updating policies for a policy class in the DB layer we
+                        finally proceed to the enforcer section */
+                        ArrayList<String> apps = this.get_POLICY_CLASS_APPS(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
+
+                        /* no apps - no enforcement! */
+                        if (apps != null)
+                        {
+                            /* Time to call the enforcer after proceeding to the DB layer */
+                            /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */
+                            
+                            /* execute enforcer for every app that belongs to a policy class */
+                            for (int i = 0; i < apps.size(); i++)
+                            {    
+                                if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                {   
+                                    this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                                }    
+                                if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
+                                {
+                                    this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                                    return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
+                                }    
+                            }
+                        }
+                     
                         return INDICATE_EXECUTION_SUCCESS;
+                    }    
+                    else
+                    {
+                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
             } catch (RecordDAO_Exception rex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
-            }
-            
-                /* after updating policies for a policy class in the DB layer we
-                finally proceed to the enforcer section */
-                ArrayList<String> apps = this.get_POLICY_CLASS_APPS(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
-
-                /* no apps - no enforcement! */
-                if (apps != null)
-                {
-                    /* Time to call the enforcer after proceeding to the DB layer */
-                    /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
-
-                    /* execute enforcer for every app that belongs to a policy class */
-                    for (int i = 0; i < apps.size(); i++)
-                    {    
-                        if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
-                        {   
-                            this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
-                            return INDICATE_CONDITIONAL_EXIT_STATUS;
-                        }    
-                        if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
-                        {
-                            this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
-                            return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
-                        }    
-                    }
-                }   
+            }   
             
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
@@ -686,50 +691,50 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS) 
-                    {  
-                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
-                    }    
-                    else
+                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) == INDICATE_EXECUTION_SUCCESS) 
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
+                        
+                        /* after updating policies for a policy class in the DB layer we
+                        finally proceed to the enforcer section */
+                        ArrayList<String> apps = this.get_POLICY_CLASS_APPS(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
+
+                        /* no apps - no enforcement! */
+                        if (apps != null)
+                        {
+                            /* Time to call the enforcer after proceeding to the DB layer */
+                            /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */
+                            
+                            /* execute enforcer for every app that belongs to a policy class */
+                            for (int i = 0; i < apps.size(); i++)
+                            {    
+                                if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                {
+                                    this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                                }
+
+                                if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
+                                {
+                                    this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                                    return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
+                                }    
+                            }
+                        }
+                        
                         return INDICATE_EXECUTION_SUCCESS;
+                    }
+                    else
+                    {
+                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
             } catch (RecordDAO_Exception rex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
-            }
-            
-                /* after updating policies for a policy class in the DB layer we
-                finally proceed to the enforcer section */
-                ArrayList<String> apps = this.get_POLICY_CLASS_APPS(this.pcrec.get_COLUMN_POLICY_CLASS_ID().trim());
-
-                /* no apps - no enforcement! */
-                if (apps != null)
-                {
-                    /* Time to call the enforcer after proceeding to the DB layer */
-                    /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
-
-                    /* execute enforcer for every app that belongs to a policy class */
-                    for (int i = 0; i < apps.size(); i++)
-                    {    
-                        if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.pcrec.get_COLUMN_POLICY_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
-                        {
-                            this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
-                            return INDICATE_CONDITIONAL_EXIT_STATUS;
-                        }
-                        
-                        if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
-                        {
-                            this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
-                            return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
-                        }    
-                    }
-                }
-                
+            }       
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;

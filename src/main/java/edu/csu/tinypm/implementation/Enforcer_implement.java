@@ -91,7 +91,7 @@ public class Enforcer_implement implements Enforcer
                     return INDICATE_EXECUTION_SUCCESS;
 }
     
-
+/*
     @Override
     public int build_EnforcerCMD_Parameters (ArrayList<String> pl)
 {
@@ -103,10 +103,6 @@ public class Enforcer_implement implements Enforcer
     
     command = new ArrayList<String>();
     command.add(SETCAP_EXE);
-     
-    //System.out.println("enforcer.buildEnforcerCMDParams pl is: " + pl);
-    //for (String val : pl) 
-        //command.add(val);
     
     for (int i = 0; i < (pl.size()-1); i++)
     {
@@ -132,6 +128,69 @@ public class Enforcer_implement implements Enforcer
     
     return INDICATE_EXECUTION_SUCCESS;
 } 
+*/    
+    
+    @Override
+public int build_EnforcerCMD_Parameters (ArrayList<String> pl)
+{
+    if (pl == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+    ArrayList<String> command = null;
+    String caps = ""; 
+    String ep= "+ep";
+    String rep= "-ep";
+    String all = "ALL";
+    command = new ArrayList<String>();
+    command.add(SETCAP_EXE);
+   
+    
+    if (pl.size() > 1) /* at least one cap is present besides the app string itself returned by return_modified_app_policies() */
+    {
+        for (int i = 0; i < (pl.size()-1); i++)
+        {
+            String cap = pl.get(i);
+            if (cap != null)
+            {    
+                caps = caps.concat(cap);
+                caps = caps.concat(",");
+
+            }
+            //System.out.println("enforcer.buildEnforcerCMDParams caps is: " + caps);
+        }
+
+        caps = caps.substring(0, (caps.length()-1)); //remove the last , character
+        caps = caps.concat(ep);
+        
+        System.out.println("enforcer.build_EnforcerCMD_Parameters caps is: " + caps);
+
+        command.add(caps);
+        command.add(pl.get(pl.size()-1));
+        this.set_CMD(command);
+        
+        System.out.println("enforcer.build_EnforcerCMD_Parameters cmd is: " + this.get_CMD());
+    }
+    
+    if (pl.size() == 1) /* no cap argument present - only app string is returned
+        by return_modified_app_policies() - the case when a single 
+        capability is removed and no more capabilities are left */
+    {
+        caps = caps.concat(all);
+        caps = caps.concat(rep);
+        
+        System.out.println("enforcer.build_EnforcerCMD_Parameters caps is: " + caps);
+        
+        command.add(caps);
+        command.add(pl.get(pl.size()-1));
+        this.set_CMD(command);
+        
+        System.out.println("enforcer.build_EnforcerCMD_Parameters cmd is: " + this.get_CMD());
+        
+    }
+    
+    return INDICATE_EXECUTION_SUCCESS;
+} 
+    
+
+    
 
     
 }
