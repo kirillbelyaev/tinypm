@@ -388,7 +388,7 @@ public class Parser_implement implements Parser
         if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
-        //System.out.println("num_tokens is: " + num_tokens);
+       
         if (num_tokens == 3)
         {    
             if (this.commandParameters != null)
@@ -397,7 +397,10 @@ public class Parser_implement implements Parser
                 {    
                     this.pcrec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
                     this.pcrec.set_COLUMN_POLICY_CLASS_NAME(this.commandParameters.get(1));
-                    this.pcrec.set_UPDATE_COLUMN_to_POLICY_CLASS_NAME(); /* indicate the update column */
+                    
+                    this.pcrec.reset_COLUMN_POLICY_CLASS_POLICIES(); /* reset policies */
+                    
+                    this.pcrec.set_UPDATE_COLUMN_to_POLICY_CLASS_NAME(); /* indicate the update column */      
                 }    
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -495,6 +498,10 @@ public class Parser_implement implements Parser
         
         String policies[] = null;
         
+        /* by now we know that if get_POLICY_CLASS_POLICIES() returns null 
+        - that means that no policies exist. That is because we already 
+        ensure that pcid parameter should not be null in the first place,
+        otherwise this method will terminate immediately. */
         if (caps != null)
         { 
             /* obtain the policies in the 1st element */
@@ -507,6 +514,10 @@ public class Parser_implement implements Parser
                 caps.add(policies[i].trim());
                         
             caps.add(app.trim()); //add the application entry last
+        } else /* no policies exist for the app */
+        {
+            caps = new ArrayList<String>();
+            caps.add(app);
         }    
         
         return caps;

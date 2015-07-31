@@ -153,6 +153,11 @@ public PolicyClassesTableRecord()
     }
     
     
+    public void reset_COLUMN_POLICY_CLASS_POLICIES() {
+           this.COLUMN_POLICY_CLASS_POLICIES = "";
+    }
+    
+    
     public void add_POLICY_CLASS_POLICY(String CAP) {
         String policies[] = null;
         if (CAP != null)
