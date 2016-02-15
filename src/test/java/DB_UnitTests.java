@@ -5,12 +5,12 @@ Kirill Belyaev. Copyright (c) @2015 Colorado State University
 Department of Computer Science, Fort Collins, CO  80523-1873, USA
 */
 
-import edu.csu.tinypm.DB.DTO.AppsTableRecord;
-import edu.csu.tinypm.DB.DTO.PolicyClassesTableRecord;
-import edu.csu.tinypm.DB.exceptions.RecordDAO_Exception;
-import edu.csu.tinypm.DB.implementation.DB_Dispatcher;
-import edu.csu.tinypm.DB.implementation.RecordDAO_implement;
-import edu.csu.tinypm.interfaces.LinuxCapabilitiesPolicyContainer;
+import edu.csu.lpm.DB.DTO.AppsTableRecord;
+import edu.csu.lpm.DB.DTO.PolicyClassesTableRecord;
+import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
+import edu.csu.lpm.DB.implementation.DB_Dispatcher;
+import edu.csu.lpm.DB.implementation.RecordDAO_implement;
+import edu.csu.lpm.interfaces.LinuxCapabilitiesPolicyContainer;
 import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
