@@ -22,18 +22,28 @@ package edu.csu.lpm.TSL.interfaces;
  *
  * @author kirill
  */
-public interface Tuple 
+public interface ContentTuple extends Tuple 
 {
-  
-    public enum TupleTypes /* we deal with two types of tuples */
-    {
-        COORDINATION,
-        COLLABORATION
-    }
+    String ID = null; /* application ID - in fact full path to its executable */
     
-    public enum TupleTypesNames /* we deal with two types of tuples */
-    {
-        COORDINATION_TUPLE, /* provides instructions */
-        COLLABORATION_TUPLE /* data sharing mechanism */
-    }
+    Integer SequenceNumber = null; /* sequence number of the part of the data object */
+    
+    StringBuffer Payload = null; /* could incorporate data object chunks */
+    
+    public String get_ID();
+    
+    public String set_ID(String id);
+    
+    public Integer get_SequenceNumber();
+    
+    public Integer set_SequenceNumber(Integer sqn);
+    
+    public StringBuffer get_Payload();
+    
+    public StringBuffer set_Payload(StringBuffer payload);
+    
+    //String Type = TupleTypes.COLLABORATION.toString();
+    
+    //TupleTypes types = null;
+    
 }

@@ -22,18 +22,29 @@ package edu.csu.lpm.TSL.interfaces;
  *
  * @author kirill
  */
-public interface Tuple 
+public interface ControlTuple extends Tuple 
 {
-  
-    public enum TupleTypes /* we deal with two types of tuples */
-    {
-        COORDINATION,
-        COLLABORATION
-    }
+    String ID = null; /* application ID - in fact full path to its executable */
     
-    public enum TupleTypesNames /* we deal with two types of tuples */
-    {
-        COORDINATION_TUPLE, /* provides instructions */
-        COLLABORATION_TUPLE /* data sharing mechanism */
-    }
+    String Type = null;
+    
+    String RequestMessage = null; /* could incorporate collaboration/coordination request. 
+    For coordination String datatype could still hold a small XML payload if necessary */
+    
+    public String get_ID();
+    
+    public String set_ID(String id);
+    
+    public String get_Type();
+    
+    public String set_Type(String type);
+    
+    public String get_RequestMessage();
+    
+    public String set_RequestMessage(String rqm);
+    
+    //String Type = TupleTypes.COLLABORATION.toString();
+    
+    //TupleTypes types = null;
+    
 }
