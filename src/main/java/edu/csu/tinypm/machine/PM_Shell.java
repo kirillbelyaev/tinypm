@@ -21,7 +21,7 @@ private void showPrompt()
     System.out.print("tinyPM::<>");
 }
 
-public void processUserInput() throws Exception 
+public void process_UserInput() throws Exception 
 {	
     int x = -1;
     Scanner keyboard = new Scanner(System.in);

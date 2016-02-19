@@ -24,7 +24,7 @@ PM_Shell sh = new PM_Shell();
 
 if(lcdb.exists())
 {
-    sh.processUserInput();
+    sh.process_UserInput();
 } else
 {
     System.out.println("PM Database " + DB_Constants.LC_DB_NAME + " does not exist! Exiting.");
