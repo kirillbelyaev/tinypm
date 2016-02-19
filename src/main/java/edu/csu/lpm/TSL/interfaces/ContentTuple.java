@@ -24,26 +24,24 @@ package edu.csu.lpm.TSL.interfaces;
  */
 public interface ContentTuple extends Tuple 
 {
-    String ID = null; /* application ID - in fact full path to its executable */
+    String ID = ""; /* application ID - in fact full path to its executable */
     
-    Integer SequenceNumber = null; /* sequence number of the part of the data object */
+    Integer SequenceNumber = null; /* sequence number for the part of the 
+    data object. Made Integer instead of an int to be able to hold info about
+    chunks for potentially large data objects */
     
     StringBuffer Payload = null; /* could incorporate data object chunks */
     
     public String get_ID();
     
-    public String set_ID(String id);
+    public int set_ID(String id);
     
     public Integer get_SequenceNumber();
     
-    public Integer set_SequenceNumber(Integer sqn);
+    public int set_SequenceNumber(Integer sqn);
     
     public StringBuffer get_Payload();
     
-    public StringBuffer set_Payload(StringBuffer payload);
-    
-    //String Type = TupleTypes.COLLABORATION.toString();
-    
-    //TupleTypes types = null;
+    public int set_Payload(StringBuffer payload);
     
 }

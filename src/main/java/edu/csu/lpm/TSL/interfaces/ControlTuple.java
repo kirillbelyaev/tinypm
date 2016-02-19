@@ -24,27 +24,25 @@ package edu.csu.lpm.TSL.interfaces;
  */
 public interface ControlTuple extends Tuple 
 {
-    String ID = null; /* application ID - in fact full path to its executable */
+    String ID = ""; /* application ID - in fact full path to its executable */
     
-    String Type = null;
+    String Type = "";
     
-    String RequestMessage = null; /* could incorporate collaboration/coordination request. 
+    String RequestMessage = ""; /* could incorporate collaboration/coordination request. 
     For coordination String datatype could still hold a small XML payload if necessary */
     
     public String get_ID();
     
-    public String set_ID(String id);
+    public int set_ID(String id);
     
     public String get_Type();
     
-    public String set_Type(String type);
+    public void set_Type_to_Coordination();
+    
+    public void set_Type_to_Collaboration();
     
     public String get_RequestMessage();
     
-    public String set_RequestMessage(String rqm);
-    
-    //String Type = TupleTypes.COLLABORATION.toString();
-    
-    //TupleTypes types = null;
+    public int set_RequestMessage(String rqm);
     
 }
