@@ -33,7 +33,7 @@ public class ContentTuple_implement implements ContentTuple
     private StringBuffer Payload = null;
 
     @Override
-    public String get_ID() 
+    public String get_ID_Field() 
     {
         return this.ID;
     }
@@ -42,7 +42,7 @@ public class ContentTuple_implement implements ContentTuple
         provides extra info with int return type: 0 for success; -1 for error
     */
     @Override
-    public int set_ID(String id)
+    public int set_ID_Field(String id)
     {
         if (id != null)
         {    
@@ -75,13 +75,13 @@ public class ContentTuple_implement implements ContentTuple
     
 
     @Override
-    public Integer get_SequenceNumber() 
+    public Integer get_SequenceNumber_Field() 
     {
         return this.SequenceNumber;
     }
 
     @Override
-    public int set_SequenceNumber(Integer sqn) 
+    public int set_SequenceNumber_Field(Integer sqn) 
     {
         if (sqn != null)
         {
@@ -94,7 +94,7 @@ public class ContentTuple_implement implements ContentTuple
     }
 
     @Override
-    public StringBuffer get_Payload() 
+    public StringBuffer get_Payload_Field() 
     {
         return this.Payload;
     }
@@ -104,7 +104,7 @@ public class ContentTuple_implement implements ContentTuple
         provides extra info with int return type: 0 for success; -1 for error
     */
     @Override
-    public int set_Payload(StringBuffer payload) 
+    public int set_Payload_Field(StringBuffer payload) 
     {
         if (payload != null)
         {

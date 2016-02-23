@@ -34,7 +34,7 @@ public class ControlTuple_implement implements ControlTuple
     private String RequestMessage = "";
     
     @Override
-    public String get_ID()
+    public String get_ID_Field()
     {
         return this.ID;
     }        
@@ -44,7 +44,7 @@ public class ControlTuple_implement implements ControlTuple
         provides extra info with int return type: 0 for success; -1 for error
     */
     @Override
-    public int set_ID(String id)
+    public int set_ID_Field(String id)
     {
         if (id != null)
         {    
@@ -77,27 +77,27 @@ public class ControlTuple_implement implements ControlTuple
     
 
     @Override
-    public String get_Type() 
+    public String get_Type_Field() 
     {
         return this.Type;
     }
 
     @Override
-    public void set_Type_to_Coordination() 
+    public void set_Type_Field_to_Coordination() 
     {
         this.Type = Tuple.TupleTypes.COORDINATION.toString();
     }
     
     
     @Override
-    public void set_Type_to_Collaboration() 
+    public void set_Type_Field_to_Collaboration() 
     {
         this.Type = Tuple.TupleTypes.COLLABORATION.toString();
     }
     
 
     @Override
-    public String get_RequestMessage() 
+    public String get_RequestMessage_Field() 
     {
         return this.RequestMessage;
     }
@@ -107,13 +107,20 @@ public class ControlTuple_implement implements ControlTuple
         provides extra info with int return type: 0 for success; -1 for error
     */
     @Override
-    public int set_RequestMessage(String rqm) 
+    public int set_RequestMessage_Field(String rqm) 
     {
         if (rqm != null)
-        {    
-            this.RequestMessage = rqm;
-            return Tuple.INDICATE_OPERATION_SUCCESS;
+        {
+            if (!rqm.isEmpty())
+            {    
+                this.RequestMessage = rqm;
+                return Tuple.INDICATE_OPERATION_SUCCESS;
+            } else {
+                        System.out.println("ControlTuple.set_RequestMessage(): message is empty! ");  
+                        return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
+                   } 
         } else {
+                    System.out.println("ControlTuple.set_RequestMessage(): message is null! ");  
                     return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
                }    
     

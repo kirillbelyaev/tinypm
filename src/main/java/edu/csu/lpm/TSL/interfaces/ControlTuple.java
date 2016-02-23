@@ -31,18 +31,18 @@ public interface ControlTuple extends Tuple
     String RequestMessage = ""; /* could incorporate collaboration/coordination request. 
     For coordination String datatype could still hold a small XML payload if necessary */
     
-    public String get_ID();
+    public String get_ID_Field();
     
-    public int set_ID(String id);
+    public int set_ID_Field(String id);
     
-    public String get_Type();
+    public String get_Type_Field();
     
-    public void set_Type_to_Coordination();
+    public void set_Type_Field_to_Coordination();
     
-    public void set_Type_to_Collaboration();
+    public void set_Type_Field_to_Collaboration();
     
-    public String get_RequestMessage();
+    public String get_RequestMessage_Field();
     
-    public int set_RequestMessage(String rqm);
+    public int set_RequestMessage_Field(String rqm);
     
 }

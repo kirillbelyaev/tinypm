@@ -32,16 +32,16 @@ public interface ContentTuple extends Tuple
     
     StringBuffer Payload = null; /* could incorporate data object chunks */
     
-    public String get_ID();
+    public String get_ID_Field();
     
-    public int set_ID(String id);
+    public int set_ID_Field(String id);
     
-    public Integer get_SequenceNumber();
+    public Integer get_SequenceNumber_Field();
     
-    public int set_SequenceNumber(Integer sqn);
+    public int set_SequenceNumber_Field(Integer sqn);
     
-    public StringBuffer get_Payload();
+    public StringBuffer get_Payload_Field();
     
-    public int set_Payload(StringBuffer payload);
+    public int set_Payload_Field(StringBuffer payload);
     
 }
