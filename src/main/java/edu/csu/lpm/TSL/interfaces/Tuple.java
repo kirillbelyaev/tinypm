@@ -26,8 +26,8 @@ public interface Tuple
 {
     /* we use macros to indicate the general method exit codes within the tuple
     implementation */
-    public int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
-    public int INDICATE_EXECUTION_SUCCESS = 0;
+    public final int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
+    public final int INDICATE_OPERATION_SUCCESS = 0;
     
   
     public enum TupleTypes /* we deal with two types of tuples */

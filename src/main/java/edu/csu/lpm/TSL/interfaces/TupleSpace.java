@@ -36,6 +36,15 @@ public interface TupleSpace
         Sort of similar to UNIX domain sockets convention. */
         final String TupleSpaceName = "TupleSpace";
         
+        /* we use macros to indicate the general method exit codes within the 
+        tuple space implementation */
+        public final int INDICATE_CONTROL_TUPLE_EXISTS_STATUS = -1;
+        public final int INDICATE_CONTENT_TUPLE_EXISTS_STATUS = -2;
+        public final int INDICATE_OPERATION_SUCCESS = 0;
+        public final int INDICATE_TUPLE_SPACE_EXISTS_STATUS = -3;
+        public final int INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS = -4;
+        
+        
         public String get_TupleSpaceName();
         
         /*
@@ -47,14 +56,14 @@ public interface TupleSpace
     
         */
         
-        public Object [] create_TupleSpace();
+        public int create_TupleSpace();
         
-        public Object [] create_TupleSpace(String name);
+        //public Object [] create_TupleSpace(String name);
         
         
         public int delete_TupleSpace();
         
-        public int delete_TupleSpace(String name);
+        //public int delete_TupleSpace(String name);
         
         
         /* some rudimentary informative support */

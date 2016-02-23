@@ -56,7 +56,7 @@ public class ContentTuple_implement implements ContentTuple
                 {    
                     this.ID = id;
                     f = null;
-                    return Tuple.INDICATE_EXECUTION_SUCCESS;
+                    return Tuple.INDICATE_OPERATION_SUCCESS;
                 }    
                 else {    
                         System.out.println("ContentTuple.set_ID(): app ID does not exist in the filesystem! ");
@@ -86,7 +86,7 @@ public class ContentTuple_implement implements ContentTuple
         if (sqn != null)
         {
             this.SequenceNumber = sqn;
-            return Tuple.INDICATE_EXECUTION_SUCCESS;
+            return Tuple.INDICATE_OPERATION_SUCCESS;
         } else {
                   System.out.println("ContentTuple.set_SequenceNumber(): SequenceNumber is null! ");  
                   return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -109,7 +109,7 @@ public class ContentTuple_implement implements ContentTuple
         if (payload != null)
         {
             this.Payload = payload;
-            return Tuple.INDICATE_EXECUTION_SUCCESS;   
+            return Tuple.INDICATE_OPERATION_SUCCESS;   
         } else {
                     System.out.println("ContentTuple.set_Payload(): Payload is null! ");  
                     return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;

@@ -58,7 +58,7 @@ public class ControlTuple_implement implements ControlTuple
                 {    
                     this.ID = id;
                     f = null;
-                    return Tuple.INDICATE_EXECUTION_SUCCESS;
+                    return Tuple.INDICATE_OPERATION_SUCCESS;
                 }    
                 else {    
                         System.out.println("ControlTuple.set_ID(): app ID does not exist in the filesystem! ");
@@ -112,7 +112,7 @@ public class ControlTuple_implement implements ControlTuple
         if (rqm != null)
         {    
             this.RequestMessage = rqm;
-            return Tuple.INDICATE_EXECUTION_SUCCESS;
+            return Tuple.INDICATE_OPERATION_SUCCESS;
         } else {
                     return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
                }    
