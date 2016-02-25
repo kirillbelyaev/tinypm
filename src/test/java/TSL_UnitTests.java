@@ -62,6 +62,16 @@ public class TSL_UnitTests {
     private final String FIELD_APP_PATH_INVALID = "/bin/non_existent/ping";
     private final String FIELD_RequestMessage = "/usr/home/containers/container-b/data-pool/runtime-log.txt";
     private final String FIELD_XML_CoordinationMessage = "<XML_MESSAGE length=\"0000060\"><field>8</field></XML_MESSAGE>";
+    private final String FIELD_Payload = "^[%G[^[[32m  OK  ^[[0m] Started Show Plymouth Boot Screen.\n" +
+"[^[[32m  OK  ^[[0m] Reached target Paths.\n" +
+"[^[[32m  OK  ^[[0m] Reached target Basic System.\n" +
+"[^[[32m  OK  ^[[0m] Reached target Initrd Default Target.\n" +
+"Starting dracut pre-pivot and cleanup hook...\n" +
+"[^[[32m  OK  ^[[0m] Started dracut pre-pivot and cleanup hook.\n" +
+"Starting Cleaning Up and Shutting Down Daemons...\n" +
+"[^[[32m  OK  ^[[0m] Stopped target Timers.\n" +
+"Starting Plymouth switch root service...\n";
+
     
     @Test
     public void test_ControlTuple()
@@ -157,5 +167,88 @@ public class TSL_UnitTests {
         System.out.println("\n"); 
     }
     
+    
+    @Test
+    public void test_ContentTuple()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_ContentTuple... ");
+        System.out.println("\n"); 
+        
+        
+        ContentTuple_implement ct = new ContentTuple_implement();
+        String string_value = null;
+        int int_value = -1;
+        Integer sqn = 0;
+        StringBuffer body_value = null; 
+        StringBuffer body = new StringBuffer();
+        body.append(this.FIELD_Payload);
+        
+        int_value = ct.set_ID_Field(this.FIELD_APP_PATH_INVALID);
+        System.out.println("method return value is: " + int_value);
+        
+        string_value = ct.get_ID_Field();
+        assertNotNull(string_value);
+        System.out.println("ID is: " + string_value);
+        
+        int_value = ct.set_ID_Field(null);
+        System.out.println("method return value is: " + int_value);
+        
+        string_value = ct.get_ID_Field();
+        assertNotNull(string_value);
+        System.out.println("ID is: " + string_value);
+        
+        int_value = ct.set_ID_Field("");
+        System.out.println("method return value is: " + int_value);
+        
+        string_value = ct.get_ID_Field();
+        assertNotNull(string_value);
+        System.out.println("ID is: " + string_value);
+        
+        int_value = ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        System.out.println("method return value is: " + int_value);
+        
+        string_value = ct.get_ID_Field();
+        assertNotNull(string_value);
+        System.out.println("ID is: " + string_value);
+        
+        
+        sqn = ct.get_SequenceNumber_Field();
+        assertNotNull(sqn);
+        System.out.println("SequenceNumber is: " + sqn);
+        
+        int_value = ct.set_SequenceNumber_Field(null);
+        System.out.println("method return value is: " + int_value);
+        
+        sqn = ct.get_SequenceNumber_Field();
+        assertNotNull(sqn);
+        System.out.println("SequenceNumber is: " + sqn);
+        
+        
+        int_value = ct.set_SequenceNumber_Field(0);
+        System.out.println("method return value is: " + int_value);
+        
+        sqn = ct.get_SequenceNumber_Field();
+        assertNotNull(sqn);
+        System.out.println("SequenceNumber is: " + sqn);
+        
+        int_value = ct.set_Payload_Field(null);
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ct.set_Payload_Field(body);
+        System.out.println("method return value is: " + int_value);
+        
+        body_value = ct.get_Payload_Field();
+        assertNotNull(body_value);
+        System.out.println("Payload is: " + body_value);
+        
+        
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_ContentTuple... ");
+        System.out.println("\n");
+    }
     
 }
