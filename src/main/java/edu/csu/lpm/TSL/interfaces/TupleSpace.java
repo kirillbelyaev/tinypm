@@ -43,6 +43,7 @@ public interface TupleSpace
         public final int INDICATE_OPERATION_SUCCESS = 0;
         public final int INDICATE_TUPLE_SPACE_EXISTS_STATUS = -3;
         public final int INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS = -4;
+        public final int INDICATE_TUPLE_SPACE_NOT_EMPTY = -5;
         
         
         public String get_TupleSpaceName();
@@ -53,7 +54,6 @@ public interface TupleSpace
         
         Object TS [] = null;
         ArrayList <Object> TSL = null;
-    
         */
         
         public int create_TupleSpace();
@@ -86,8 +86,8 @@ public interface TupleSpace
         
         
         /* take operation returns a tuple while removing it from a tuple space */
-        public int take_ControlTuple();
+        public ControlTuple take_ControlTuple();
         
-        public int take_ContentTuple();
+        public ContentTuple take_ContentTuple();
     
 }

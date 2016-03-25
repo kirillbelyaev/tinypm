@@ -19,6 +19,7 @@
 
 import edu.csu.lpm.TSL.implementation.ContentTuple_implement;
 import edu.csu.lpm.TSL.implementation.ControlTuple_implement;
+import edu.csu.lpm.TSL.implementation.TupleSpace_implement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -248,6 +249,46 @@ public class TSL_UnitTests {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_ContentTuple... ");
+        System.out.println("\n");
+    }
+    
+    
+    @Test
+    public void test_TupleSpace()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_TupleSpace... ");
+        System.out.println("\n"); 
+     
+     
+        TupleSpace_implement ts = new TupleSpace_implement();
+        String string_value = null;
+        int int_value = -1;
+        
+        string_value = ts.get_TupleSpaceName();
+        assertNotNull(string_value);
+        System.out.println("TupleSpaceName is: " + string_value);
+        
+        int_value = ts.create_TupleSpace();
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ts.create_TupleSpace();
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ts.delete_TupleSpace();
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ts.delete_TupleSpace();
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ts.create_TupleSpace();
+        System.out.println("method return value is: " + int_value);
+        
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_TupleSpace... ");
         System.out.println("\n");
     }
     

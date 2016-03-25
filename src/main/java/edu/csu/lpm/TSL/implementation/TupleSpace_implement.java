@@ -55,9 +55,13 @@ public class TupleSpace_implement implements TupleSpace
     public int delete_TupleSpace() 
     {
         if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+        
+        /* allow deletion only if ts is empty by TS calculus definition */
+        if (!this.TS.isEmpty()) return TupleSpace.INDICATE_TUPLE_SPACE_NOT_EMPTY;
         else
         {    
-            this.TS.clear();
+            this.TS.clear(); /* not really needed since it should be empty - more
+            like a symbolic gesture*/
             TS = null;
             return TupleSpace.INDICATE_OPERATION_SUCCESS;
         }
@@ -122,7 +126,7 @@ public class TupleSpace_implement implements TupleSpace
     @Override
     public int append_ContentTuple(ContentTuple ct) 
     {
-        /* we limit a tuple space to a single content tuple for DDOS reasons */
+        /* we limit a tuple space to a single content tuple for DOS reasons */
         if (!TS.contains(ct))
         {    
             TS.add(ct);
@@ -131,13 +135,41 @@ public class TupleSpace_implement implements TupleSpace
     }
 
     @Override
-    public int take_ControlTuple() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ControlTuple take_ControlTuple() 
+    {
+        ControlTuple ct = null;
+        
+        int position = this.TS.indexOf(ct);
+        
+        if (position != -1)
+        {
+            ct = (ControlTuple) this.TS.get(position);
+            this.TS.remove(position); /* adhere to TS calculus and remove a tuple */
+            //return (ControlTuple) this.TS.get(position);
+            return ct;
+        }
+        else { return null; }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int take_ContentTuple() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ContentTuple take_ContentTuple() 
+    {
+        ContentTuple ct = null;
+        
+        int position = this.TS.indexOf(ct);
+        
+        if (position != -1)
+        {
+            ct = (ContentTuple) this.TS.get(position);
+            this.TS.remove(position); /* adhere to TS calculus and remove a tuple */
+            //return (ContentTuple) this.TS.get(position); 
+            return ct;
+        }
+        else { return null; }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
