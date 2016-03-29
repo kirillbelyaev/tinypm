@@ -272,38 +272,49 @@ public class TSLib_UnitTests {
         
         string_value = ts.get_TupleSpaceName();
         assertNotNull(string_value);
+        System.out.println("executing get_TupleSpaceName() ");
         System.out.println("TupleSpaceName is: " + string_value);
         
         int_value = ts.create_TupleSpace();
+        System.out.println("executing create_TupleSpace() ");
         System.out.println("method return value is: " + int_value);
         
         int_value = ts.create_TupleSpace();
+        System.out.println("executing create_TupleSpace() ");
         System.out.println("method return value is: " + int_value);
         
         int_value = ts.delete_TupleSpace();
+        System.out.println("executing delete_TupleSpace() ");
         System.out.println("method return value is: " + int_value);
         
         int_value = ts.delete_TupleSpace();
+        System.out.println("executing delete_TupleSpace() ");
         System.out.println("method return value is: " + int_value);
         
         int_value = ts.create_TupleSpace();
+        System.out.println("executing create_TupleSpace() ");
         System.out.println("method return value is: " + int_value);
         
         int_value = ts.countTuples();
+        System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         
         int_value = ts.append_ControlTuple(ct);
+        System.out.println("executing append_ControlTuple() ");
         System.out.println("method return value is: " + int_value);
         
         int_value = ts.countTuples();
+        System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         
         ct = null;
         ct = ts.read_ControlTuple();
+        System.out.println("executing read_ControlTuple() ");
         if (ct != null) 
         System.out.println("tuple type is: " + ct.get_Type_Field());
         
         int_value = ts.append_ControlTuple(ct);
+        System.out.println("executing append_ControlTuple() ");
         System.out.println("method return value is: " + int_value);
         
         

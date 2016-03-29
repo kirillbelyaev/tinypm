@@ -135,6 +135,7 @@ public class TupleSpace_implement implements TupleSpace
     public int append_ControlTuple(ControlTuple_implement ct) 
     {
         if (ct == null) return TupleSpace.INDICATE_TUPLE_IS_NULL_STATUS;
+        if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
         /* we limit a tuple space to a single control tuple */
         if (!TS.contains(ct))
         {    
@@ -148,6 +149,7 @@ public class TupleSpace_implement implements TupleSpace
     public int append_ContentTuple(ContentTuple_implement ct) 
     {
         if (ct == null) return TupleSpace.INDICATE_TUPLE_IS_NULL_STATUS;
+        if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
         /* we limit a tuple space to a single content tuple for DOS reasons */
         if (!TS.contains(ct))
         {    
