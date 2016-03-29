@@ -29,6 +29,7 @@ public class TupleSpace_implement implements TupleSpace
 {
     
     //final String TupleSpaceName = "ts";
+    /* TS is a list that can hold different types of objects */
     private ArrayList <Object> TS = null;
 
     @Override
@@ -182,39 +183,75 @@ public class TupleSpace_implement implements TupleSpace
     @Override
     public ControlTuple_implement take_ControlTuple() 
     {
-        ControlTuple_implement ct = null;
+        if (this.TS == null) return null;
+        //ControlTuple_implement ct = null;
+        /* we need to instanciate the class */
+        ControlTuple_implement ct = new ControlTuple_implement();
         
-        int position = this.TS.indexOf(ct);
+        int position = 0;
         
-        if (position != -1)
-        {
-            ct = (ControlTuple_implement) this.TS.get(position);
-            this.TS.remove(position); /* adhere to TS calculus and remove a tuple */
-            //return (ControlTuple) this.TS.get(position);
-            return ct;
+        /* iterate over TS */
+        for (Object o : this.TS)
+        {   
+            if (o != null)
+            {  
+                /* does not work - we need the actual instanciated class parameter */
+                //if (o.getClass().isInstance(ControlTuple_implement.class))
+                /* since equals() can not make object comparison of 
+                different objects we need to identify a class type based on
+                the instance type check - the only possible solution */
+                if (o.getClass().isInstance(ct))    
+                {
+                    //System.out.println("read_ControlTuple(): object class match found! ");
+                    /* reuse the existing class instance */
+                    ct = (ControlTuple_implement) o;
+                    //return (ControlTuple_implement) o;
+                    this.TS.remove(position); /* adhere to TS calculus and remove a tuple */
+                    return ct;
+                }               
+            }
             
-        } else { return null; }
+            position = position+1;
+        }
         
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
     public ContentTuple_implement take_ContentTuple() 
     {
-        ContentTuple_implement ct = null;
+        if (this.TS == null) return null;
+        //ContentTuple_implement ct = null;
+        /* we need to instanciate the class */
+        ContentTuple_implement ct = new ContentTuple_implement();
         
-        int position = this.TS.indexOf(ct);
+        int position = 0;
         
-        if (position != -1)
-        {
-            ct = (ContentTuple_implement) this.TS.get(position);
-            this.TS.remove(position); /* adhere to TS calculus and remove a tuple */
-            //return (ContentTuple) this.TS.get(position); 
-            return ct;
+        /* iterate over TS */
+        for (Object o : this.TS)
+        {   
+            if (o != null)
+            {  
+                /* does not work - we need the actual instanciated class parameter */
+                //if (o.getClass().isInstance(ContentTuple_implement.class))
+                /* since equals() can not make object comparison of 
+                different objects we need to identify a class type based on
+                the instance type check - the only possible solution */
+                if (o.getClass().isInstance(ct))    
+                {
+                    //System.out.println("read_ControlTuple(): object class match found! ");
+                    /* reuse the existing class instance */
+                    ct = (ContentTuple_implement) o;
+                    //return (ControlTuple_implement) o;
+                    this.TS.remove(position); /* adhere to TS calculus and remove a tuple */
+                    return ct;
+                }               
+            }
             
-        } else { return null; }
-        
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            position = position+1;
+        }
+     
+        return null;
     }
     
 }
