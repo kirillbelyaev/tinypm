@@ -16,7 +16,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package edu.csu.lpm.TSL.interfaces;
+package edu.csu.lpm.TSLib.interfaces;
+
+import edu.csu.lpm.TSLib.implementation.ContentTuple_implement;
+import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
 
 /**
  *
@@ -34,7 +37,7 @@ public interface TupleSpace
         location using uniform naming convention instead of assuming TS name 
         that is given by the internal application logic. 
         Sort of similar to UNIX domain sockets convention. */
-        final String TupleSpaceName = "TupleSpace";
+        final String TupleSpaceName = "ts";
         
         /* we use macros to indicate the general method exit codes within the 
         tuple space implementation */
@@ -43,7 +46,8 @@ public interface TupleSpace
         public final int INDICATE_OPERATION_SUCCESS = 0;
         public final int INDICATE_TUPLE_SPACE_EXISTS_STATUS = -3;
         public final int INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS = -4;
-        public final int INDICATE_TUPLE_SPACE_NOT_EMPTY = -5;
+        public final int INDICATE_TUPLE_SPACE_NOT_EMPTY_STATUS = -5;
+        public final int INDICATE_TUPLE_IS_NULL_STATUS = -6;
         
         
         public String get_TupleSpaceName();
@@ -75,19 +79,19 @@ public interface TupleSpace
         
         
         /* read operation reads a tuple but does not remove it from TS */
-        public ControlTuple read_ControlTuple();
+        public ControlTuple_implement read_ControlTuple();
         
-        public ContentTuple read_ContentTuple();
+        public ContentTuple_implement read_ContentTuple();
         
         /* append operation adds a tuple without affecting existing tuples in a tuple space */
-        public int append_ControlTuple(ControlTuple ct);
+        public int append_ControlTuple(ControlTuple_implement ct);
         
-        public int append_ContentTuple(ContentTuple ct);
+        public int append_ContentTuple(ContentTuple_implement ct);
         
         
         /* take operation returns a tuple while removing it from a tuple space */
-        public ControlTuple take_ControlTuple();
+        public ControlTuple_implement take_ControlTuple();
         
-        public ContentTuple take_ContentTuple();
+        public ContentTuple_implement take_ContentTuple();
     
 }

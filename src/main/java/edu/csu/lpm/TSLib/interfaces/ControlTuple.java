@@ -16,32 +16,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package edu.csu.lpm.TSL.interfaces;
+package edu.csu.lpm.TSLib.interfaces;
 
 /**
  *
  * @author kirill
  */
-public interface ContentTuple extends Tuple 
+public interface ControlTuple extends Tuple 
 {
     String ID = ""; /* application ID - in fact full path to its executable */
     
-    Integer SequenceNumber = null; /* sequence number for the part of the 
-    data object. Made Integer instead of an int to be able to hold info about
-    chunks for potentially large data objects */
+    String Type = "";
     
-    StringBuffer Payload = null; /* could incorporate data object chunks */
+    String RequestMessage = ""; /* could incorporate collaboration/coordination request. 
+    For coordination String datatype could still hold a small XML payload if necessary */
     
     public String get_ID_Field();
     
     public int set_ID_Field(String id);
     
-    public Integer get_SequenceNumber_Field();
+    public String get_Type_Field();
     
-    public int set_SequenceNumber_Field(Integer sqn);
+    public void set_Type_Field_to_Coordination();
     
-    public StringBuffer get_Payload_Field();
+    public void set_Type_Field_to_Collaboration();
     
-    public int set_Payload_Field(StringBuffer payload);
+    public String get_RequestMessage_Field();
+    
+    public int set_RequestMessage_Field(String rqm);
     
 }

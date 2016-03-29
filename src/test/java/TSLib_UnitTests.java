@@ -17,9 +17,9 @@
  * MA 02110-1301  USA
  */
 
-import edu.csu.lpm.TSL.implementation.ContentTuple_implement;
-import edu.csu.lpm.TSL.implementation.ControlTuple_implement;
-import edu.csu.lpm.TSL.implementation.TupleSpace_implement;
+import edu.csu.lpm.TSLib.implementation.ContentTuple_implement;
+import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
+import edu.csu.lpm.TSLib.implementation.TupleSpace_implement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,9 +31,9 @@ import static org.junit.Assert.*;
  *
  * @author kirill
  */
-public class TSL_UnitTests {
+public class TSLib_UnitTests {
     
-    public TSL_UnitTests() {
+    public TSLib_UnitTests() {
     }
     
     @BeforeClass
@@ -63,15 +63,16 @@ public class TSL_UnitTests {
     private final String FIELD_APP_PATH_INVALID = "/bin/non_existent/ping";
     private final String FIELD_RequestMessage = "/usr/home/containers/container-b/data-pool/runtime-log.txt";
     private final String FIELD_XML_CoordinationMessage = "<XML_MESSAGE length=\"0000060\"><field>8</field></XML_MESSAGE>";
-    private final String FIELD_Payload = "^[%G[^[[32m  OK  ^[[0m] Started Show Plymouth Boot Screen.\n" +
-"[^[[32m  OK  ^[[0m] Reached target Paths.\n" +
-"[^[[32m  OK  ^[[0m] Reached target Basic System.\n" +
-"[^[[32m  OK  ^[[0m] Reached target Initrd Default Target.\n" +
-"Starting dracut pre-pivot and cleanup hook...\n" +
-"[^[[32m  OK  ^[[0m] Started dracut pre-pivot and cleanup hook.\n" +
-"Starting Cleaning Up and Shutting Down Daemons...\n" +
-"[^[[32m  OK  ^[[0m] Stopped target Timers.\n" +
-"Starting Plymouth switch root service...\n";
+    private final String FIELD_Payload = 
+    "^[%G[^[[32m  OK  ^[[0m] Started Show Plymouth Boot Screen.\n" +
+    "[^[[32m  OK  ^[[0m] Reached target Paths.\n" +
+    "[^[[32m  OK  ^[[0m] Reached target Basic System.\n" +
+    "[^[[32m  OK  ^[[0m] Reached target Initrd Default Target.\n" +
+    "Starting dracut pre-pivot and cleanup hook...\n" +
+    "[^[[32m  OK  ^[[0m] Started dracut pre-pivot and cleanup hook.\n" +
+    "Starting Cleaning Up and Shutting Down Daemons...\n" +
+    "[^[[32m  OK  ^[[0m] Stopped target Timers.\n" +
+    "Starting Plymouth switch root service...\n";
 
     
     @Test
@@ -266,6 +267,9 @@ public class TSL_UnitTests {
         String string_value = null;
         int int_value = -1;
         
+        ControlTuple_implement ct = new ControlTuple_implement();
+        ct.set_Type_Field_to_Coordination();
+        
         string_value = ts.get_TupleSpaceName();
         assertNotNull(string_value);
         System.out.println("TupleSpaceName is: " + string_value);
@@ -283,6 +287,23 @@ public class TSL_UnitTests {
         System.out.println("method return value is: " + int_value);
         
         int_value = ts.create_TupleSpace();
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ts.countTuples();
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ts.append_ControlTuple(ct);
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ts.countTuples();
+        System.out.println("method return value is: " + int_value);
+        
+        ct = null;
+        ct = ts.read_ControlTuple();
+        if (ct != null) 
+        System.out.println("tuple type is: " + ct.get_Type_Field());
+        
+        int_value = ts.append_ControlTuple(ct);
         System.out.println("method return value is: " + int_value);
         
         

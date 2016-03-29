@@ -16,11 +16,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package edu.csu.lpm.TSL.implementation;
+package edu.csu.lpm.TSLib.implementation;
 
-import edu.csu.lpm.TSL.interfaces.ContentTuple;
-import edu.csu.lpm.TSL.interfaces.ControlTuple;
-import edu.csu.lpm.TSL.interfaces.TupleSpace;
+import edu.csu.lpm.TSLib.interfaces.TupleSpace;
 import java.util.ArrayList;
 
 /**
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 public class TupleSpace_implement implements TupleSpace 
 {
     
-    final String TupleSpaceName = "TupleSpace";
+    //final String TupleSpaceName = "ts";
     private ArrayList <Object> TS = null;
 
     @Override
@@ -57,7 +55,7 @@ public class TupleSpace_implement implements TupleSpace
         if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
         
         /* allow deletion only if ts is empty by TS calculus definition */
-        if (!this.TS.isEmpty()) return TupleSpace.INDICATE_TUPLE_SPACE_NOT_EMPTY;
+        if (!this.TS.isEmpty()) return TupleSpace.INDICATE_TUPLE_SPACE_NOT_EMPTY_STATUS;
         else
         {    
             this.TS.clear(); /* not really needed since it should be empty - more
@@ -75,6 +73,7 @@ public class TupleSpace_implement implements TupleSpace
     @Override
     public int countTuples() 
     {
+        if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
         return this.TS.size();
     }
 
@@ -89,85 +88,109 @@ public class TupleSpace_implement implements TupleSpace
     }
 
     @Override
-    public ControlTuple read_ControlTuple() 
+    public ControlTuple_implement read_ControlTuple() 
     {
-        ControlTuple ct = null;
+        if (this.TS == null) return null;
+        //ControlTuple_implement ct = null;
+        /* we need to instanciate the class */
+        ControlTuple_implement ct = new ControlTuple_implement();
+        
+        /* iterate over TS */
+        for (Object o : this.TS)
+        {   
+            if (o != null)
+            {  
+                /* does not work - we need the actual instanciated class parameter */
+                //if (o.getClass().isInstance(ControlTuple_implement.class))
+                /* since equals() can not make object comparison of 
+                different objects we need to identify a class type based on
+                the instance type check - the only possible solution */
+                if (o.getClass().isInstance(ct))    
+                {
+                    //System.out.println("read_ControlTuple(): object class match found! ");
+                    /* reuse the existing class instance */
+                    ct = (ControlTuple_implement) o;
+                    //return (ControlTuple_implement) o;
+                    return ct;
+                }               
+            }    
+        }
+     
+        return null;
+    }
+
+    @Override
+    public ContentTuple_implement read_ContentTuple() 
+    {
+        ContentTuple_implement ct = null;
         
         int position = this.TS.indexOf(ct);
         
         if (position != -1)
-        { return (ControlTuple) this.TS.get(position); }
+        { return (ContentTuple_implement) this.TS.get(position); }
         else { return null; }
     }
 
     @Override
-    public ContentTuple read_ContentTuple() 
+    public int append_ControlTuple(ControlTuple_implement ct) 
     {
-        ContentTuple ct = null;
-        
-        int position = this.TS.indexOf(ct);
-        
-        if (position != -1)
-        { return (ContentTuple) this.TS.get(position); }
-        else { return null; }
-    }
-
-    @Override
-    public int append_ControlTuple(ControlTuple ct) 
-    {
+        if (ct == null) return TupleSpace.INDICATE_TUPLE_IS_NULL_STATUS;
         /* we limit a tuple space to a single control tuple */
         if (!TS.contains(ct))
         {    
             TS.add(ct);
             return TupleSpace.INDICATE_OPERATION_SUCCESS;
+            
         } else { return TupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS; }    
     }
 
     @Override
-    public int append_ContentTuple(ContentTuple ct) 
+    public int append_ContentTuple(ContentTuple_implement ct) 
     {
+        if (ct == null) return TupleSpace.INDICATE_TUPLE_IS_NULL_STATUS;
         /* we limit a tuple space to a single content tuple for DOS reasons */
         if (!TS.contains(ct))
         {    
             TS.add(ct);
             return TupleSpace.INDICATE_OPERATION_SUCCESS;
+            
         } else { return TupleSpace.INDICATE_CONTENT_TUPLE_EXISTS_STATUS; } 
     }
 
     @Override
-    public ControlTuple take_ControlTuple() 
+    public ControlTuple_implement take_ControlTuple() 
     {
-        ControlTuple ct = null;
+        ControlTuple_implement ct = null;
         
         int position = this.TS.indexOf(ct);
         
         if (position != -1)
         {
-            ct = (ControlTuple) this.TS.get(position);
+            ct = (ControlTuple_implement) this.TS.get(position);
             this.TS.remove(position); /* adhere to TS calculus and remove a tuple */
             //return (ControlTuple) this.TS.get(position);
             return ct;
-        }
-        else { return null; }
+            
+        } else { return null; }
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ContentTuple take_ContentTuple() 
+    public ContentTuple_implement take_ContentTuple() 
     {
-        ContentTuple ct = null;
+        ContentTuple_implement ct = null;
         
         int position = this.TS.indexOf(ct);
         
         if (position != -1)
         {
-            ct = (ContentTuple) this.TS.get(position);
+            ct = (ContentTuple_implement) this.TS.get(position);
             this.TS.remove(position); /* adhere to TS calculus and remove a tuple */
             //return (ContentTuple) this.TS.get(position); 
             return ct;
-        }
-        else { return null; }
+            
+        } else { return null; }
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

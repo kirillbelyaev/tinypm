@@ -16,10 +16,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package edu.csu.lpm.TSL.implementation;
+package edu.csu.lpm.TSLib.implementation;
 
-import edu.csu.lpm.TSL.interfaces.ContentTuple;
-import edu.csu.lpm.TSL.interfaces.Tuple;
+import edu.csu.lpm.TSLib.interfaces.ContentTuple;
+import edu.csu.lpm.TSLib.interfaces.Tuple;
 import java.io.File;
 
 /**
