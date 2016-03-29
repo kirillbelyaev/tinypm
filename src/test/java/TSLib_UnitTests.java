@@ -270,6 +270,10 @@ public class TSLib_UnitTests {
         ControlTuple_implement ct = new ControlTuple_implement();
         ct.set_Type_Field_to_Coordination();
         
+        ContentTuple_implement ctt = new ContentTuple_implement();
+        ctt.set_SequenceNumber_Field(100);
+        
+        
         string_value = ts.get_TupleSpaceName();
         assertNotNull(string_value);
         System.out.println("executing get_TupleSpaceName() ");
@@ -311,10 +315,60 @@ public class TSLib_UnitTests {
         ct = ts.read_ControlTuple();
         System.out.println("executing read_ControlTuple() ");
         if (ct != null) 
-        System.out.println("tuple type is: " + ct.get_Type_Field());
+            System.out.println("tuple type is: " + ct.get_Type_Field());
+        else
+            System.out.println("NULL - no match ");
         
         int_value = ts.append_ControlTuple(ct);
         System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        
+        
+        ctt = null;
+        ctt = ts.read_ContentTuple();
+        System.out.println("executing read_ContentTuple() ");
+        if (ctt != null) 
+            System.out.println("content tuple seq_num is: " + ctt.get_SequenceNumber_Field());
+        else
+            System.out.println("NULL - no match ");
+
+        
+        int_value = ts.countTuples();
+        System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        
+        
+        int_value = ts.append_ContentTuple(ctt);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + int_value);
+        
+        
+        ctt = new ContentTuple_implement();
+        ctt.set_SequenceNumber_Field(100);
+        
+        int_value = ts.append_ContentTuple(ctt);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + int_value);
+        
+        int_value = ts.countTuples();
+        System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        
+        ctt = null;
+        ctt = ts.read_ContentTuple();
+        System.out.println("executing read_ContentTuple() ");
+        if (ctt != null) 
+            System.out.println("content tuple seq_num is: " + ctt.get_SequenceNumber_Field());
+        else
+            System.out.println("NULL - no match ");
+
+        int_value = ts.append_ContentTuple(ctt);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + int_value);
+        
+        
+        int_value = ts.countTuples();
+        System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         
         

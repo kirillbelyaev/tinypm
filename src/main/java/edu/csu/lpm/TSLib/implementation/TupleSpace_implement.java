@@ -122,13 +122,33 @@ public class TupleSpace_implement implements TupleSpace
     @Override
     public ContentTuple_implement read_ContentTuple() 
     {
-        ContentTuple_implement ct = null;
+        if (this.TS == null) return null;
+        //ContentTuple_implement ct = null;
+        /* we need to instanciate the class */
+        ContentTuple_implement ct = new ContentTuple_implement();
         
-        int position = this.TS.indexOf(ct);
-        
-        if (position != -1)
-        { return (ContentTuple_implement) this.TS.get(position); }
-        else { return null; }
+        /* iterate over TS */
+        for (Object o : this.TS)
+        {   
+            if (o != null)
+            {  
+                /* does not work - we need the actual instanciated class parameter */
+                //if (o.getClass().isInstance(ContentTuple_implement.class))
+                /* since equals() can not make object comparison of 
+                different objects we need to identify a class type based on
+                the instance type check - the only possible solution */
+                if (o.getClass().isInstance(ct))    
+                {
+                    //System.out.println("read_ControlTuple(): object class match found! ");
+                    /* reuse the existing class instance */
+                    ct = (ContentTuple_implement) o;
+                    //return (ControlTuple_implement) o;
+                    return ct;
+                }               
+            }    
+        }
+     
+        return null;   
     }
 
     @Override
