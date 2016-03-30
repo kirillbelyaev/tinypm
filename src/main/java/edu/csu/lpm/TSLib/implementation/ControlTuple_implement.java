@@ -126,6 +126,53 @@ public class ControlTuple_implement implements ControlTuple
     
     }
     
+    /* introduce template matching methods inside a tuple */
     
+    @Override
+    public boolean match_on_ID_Field(String id)
+    {
+        if (id != null)
+        {
+            if (!id.isEmpty())
+            {
+                if (this.ID.equals(id))
+                    return true;
+            }    
+        }
+        
+        return false;
+    }        
+    
+    
+    @Override
+    public boolean match_on_Type_Field(String type)
+    {
+        if (type != null)
+        {
+            if (!type.isEmpty())
+            {
+                if (this.Type.equals(type))
+                    return true;
+            }    
+        }
+        
+        return false;
+    }
+    
+    
+    @Override
+    public boolean match_on_RequestMessage_Field(String rqm)
+    {
+        if (rqm != null)
+        {
+            if (!rqm.isEmpty())
+            {
+                if (this.RequestMessage.equals(rqm))
+                    return true;
+            }    
+        }
+        
+        return false;
+    }
     
 }

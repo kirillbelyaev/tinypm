@@ -20,6 +20,7 @@
 import edu.csu.lpm.TSLib.implementation.ContentTuple_implement;
 import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
 import edu.csu.lpm.TSLib.implementation.TupleSpace_implement;
+import edu.csu.lpm.TSLib.interfaces.Tuple;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -87,80 +88,155 @@ public class TSLib_UnitTests {
         ControlTuple_implement ct = new ControlTuple_implement();
         String string_value = null;
         int int_value = -1;
+        boolean result = false;
         
         int_value = ct.set_ID_Field(this.FIELD_APP_PATH_INVALID);
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
         System.out.println("ID is: " + string_value);
+        System.out.println("\n"); 
         
         int_value = ct.set_ID_Field(null);
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
         System.out.println("ID is: " + string_value);
+        System.out.println("\n"); 
         
         int_value = ct.set_ID_Field("");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
         System.out.println("ID is: " + string_value);
+        System.out.println("\n"); 
         
         int_value = ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
         System.out.println("ID is: " + string_value);
-        
+        System.out.println("\n"); 
         
         int_value = ct.set_RequestMessage_Field(this.FIELD_RequestMessage);
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
         
         string_value = ct.get_RequestMessage_Field();
         assertNotNull(string_value);
         System.out.println("RequestMessage is: " + string_value);
+        System.out.println("\n"); 
         
         int_value = ct.set_RequestMessage_Field(this.FIELD_XML_CoordinationMessage);
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
         
         string_value = ct.get_RequestMessage_Field();
         assertNotNull(string_value);
         System.out.println("RequestMessage is: " + string_value);
+        System.out.println("\n"); 
         
         int_value = ct.set_RequestMessage_Field(null);
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
         
         string_value = ct.get_RequestMessage_Field();
         assertNotNull(string_value);
         System.out.println("RequestMessage is: " + string_value);
+        System.out.println("\n"); 
         
         int_value = ct.set_RequestMessage_Field("");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
         
         string_value = ct.get_RequestMessage_Field();
         assertNotNull(string_value);
         System.out.println("RequestMessage is: " + string_value);
-        
+        System.out.println("\n"); 
         
         string_value = ct.get_Type_Field();
         assertNotNull(string_value);
         System.out.println("Type is: " + string_value);
+        System.out.println("\n"); 
         
         ct.set_Type_Field_to_Collaboration();
         
         string_value = ct.get_Type_Field();
         assertNotNull(string_value);
         System.out.println("Type is: " + string_value);
+        System.out.println("\n"); 
         
         ct.set_Type_Field_to_Coordination();
         
         string_value = ct.get_Type_Field();
         assertNotNull(string_value);
         System.out.println("Type is: " + string_value);
+        System.out.println("\n"); 
+        
+        /* now test matching */
+        
+        result = ct.match_on_ID_Field(this.FIELD_APP_PATH_VALID);
+        System.out.println("executing match_on_ID() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_ID_Field(this.FIELD_APP_PATH_INVALID);
+        System.out.println("executing match_on_ID() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_ID_Field(null);
+        System.out.println("executing match_on_ID() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_ID_Field("");
+        System.out.println("executing match_on_ID() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        
+        result = ct.match_on_Type_Field(Tuple.TupleTypes.COLLABORATION.toString());
+        System.out.println("executing match_on_Type_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        
+        result = ct.match_on_Type_Field(Tuple.TupleTypes.COORDINATION.toString());
+        System.out.println("executing match_on_Type_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_Type_Field(" ");
+        System.out.println("executing match_on_Type_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        
+        result = ct.match_on_RequestMessage_Field(this.FIELD_RequestMessage);
+        System.out.println("executing match_on_RequestMessage_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        
+        result = ct.match_on_RequestMessage_Field(this.FIELD_XML_CoordinationMessage);
+        System.out.println("executing match_on_RequestMessage_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_RequestMessage_Field(" ");
+        System.out.println("executing match_on_RequestMessage_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
         
         
         System.out.println("\n"); 
@@ -448,6 +524,12 @@ public class TSLib_UnitTests {
         
         int_value = ts.countTuples();
         System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        
+        int_value = ts.delete_TupleSpace();
+        System.out.println("executing delete_TupleSpace() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         

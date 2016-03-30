@@ -24,11 +24,11 @@ package edu.csu.lpm.TSLib.interfaces;
  */
 public interface ControlTuple extends Tuple 
 {
-    String ID = ""; /* application ID - in fact full path to its executable */
+    String ID_Field = ""; /* application ID - in fact full path to its executable */
     
-    String Type = "";
+    String Type_Field = ""; /* indicates type of communication: coordination/collaboration  */
     
-    String RequestMessage = ""; /* could incorporate collaboration/coordination request. 
+    String RequestMessage_Field = ""; /* could incorporate collaboration/coordination request. 
     For coordination String datatype could still hold a small XML payload if necessary */
     
     public String get_ID_Field();
@@ -44,5 +44,12 @@ public interface ControlTuple extends Tuple
     public String get_RequestMessage_Field();
     
     public int set_RequestMessage_Field(String rqm);
+    
+    /* introduce template matching methods inside a tuple */
+    public boolean match_on_ID_Field(String id);
+    
+    public boolean match_on_Type_Field(String type);
+    
+    public boolean match_on_RequestMessage_Field(String rqm);
     
 }

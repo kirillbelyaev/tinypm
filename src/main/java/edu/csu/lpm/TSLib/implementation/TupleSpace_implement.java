@@ -27,7 +27,6 @@ import java.util.ArrayList;
  */
 public class TupleSpace_implement implements TupleSpace 
 {
-    
     //final String TupleSpaceName = "ts";
     /* TS is a list that can hold different types of objects */
     private ArrayList <Object> TS = null;
