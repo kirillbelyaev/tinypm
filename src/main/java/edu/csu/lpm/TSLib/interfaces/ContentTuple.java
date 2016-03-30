@@ -24,13 +24,13 @@ package edu.csu.lpm.TSLib.interfaces;
  */
 public interface ContentTuple extends Tuple 
 {
-    String ID = ""; /* application ID - in fact full path to its executable */
+    String ID_Field = ""; /* application ID - in fact full path to its executable */
     
-    Integer SequenceNumber = null; /* sequence number for the part of the 
+    Integer SequenceNumber_Field = null; /* sequence number for the part of the 
     data object. Made Integer instead of an int to be able to hold info about
     chunks for potentially large data objects */
     
-    StringBuffer Payload = null; /* could incorporate data object chunks */
+    StringBuffer Payload_Field = null; /* could incorporate data object chunks */
     
     public String get_ID_Field();
     
@@ -43,5 +43,10 @@ public interface ContentTuple extends Tuple
     public StringBuffer get_Payload_Field();
     
     public int set_Payload_Field(StringBuffer payload);
+    
+    /* introduce template matching methods inside a tuple */
+    public boolean match_on_ID_Field(String id);
+    
+    public boolean match_on_SequenceNumber_Field(Integer n);
     
 }

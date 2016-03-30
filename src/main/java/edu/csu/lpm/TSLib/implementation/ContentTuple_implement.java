@@ -116,4 +116,35 @@ public class ContentTuple_implement implements ContentTuple
                }    
     }
     
+    
+    /* introduce template matching methods inside a tuple */
+    
+    @Override
+    public boolean match_on_ID_Field(String id)
+    {
+        if (id != null)
+        {
+            if (!id.isEmpty())
+            {
+                if (this.ID.equals(id))
+                    return true;
+            }    
+        }
+        
+        return false;
+    }        
+    
+    
+    @Override
+    public boolean match_on_SequenceNumber_Field(Integer n)
+    {
+        if (n != null)
+        {    
+            if (this.SequenceNumber.equals(n))
+                return true; 
+        }
+        
+        return false;
+    }
+    
 }

@@ -258,6 +258,8 @@ public class TSLib_UnitTests {
         ContentTuple_implement ct = new ContentTuple_implement();
         String string_value = null;
         int int_value = -1;
+        boolean result = false;
+        
         Integer sqn = 0;
         StringBuffer body_value = null; 
         StringBuffer body = new StringBuffer();
@@ -322,6 +324,42 @@ public class TSLib_UnitTests {
         System.out.println("Payload is: " + body_value);
         
         
+        /* now test matching */
+        
+        result = ct.match_on_ID_Field(this.FIELD_APP_PATH_VALID);
+        System.out.println("executing match_on_ID() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_ID_Field(this.FIELD_APP_PATH_INVALID);
+        System.out.println("executing match_on_ID() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_ID_Field(null);
+        System.out.println("executing match_on_ID() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_ID_Field("");
+        System.out.println("executing match_on_ID() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_SequenceNumber_Field(1);
+        System.out.println("executing match_on_SequenceNumber_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_SequenceNumber_Field(sqn);
+        System.out.println("executing match_on_SequenceNumber_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
+        
+        result = ct.match_on_SequenceNumber_Field(null);
+        System.out.println("executing match_on_SequenceNumber_Field() ");
+        System.out.println("result is: " + result);
+        System.out.println("\n"); 
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
