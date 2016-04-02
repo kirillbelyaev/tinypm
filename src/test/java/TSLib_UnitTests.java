@@ -91,86 +91,105 @@ public class TSLib_UnitTests {
         boolean result = false;
         
         int_value = ct.set_ID_Field(this.FIELD_APP_PATH_INVALID);
+        System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n"); 
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_ID_Field() ");
         System.out.println("ID is: " + string_value);
         System.out.println("\n"); 
         
         int_value = ct.set_ID_Field(null);
+        System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n"); 
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_ID_Field() ");
         System.out.println("ID is: " + string_value);
         System.out.println("\n"); 
         
         int_value = ct.set_ID_Field("");
+        System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n"); 
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_ID_Field() ");
         System.out.println("ID is: " + string_value);
         System.out.println("\n"); 
         
         int_value = ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n"); 
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_ID_Field() ");
         System.out.println("ID is: " + string_value);
         System.out.println("\n"); 
         
         int_value = ct.set_RequestMessage_Field(this.FIELD_RequestMessage);
+        System.out.println("executing set_RequestMessage_Field() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n"); 
         
         string_value = ct.get_RequestMessage_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_RequestMessage_Field() ");
         System.out.println("RequestMessage is: " + string_value);
         System.out.println("\n"); 
         
         int_value = ct.set_RequestMessage_Field(this.FIELD_XML_CoordinationMessage);
+        System.out.println("executing set_RequestMessage_Field() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n"); 
         
         string_value = ct.get_RequestMessage_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_RequestMessage_Field() ");
         System.out.println("RequestMessage is: " + string_value);
         System.out.println("\n"); 
         
         int_value = ct.set_RequestMessage_Field(null);
+        System.out.println("executing set_RequestMessage_Field() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n"); 
         
         string_value = ct.get_RequestMessage_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_RequestMessage_Field() ");
         System.out.println("RequestMessage is: " + string_value);
         System.out.println("\n"); 
         
         int_value = ct.set_RequestMessage_Field("");
+        System.out.println("executing set_RequestMessage_Field() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n"); 
         
         string_value = ct.get_RequestMessage_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_RequestMessage_Field() ");
         System.out.println("RequestMessage is: " + string_value);
         System.out.println("\n"); 
         
         string_value = ct.get_Type_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_Type_Field() ");
         System.out.println("Type is: " + string_value);
         System.out.println("\n"); 
         
         ct.set_Type_Field_to_Collaboration();
+        System.out.println("executing set_Type_Field_to_Collaboration() ");
         
         string_value = ct.get_Type_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_Type_Field() ");
         System.out.println("Type is: " + string_value);
         System.out.println("\n"); 
         
@@ -178,6 +197,7 @@ public class TSLib_UnitTests {
         
         string_value = ct.get_Type_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_Type_Field() ");
         System.out.println("Type is: " + string_value);
         System.out.println("\n"); 
         
@@ -266,62 +286,95 @@ public class TSLib_UnitTests {
         body.append(this.FIELD_Payload);
         
         int_value = ct.set_ID_Field(this.FIELD_APP_PATH_INVALID);
+        System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n"); 
+        
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_ID_Field() ");
         System.out.println("ID is: " + string_value);
+        System.out.println("\n");
         
         int_value = ct.set_ID_Field(null);
+        System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_ID_Field() ");
         System.out.println("ID is: " + string_value);
+        System.out.println("\n");
         
         int_value = ct.set_ID_Field("");
+        System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_ID_Field() ");
         System.out.println("ID is: " + string_value);
+        System.out.println("\n");
         
         int_value = ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         string_value = ct.get_ID_Field();
         assertNotNull(string_value);
+        System.out.println("executing get_ID_Field() ");
         System.out.println("ID is: " + string_value);
+        System.out.println("\n");
         
         
         sqn = ct.get_SequenceNumber_Field();
         assertNotNull(sqn);
+        System.out.println("executing get_SequenceNumber_Field() ");
         System.out.println("SequenceNumber is: " + sqn);
+        System.out.println("\n");
         
         int_value = ct.set_SequenceNumber_Field(null);
+        System.out.println("executing set_SequenceNumber_Field() ");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         sqn = ct.get_SequenceNumber_Field();
         assertNotNull(sqn);
+        System.out.println("executing get_SequenceNumber_Field() ");
         System.out.println("SequenceNumber is: " + sqn);
+        System.out.println("\n");
         
         
         int_value = ct.set_SequenceNumber_Field(0);
+        System.out.println("executing set_SequenceNumber_Field() ");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         sqn = ct.get_SequenceNumber_Field();
         assertNotNull(sqn);
+        System.out.println("executing get_SequenceNumber_Field() ");
         System.out.println("SequenceNumber is: " + sqn);
+        System.out.println("\n");
         
         int_value = ct.set_Payload_Field(null);
+        System.out.println("executing set_Payload_Field() ");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         int_value = ct.set_Payload_Field(body);
+        System.out.println("executing set_Payload_Field() ");
         System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         body_value = ct.get_Payload_Field();
         assertNotNull(body_value);
+        System.out.println("executing get_Payload_Field() ");
         System.out.println("Payload is: " + body_value);
+        System.out.println("\n");
         
         
         /* now test matching */
