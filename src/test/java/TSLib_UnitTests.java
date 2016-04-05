@@ -647,7 +647,7 @@ public class TSLib_UnitTests {
         System.out.println("started test_PersistenceManager... ");
         System.out.println("\n"); 
         
-        String location = System.getProperty("user.home");
+        String valid_location = System.getProperty("user.home");
         String invalid_location = "/non/existent/dir";
         
         PersistenceManager_implement pm = new PersistenceManager_implement();
@@ -656,9 +656,9 @@ public class TSLib_UnitTests {
         int int_value = -1;
         boolean result = false;
         
-        System.out.println("location base FS path is: " + location);
+        System.out.println("location base FS path is: " + valid_location);
         
-        int_value = pm.create_TupleSpace(location);
+        int_value = pm.create_TupleSpace(valid_location);
         System.out.println("executing create_TupleSpace() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -678,7 +678,55 @@ public class TSLib_UnitTests {
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
+        int_value = pm.create_TupleSpace(valid_location);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
+        int_value = pm.countTuples(valid_location);
+        System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.countTuples(null);
+        System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.countTuples("");
+        System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.countTuples(invalid_location);
+        System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.delete_TupleSpace(valid_location);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.delete_TupleSpace(null);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.delete_TupleSpace("");
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.delete_TupleSpace(invalid_location);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.delete_TupleSpace(valid_location);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");

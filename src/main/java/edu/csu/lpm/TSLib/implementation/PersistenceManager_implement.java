@@ -32,7 +32,55 @@ public class PersistenceManager_implement implements PersistenceManager
     @Override
     public int countTuples(String location) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (location != null)
+        {    
+            if (!location.isEmpty())
+            {
+                File base = new File (location);
+                
+                if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                try 
+                {
+                    if (base.isDirectory())
+                    {
+                        File ts = new File (location + TupleSpace.TupleSpaceName);
+                        
+                        if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                        if (!ts.exists()) /* could be a file or a directory with the same name */
+                        {
+                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                        } else {       
+                                    if (ts.isDirectory())
+                                    {
+                                        if (ts.list() == null)
+                                        {
+                                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                        }
+                                        
+                                        /* return the length of the string array
+                                        if length is 0 - the dir is empty */
+                                        return ts.list().length;
+                                        
+                                    } else {
+                                               return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                           }                 
+                               }    
+                    } else {
+                                return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                           }
+                } catch (SecurityException se)
+                { 
+                    se.printStackTrace();
+                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                }
+            }    
+        }   
+        
+        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -44,11 +92,15 @@ public class PersistenceManager_implement implements PersistenceManager
             {
                 File base = new File (location);
 
+                if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                
                 try 
                 {
                     if (base.isDirectory())
                     {
                         File ts = new File (location + TupleSpace.TupleSpaceName);
+                        
+                        if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (ts.exists()) /* could be a file or a directory with the same name */
                         {
@@ -78,8 +130,59 @@ public class PersistenceManager_implement implements PersistenceManager
     }
 
     @Override
-    public int delete_TupleSpace(String location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int delete_TupleSpace(String location) 
+    {
+        if (location != null)
+        {    
+            if (!location.isEmpty())
+            {
+                File base = new File (location);
+                
+                if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                try 
+                {
+                    if (base.isDirectory())
+                    {
+                        File ts = new File (location + TupleSpace.TupleSpaceName);
+                        
+                        if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                        if (!ts.exists()) /* could be a file or a directory with the same name */
+                        {
+                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                        } else {       
+                                    if (ts.isDirectory())
+                                    {
+                                        if (this.countTuples(location) == 0) /* directory is empty */
+                                        {   
+                                            if (ts.delete() == true)
+                                            {    
+                                                return PersistenceManager.INDICATE_OPERATION_SUCCESS;
+                                            } else {
+                                                      return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;  
+                                                   }
+                                        } else {
+                                                  return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;  
+                                               }
+                                    } else {
+                                                return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                           }                 
+                               }    
+                    } else {
+                                return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                           }
+                } catch (SecurityException se)
+                { 
+                    se.printStackTrace();
+                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                }
+            }    
+        }   
+        
+        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
