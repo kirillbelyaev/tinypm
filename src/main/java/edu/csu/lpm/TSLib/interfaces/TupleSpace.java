@@ -37,7 +37,7 @@ public interface TupleSpace
         location using uniform naming convention instead of assuming TS name 
         that is given by the internal application logic. 
         Sort of similar to UNIX domain sockets convention. */
-        final String TupleSpaceName = "ts";
+        final String TupleSpaceName = "/ts";
         
         /* we use macros to indicate the general method exit codes within the 
         tuple space implementation */

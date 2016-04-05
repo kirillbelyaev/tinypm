@@ -31,14 +31,24 @@ public interface PersistenceManager
     implementation */
     public final int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
     public final int INDICATE_OPERATION_SUCCESS = 0;
+    public final int INDICATE_EXCEPTION_OCCURRENCE_STATUS = -2;
     
+    public int countTuples(String location);
     
-    public int write_ContentTuple(ContentTuple_implement ct, String location);
+    public int create_TupleSpace(String location);
     
-    public int write_ControlTuple(ControlTuple_implement ct, String location);
+    public int delete_TupleSpace(String location);
+    
+    public int append_ContentTuple(ContentTuple_implement ct, String location);
+    
+    public int append_ControlTuple(ControlTuple_implement ct, String location);
     
     public ContentTuple_implement read_ContentTuple(String location);
     
     public ControlTuple_implement read_ControlTuple(String location);
+    
+    public ControlTuple_implement take_ControlTuple(String location);
+    
+    public ContentTuple_implement take_ContentTuple(String location);
     
 }

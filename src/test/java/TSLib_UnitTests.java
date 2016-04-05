@@ -19,6 +19,7 @@
 
 import edu.csu.lpm.TSLib.implementation.ContentTuple_implement;
 import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
+import edu.csu.lpm.TSLib.implementation.PersistenceManager_implement;
 import edu.csu.lpm.TSLib.implementation.TupleSpace_implement;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
 import org.junit.After;
@@ -636,5 +637,54 @@ public class TSLib_UnitTests {
         System.out.println("finished test_TupleSpace... ");
         System.out.println("\n");
     }
+    
+    
+    @Test
+    public void test_PersistenceManager()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistenceManager... ");
+        System.out.println("\n"); 
+        
+        String location = System.getProperty("user.home");
+        String invalid_location = "/non/existent/dir";
+        
+        PersistenceManager_implement pm = new PersistenceManager_implement();
+        ControlTuple_implement ct = new ControlTuple_implement();
+        String string_value = null;
+        int int_value = -1;
+        boolean result = false;
+        
+        System.out.println("location base FS path is: " + location);
+        
+        int_value = pm.create_TupleSpace(location);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.create_TupleSpace(null);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.create_TupleSpace("");
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.create_TupleSpace(invalid_location);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistenceManager... ");
+        System.out.println("\n");
+        
+    }    
     
 }
