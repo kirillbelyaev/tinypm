@@ -21,12 +21,13 @@ package edu.csu.lpm.TSLib.implementation;
 import edu.csu.lpm.TSLib.interfaces.ContentTuple;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
 import java.io.File;
+import java.io.Serializable;
 
 /**
  *
  * @author kirill
  */
-public class ContentTuple_implement implements ContentTuple 
+public class ContentTuple_implement implements ContentTuple, Serializable 
 {
     private String ID = ""; 
     private Integer SequenceNumber = -1;

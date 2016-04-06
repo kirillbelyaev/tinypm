@@ -20,7 +20,15 @@ package edu.csu.lpm.TSLib.implementation;
 
 import edu.csu.lpm.TSLib.interfaces.PersistenceManager;
 import edu.csu.lpm.TSLib.interfaces.TupleSpace;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -72,7 +80,8 @@ public class PersistenceManager_implement implements PersistenceManager
                            }
                 } catch (SecurityException se)
                 { 
-                    se.printStackTrace();
+                    //se.printStackTrace();
+                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
                     return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
                 }
             }    
@@ -118,7 +127,8 @@ public class PersistenceManager_implement implements PersistenceManager
                            }
                 } catch (SecurityException se)
                 { 
-                    se.printStackTrace();
+                    //se.printStackTrace();
+                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
                     return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
                 }
             }    
@@ -174,7 +184,8 @@ public class PersistenceManager_implement implements PersistenceManager
                            }
                 } catch (SecurityException se)
                 { 
-                    se.printStackTrace();
+                    //se.printStackTrace();
+                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
                     return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
                 }
             }    
@@ -191,8 +202,88 @@ public class PersistenceManager_implement implements PersistenceManager
     }
 
     @Override
-    public int append_ControlTuple(ControlTuple_implement ct, String location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int append_ControlTuple(ControlTuple_implement ct, String location) 
+    {
+        if (ct == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (location == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (!location.isEmpty())
+        {
+            File base = new File (location);
+
+            if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+            try 
+            {
+                if (base.isDirectory())
+                {
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
+
+                    if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                    if (!ts.exists()) /* could be a file or a directory with the same name */
+                    {
+                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                    } else {       
+                                if (ts.isDirectory())
+                                {
+                                    if (ts.list() == null)
+                                    {
+                                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                    }
+
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                    
+                                    if (c_t.exists()) /* if control tuple already exists */
+                                    {
+                                        return TupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS;
+                                    } else {
+                                                /* introduce serialization using internal Java facility,
+                                                instead of relying on external libraries */
+                                                /* usage of external library is problematic due to licensing issues */
+                                                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+                                                try 
+                                                {
+                                                    OutputStream control_tuple = new FileOutputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                                    
+                                                    OutputStream buffer = new BufferedOutputStream(control_tuple);
+
+                                                    ObjectOutput oos = new ObjectOutputStream(buffer);
+                                                    /* serialize the POJO to file */
+                                                    oos.writeObject(ct);
+                                                    
+                                                    /* close streams */
+                                                    oos.close();
+                                                    buffer.close();
+                                                    control_tuple.close();
+                                                    
+                                                    return PersistenceManager.INDICATE_OPERATION_SUCCESS;
+
+                                                } catch (IOException ex) 
+                                                {
+                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+                                                }
+                                           }
+                                } else {
+                                           return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                       }                 
+                           }    
+                } else {
+                            return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                       }
+            } catch (SecurityException se)
+            { 
+                //se.printStackTrace();
+                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+            }
+        }
+        
+        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

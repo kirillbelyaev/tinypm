@@ -728,6 +728,23 @@ public class TSLib_UnitTests {
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
+        ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        ct.set_Type_Field_to_Coordination();
+        ct.set_RequestMessage_Field(this.FIELD_RequestMessage);
+        System.out.println("setting ControlTuple fields ");
+        System.out.println("\n");
+        
+        int_value = pm.create_TupleSpace(valid_location);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        
+        int_value = pm.append_ControlTuple(ct, valid_location);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_PersistenceManager... ");

@@ -21,12 +21,13 @@ package edu.csu.lpm.TSLib.implementation;
 import edu.csu.lpm.TSLib.interfaces.ControlTuple;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
 import java.io.File;
+import java.io.Serializable;
 
 /**
  *
  * @author kirill
  */
-public class ControlTuple_implement implements ControlTuple 
+public class ControlTuple_implement implements ControlTuple, Serializable 
 {
     
     private String ID = "";

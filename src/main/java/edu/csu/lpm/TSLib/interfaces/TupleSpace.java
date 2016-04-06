@@ -38,11 +38,13 @@ public interface TupleSpace
         that is given by the internal application logic. 
         Sort of similar to UNIX domain sockets convention. */
         final String TupleSpaceName = "/ts";
+        final String ControlTupleName = "/control-tuple";
+        final String ContentTupleName = "/content-tuple";
         
         /* we use macros to indicate the general method exit codes within the 
         tuple space implementation */
-        public final int INDICATE_CONTROL_TUPLE_EXISTS_STATUS = -1;
-        public final int INDICATE_CONTENT_TUPLE_EXISTS_STATUS = -2;
+        public final int INDICATE_CONTROL_TUPLE_EXISTS_STATUS = -7;
+        public final int INDICATE_CONTENT_TUPLE_EXISTS_STATUS = -8;
         public final int INDICATE_OPERATION_SUCCESS = 0;
         public final int INDICATE_TUPLE_SPACE_EXISTS_STATUS = -3;
         public final int INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS = -4;
