@@ -729,7 +729,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
-        ct.set_Type_Field_to_Coordination();
+        ct.set_Type_Field_to_Collaboration();
         ct.set_RequestMessage_Field(this.FIELD_RequestMessage);
         System.out.println("setting ControlTuple fields ");
         System.out.println("\n");
@@ -744,6 +744,195 @@ public class TSLib_UnitTests {
         System.out.println("executing append_ControlTuple() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
+        
+        int_value = pm.append_ControlTuple(null, valid_location);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ControlTuple(ct, null);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ControlTuple(null, null);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ControlTuple(ct, "");
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ControlTuple(null, "");
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ControlTuple(ct, invalid_location);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ControlTuple(null, invalid_location);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        
+        ct = null;
+        ct = pm.read_ControlTuple(valid_location);
+        System.out.println("executing read_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        
+        ct = null;
+        ct = pm.read_ControlTuple(invalid_location);
+        System.out.println("executing read_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ct = null;
+        ct = pm.read_ControlTuple(null);
+        System.out.println("executing read_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ct = null;
+        ct = pm.read_ControlTuple("");
+        System.out.println("executing read_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        
+        
+        ct = null;
+        ct = pm.take_ControlTuple(valid_location);
+        System.out.println("executing take_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        
+        ct = null;
+        ct = pm.take_ControlTuple(invalid_location);
+        System.out.println("executing take_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ct = null;
+        ct = pm.take_ControlTuple("");
+        System.out.println("executing take_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ct = null;
+        ct = pm.take_ControlTuple(null);
+        System.out.println("executing take_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ct = new ControlTuple_implement();
+        ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        ct.set_Type_Field_to_Collaboration();
+        ct.set_RequestMessage_Field(this.FIELD_RequestMessage);
+        System.out.println("setting ControlTuple fields ");
+        System.out.println("\n");
+        
+        int_value = pm.append_ControlTuple(ct, valid_location);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        ct = null;
+        ct = pm.read_ControlTuple(valid_location);
+        System.out.println("executing read_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ct = null;
+        ct = pm.take_ControlTuple(valid_location);
+        System.out.println("executing take_ControlTuple() ");
+        if (ct != null)
+        {    
+            System.out.println("tuple Type field is: " + ct.get_Type_Field());
+            System.out.println("tuple ID field is: " + ct.get_ID_Field());
+            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        int_value = pm.delete_TupleSpace(valid_location);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");

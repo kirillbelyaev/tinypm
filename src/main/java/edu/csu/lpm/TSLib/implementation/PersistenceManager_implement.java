@@ -20,10 +20,15 @@ package edu.csu.lpm.TSLib.implementation;
 
 import edu.csu.lpm.TSLib.interfaces.PersistenceManager;
 import edu.csu.lpm.TSLib.interfaces.TupleSpace;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -292,13 +297,202 @@ public class PersistenceManager_implement implements PersistenceManager
     }
 
     @Override
-    public ControlTuple_implement read_ControlTuple(String location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ControlTuple_implement read_ControlTuple(String location) 
+    {   
+        if (location == null) return null;
+        
+        if (!location.isEmpty())
+        {
+            File base = new File (location);
+
+            if (base == null) return null;
+
+            try 
+            {
+                if (base.isDirectory())
+                {
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
+
+                    if (ts == null) return null;
+
+                    if (!ts.exists()) /* could be a file or a directory with the same name */
+                    {
+                        return null;
+                    } else {       
+                                if (ts.isDirectory())
+                                {
+                                    if (ts.list() == null)
+                                    {
+                                        return null;
+                                    }
+
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                    
+                                    if (!c_t.exists()) /* if control tuple does not exist */
+                                    {
+                                        return null;
+                                    } else {
+                                                /* make sure it is a regular file and not a directory */
+                                                if (!c_t.isFile()) return null;
+                                        
+                                                /* introduce serialization using internal Java facility,
+                                                instead of relying on external libraries */
+                                                /* usage of external library is problematic due to licensing issues */
+                                                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                                                
+                                                try 
+                                                {
+                                                    InputStream control_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                                    
+                                                    InputStream buffer = new BufferedInputStream(control_tuple);
+
+                                                    ObjectInput ois = new ObjectInputStream(buffer);
+                                                    
+                                                    ControlTuple_implement ct = null;
+                                                    
+                                                    /* de-serialize to POJO from file */
+                                                    try 
+                                                    {    
+                                                        ct = (ControlTuple_implement) ois.readObject();
+                                                    } catch (ClassNotFoundException ex) 
+                                                    {
+                                                        Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                        return null;
+                                                    }
+                                                    
+                                                    /* close streams */
+                                                    ois.close();
+                                                    buffer.close();
+                                                    control_tuple.close();
+                                                    
+                                                    /* return POJO */
+                                                    return ct;
+
+                                                } catch (IOException ex) 
+                                                {
+                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return null;
+                                                }
+                                           }
+                                } else {
+                                           return null;
+                                       }                 
+                           }    
+                } else {
+                            return null;                  
+                       }
+            } catch (SecurityException se)
+            { 
+                //se.printStackTrace();
+                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                return null; 
+            }
+        }
+        
+        return null;
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ControlTuple_implement take_ControlTuple(String location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ControlTuple_implement take_ControlTuple(String location) 
+    {
+        if (location == null) return null;
+        
+        if (!location.isEmpty())
+        {
+            File base = new File (location);
+
+            if (base == null) return null;
+
+            try 
+            {
+                if (base.isDirectory())
+                {
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
+
+                    if (ts == null) return null;
+
+                    if (!ts.exists()) /* could be a file or a directory with the same name */
+                    {
+                        return null;
+                    } else {       
+                                if (ts.isDirectory())
+                                {
+                                    if (ts.list() == null)
+                                    {
+                                        return null;
+                                    }
+
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                    
+                                    if (!c_t.exists()) /* if control tuple does not exist */
+                                    {
+                                        return null;
+                                    } else {
+                                                /* make sure it is a regular file and not a directory */
+                                                if (!c_t.isFile()) return null;
+                                        
+                                                /* introduce serialization using internal Java facility,
+                                                instead of relying on external libraries */
+                                                /* usage of external library is problematic due to licensing issues */
+                                                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                                                
+                                                try 
+                                                {
+                                                    InputStream control_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                                    
+                                                    InputStream buffer = new BufferedInputStream(control_tuple);
+
+                                                    ObjectInput ois = new ObjectInputStream(buffer);
+                                                    
+                                                    ControlTuple_implement ct = null;
+                                                    
+                                                    /* de-serialize to POJO from file */
+                                                    try 
+                                                    {    
+                                                        ct = (ControlTuple_implement) ois.readObject();
+                                                    } catch (ClassNotFoundException ex) 
+                                                    {
+                                                        Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                        return null;
+                                                    }
+                                                    
+                                                    /* close streams */
+                                                    ois.close();
+                                                    buffer.close();
+                                                    control_tuple.close();
+                                                    
+                                                    /* remove tuple file */
+                                                    if (c_t.delete() != true) return null;
+                                                    
+                                                    /* return POJO */
+                                                    return ct;
+
+                                                } catch (IOException ex) 
+                                                {
+                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return null;
+                                                }
+                                           }
+                                } else {
+                                           return null;
+                                       }                 
+                           }    
+                } else {
+                            return null;                  
+                       }
+            } catch (SecurityException se)
+            { 
+                //se.printStackTrace();
+                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                return null; 
+            }
+        }
+        
+        return null;
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
