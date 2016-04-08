@@ -202,8 +202,89 @@ public class PersistenceManager_implement implements PersistenceManager
     }
 
     @Override
-    public int append_ContentTuple(ContentTuple_implement ct, String location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int append_ContentTuple(ContentTuple_implement ct, String location) 
+    {
+        if (ct == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (location == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (!location.isEmpty())
+        {
+            File base = new File (location);
+
+            if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+            try 
+            {
+                if (base.isDirectory())
+                {
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
+
+                    if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                    if (!ts.exists()) /* could be a file or a directory with the same name */
+                    {
+                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                    } else {       
+                                if (ts.isDirectory())
+                                {
+                                    if (ts.list() == null)
+                                    {
+                                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                    }
+
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                    
+                                    if (c_t.exists()) /* if control tuple already exists */
+                                    {
+                                        return TupleSpace.INDICATE_CONTENT_TUPLE_EXISTS_STATUS;
+                                    } else {
+                                                /* introduce serialization using internal Java facility,
+                                                instead of relying on external libraries */
+                                                /* usage of external library is problematic due to licensing issues */
+                                                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+                                                try 
+                                                {
+                                                    OutputStream content_tuple = new FileOutputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                                    
+                                                    OutputStream buffer = new BufferedOutputStream(content_tuple);
+
+                                                    ObjectOutput oos = new ObjectOutputStream(buffer);
+                                                    /* serialize the POJO to file */
+                                                    oos.writeObject(ct);
+                                                    
+                                                    /* close streams */
+                                                    oos.close();
+                                                    buffer.close();
+                                                    content_tuple.close();
+                                                    
+                                                    return PersistenceManager.INDICATE_OPERATION_SUCCESS;
+
+                                                } catch (IOException ex) 
+                                                {
+                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+                                                }
+                                           }
+                                } else {
+                                           return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                       }                 
+                           }    
+                } else {
+                            return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                       }
+            } catch (SecurityException se)
+            { 
+                //se.printStackTrace();
+                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+            }
+        }
+        
+        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -292,8 +373,101 @@ public class PersistenceManager_implement implements PersistenceManager
     }
 
     @Override
-    public ContentTuple_implement read_ContentTuple(String location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ContentTuple_implement read_ContentTuple(String location) 
+    {
+        if (location == null) return null;
+        
+        if (!location.isEmpty())
+        {
+            File base = new File (location);
+
+            if (base == null) return null;
+
+            try 
+            {
+                if (base.isDirectory())
+                {
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
+
+                    if (ts == null) return null;
+
+                    if (!ts.exists()) /* could be a file or a directory with the same name */
+                    {
+                        return null;
+                    } else {       
+                                if (ts.isDirectory())
+                                {
+                                    if (ts.list() == null)
+                                    {
+                                        return null;
+                                    }
+
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                    
+                                    if (!c_t.exists()) /* if content tuple does not exist */
+                                    {
+                                        return null;
+                                    } else {
+                                                /* make sure it is a regular file and not a directory */
+                                                if (!c_t.isFile()) return null;
+                                        
+                                                /* introduce serialization using internal Java facility,
+                                                instead of relying on external libraries */
+                                                /* usage of external library is problematic due to licensing issues */
+                                                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                                                
+                                                try 
+                                                {
+                                                    InputStream content_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                                    
+                                                    InputStream buffer = new BufferedInputStream(content_tuple);
+
+                                                    ObjectInput ois = new ObjectInputStream(buffer);
+                                                    
+                                                    ContentTuple_implement ct = null;
+                                                    
+                                                    /* de-serialize to POJO from file */
+                                                    try 
+                                                    {    
+                                                        ct = (ContentTuple_implement) ois.readObject();
+                                                    } catch (ClassNotFoundException ex) 
+                                                    {
+                                                        Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                        return null;
+                                                    }
+                                                    
+                                                    /* close streams */
+                                                    ois.close();
+                                                    buffer.close();
+                                                    content_tuple.close();
+                                                    
+                                                    /* return POJO */
+                                                    return ct;
+
+                                                } catch (IOException ex) 
+                                                {
+                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return null;
+                                                }
+                                           }
+                                } else {
+                                           return null;
+                                       }                 
+                           }    
+                } else {
+                            return null;                  
+                       }
+            } catch (SecurityException se)
+            { 
+                //se.printStackTrace();
+                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                return null; 
+            }
+        }
+        
+        return null;
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -496,8 +670,104 @@ public class PersistenceManager_implement implements PersistenceManager
     }
 
     @Override
-    public ContentTuple_implement take_ContentTuple(String location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ContentTuple_implement take_ContentTuple(String location) 
+    {
+        if (location == null) return null;
+        
+        if (!location.isEmpty())
+        {
+            File base = new File (location);
+
+            if (base == null) return null;
+
+            try 
+            {
+                if (base.isDirectory())
+                {
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
+
+                    if (ts == null) return null;
+
+                    if (!ts.exists()) /* could be a file or a directory with the same name */
+                    {
+                        return null;
+                    } else {       
+                                if (ts.isDirectory())
+                                {
+                                    if (ts.list() == null)
+                                    {
+                                        return null;
+                                    }
+
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                    
+                                    if (!c_t.exists()) /* if control tuple does not exist */
+                                    {
+                                        return null;
+                                    } else {
+                                                /* make sure it is a regular file and not a directory */
+                                                if (!c_t.isFile()) return null;
+                                        
+                                                /* introduce serialization using internal Java facility,
+                                                instead of relying on external libraries */
+                                                /* usage of external library is problematic due to licensing issues */
+                                                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                                                
+                                                try 
+                                                {
+                                                    InputStream content_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                                    
+                                                    InputStream buffer = new BufferedInputStream(content_tuple);
+
+                                                    ObjectInput ois = new ObjectInputStream(buffer);
+                                                    
+                                                    ContentTuple_implement ct = null;
+                                                    
+                                                    /* de-serialize to POJO from file */
+                                                    try 
+                                                    {    
+                                                        ct = (ContentTuple_implement) ois.readObject();
+                                                    } catch (ClassNotFoundException ex) 
+                                                    {
+                                                        Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                        return null;
+                                                    }
+                                                    
+                                                    /* close streams */
+                                                    ois.close();
+                                                    buffer.close();
+                                                    content_tuple.close();
+                                                    
+                                                    /* remove tuple file */
+                                                    if (c_t.delete() != true) return null;
+                                                    
+                                                    /* return POJO */
+                                                    return ct;
+
+                                                } catch (IOException ex) 
+                                                {
+                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return null;
+                                                }
+                                           }
+                                } else {
+                                           return null;
+                                       }                 
+                           }    
+                } else {
+                            return null;                  
+                       }
+            } catch (SecurityException se)
+            { 
+                //se.printStackTrace();
+                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                return null; 
+            }
+        }
+        
+        return null;
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

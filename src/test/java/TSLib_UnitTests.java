@@ -66,7 +66,7 @@ public class TSLib_UnitTests {
     private final String FIELD_RequestMessage = "/usr/home/containers/container-b/data-pool/runtime-log.txt";
     private final String FIELD_XML_CoordinationMessage = "<XML_MESSAGE length=\"0000060\"><field>8</field></XML_MESSAGE>";
     private final String FIELD_Payload = 
-    "^[%G[^[[32m  OK  ^[[0m] Started Show Plymouth Boot Screen.\n" +
+    "[^[[32m  OK  ^[[0m] Started Show Plymouth Boot Screen.\n" +
     "[^[[32m  OK  ^[[0m] Reached target Paths.\n" +
     "[^[[32m  OK  ^[[0m] Reached target Basic System.\n" +
     "[^[[32m  OK  ^[[0m] Reached target Initrd Default Target.\n" +
@@ -652,6 +652,13 @@ public class TSLib_UnitTests {
         
         PersistenceManager_implement pm = new PersistenceManager_implement();
         ControlTuple_implement ct = new ControlTuple_implement();
+        ContentTuple_implement ctt = new ContentTuple_implement();
+        
+        StringBuffer body_value = null; 
+        StringBuffer body = new StringBuffer();
+        body.append(this.FIELD_Payload);
+        
+        
         String string_value = null;
         int int_value = -1;
         boolean result = false;
@@ -835,7 +842,6 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         
-        
         ct = null;
         ct = pm.take_ControlTuple(valid_location);
         System.out.println("executing take_ControlTuple() ");
@@ -932,6 +938,193 @@ public class TSLib_UnitTests {
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
+        
+        ctt.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        ctt.set_SequenceNumber_Field(101);
+        ctt.set_Payload_Field(body);
+        System.out.println("setting ContentTuple fields ");
+        System.out.println("\n");
+        
+        int_value = pm.create_TupleSpace(valid_location);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ContentTuple(ctt, valid_location);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ContentTuple(ctt, invalid_location);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ContentTuple(null, valid_location);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ContentTuple(null, null);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.append_ContentTuple(null, "");
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        
+        int_value = pm.countTuples(valid_location);
+        System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        ctt = null;
+        ctt = pm.read_ContentTuple(valid_location);
+        System.out.println("executing read_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        
+        ctt = null;
+        ctt = pm.read_ContentTuple(invalid_location);
+        System.out.println("executing read_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ctt = null;
+        ctt = pm.read_ContentTuple("");
+        System.out.println("executing read_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ctt = null;
+        ctt = pm.read_ContentTuple(null);
+        System.out.println("executing read_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ctt = null;
+        ctt = pm.read_ContentTuple("/");
+        System.out.println("executing read_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        
+        ctt = null;
+        ctt = pm.take_ContentTuple(valid_location);
+        System.out.println("executing take_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        
+        ctt = null;
+        ctt = pm.take_ContentTuple(invalid_location);
+        System.out.println("executing take_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        
+        ctt = null;
+        ctt = pm.take_ContentTuple("");
+        System.out.println("executing take_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ctt = null;
+        ctt = pm.take_ContentTuple("/");
+        System.out.println("executing take_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        ctt = null;
+        ctt = pm.take_ContentTuple(null);
+        System.out.println("executing take_ContentTuple() ");
+        if (ctt != null)
+        {    
+            System.out.println("tuple ID field is: " + ctt.get_ID_Field());
+            System.out.println("tuple Suquence Number field is: " + ctt.get_SequenceNumber_Field());
+            System.out.println("tuple Payload field is: " + ctt.get_Payload_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        
+        int_value = pm.countTuples(valid_location);
+        System.out.println("executing countTuples() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
+        
+        int_value = pm.delete_TupleSpace(valid_location);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + int_value);
+        System.out.println("\n");
         
         
         System.out.println("\n"); 
