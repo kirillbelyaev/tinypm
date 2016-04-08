@@ -19,8 +19,8 @@
 
 import edu.csu.lpm.TSLib.implementation.ContentTuple_implement;
 import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
-import edu.csu.lpm.TSLib.implementation.PersistenceManager_implement;
-import edu.csu.lpm.TSLib.implementation.TupleSpace_implement;
+import edu.csu.lpm.TSLib.implementation.PersistentTupleSpace_implement;
+import edu.csu.lpm.TSLib.implementation.VolatileTupleSpace_implement;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -53,12 +53,6 @@ public class TSLib_UnitTests {
     @After
     public void tearDown() {
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
     
     
     private final String FIELD_APP_PATH_VALID = "/bin/ping";
@@ -76,6 +70,14 @@ public class TSLib_UnitTests {
     "[^[[32m  OK  ^[[0m] Stopped target Timers.\n" +
     "Starting Plymouth switch root service...\n";
 
+    String ValidLocation = System.getProperty("user.home");
+    String InvalidLocation = "/non/existent/dir";
+    String EmptyString = "";
+    String RootDir = "/";
+    int IntValue = -1;
+    
+    PersistentTupleSpace_implement PTS = new PersistentTupleSpace_implement();
+    ControlTuple_implement CLT = new ControlTuple_implement();
     
     @Test
     public void test_ControlTuple()
@@ -431,7 +433,7 @@ public class TSLib_UnitTests {
         System.out.println("\n"); 
      
      
-        TupleSpace_implement ts = new TupleSpace_implement();
+        VolatileTupleSpace_implement ts = new VolatileTupleSpace_implement();
         String string_value = null;
         int int_value = -1;
         
@@ -473,7 +475,7 @@ public class TSLib_UnitTests {
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -483,7 +485,7 @@ public class TSLib_UnitTests {
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -512,7 +514,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
 
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -531,7 +533,7 @@ public class TSLib_UnitTests {
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -551,7 +553,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -567,7 +569,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -583,7 +585,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -599,7 +601,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
 
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -614,7 +616,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
 
         
-        int_value = ts.countTuples();
+        int_value = ts.count_Tuples();
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
@@ -638,6 +640,405 @@ public class TSLib_UnitTests {
         System.out.println("\n");
     }
     
+    /* PTS */
+    
+    @Test
+    public void test_PersistenceTupleSpace_create_TupleSpace()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistenceTupleSpace_create_TupleSpace... ");
+        System.out.println("\n");
+                
+        this.IntValue = this.PTS.create_TupleSpace(this.ValidLocation);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.create_TupleSpace(this.InvalidLocation);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.create_TupleSpace(this.EmptyString);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.create_TupleSpace(this.RootDir);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.create_TupleSpace(null);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.create_TupleSpace(this.ValidLocation);
+        System.out.println("executing create_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+    
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistenceTupleSpace_create_TupleSpace... ");
+        System.out.println("\n");
+    }
+
+
+    @Test
+    public void test_PersistenceTupleSpace_delete_TupleSpace()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistenceTupleSpace_delete_TupleSpace... ");
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.delete_TupleSpace(this.ValidLocation);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.delete_TupleSpace(this.InvalidLocation);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.delete_TupleSpace(this.EmptyString);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.delete_TupleSpace(this.RootDir);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.delete_TupleSpace(null);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.delete_TupleSpace(this.ValidLocation);
+        System.out.println("executing delete_TupleSpace() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistenceTupleSpace_delete_TupleSpace... ");
+        System.out.println("\n");
+    }    
+    
+    
+    @Test
+    public void test_PersistenceTupleSpace_count_Tuples()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistenceTupleSpace_count_Tuples... ");
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_Tuples(this.ValidLocation);
+        System.out.println("executing count_Tuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_Tuples(this.InvalidLocation);
+        System.out.println("executing count_Tuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_Tuples(this.EmptyString);
+        System.out.println("executing count_Tuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_Tuples(this.RootDir);
+        System.out.println("executing count_Tuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_Tuples(null);
+        System.out.println("executing count_Tuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_Tuples(this.ValidLocation);
+        System.out.println("executing count_Tuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistenceTupleSpace_count_Tuples... ");
+        System.out.println("\n");
+    }    
+    
+    
+    @Test
+    public void test_PersistenceTupleSpace_append_ControlTuple()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistenceTupleSpace_append_ControlTuple... ");
+        System.out.println("\n");
+        
+        if (this.CLT == null) this.CLT = new ControlTuple_implement();
+        
+        this.CLT.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        this.CLT.set_Type_Field_to_Collaboration();
+        this.CLT.set_RequestMessage_Field(this.FIELD_RequestMessage);
+        System.out.println("setting ControlTuple fields ");
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(this.CLT, this.ValidLocation);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(null, this.ValidLocation);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(this.CLT, this.InvalidLocation);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(null, this.InvalidLocation);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(this.CLT, this.EmptyString);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(null, this.EmptyString);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(this.CLT, this.RootDir);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(null, this.RootDir);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(this.CLT, null);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(null, null);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.append_ControlTuple(this.CLT, this.ValidLocation);
+        System.out.println("executing append_ControlTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistenceTupleSpace_append_ControlTuple... ");
+        System.out.println("\n");
+    }    
+    
+    @Test
+    public void test_PersistenceTupleSpace_read_ControlTuple()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistenceTupleSpace_read_ControlTuple... ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.read_ControlTuple(this.ValidLocation);
+        System.out.println("executing read_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.read_ControlTuple(this.InvalidLocation);
+        System.out.println("executing read_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.read_ControlTuple(this.EmptyString);
+        System.out.println("executing read_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.read_ControlTuple(this.RootDir);
+        System.out.println("executing read_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.read_ControlTuple(null);
+        System.out.println("executing read_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.read_ControlTuple(this.ValidLocation);
+        System.out.println("executing read_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistenceTupleSpace_read_ControlTuple... ");
+        System.out.println("\n");
+    }    
+    
+    
+    @Test
+    public void test_PersistenceTupleSpace_take_ControlTuple()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistenceTupleSpace_take_ControlTuple... ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.take_ControlTuple(this.ValidLocation);
+        System.out.println("executing take_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.take_ControlTuple(this.InvalidLocation);
+        System.out.println("executing take_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.take_ControlTuple(this.EmptyString);
+        System.out.println("executing take_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.take_ControlTuple(this.RootDir);
+        System.out.println("executing take_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.take_ControlTuple(null);
+        System.out.println("executing take_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        this.CLT = null;
+        this.CLT = this.PTS.take_ControlTuple(this.ValidLocation);
+        System.out.println("executing take_ControlTuple() ");
+        if (this.CLT != null)
+        {    
+            System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
+        }    
+        else
+            System.out.println("NULL - no match ");
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistenceTupleSpace_take_ControlTuple... ");
+        System.out.println("\n");
+    }    
+    
     
     @Test
     public void test_PersistenceManager()
@@ -650,8 +1051,8 @@ public class TSLib_UnitTests {
         String valid_location = System.getProperty("user.home");
         String invalid_location = "/non/existent/dir";
         
-        PersistenceManager_implement pm = new PersistenceManager_implement();
-        ControlTuple_implement ct = new ControlTuple_implement();
+        PersistentTupleSpace_implement PTS = new PersistentTupleSpace_implement();
+        ControlTuple_implement CLT = new ControlTuple_implement();
         ContentTuple_implement ctt = new ContentTuple_implement();
         
         StringBuffer body_value = null; 
@@ -663,281 +1064,6 @@ public class TSLib_UnitTests {
         int int_value = -1;
         boolean result = false;
         
-        System.out.println("location base FS path is: " + valid_location);
-        
-        int_value = pm.create_TupleSpace(valid_location);
-        System.out.println("executing create_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.create_TupleSpace(null);
-        System.out.println("executing create_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.create_TupleSpace("");
-        System.out.println("executing create_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.create_TupleSpace(invalid_location);
-        System.out.println("executing create_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.create_TupleSpace(valid_location);
-        System.out.println("executing create_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.countTuples(valid_location);
-        System.out.println("executing countTuples() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.countTuples(null);
-        System.out.println("executing countTuples() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.countTuples("");
-        System.out.println("executing countTuples() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.countTuples(invalid_location);
-        System.out.println("executing countTuples() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.delete_TupleSpace(valid_location);
-        System.out.println("executing delete_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.delete_TupleSpace(null);
-        System.out.println("executing delete_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.delete_TupleSpace("");
-        System.out.println("executing delete_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.delete_TupleSpace(invalid_location);
-        System.out.println("executing delete_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.delete_TupleSpace(valid_location);
-        System.out.println("executing delete_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
-        ct.set_Type_Field_to_Collaboration();
-        ct.set_RequestMessage_Field(this.FIELD_RequestMessage);
-        System.out.println("setting ControlTuple fields ");
-        System.out.println("\n");
-        
-        int_value = pm.create_TupleSpace(valid_location);
-        System.out.println("executing create_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        
-        int_value = pm.append_ControlTuple(ct, valid_location);
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.append_ControlTuple(null, valid_location);
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.append_ControlTuple(ct, null);
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.append_ControlTuple(null, null);
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.append_ControlTuple(ct, "");
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.append_ControlTuple(null, "");
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.append_ControlTuple(ct, invalid_location);
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.append_ControlTuple(null, invalid_location);
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        
-        ct = null;
-        ct = pm.read_ControlTuple(valid_location);
-        System.out.println("executing read_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        
-        ct = null;
-        ct = pm.read_ControlTuple(invalid_location);
-        System.out.println("executing read_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        ct = null;
-        ct = pm.read_ControlTuple(null);
-        System.out.println("executing read_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        ct = null;
-        ct = pm.read_ControlTuple("");
-        System.out.println("executing read_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        
-        ct = null;
-        ct = pm.take_ControlTuple(valid_location);
-        System.out.println("executing take_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        
-        ct = null;
-        ct = pm.take_ControlTuple(invalid_location);
-        System.out.println("executing take_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        ct = null;
-        ct = pm.take_ControlTuple("");
-        System.out.println("executing take_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        ct = null;
-        ct = pm.take_ControlTuple(null);
-        System.out.println("executing take_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        ct = new ControlTuple_implement();
-        ct.set_ID_Field(this.FIELD_APP_PATH_VALID);
-        ct.set_Type_Field_to_Collaboration();
-        ct.set_RequestMessage_Field(this.FIELD_RequestMessage);
-        System.out.println("setting ControlTuple fields ");
-        System.out.println("\n");
-        
-        int_value = pm.append_ControlTuple(ct, valid_location);
-        System.out.println("executing append_ControlTuple() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        ct = null;
-        ct = pm.read_ControlTuple(valid_location);
-        System.out.println("executing read_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        ct = null;
-        ct = pm.take_ControlTuple(valid_location);
-        System.out.println("executing take_ControlTuple() ");
-        if (ct != null)
-        {    
-            System.out.println("tuple Type field is: " + ct.get_Type_Field());
-            System.out.println("tuple ID field is: " + ct.get_ID_Field());
-            System.out.println("tuple Request field is: " + ct.get_RequestMessage_Field());
-        }    
-        else
-            System.out.println("NULL - no match ");
-        System.out.println("\n");
-        
-        int_value = pm.delete_TupleSpace(valid_location);
-        System.out.println("executing delete_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
         
         ctt.set_ID_Field(this.FIELD_APP_PATH_VALID);
         ctt.set_SequenceNumber_Field(101);
@@ -945,44 +1071,39 @@ public class TSLib_UnitTests {
         System.out.println("setting ContentTuple fields ");
         System.out.println("\n");
         
-        int_value = pm.create_TupleSpace(valid_location);
-        System.out.println("executing create_TupleSpace() ");
-        System.out.println("method return value is: " + int_value);
-        System.out.println("\n");
-        
-        int_value = pm.append_ContentTuple(ctt, valid_location);
+        int_value = PTS.append_ContentTuple(ctt, valid_location);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
-        int_value = pm.append_ContentTuple(ctt, invalid_location);
+        int_value = PTS.append_ContentTuple(ctt, invalid_location);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
-        int_value = pm.append_ContentTuple(null, valid_location);
+        int_value = PTS.append_ContentTuple(null, valid_location);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
-        int_value = pm.append_ContentTuple(null, null);
+        int_value = PTS.append_ContentTuple(null, null);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
-        int_value = pm.append_ContentTuple(null, "");
+        int_value = PTS.append_ContentTuple(null, "");
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
         
-        int_value = pm.countTuples(valid_location);
+        int_value = PTS.count_Tuples(valid_location);
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
         ctt = null;
-        ctt = pm.read_ContentTuple(valid_location);
+        ctt = PTS.read_ContentTuple(valid_location);
         System.out.println("executing read_ContentTuple() ");
         if (ctt != null)
         {    
@@ -996,7 +1117,7 @@ public class TSLib_UnitTests {
         
         
         ctt = null;
-        ctt = pm.read_ContentTuple(invalid_location);
+        ctt = PTS.read_ContentTuple(invalid_location);
         System.out.println("executing read_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1009,7 +1130,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         ctt = null;
-        ctt = pm.read_ContentTuple("");
+        ctt = PTS.read_ContentTuple("");
         System.out.println("executing read_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1022,7 +1143,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         ctt = null;
-        ctt = pm.read_ContentTuple(null);
+        ctt = PTS.read_ContentTuple(null);
         System.out.println("executing read_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1035,7 +1156,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         ctt = null;
-        ctt = pm.read_ContentTuple("/");
+        ctt = PTS.read_ContentTuple("/");
         System.out.println("executing read_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1049,7 +1170,7 @@ public class TSLib_UnitTests {
         
         
         ctt = null;
-        ctt = pm.take_ContentTuple(valid_location);
+        ctt = PTS.take_ContentTuple(valid_location);
         System.out.println("executing take_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1063,7 +1184,7 @@ public class TSLib_UnitTests {
         
         
         ctt = null;
-        ctt = pm.take_ContentTuple(invalid_location);
+        ctt = PTS.take_ContentTuple(invalid_location);
         System.out.println("executing take_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1077,7 +1198,7 @@ public class TSLib_UnitTests {
         
         
         ctt = null;
-        ctt = pm.take_ContentTuple("");
+        ctt = PTS.take_ContentTuple("");
         System.out.println("executing take_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1090,7 +1211,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         ctt = null;
-        ctt = pm.take_ContentTuple("/");
+        ctt = PTS.take_ContentTuple("/");
         System.out.println("executing take_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1103,7 +1224,7 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         ctt = null;
-        ctt = pm.take_ContentTuple(null);
+        ctt = PTS.take_ContentTuple(null);
         System.out.println("executing take_ContentTuple() ");
         if (ctt != null)
         {    
@@ -1116,12 +1237,12 @@ public class TSLib_UnitTests {
         System.out.println("\n");
         
         
-        int_value = pm.countTuples(valid_location);
+        int_value = PTS.count_Tuples(valid_location);
         System.out.println("executing countTuples() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");
         
-        int_value = pm.delete_TupleSpace(valid_location);
+        int_value = PTS.delete_TupleSpace(valid_location);
         System.out.println("executing delete_TupleSpace() ");
         System.out.println("method return value is: " + int_value);
         System.out.println("\n");

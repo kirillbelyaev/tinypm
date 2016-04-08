@@ -18,8 +18,6 @@
  */
 package edu.csu.lpm.TSLib.implementation;
 
-import edu.csu.lpm.TSLib.interfaces.PersistenceManager;
-import edu.csu.lpm.TSLib.interfaces.TupleSpace;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -34,16 +32,18 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.csu.lpm.TSLib.interfaces.VolatileTupleSpace;
+import edu.csu.lpm.TSLib.interfaces.PersistentTupleSpace;
 
 /**
  *
  * @author kirill
  */
-public class PersistenceManager_implement implements PersistenceManager
+public class PersistentTupleSpace_implement implements PersistentTupleSpace
 {
 
     @Override
-    public int countTuples(String location) 
+    public int count_Tuples(String location) 
     {
         if (location != null)
         {    
@@ -51,25 +51,25 @@ public class PersistenceManager_implement implements PersistenceManager
             {
                 File base = new File (location);
                 
-                if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                if (base == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                 try 
                 {
                     if (base.isDirectory())
                     {
-                        File ts = new File (location + TupleSpace.TupleSpaceName);
+                        File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
                         
-                        if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                        if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (!ts.exists()) /* could be a file or a directory with the same name */
                         {
-                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                            return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                         } else {       
                                     if (ts.isDirectory())
                                     {
                                         if (ts.list() == null)
                                         {
-                                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                            return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                                         }
                                         
                                         /* return the length of the string array
@@ -77,22 +77,22 @@ public class PersistenceManager_implement implements PersistenceManager
                                         return ts.list().length;
                                         
                                     } else {
-                                               return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                               return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
                                            }                 
                                }    
                     } else {
-                                return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                                return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;                  
                            }
                 } catch (SecurityException se)
                 { 
                     //se.printStackTrace();
-                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
-                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
+                    return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
                 }
             }    
         }   
         
-        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -106,40 +106,40 @@ public class PersistenceManager_implement implements PersistenceManager
             {
                 File base = new File (location);
 
-                if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                if (base == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
                 
                 try 
                 {
                     if (base.isDirectory())
                     {
-                        File ts = new File (location + TupleSpace.TupleSpaceName);
+                        File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
                         
-                        if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                        if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (ts.exists()) /* could be a file or a directory with the same name */
                         {
-                            return TupleSpace.INDICATE_TUPLE_SPACE_EXISTS_STATUS;
+                            return VolatileTupleSpace.INDICATE_TUPLE_SPACE_EXISTS_STATUS;
                         } else {       
                                     if (ts.mkdir())
                                     {
-                                        return PersistenceManager.INDICATE_OPERATION_SUCCESS;
+                                        return PersistentTupleSpace.INDICATE_OPERATION_SUCCESS;
                                     } else {
-                                                return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                                return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
                                            }                 
                                }    
                     } else {
-                                return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                                return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;                  
                            }
                 } catch (SecurityException se)
                 { 
                     //se.printStackTrace();
-                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
-                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
+                    return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
                 }
             }    
         }   
         
-        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -153,50 +153,50 @@ public class PersistenceManager_implement implements PersistenceManager
             {
                 File base = new File (location);
                 
-                if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                if (base == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                 try 
                 {
                     if (base.isDirectory())
                     {
-                        File ts = new File (location + TupleSpace.TupleSpaceName);
+                        File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
                         
-                        if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                        if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (!ts.exists()) /* could be a file or a directory with the same name */
                         {
-                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                            return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                         } else {       
                                     if (ts.isDirectory())
                                     {
-                                        if (this.countTuples(location) == 0) /* directory is empty */
+                                        if (this.count_Tuples(location) == 0) /* directory is empty */
                                         {   
                                             if (ts.delete() == true)
                                             {    
-                                                return PersistenceManager.INDICATE_OPERATION_SUCCESS;
+                                                return PersistentTupleSpace.INDICATE_OPERATION_SUCCESS;
                                             } else {
-                                                      return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;  
+                                                      return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;  
                                                    }
                                         } else {
-                                                  return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;  
+                                                  return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;  
                                                }
                                     } else {
-                                                return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                                return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
                                            }                 
                                }    
                     } else {
-                                return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                                return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;                  
                            }
                 } catch (SecurityException se)
                 { 
                     //se.printStackTrace();
-                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
-                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
+                    return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
                 }
             }    
         }   
         
-        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -204,40 +204,40 @@ public class PersistenceManager_implement implements PersistenceManager
     @Override
     public int append_ContentTuple(ContentTuple_implement ct, String location) 
     {
-        if (ct == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (ct == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        if (location == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (location == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         if (!location.isEmpty())
         {
             File base = new File (location);
 
-            if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (base == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
             try 
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + TupleSpace.TupleSpaceName);
+                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
 
-                    if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                     if (!ts.exists()) /* could be a file or a directory with the same name */
                     {
-                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                        return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                     } else {       
                                 if (ts.isDirectory())
                                 {
                                     if (ts.list() == null)
                                     {
-                                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                        return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                                     }
 
-                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
                                     
                                     if (c_t.exists()) /* if control tuple already exists */
                                     {
-                                        return TupleSpace.INDICATE_CONTENT_TUPLE_EXISTS_STATUS;
+                                        return VolatileTupleSpace.INDICATE_CONTENT_TUPLE_EXISTS_STATUS;
                                     } else {
                                                 /* introduce serialization using internal Java facility,
                                                 instead of relying on external libraries */
@@ -246,7 +246,7 @@ public class PersistenceManager_implement implements PersistenceManager
 
                                                 try 
                                                 {
-                                                    OutputStream content_tuple = new FileOutputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                                    OutputStream content_tuple = new FileOutputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
                                                     
                                                     OutputStream buffer = new BufferedOutputStream(content_tuple);
 
@@ -259,30 +259,30 @@ public class PersistenceManager_implement implements PersistenceManager
                                                     buffer.close();
                                                     content_tuple.close();
                                                     
-                                                    return PersistenceManager.INDICATE_OPERATION_SUCCESS;
+                                                    return PersistentTupleSpace.INDICATE_OPERATION_SUCCESS;
 
                                                 } catch (IOException ex) 
                                                 {
-                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
-                                                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+                                                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
                                                 }
                                            }
                                 } else {
-                                           return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                           return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
                                        }                 
                            }    
                 } else {
-                            return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                            return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;                  
                        }
             } catch (SecurityException se)
             { 
                 //se.printStackTrace();
-                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
-                return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
+                return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
             }
         }
         
-        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -290,40 +290,40 @@ public class PersistenceManager_implement implements PersistenceManager
     @Override
     public int append_ControlTuple(ControlTuple_implement ct, String location) 
     {
-        if (ct == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (ct == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        if (location == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (location == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         if (!location.isEmpty())
         {
             File base = new File (location);
 
-            if (base == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (base == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
             try 
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + TupleSpace.TupleSpaceName);
+                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
 
-                    if (ts == null) return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                     if (!ts.exists()) /* could be a file or a directory with the same name */
                     {
-                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                        return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                     } else {       
                                 if (ts.isDirectory())
                                 {
                                     if (ts.list() == null)
                                     {
-                                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                        return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                                     }
 
-                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
                                     
                                     if (c_t.exists()) /* if control tuple already exists */
                                     {
-                                        return TupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS;
+                                        return VolatileTupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS;
                                     } else {
                                                 /* introduce serialization using internal Java facility,
                                                 instead of relying on external libraries */
@@ -332,7 +332,7 @@ public class PersistenceManager_implement implements PersistenceManager
 
                                                 try 
                                                 {
-                                                    OutputStream control_tuple = new FileOutputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                                    OutputStream control_tuple = new FileOutputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
                                                     
                                                     OutputStream buffer = new BufferedOutputStream(control_tuple);
 
@@ -345,30 +345,30 @@ public class PersistenceManager_implement implements PersistenceManager
                                                     buffer.close();
                                                     control_tuple.close();
                                                     
-                                                    return PersistenceManager.INDICATE_OPERATION_SUCCESS;
+                                                    return PersistentTupleSpace.INDICATE_OPERATION_SUCCESS;
 
                                                 } catch (IOException ex) 
                                                 {
-                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
-                                                    return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+                                                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
                                                 }
                                            }
                                 } else {
-                                           return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                           return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
                                        }                 
                            }    
                 } else {
-                            return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                            return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;                  
                        }
             } catch (SecurityException se)
             { 
                 //se.printStackTrace();
-                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
-                return PersistenceManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
+                return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
             }
         }
         
-        return PersistenceManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -387,7 +387,7 @@ public class PersistenceManager_implement implements PersistenceManager
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + TupleSpace.TupleSpaceName);
+                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
 
                     if (ts == null) return null;
 
@@ -402,7 +402,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                         return null;
                                     }
 
-                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
                                     
                                     if (!c_t.exists()) /* if content tuple does not exist */
                                     {
@@ -418,7 +418,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                                 
                                                 try 
                                                 {
-                                                    InputStream content_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                                    InputStream content_tuple = new FileInputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
                                                     
                                                     InputStream buffer = new BufferedInputStream(content_tuple);
 
@@ -432,7 +432,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                                         ct = (ContentTuple_implement) ois.readObject();
                                                     } catch (ClassNotFoundException ex) 
                                                     {
-                                                        Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                        Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
                                                         return null;
                                                     }
                                                     
@@ -446,7 +446,7 @@ public class PersistenceManager_implement implements PersistenceManager
 
                                                 } catch (IOException ex) 
                                                 {
-                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
                                                     return null;
                                                 }
                                            }
@@ -460,7 +460,7 @@ public class PersistenceManager_implement implements PersistenceManager
             } catch (SecurityException se)
             { 
                 //se.printStackTrace();
-                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
                 return null; 
             }
         }
@@ -485,7 +485,7 @@ public class PersistenceManager_implement implements PersistenceManager
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + TupleSpace.TupleSpaceName);
+                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
 
                     if (ts == null) return null;
 
@@ -500,7 +500,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                         return null;
                                     }
 
-                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
                                     
                                     if (!c_t.exists()) /* if control tuple does not exist */
                                     {
@@ -516,7 +516,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                                 
                                                 try 
                                                 {
-                                                    InputStream control_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                                    InputStream control_tuple = new FileInputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
                                                     
                                                     InputStream buffer = new BufferedInputStream(control_tuple);
 
@@ -530,7 +530,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                                         ct = (ControlTuple_implement) ois.readObject();
                                                     } catch (ClassNotFoundException ex) 
                                                     {
-                                                        Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                        Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
                                                         return null;
                                                     }
                                                     
@@ -544,7 +544,7 @@ public class PersistenceManager_implement implements PersistenceManager
 
                                                 } catch (IOException ex) 
                                                 {
-                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
                                                     return null;
                                                 }
                                            }
@@ -558,7 +558,7 @@ public class PersistenceManager_implement implements PersistenceManager
             } catch (SecurityException se)
             { 
                 //se.printStackTrace();
-                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
                 return null; 
             }
         }
@@ -583,7 +583,7 @@ public class PersistenceManager_implement implements PersistenceManager
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + TupleSpace.TupleSpaceName);
+                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
 
                     if (ts == null) return null;
 
@@ -598,7 +598,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                         return null;
                                     }
 
-                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
                                     
                                     if (!c_t.exists()) /* if control tuple does not exist */
                                     {
@@ -614,7 +614,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                                 
                                                 try 
                                                 {
-                                                    InputStream control_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                                    InputStream control_tuple = new FileInputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
                                                     
                                                     InputStream buffer = new BufferedInputStream(control_tuple);
 
@@ -628,7 +628,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                                         ct = (ControlTuple_implement) ois.readObject();
                                                     } catch (ClassNotFoundException ex) 
                                                     {
-                                                        Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                        Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
                                                         return null;
                                                     }
                                                     
@@ -645,7 +645,7 @@ public class PersistenceManager_implement implements PersistenceManager
 
                                                 } catch (IOException ex) 
                                                 {
-                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
                                                     return null;
                                                 }
                                            }
@@ -659,7 +659,7 @@ public class PersistenceManager_implement implements PersistenceManager
             } catch (SecurityException se)
             { 
                 //se.printStackTrace();
-                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
                 return null; 
             }
         }
@@ -684,7 +684,7 @@ public class PersistenceManager_implement implements PersistenceManager
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + TupleSpace.TupleSpaceName);
+                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
 
                     if (ts == null) return null;
 
@@ -699,7 +699,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                         return null;
                                     }
 
-                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
                                     
                                     if (!c_t.exists()) /* if control tuple does not exist */
                                     {
@@ -715,7 +715,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                                 
                                                 try 
                                                 {
-                                                    InputStream content_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
+                                                    InputStream content_tuple = new FileInputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
                                                     
                                                     InputStream buffer = new BufferedInputStream(content_tuple);
 
@@ -729,7 +729,7 @@ public class PersistenceManager_implement implements PersistenceManager
                                                         ct = (ContentTuple_implement) ois.readObject();
                                                     } catch (ClassNotFoundException ex) 
                                                     {
-                                                        Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                        Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
                                                         return null;
                                                     }
                                                     
@@ -746,7 +746,7 @@ public class PersistenceManager_implement implements PersistenceManager
 
                                                 } catch (IOException ex) 
                                                 {
-                                                    Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
                                                     return null;
                                                 }
                                            }
@@ -760,7 +760,7 @@ public class PersistenceManager_implement implements PersistenceManager
             } catch (SecurityException se)
             { 
                 //se.printStackTrace();
-                Logger.getLogger(PersistenceManager_implement.class.getName()).log(Level.SEVERE, null, se);
+                Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
                 return null; 
             }
         }

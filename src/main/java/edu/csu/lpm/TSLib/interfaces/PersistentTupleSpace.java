@@ -25,7 +25,7 @@ import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
  *
  * @author kirill
  */
-public interface PersistenceManager 
+public interface PersistentTupleSpace 
 {
     /* we use macros to indicate the general method exit codes within the tuple
     implementation */
@@ -33,7 +33,7 @@ public interface PersistenceManager
     public final int INDICATE_OPERATION_SUCCESS = 0;
     public final int INDICATE_EXCEPTION_OCCURRENCE_STATUS = -2;
     
-    public int countTuples(String location);
+    public int count_Tuples(String location);
     
     public int create_TupleSpace(String location);
     

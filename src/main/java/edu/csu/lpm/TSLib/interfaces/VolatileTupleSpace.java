@@ -25,7 +25,7 @@ import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
  *
  * @author kirill
  */
-public interface TupleSpace 
+public interface VolatileTupleSpace 
 {
         /* fixed name precludes the creation of the directory with the same
         name by another app in the same IRE. Well - at least theoretically
@@ -73,11 +73,11 @@ public interface TupleSpace
         
         
         /* some rudimentary informative support */
-        public int countTuples();
+        public int count_Tuples();
         
-        public int countControlTuples();
+        public int count_ControlTuples();
         
-        public int countContentTuples();
+        public int count_ContentTuples();
         
         
         /* read operation reads a tuple but does not remove it from TS */
