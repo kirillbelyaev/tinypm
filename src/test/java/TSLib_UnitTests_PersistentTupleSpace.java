@@ -69,22 +69,21 @@ public class TSLib_UnitTests_PersistentTupleSpace
     "[^[[32m  OK  ^[[0m] Stopped target Timers.\n" +
     "Starting Plymouth switch root service...\n";
 
-    String ValidLocation = System.getProperty("user.home");
-    String InvalidLocation = "/non/existent/dir";
-    String EmptyString = "";
-    String RootDir = "/";
+    private final String ValidLocation = System.getProperty("user.home");
+    private final String InvalidLocation = "/non/existent/dir";
+    private final String EmptyString = "";
+    private final String RootDir = "/";
     
-    StringBuffer Body = new StringBuffer();
+    private StringBuffer Body = new StringBuffer();
     
-    int IntValue = -1;
-    int SampleSequenceNumber = 101;
+    private int IntValue = -1;
+    private final int SampleSequenceNumber = 101;
     
-    boolean TerminateNow = false;
+    private boolean TerminateNow = false;
     
-    PersistentTupleSpace_implement PTS = new PersistentTupleSpace_implement();
-    ControlTuple_implement CLT = new ControlTuple_implement();
-    ContentTuple_implement CNT = new ContentTuple_implement();
-    
+    private PersistentTupleSpace_implement PTS = new PersistentTupleSpace_implement();
+    private ControlTuple_implement CLT = new ControlTuple_implement();
+    private ContentTuple_implement CNT = new ContentTuple_implement();
     
     /* PTS tests */
     
