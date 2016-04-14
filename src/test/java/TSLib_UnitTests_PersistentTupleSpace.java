@@ -881,7 +881,6 @@ public class TSLib_UnitTests_PersistentTupleSpace
         
         this.test_PersistentTupleSpace_delete_TupleSpace();
         
-        
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_PersistentTupleSpace ");
