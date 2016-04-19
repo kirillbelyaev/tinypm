@@ -31,7 +31,8 @@ public interface PersistentTupleSpace extends TupleSpace
     public int count_Tuples(String location);
     
     public int count_ControlTuples(String location);
-        
+    
+    public int count_ContentTuples(String location);
     
     public int create_TupleSpace(String location);
     

@@ -833,4 +833,67 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
         return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
+    @Override
+    public int count_ContentTuples(String location) 
+    {
+        if (location != null)
+        {    
+            if (!location.isEmpty())
+            {
+                File base = new File (location);
+                
+                if (base == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                try 
+                {
+                    if (base.isDirectory())
+                    {
+                        File ts = new File (location + TupleSpace.TupleSpaceName);
+                        
+                        if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                        if (!ts.exists()) /* could be a file or a directory with the same name */
+                        {
+                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                        } else {       
+                                    if (ts.isDirectory())
+                                    {    
+                                        int count = 0;
+                                        File [] files = ts.listFiles();
+                                        
+                                        if (files == null)
+                                        {
+                                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                        }
+                                        
+                                        
+                                        for (int i = 0; i < files.length; i++)
+                                        {
+                                            /* if strings match and file is a normal file */
+                                            if (files[i].getName().compareTo(TupleSpace.ContentTupleName.substring(1)) == 0 && files[i].isFile() == true)
+                                                count = count+1;
+                                        }
+                                        
+                                        /* return the occurrence count
+                                        if count is 0 - the specified file does not exist */
+                                        return count;
+                                        
+                                    } else {
+                                               return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                           }                 
+                               }    
+                    } else {
+                                return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                           }
+                } catch (SecurityException se)
+                {
+                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
+                    return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                }
+            }    
+        }   
+        
+        return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
 }
