@@ -16,37 +16,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-
 package edu.csu.lpm.TSLib.interfaces;
 
-import edu.csu.lpm.TSLib.implementation.ContentTuple_implement;
 import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
 
 /**
  *
  * @author kirill
  */
-public interface PersistentTupleSpace extends TupleSpace
-{
-    public int count_Tuples(String location);
+public interface AgentTransactionManager extends TransactionManager
+{   
+    /* by nature coordination is symmetric - both parties have to exchange control tuples */
+    public int perform_PersistentCoordinativeTransaction(ControlTuple_implement clt, String location);
     
-    public int count_ControlTuples(String location);
-        
+    public ControlTuple_implement get_ReplyControlTuple();
     
-    public int create_TupleSpace(String location);
+    //int stop_Coordination();
     
-    public int delete_TupleSpace(String location);
+    int perform_PersistentCollaborativeTransaction(ControlTuple_implement clt);
     
-    public int append_ContentTuple(ContentTuple_implement ct, String location);
+    //int stop_Collaboration();
     
-    public int append_ControlTuple(ControlTuple_implement ct, String location);
-    
-    public ContentTuple_implement read_ContentTuple(String location);
-    
-    public ControlTuple_implement read_ControlTuple(String location);
-    
-    public ControlTuple_implement take_ControlTuple(String location);
-    
-    public ContentTuple_implement take_ContentTuple(String location);
+    //File assembleReplica(ContentTuple_implement cnt);
     
 }

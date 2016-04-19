@@ -32,8 +32,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import edu.csu.lpm.TSLib.interfaces.VolatileTupleSpace;
 import edu.csu.lpm.TSLib.interfaces.PersistentTupleSpace;
+import edu.csu.lpm.TSLib.interfaces.TupleSpace;
 
 /**
  *
@@ -57,19 +57,19 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                 {
                     if (base.isDirectory())
                     {
-                        File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                        File ts = new File (location + TupleSpace.TupleSpaceName);
                         
                         if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (!ts.exists()) /* could be a file or a directory with the same name */
                         {
-                            return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                         } else {       
                                     if (ts.isDirectory())
                                     {
                                         if (ts.list() == null)
                                         {
-                                            return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                                         }
                                         
                                         /* return the length of the string array
@@ -112,13 +112,13 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                 {
                     if (base.isDirectory())
                     {
-                        File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                        File ts = new File (location + TupleSpace.TupleSpaceName);
                         
                         if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (ts.exists()) /* could be a file or a directory with the same name */
                         {
-                            return VolatileTupleSpace.INDICATE_TUPLE_SPACE_EXISTS_STATUS;
+                            return TupleSpace.INDICATE_TUPLE_SPACE_EXISTS_STATUS;
                         } else {       
                                     if (ts.mkdir())
                                     {
@@ -159,13 +159,13 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                 {
                     if (base.isDirectory())
                     {
-                        File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                        File ts = new File (location + TupleSpace.TupleSpaceName);
                         
                         if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (!ts.exists()) /* could be a file or a directory with the same name */
                         {
-                            return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                         } else {       
                                     if (ts.isDirectory())
                                     {
@@ -218,26 +218,26 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
 
                     if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                     if (!ts.exists()) /* could be a file or a directory with the same name */
                     {
-                        return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                     } else {       
                                 if (ts.isDirectory())
                                 {
                                     if (ts.list() == null)
                                     {
-                                        return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                                     }
 
-                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
                                     
                                     if (c_t.exists()) /* if control tuple already exists */
                                     {
-                                        return VolatileTupleSpace.INDICATE_CONTENT_TUPLE_EXISTS_STATUS;
+                                        return TupleSpace.INDICATE_CONTENT_TUPLE_EXISTS_STATUS;
                                     } else {
                                                 /* introduce serialization using internal Java facility,
                                                 instead of relying on external libraries */
@@ -246,7 +246,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
 
                                                 try 
                                                 {
-                                                    OutputStream content_tuple = new FileOutputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
+                                                    OutputStream content_tuple = new FileOutputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
                                                     
                                                     OutputStream buffer = new BufferedOutputStream(content_tuple);
 
@@ -304,26 +304,26 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
 
                     if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
 
                     if (!ts.exists()) /* could be a file or a directory with the same name */
                     {
-                        return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                     } else {       
                                 if (ts.isDirectory())
                                 {
                                     if (ts.list() == null)
                                     {
-                                        return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
                                     }
 
-                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
                                     
                                     if (c_t.exists()) /* if control tuple already exists */
                                     {
-                                        return VolatileTupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS;
+                                        return TupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS;
                                     } else {
                                                 /* introduce serialization using internal Java facility,
                                                 instead of relying on external libraries */
@@ -332,7 +332,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
 
                                                 try 
                                                 {
-                                                    OutputStream control_tuple = new FileOutputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
+                                                    OutputStream control_tuple = new FileOutputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
                                                     
                                                     OutputStream buffer = new BufferedOutputStream(control_tuple);
 
@@ -387,7 +387,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
 
                     if (ts == null) return null;
 
@@ -402,7 +402,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                                         return null;
                                     }
 
-                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
                                     
                                     if (!c_t.exists()) /* if content tuple does not exist */
                                     {
@@ -418,7 +418,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                                                 
                                                 try 
                                                 {
-                                                    InputStream content_tuple = new FileInputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
+                                                    InputStream content_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
                                                     
                                                     InputStream buffer = new BufferedInputStream(content_tuple);
 
@@ -485,7 +485,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
 
                     if (ts == null) return null;
 
@@ -500,7 +500,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                                         return null;
                                     }
 
-                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
                                     
                                     if (!c_t.exists()) /* if control tuple does not exist */
                                     {
@@ -516,7 +516,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                                                 
                                                 try 
                                                 {
-                                                    InputStream control_tuple = new FileInputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
+                                                    InputStream control_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
                                                     
                                                     InputStream buffer = new BufferedInputStream(control_tuple);
 
@@ -583,7 +583,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
 
                     if (ts == null) return null;
 
@@ -598,7 +598,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                                         return null;
                                     }
 
-                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
                                     
                                     if (!c_t.exists()) /* if control tuple does not exist */
                                     {
@@ -614,7 +614,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                                                 
                                                 try 
                                                 {
-                                                    InputStream control_tuple = new FileInputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ControlTupleName);
+                                                    InputStream control_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
                                                     
                                                     InputStream buffer = new BufferedInputStream(control_tuple);
 
@@ -684,7 +684,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
             {
                 if (base.isDirectory())
                 {
-                    File ts = new File (location + VolatileTupleSpace.TupleSpaceName);
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
 
                     if (ts == null) return null;
 
@@ -699,7 +699,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                                         return null;
                                     }
 
-                                    File c_t = new File (location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
+                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
                                     
                                     if (!c_t.exists()) /* if control tuple does not exist */
                                     {
@@ -715,7 +715,7 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
                                                 
                                                 try 
                                                 {
-                                                    InputStream content_tuple = new FileInputStream(location + VolatileTupleSpace.TupleSpaceName + VolatileTupleSpace.ContentTupleName);
+                                                    InputStream content_tuple = new FileInputStream(location + TupleSpace.TupleSpaceName + TupleSpace.ContentTupleName);
                                                     
                                                     InputStream buffer = new BufferedInputStream(content_tuple);
 
@@ -768,6 +768,69 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
         return null;
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int count_ControlTuples(String location) 
+    {
+        if (location != null)
+        {    
+            if (!location.isEmpty())
+            {
+                File base = new File (location);
+                
+                if (base == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                try 
+                {
+                    if (base.isDirectory())
+                    {
+                        File ts = new File (location + TupleSpace.TupleSpaceName);
+                        
+                        if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                        if (!ts.exists()) /* could be a file or a directory with the same name */
+                        {
+                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                        } else {       
+                                    if (ts.isDirectory())
+                                    {    
+                                        int count = 0;
+                                        File [] files = ts.listFiles();
+                                        
+                                        if (files == null)
+                                        {
+                                            return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                        }
+                                        
+                                        
+                                        for (int i = 0; i < files.length; i++)
+                                        {
+                                            /* if strings match and file is a normal file */
+                                            if (files[i].getName().compareTo(TupleSpace.ControlTupleName.substring(1)) == 0 && files[i].isFile() == true)
+                                                count = count+1;
+                                        }
+                                        
+                                        /* return the occurrence count
+                                        if count is 0 - the specified file does not exist */
+                                        return count;
+                                        
+                                    } else {
+                                               return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                           }                 
+                               }    
+                    } else {
+                                return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                           }
+                } catch (SecurityException se)
+                {
+                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
+                    return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+                }
+            }    
+        }   
+        
+        return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
 }

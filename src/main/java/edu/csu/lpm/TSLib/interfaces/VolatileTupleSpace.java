@@ -25,33 +25,8 @@ import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
  *
  * @author kirill
  */
-public interface VolatileTupleSpace 
-{
-        /* fixed name precludes the creation of the directory with the same
-        name by another app in the same IRE. Well - at least theoretically
-        it will not allow to recreate the directory .... 
-        Probably the main motivation behind this design is the fact that only
-        a single tuple space is allowed within an IRE (Isolated Runtime
-        Environment) because only a single application is deployed in it...
-        Therefore it is easier for LPM to just check a single TS directory 
-        location using uniform naming convention instead of assuming TS name 
-        that is given by the internal application logic. 
-        Sort of similar to UNIX domain sockets convention. */
-        final String TupleSpaceName = "/ts";
-        final String ControlTupleName = "/control-tuple";
-        final String ContentTupleName = "/content-tuple";
-        
-        /* we use macros to indicate the general method exit codes within the 
-        tuple space implementation */
-        public final int INDICATE_CONTROL_TUPLE_EXISTS_STATUS = -7;
-        public final int INDICATE_CONTENT_TUPLE_EXISTS_STATUS = -8;
-        public final int INDICATE_OPERATION_SUCCESS = 0;
-        public final int INDICATE_TUPLE_SPACE_EXISTS_STATUS = -3;
-        public final int INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS = -4;
-        public final int INDICATE_TUPLE_SPACE_NOT_EMPTY_STATUS = -5;
-        public final int INDICATE_TUPLE_IS_NULL_STATUS = -6;
-        
-        
+public interface VolatileTupleSpace extends TupleSpace
+{       
         public String get_TupleSpaceName();
         
         /*
@@ -64,13 +39,7 @@ public interface VolatileTupleSpace
         
         public int create_TupleSpace();
         
-        //public Object [] create_TupleSpace(String name);
-        
-        
         public int delete_TupleSpace();
-        
-        //public int delete_TupleSpace(String name);
-        
         
         /* some rudimentary informative support */
         public int count_Tuples();

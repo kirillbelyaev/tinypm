@@ -251,6 +251,60 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("\n");
     }    
     
+    @Test
+    public void test_PersistentTupleSpace_count_ControlTuples()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistentTupleSpace_count_ControlTuples ");
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_ControlTuples(this.ValidLocation);
+        System.out.println("executing count_ControlTuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        /* terminate with valid execution only */
+        if (this.TerminateNow == true)
+        {    
+            System.out.println("\n"); 
+            System.out.println("--------------------------------------");
+            System.out.println("finished test_PersistentTupleSpace_count_ControlTuples ");
+            System.out.println("\n");
+            return;
+        }
+        
+        this.IntValue = this.PTS.count_ControlTuples(this.InvalidLocation);
+        System.out.println("executing count_ControlTuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_ControlTuples(this.EmptyString);
+        System.out.println("executing count_ControlTuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_ControlTuples(this.RootDir);
+        System.out.println("executing count_ControlTuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_ControlTuples(null);
+        System.out.println("executing count_ControlTuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.count_ControlTuples(this.ValidLocation);
+        System.out.println("executing count_ControlTuples() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistentTupleSpace_count_ControlTuples ");
+        System.out.println("\n");
+    }    
+    
     
     @Test
     public void test_PersistentTupleSpace_append_ControlTuple()
@@ -862,12 +916,16 @@ public class TSLib_UnitTests_PersistentTupleSpace
         
         this.test_PersistentTupleSpace_count_Tuples();
         
+        this.test_PersistentTupleSpace_count_ControlTuples();
+        
         this.test_PersistentTupleSpace_read_ControlTuple();
         
         
         this.test_PersistentTupleSpace_append_ContentTuple();
         
         this.test_PersistentTupleSpace_count_Tuples();
+        
+        this.test_PersistentTupleSpace_count_ControlTuples();
         
         this.test_PersistentTupleSpace_read_ContentTuple();
         
@@ -877,6 +935,9 @@ public class TSLib_UnitTests_PersistentTupleSpace
         this.test_PersistentTupleSpace_take_ControlTuple();
         
         this.test_PersistentTupleSpace_count_Tuples();
+        
+        this.test_PersistentTupleSpace_count_ControlTuples();
+        
         
         
         this.test_PersistentTupleSpace_delete_TupleSpace();

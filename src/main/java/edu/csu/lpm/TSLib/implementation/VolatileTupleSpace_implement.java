@@ -18,6 +18,7 @@
  */
 package edu.csu.lpm.TSLib.implementation;
 
+import edu.csu.lpm.TSLib.interfaces.TupleSpace;
 import java.util.ArrayList;
 import edu.csu.lpm.TSLib.interfaces.VolatileTupleSpace;
 
@@ -43,8 +44,8 @@ public class VolatileTupleSpace_implement implements VolatileTupleSpace
         if (this.TS == null)
         {    
             TS = new ArrayList <Object>();
-            return VolatileTupleSpace.INDICATE_OPERATION_SUCCESS;
-        } else { return VolatileTupleSpace.INDICATE_TUPLE_SPACE_EXISTS_STATUS; }
+            return TupleSpace.INDICATE_OPERATION_SUCCESS;
+        } else { return TupleSpace.INDICATE_TUPLE_SPACE_EXISTS_STATUS; }
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -52,16 +53,16 @@ public class VolatileTupleSpace_implement implements VolatileTupleSpace
     @Override
     public int delete_TupleSpace() 
     {
-        if (this.TS == null) return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+        if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
         
         /* allow deletion only if ts is empty by TS calculus definition */
-        if (!this.TS.isEmpty()) return VolatileTupleSpace.INDICATE_TUPLE_SPACE_NOT_EMPTY_STATUS;
+        if (!this.TS.isEmpty()) return TupleSpace.INDICATE_TUPLE_SPACE_NOT_EMPTY_STATUS;
         else
         {    
             this.TS.clear(); /* not really needed since it should be empty - more
             like a symbolic gesture*/
             TS = null;
-            return VolatileTupleSpace.INDICATE_OPERATION_SUCCESS;
+            return TupleSpace.INDICATE_OPERATION_SUCCESS;
         }
     }
 
@@ -73,7 +74,7 @@ public class VolatileTupleSpace_implement implements VolatileTupleSpace
     @Override
     public int count_Tuples() 
     {
-        if (this.TS == null) return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+        if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
         return this.TS.size();
     }
 
@@ -154,29 +155,29 @@ public class VolatileTupleSpace_implement implements VolatileTupleSpace
     @Override
     public int append_ControlTuple(ControlTuple_implement ct) 
     {
-        if (ct == null) return VolatileTupleSpace.INDICATE_TUPLE_IS_NULL_STATUS;
-        if (this.TS == null) return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+        if (ct == null) return TupleSpace.INDICATE_TUPLE_IS_NULL_STATUS;
+        if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
         /* we limit a tuple space to a single control tuple */
         if (!TS.contains(ct))
         {    
             TS.add(ct);
-            return VolatileTupleSpace.INDICATE_OPERATION_SUCCESS;
+            return TupleSpace.INDICATE_OPERATION_SUCCESS;
             
-        } else { return VolatileTupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS; }    
+        } else { return TupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS; }    
     }
 
     @Override
     public int append_ContentTuple(ContentTuple_implement ct) 
     {
-        if (ct == null) return VolatileTupleSpace.INDICATE_TUPLE_IS_NULL_STATUS;
-        if (this.TS == null) return VolatileTupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+        if (ct == null) return TupleSpace.INDICATE_TUPLE_IS_NULL_STATUS;
+        if (this.TS == null) return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
         /* we limit a tuple space to a single content tuple for DOS reasons */
         if (!TS.contains(ct))
         {    
             TS.add(ct);
-            return VolatileTupleSpace.INDICATE_OPERATION_SUCCESS;
+            return TupleSpace.INDICATE_OPERATION_SUCCESS;
             
-        } else { return VolatileTupleSpace.INDICATE_CONTENT_TUPLE_EXISTS_STATUS; } 
+        } else { return TupleSpace.INDICATE_CONTENT_TUPLE_EXISTS_STATUS; } 
     }
 
     @Override
