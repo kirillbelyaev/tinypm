@@ -24,16 +24,26 @@ package edu.csu.lpm.TSLib.interfaces;
  */
 public interface ControlTuple extends Tuple 
 {
-    String ID_Field = ""; /* application ID - in fact full path to its executable */
+    /* both source/destination ID fields are used for coordination since both fields are set to verify the flow of control messages
+    between two endpoints.
+    theoretically only source ID is required for collaboration since the requester can specify the request in the request message field.
+    Another reason for that - collaboration is mediated through LPM without consent of the other endpoint in contrast to coordination. */
+    String SourceID_Field = ""; /* source application ID - in fact full path to its executable */
+    
+    String DestinationID_Field = ""; /* destination application ID - in fact full path to its executable */
     
     String Type_Field = ""; /* indicates type of communication: coordination/collaboration  */
     
     String RequestMessage_Field = ""; /* could incorporate collaboration/coordination request. 
     For coordination String datatype could still hold a small XML payload if necessary */
     
-    public String get_ID_Field();
+    public String get_SourceID_Field();
     
-    public int set_ID_Field(String id);
+    public int set_SourceID_Field(String id);
+    
+    public String get_DestinationID_Field();
+    
+    public int set_DestinationID_Field(String id);
     
     public String get_Type_Field();
     
@@ -46,7 +56,9 @@ public interface ControlTuple extends Tuple
     public int set_RequestMessage_Field(String rqm);
     
     /* introduce template matching methods inside a tuple */
-    public boolean match_on_ID_Field(String id);
+    public boolean match_on_SourceID_Field(String id);
+    
+    public boolean match_on_DestinationID_Field(String id);
     
     public boolean match_on_Type_Field(String type);
     

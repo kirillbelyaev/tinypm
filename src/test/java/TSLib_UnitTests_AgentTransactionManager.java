@@ -55,6 +55,7 @@ public class TSLib_UnitTests_AgentTransactionManager
     /* globals */
     
     private final String FIELD_APP_PATH_VALID = "/bin/ping";
+    private final String FIELD_APP_PATH_VALID2 = "/bin/ftp";
     private final String FIELD_APP_PATH_INVALID = "/bin/non_existent/ping";
     private final String FIELD_RequestMessage = "/usr/home/containers/container-b/data-pool/runtime-log.txt";
     private final String FIELD_XML_CoordinationMessage = "<XML_MESSAGE length=\"0000060\"><field>8</field></XML_MESSAGE>";
@@ -97,7 +98,8 @@ public class TSLib_UnitTests_AgentTransactionManager
         
         if (this.CLT == null) this.CLT = new ControlTuple_implement();
         
-        this.CLT.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        this.CLT.set_SourceID_Field(this.FIELD_APP_PATH_VALID);
+        this.CLT.set_DestinationID_Field(this.FIELD_APP_PATH_VALID2);
         this.CLT.set_Type_Field_to_Coordination();
         this.CLT.set_RequestMessage_Field(this.FIELD_XML_CoordinationMessage);
         System.out.println("setting ControlTuple fields ");

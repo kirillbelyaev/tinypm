@@ -96,7 +96,7 @@ public class TSLib_UnitTests_ControlTuple {
         System.out.println("started test_ControlTuple_set_ID_Field() ");
         System.out.println("\n"); 
         
-        this.IntValue = this.CLT.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        this.IntValue = this.CLT.set_SourceID_Field(this.FIELD_APP_PATH_VALID);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
@@ -111,22 +111,22 @@ public class TSLib_UnitTests_ControlTuple {
             return;
         }
         
-        this.IntValue = this.CLT.set_ID_Field(this.FIELD_APP_PATH_INVALID);
+        this.IntValue = this.CLT.set_SourceID_Field(this.FIELD_APP_PATH_INVALID);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
         
-        this.IntValue = this.CLT.set_ID_Field(this.EmptyString);
+        this.IntValue = this.CLT.set_SourceID_Field(this.EmptyString);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
         
-        this.IntValue = this.CLT.set_ID_Field(this.RootDir);
+        this.IntValue = this.CLT.set_SourceID_Field(this.RootDir);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
         
-        this.IntValue = this.CLT.set_ID_Field(null);
+        this.IntValue = this.CLT.set_SourceID_Field(null);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
@@ -146,7 +146,7 @@ public class TSLib_UnitTests_ControlTuple {
         System.out.println("started test_ControlTuple_get_ID_Field() ");
         System.out.println("\n"); 
         
-        this.StringValue = this.CLT.get_ID_Field();
+        this.StringValue = this.CLT.get_SourceID_Field();
         assertNotNull(this.StringValue);
         System.out.println("executing get_ID_Field() ");
         System.out.println("ID field is: " + this.StringValue);
@@ -311,22 +311,22 @@ public class TSLib_UnitTests_ControlTuple {
         
         /* now test matching */
         
-        this.Result = this.CLT.match_on_ID_Field(this.FIELD_APP_PATH_VALID);
+        this.Result = this.CLT.match_on_SourceID_Field(this.FIELD_APP_PATH_VALID);
         System.out.println("executing match_on_ID() ");
         System.out.println("result is: " + this.Result);
         System.out.println("\n"); 
         
-        this.Result = this.CLT.match_on_ID_Field(this.FIELD_APP_PATH_INVALID);
+        this.Result = this.CLT.match_on_SourceID_Field(this.FIELD_APP_PATH_INVALID);
         System.out.println("executing match_on_ID() ");
         System.out.println("result is: " + this.Result);
         System.out.println("\n"); 
         
-        this.Result = this.CLT.match_on_ID_Field(null);
+        this.Result = this.CLT.match_on_SourceID_Field(null);
         System.out.println("executing match_on_ID() ");
         System.out.println("result is: " + this.Result);
         System.out.println("\n"); 
         
-        this.Result = this.CLT.match_on_ID_Field(this.EmptyString);
+        this.Result = this.CLT.match_on_SourceID_Field(this.EmptyString);
         System.out.println("executing match_on_ID() ");
         System.out.println("result is: " + this.Result);
         System.out.println("\n"); 

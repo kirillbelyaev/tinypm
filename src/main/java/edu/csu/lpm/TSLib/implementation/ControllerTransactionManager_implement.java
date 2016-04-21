@@ -53,9 +53,10 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 if (clt != null)
                 {
                    /* 1: type field is coordination
-                      2: if sender ID is valid - registered in Communication Policy Class (CPC)
-                         and coordination is enabled */
-                   if (clt.match_on_Type_Field(Tuple.TupleTypes.COORDINATION.toString()) == true && this.validate_Coordination(clt.get_ID_Field(), clt.get_ID_Field()) == true)
+                      2: if Source/Destination IDs are valid - registered in Communication Policy Class (CPC)
+                         and coordination between them is enabled */
+                   if (clt.match_on_Type_Field(Tuple.TupleTypes.COORDINATION.toString()) == true 
+                   && this.validate_Coordination(clt.get_SourceID_Field(), clt.get_DestinationID_Field()) == true)
                    {
                        /* SLEEP 1 - give a chance to TSC (TS Controller) to read and shuttle a control tuple */
 //                    try 
@@ -75,10 +76,10 @@ public class ControllerTransactionManager_implement implements ControllerTransac
 //                    }
                        /* Now check if we can append a control tuple in destination TS 2.
                        TS location should be obtained through translation function */
-                       if (this.PTS.count_ControlTuples(this.get_TupleSpaceLocation(clt.get_ID_Field())) == 0)
+                       if (this.PTS.count_ControlTuples(this.get_TupleSpaceLocation(clt.get_DestinationID_Field())) == 0)
                        {
                            /* append a control tuple to TS 2 */
-                            if (this.PTS.append_ControlTuple(clt, this.get_TupleSpaceLocation(clt.get_ID_Field())) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                            if (this.PTS.append_ControlTuple(clt, this.get_TupleSpaceLocation(clt.get_DestinationID_Field())) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                             {
                                return TransactionManager.INDICATE_OPERATION_SUCCESS; 
                                

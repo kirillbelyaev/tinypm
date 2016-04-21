@@ -30,22 +30,28 @@ import java.io.Serializable;
 public class ControlTuple_implement implements ControlTuple, Serializable 
 {
     
-    private String ID = "";
+    private String SourceID = "";
+    private String DestinationID = "";
     private String Type = "";
     private String RequestMessage = "";
     
     @Override
-    public String get_ID_Field()
+    public String get_SourceID_Field()
     {
-        return this.ID;
+        return this.SourceID;
     }        
     
+    @Override
+    public String get_DestinationID_Field()
+    {
+        return this.DestinationID;
+    }        
     
     /*
         provides extra info with int return type: 0 for success; -1 for error
     */
     @Override
-    public int set_ID_Field(String id)
+    public int set_SourceID_Field(String id)
     {
         if (id != null)
         {    
@@ -57,24 +63,56 @@ public class ControlTuple_implement implements ControlTuple, Serializable
                 a directory */
                 if (f.isFile())
                 {    
-                    this.ID = id;
+                    this.SourceID = id;
                     f = null;
                     return Tuple.INDICATE_OPERATION_SUCCESS;
                 }    
                 else {    
-                        System.out.println("ControlTuple.set_ID(): app ID does not exist in the filesystem! ");
+                        //System.out.println("ControlTuple.set_ID(): app ID does not exist in the filesystem! ");
                         return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
                      }
             } else {
-                        System.out.println("ControlTuple.set_ID(): app ID is empty! ");  
+                        //System.out.println("ControlTuple.set_ID(): app ID is empty! ");  
                         return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
                    }    
             
         } else {
-                    System.out.println("ControlTuple.set_ID(): app ID is null! ");  
+                    //System.out.println("ControlTuple.set_ID(): app ID is null! ");  
                     return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;     
                }        
     }  
+    
+    @Override
+    public int set_DestinationID_Field(String id)
+    {
+        if (id != null)
+        {    
+            if (!id.isEmpty())
+            {    
+                File f = new File(id);
+                
+                /* set only if an app is an actual file, does exist and not 
+                a directory */
+                if (f.isFile())
+                {    
+                    this.DestinationID = id;
+                    f = null;
+                    return Tuple.INDICATE_OPERATION_SUCCESS;
+                }    
+                else {    
+                        //System.out.println("ControlTuple.set_ID(): app ID does not exist in the filesystem! ");
+                        return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
+                     }
+            } else {
+                        //System.out.println("ControlTuple.set_ID(): app ID is empty! ");  
+                        return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
+                   }    
+            
+        } else {
+                    //System.out.println("ControlTuple.set_ID(): app ID is null! ");  
+                    return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;     
+               }        
+    }
     
 
     @Override
@@ -130,13 +168,13 @@ public class ControlTuple_implement implements ControlTuple, Serializable
     /* introduce template matching methods inside a tuple */
     
     @Override
-    public boolean match_on_ID_Field(String id)
+    public boolean match_on_SourceID_Field(String id)
     {
         if (id != null)
         {
             if (!id.isEmpty())
             {
-                if (this.ID.equals(id))
+                if (this.SourceID.equals(id))
                     return true;
             }    
         }
@@ -144,6 +182,20 @@ public class ControlTuple_implement implements ControlTuple, Serializable
         return false;
     }        
     
+    @Override
+    public boolean match_on_DestinationID_Field(String id)
+    {
+        if (id != null)
+        {
+            if (!id.isEmpty())
+            {
+                if (this.DestinationID.equals(id))
+                    return true;
+            }    
+        }
+        
+        return false;
+    }
     
     @Override
     public boolean match_on_Type_Field(String type)

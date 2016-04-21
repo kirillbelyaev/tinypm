@@ -110,8 +110,10 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                             /* if obtaining reply control tuple is successful */
                             if (reply_pct != null)
                             {
-                                /* if ID and type fields match with original */
-                                if (clt.match_on_Type_Field(reply_pct.get_Type_Field()) == true && clt.match_on_ID_Field(reply_pct.get_ID_Field()) == true)
+                                /* if source ID of original matches with destination ID of reply and type fields match */
+                                if (clt.match_on_Type_Field(reply_pct.get_Type_Field()) == true 
+                                && clt.match_on_SourceID_Field(reply_pct.get_DestinationID_Field()) == true 
+                                && clt.match_on_DestinationID_Field(reply_pct.get_SourceID_Field()) == true)
                                 {
                                     /* delete tuple space to complete transaction */
                                     if (this.PTS.delete_TupleSpace(location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)

@@ -186,7 +186,7 @@ public class TSLib_UnitTests_VolatileTupleSpace
         
         if (this.CLT == null) this.CLT = new ControlTuple_implement();
         
-        this.CLT.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        this.CLT.set_SourceID_Field(this.FIELD_APP_PATH_VALID);
         this.CLT.set_Type_Field_to_Collaboration();
         this.CLT.set_RequestMessage_Field(this.FIELD_RequestMessage);
         System.out.println("setting ControlTuple fields ");
@@ -238,7 +238,7 @@ public class TSLib_UnitTests_VolatileTupleSpace
         if (this.CLT != null)
         {    
             System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
-            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_SourceID_Field());
             System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
         }    
         else
@@ -265,7 +265,7 @@ public class TSLib_UnitTests_VolatileTupleSpace
         if (this.CLT != null)
         {    
             System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
-            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_SourceID_Field());
             System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
         }    
         else
@@ -288,7 +288,7 @@ public class TSLib_UnitTests_VolatileTupleSpace
         if (this.CLT != null)
         {    
             System.out.println("tuple Type field is: " + this.CLT.get_Type_Field());
-            System.out.println("tuple ID field is: " + this.CLT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CLT.get_SourceID_Field());
             System.out.println("tuple Request field is: " + this.CLT.get_RequestMessage_Field());
         }    
         else
