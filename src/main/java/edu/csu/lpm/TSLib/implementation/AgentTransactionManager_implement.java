@@ -128,7 +128,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                                                 return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                                             }
                                     
-                                            return TransactionManager.INDICATE_REPLY_FIELDS_VALIDATION_FAILED_STATUS; 
+                                            return TransactionManager.INDICATE_FIELDS_VALIDATION_FAILED_STATUS; 
                                        }    
                             
                             } else { 

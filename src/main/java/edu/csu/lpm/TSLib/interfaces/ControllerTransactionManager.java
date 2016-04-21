@@ -18,20 +18,16 @@
  */
 package edu.csu.lpm.TSLib.interfaces;
 
-import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
-
 /**
  *
  * @author kirill
  */
-public interface AgentTransactionManager extends TransactionManager
+public interface ControllerTransactionManager extends TransactionManager
 {   
     /* by nature coordination is symmetric - both parties have to exchange control tuples */
-    public int perform_PersistentCoordinativeTransaction(ControlTuple_implement clt, String location);
+    public int facilitate_PersistentCoordinativeTransaction(String location);
     
-    public ControlTuple_implement get_ReplyControlTuple();
-    
-    public int perform_PersistentCollaborativeTransaction(ControlTuple_implement clt);
+    public int facilitate_PersistentCollaborativeTransaction(String location);
     
     //File assembleReplica(ContentTuple_implement cnt);
     

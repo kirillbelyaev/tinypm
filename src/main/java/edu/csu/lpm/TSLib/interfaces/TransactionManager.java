@@ -28,14 +28,16 @@ public interface TransactionManager
     implementation */
     public final int DEFAULT_SLEEP_INTERVAL = 25000;
     public final int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
+    public final int INDICATE_EXCEPTION_OCCURRENCE_STATUS = -2;
     public final int INDICATE_OPERATION_SUCCESS = 0;
     public final int INDICATE_NOT_COORDINATION_TYPE_FIELD_STATUS = -12;
-    public final int INDICATE_REPLY_FIELDS_VALIDATION_FAILED_STATUS = -13;
+    public final int INDICATE_FIELDS_VALIDATION_FAILED_STATUS = -13;
     public final int INDICATE_CREATE_TUPLE_SPACE_FAILED_STATUS = -14;
     public final int INDICATE_APPEND_CONTROL_TUPLE_FAILED_STATUS = -15;
     public final int INDICATE_TAKE_CONTROL_TUPLE_FAILED_STATUS = -16;
     public final int INDICATE_CONTROL_TUPLE_NOT_PRESENT_STATUS = -17;
     public final int INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS = -18;
-    public final int INDICATE_EXCEPTION_OCCURRENCE_STATUS = -2;
+    public final int INDICATE_READ_CONTROL_TUPLE_FAILED_STATUS = -19;
+    
     
 }
