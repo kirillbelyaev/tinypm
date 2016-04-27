@@ -24,8 +24,13 @@ package edu.csu.lpm.TSLib.interfaces;
  */
 public interface ControllerTransactionManager extends TransactionManager
 {   
-    /* by nature coordination is symmetric - both parties have to exchange control tuples */
-    public int facilitate_PersistentCoordinativeTransaction(String location);
+    /* by nature coordination is symmetric - both parties have to exchange control tuples
+    this method performs this in one direction - appending control tuple to TS 
+    of destination ID.
+    ts_location parameter denotes the TS for source ID */
+    //public int facilitate_UnidirectionalPersistentCoordinativeTransaction(String location);
+    
+    public int facilitate_BidirectionalPersistentCoordinativeTransaction(String ts_location1, String ts_location2);
     
     public int facilitate_PersistentCollaborativeTransaction(String location);
     

@@ -82,7 +82,7 @@ public class controller implements Runnable
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("controller started test of facilitate_PersistentCoordinativeTransaction() ");
+        System.out.println("controller started test of facilitate_BidirectionalPersistentCoordinativeTransaction() ");
         System.out.println("\n");
         
         int IntValue = -1;
@@ -95,23 +95,10 @@ public class controller implements Runnable
         System.out.println("controller TS A AbsolutePath is:" + AbsolutePathTSA);
         System.out.println("controller TS B AbsolutePath is:" + AbsolutePathTSB);
         
-        while (true)
-        {
-            try 
-            {
-                Thread.sleep(TransactionManager.CONTROLLER_SLEEP_INTERVAL); /* 5 seconds */
-            } catch (InterruptedException ex) 
-            {
-                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            IntValue = CTM.facilitate_PersistentCoordinativeTransaction(AbsolutePathTSA);
-            System.out.println("controller executing facilitate_PersistentCoordinativeTransaction() ");
-            System.out.println("controller method return value is: " + IntValue);
-            System.out.println("\n");
-            
-            IntValue = CTM.facilitate_PersistentCoordinativeTransaction(AbsolutePathTSB);
-            System.out.println("controller executing facilitate_PersistentCoordinativeTransaction() ");
+        while (true) /* run forever */
+        {            
+            IntValue = CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(AbsolutePathTSA, AbsolutePathTSB);
+            System.out.println("controller executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
             System.out.println("controller method return value is: " + IntValue);
             System.out.println("\n");
         }

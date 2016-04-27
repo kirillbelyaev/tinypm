@@ -29,10 +29,10 @@ import org.junit.Test;
  *
  * @author kirill
  */
-public class TSLib_UnitTests_Coodination 
+public class TSLib_UnitTests_Coordination 
 {
     
-    public TSLib_UnitTests_Coodination() {
+    public TSLib_UnitTests_Coordination() {
     }
     
     @BeforeClass
@@ -119,7 +119,7 @@ public class TSLib_UnitTests_Coodination
             Thread.sleep(30000); /* test for one minute or 30 seconds */
         } catch (InterruptedException ex) 
         {
-            Logger.getLogger(TSLib_UnitTests_Coodination.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TSLib_UnitTests_Coordination.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         System.out.println("\n"); 

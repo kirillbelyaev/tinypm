@@ -87,59 +87,59 @@ public class TSLib_UnitTests_ControllerTransactionManager
     
     /* CTM tests */
     
-    @Test
-    public void test_facilitate_PersistentCoordinativeTransaction()
-    {
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("started test_facilitate_PersistentCoordinativeTransaction ");
-        System.out.println("\n");
-        
-        this.IntValue = this.CTM.facilitate_PersistentCoordinativeTransaction(this.ValidLocation);
-        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
-        System.out.println("method return value is: " + this.IntValue);
-        System.out.println("\n");
-        
-        /* terminate with valid execution only */
-        if (this.TerminateNow == true)
-        {    
-            System.out.println("\n"); 
-            System.out.println("--------------------------------------");
-            System.out.println("finished test_facilitate_PersistentCoordinativeTransaction ");
-            System.out.println("\n");
-            return;
-        }
-        
-        this.IntValue = this.CTM.facilitate_PersistentCoordinativeTransaction(null);
-        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
-        System.out.println("method return value is: " + IntValue);
-        System.out.println("\n");
-        
-        this.IntValue = this.CTM.facilitate_PersistentCoordinativeTransaction(this.InvalidLocation);
-        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
-        System.out.println("method return value is: " + this.IntValue);
-        System.out.println("\n");
-        
-        this.IntValue = this.CTM.facilitate_PersistentCoordinativeTransaction(this.EmptyString);
-        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
-        System.out.println("method return value is: " + this.IntValue);
-        System.out.println("\n");
-        
-        this.IntValue = this.CTM.facilitate_PersistentCoordinativeTransaction(this.RootDir);
-        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
-        System.out.println("method return value is: " + this.IntValue);
-        System.out.println("\n");
-        
-        this.IntValue = this.CTM.facilitate_PersistentCoordinativeTransaction(this.ValidLocation);
-        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
-        System.out.println("method return value is: " + this.IntValue);
-        System.out.println("\n");
-        
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("finished test_facilitate_PersistentCoordinativeTransaction ");
-        System.out.println("\n");
-    }    
+//    @Test
+//    public void test_facilitate_PersistentCoordinativeTransaction()
+//    {
+//        System.out.println("\n"); 
+//        System.out.println("--------------------------------------");
+//        System.out.println("started test_facilitate_PersistentCoordinativeTransaction ");
+//        System.out.println("\n");
+//        
+//        this.IntValue = this.CTM.facilitate_UnidirectionalPersistentCoordinativeTransaction(this.ValidLocation);
+//        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
+//        System.out.println("method return value is: " + this.IntValue);
+//        System.out.println("\n");
+//        
+//        /* terminate with valid execution only */
+//        if (this.TerminateNow == true)
+//        {    
+//            System.out.println("\n"); 
+//            System.out.println("--------------------------------------");
+//            System.out.println("finished test_facilitate_PersistentCoordinativeTransaction ");
+//            System.out.println("\n");
+//            return;
+//        }
+//        
+//        this.IntValue = this.CTM.facilitate_UnidirectionalPersistentCoordinativeTransaction(null);
+//        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
+//        System.out.println("method return value is: " + IntValue);
+//        System.out.println("\n");
+//        
+//        this.IntValue = this.CTM.facilitate_UnidirectionalPersistentCoordinativeTransaction(this.InvalidLocation);
+//        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
+//        System.out.println("method return value is: " + this.IntValue);
+//        System.out.println("\n");
+//        
+//        this.IntValue = this.CTM.facilitate_UnidirectionalPersistentCoordinativeTransaction(this.EmptyString);
+//        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
+//        System.out.println("method return value is: " + this.IntValue);
+//        System.out.println("\n");
+//        
+//        this.IntValue = this.CTM.facilitate_UnidirectionalPersistentCoordinativeTransaction(this.RootDir);
+//        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
+//        System.out.println("method return value is: " + this.IntValue);
+//        System.out.println("\n");
+//        
+//        this.IntValue = this.CTM.facilitate_UnidirectionalPersistentCoordinativeTransaction(this.ValidLocation);
+//        System.out.println("executing facilitate_PersistentCoordinativeTransaction() ");
+//        System.out.println("method return value is: " + this.IntValue);
+//        System.out.println("\n");
+//        
+//        System.out.println("\n"); 
+//        System.out.println("--------------------------------------");
+//        System.out.println("finished test_facilitate_PersistentCoordinativeTransaction ");
+//        System.out.println("\n");
+//    }    
     
     
     
@@ -154,7 +154,7 @@ public class TSLib_UnitTests_ControllerTransactionManager
         /* set to direct the execution of test methods with valid input only */
         this.TerminateNow = true;
         
-        this.test_facilitate_PersistentCoordinativeTransaction();
+        //this.test_facilitate_PersistentCoordinativeTransaction();
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");

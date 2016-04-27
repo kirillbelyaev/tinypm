@@ -42,13 +42,13 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
     acknowledgement control tuple in return so that sending party obtains confirmation.
     NOTE - this transaction method has been split into 2 parts - passive & active - 
     therefore it is not used in practice and is given as a REFERENCE */
-    private int perform_PersistentCoordinativeTransaction(ControlTuple_implement clt, String location) 
+    private int perform_PersistentCoordinativeTransaction(ControlTuple_implement clt, String ts_location) 
     {
         ControlTuple_implement request_pct = null;  
         ControlTuple_implement reply_pct = null;
         
         if (clt == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
-        if (location == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (ts_location == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         /* check if both source/destination IDs are set */
         if (clt.get_SourceID_Field().isEmpty() && clt.get_DestinationID_Field().isEmpty()) return TransactionManager.INDICATE_FIELDS_VALIDATION_FAILED_STATUS;
@@ -59,10 +59,10 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
         if (this.PTS != null)
         {
             /* start transaction with creating a TS in persistent storage */
-            if (this.PTS.create_TupleSpace(location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+            if (this.PTS.create_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
             {
                 /* append a valid control tuple */
-                if (this.PTS.append_ControlTuple(clt, location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                if (this.PTS.append_ControlTuple(clt, ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                 {
                     /* SLEEP 1 - give a chance to TSC (TS Controller) to read and shuttle a control tuple */
                     try 
@@ -73,7 +73,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                         Logger.getLogger(AgentTransactionManager_implement.class.getName()).log(Level.SEVERE, null, ex);
                         
                         /* delete tuple space on exit */
-                        if (this.PTS.delete_TupleSpace(location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                        if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                         {    
                             return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                         }
@@ -82,7 +82,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                     }
                     
                     /* now take our control tuple */
-                    request_pct = this.PTS.take_ControlTuple(location);
+                    request_pct = this.PTS.take_ControlTuple(ts_location);
                     
                     /* if take operation is successful */
                     if (request_pct != null)
@@ -97,7 +97,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                             Logger.getLogger(AgentTransactionManager_implement.class.getName()).log(Level.SEVERE, null, ex);
                             
                             /* delete tuple space on exit */
-                            if (this.PTS.delete_TupleSpace(location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                            if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                             {    
                                 return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                             }
@@ -106,10 +106,10 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                         }
                         
                         /* now take reply control tuple if TS has one such tuple */
-                        if (this.PTS.count_ControlTuples(location) == 1)
+                        if (this.PTS.count_ControlTuples(ts_location) == 1)
                         {
                             /* take reply control tuple */
-                            reply_pct = this.PTS.take_ControlTuple(location);
+                            reply_pct = this.PTS.take_ControlTuple(ts_location);
                             
                             /* if obtaining reply control tuple is successful */
                             if (reply_pct != null)
@@ -120,7 +120,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                                 && clt.match_on_DestinationID_Field(reply_pct.get_SourceID_Field()) == true)
                                 {
                                     /* delete tuple space to complete transaction */
-                                    if (this.PTS.delete_TupleSpace(location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                    if (this.PTS.delete_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                                     {
                                         /* assign the reply to private variable */
                                         this.REPLY_CLT = reply_pct; 
@@ -129,7 +129,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                                     
                                 } else {
                                             /* delete tuple space on exit */
-                                            if (this.PTS.delete_TupleSpace(location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                            if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                                             {    
                                                 return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                                             }
@@ -139,7 +139,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                             
                             } else { 
                                         /* delete tuple space on exit */
-                                        if (this.PTS.delete_TupleSpace(location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                        if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                                         {    
                                             return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                                         }
@@ -149,7 +149,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                         
                         } else { 
                                     /* delete tuple space on exit */
-                                    if (this.PTS.delete_TupleSpace(location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                    if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                                     {    
                                         return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                                     }
@@ -159,7 +159,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                         
                     } else { 
                                 /* delete tuple space on exit */
-                                if (this.PTS.delete_TupleSpace(location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                                 {    
                                     return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                                 }
@@ -169,7 +169,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                     
                 } else { 
                             /* delete tuple space on exit */
-                            if (this.PTS.delete_TupleSpace(location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                            if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                             {    
                                 return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                             }
@@ -177,15 +177,14 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                             return TransactionManager.INDICATE_APPEND_CONTROL_TUPLE_FAILED_STATUS; 
                        }   
             
-            } else { 
-                
+            } else {                
                         /* delete tuple space on exit */
-                        if (this.PTS.delete_TupleSpace(location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                        if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                         {    
                             return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
                         }
-                        return TransactionManager.INDICATE_CREATE_TUPLE_SPACE_FAILED_STATUS; 
-                   
+                        
+                        return TransactionManager.INDICATE_CREATE_TUPLE_SPACE_FAILED_STATUS;                    
                    }             
         }    
         
@@ -277,15 +276,17 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                         
                         return TransactionManager.INDICATE_CREATE_TUPLE_SPACE_FAILED_STATUS;             
                    }             
-        }    
+        }   
         
         return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
-    /* Passive transaction - takes a control tuple - performs receive functionality
+    /* Passive transaction - takes a control tuple - performs receive functionality.
     for this method we do not really need the control tuple parameter since an app 
     may receive a control tuple from any recipient and should perform validation
-    outside the method */
+    outside the method based on proprietary logic.
+    Return value of ZERO signifies success and that the private REPLY_CLT class variable
+    is set to non null and ready to be obtained via get_ReplyControlTuple() */
     @Override
     public int perform_PassivePersistentCoordinativeTransaction(String ts_location) 
     {  
@@ -381,6 +382,8 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
         return null;
     }        
 
+    /* in case perform_PassivePersistentCoordinativeTransaction() returns ZERO 
+    we can obtain the private REPLY_CLT class variable */
     @Override
     public ControlTuple_implement get_ReplyControlTuple() 
     {
