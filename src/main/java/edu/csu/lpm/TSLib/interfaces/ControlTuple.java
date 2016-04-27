@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
+
 package edu.csu.lpm.TSLib.interfaces;
 
 /**
@@ -30,12 +31,12 @@ public interface ControlTuple extends Tuple
     Another reason for that - collaboration is mediated through LPM without consent of the other endpoint in contrast to coordination. */
     String SourceID_Field = ""; /* source application ID - in fact full path to its executable */
     
-    String DestinationID_Field = ""; /* destination application ID - in fact full path to its executable */
+    String DestinationID_Field = ""; /* destination application ID - in fact full path to its executable - necessary for verifiable coordination */
     
     String Type_Field = ""; /* indicates type of communication: coordination/collaboration  */
     
     String RequestMessage_Field = ""; /* could incorporate collaboration/coordination request. 
-    For coordination String datatype could still hold a small XML payload if necessary */
+    For coordination String datatype could still hold a small XML/JSON payload if necessary */
     
     public String get_SourceID_Field();
     

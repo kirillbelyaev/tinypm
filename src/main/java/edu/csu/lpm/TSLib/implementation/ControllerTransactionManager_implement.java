@@ -52,12 +52,17 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 /* if reading control tuple from TS 1 is successful */
                 if (clt != null)
                 {
-                   /* 1: type field is coordination
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). read_ControlTuple from TS1 successful. \n");
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). sourceID is: " + clt.get_SourceID_Field());
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). destinationID is: " + clt.get_DestinationID_Field());
+                    /* 1: type field is coordination
                       2: if Source/Destination IDs are valid - registered in Communication Policy Class (CPC)
                          and coordination between them is enabled */
                    if (clt.match_on_Type_Field(Tuple.TupleTypes.COORDINATION.toString()) == true 
                    && this.validate_Coordination(clt.get_SourceID_Field(), clt.get_DestinationID_Field()) == true)
                    {
+                       System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). validation of ControlTuple from TS1 successful. \n");
+                       
                        /* SLEEP 1 - give a chance to TSC (TS Controller) to read and shuttle a control tuple */
 //                    try 
 //                    {    
@@ -74,10 +79,15 @@ public class ControllerTransactionManager_implement implements ControllerTransac
 //                            
 //                        return TransactionManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
 //                    }
+                       
+                       System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: get_TupleSpaceLocation(): return value is: " + this.get_TupleSpaceLocation(clt.get_DestinationID_Field()) );
+                           
                        /* Now check if we can append a control tuple in destination TS 2.
                        TS location should be obtained through translation function */
                        if (this.PTS.count_ControlTuples(this.get_TupleSpaceLocation(clt.get_DestinationID_Field())) == 0)
                        {
+                           System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: count_ControlTuples():  destination TS is empty. \n");
+                           
                            /* append a control tuple to TS 2 */
                             if (this.PTS.append_ControlTuple(clt, this.get_TupleSpaceLocation(clt.get_DestinationID_Field())) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                             {
@@ -101,12 +111,16 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     the TBD CPC layer - check if such an access control policy exists */
     private boolean validate_Coordination(String sid, String did)
     {
+        String id1 = "/s/chopin/b/grad/kirill/containers/container-1/bin/applicationA";
+        String id2 = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
+        
         if (sid != null && did != null)
         {
             if (!sid.isEmpty() && !did.isEmpty())
             {
                 /* return true for now to mock the CPC functionality */
-                return true;
+                if ((sid.compareTo(id1) == 0 || sid.compareTo(id2) == 0) && (did.compareTo(id1) == 0 || did.compareTo(id2) == 0))
+                    return true;
             }    
         }
         return false;
@@ -118,8 +132,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     {
         String ts_location = null;
         /* mock IDs */
-        String id1 = "/s/chopin/b/grad/kirill/containers/container-1/bin/coordinator-a";
-        String id2 = "/s/chopin/b/grad/kirill/containers/container-2/bin/coordinator-b";
+        String id1 = "/s/chopin/b/grad/kirill/containers/container-1/bin/applicationA";
+        String id2 = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
         
         if (id != null)
         {
@@ -128,13 +142,13 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 /* return mock TS location for now to mock the CPC functionality */
                 if (id.compareTo(id1) == 0)
                 {
-                    ts_location = "/s/chopin/b/grad/kirill/containers/container-a/";
+                    ts_location = "/s/chopin/b/grad/kirill/containers/container-1/";
                     return ts_location;
                 }
                 
                 if (id.compareTo(id2) == 0)
                 {
-                    ts_location = "/s/chopin/b/grad/kirill/containers/container-b/";
+                    ts_location = "/s/chopin/b/grad/kirill/containers/container-2/";
                     return ts_location;
                 }
             }    

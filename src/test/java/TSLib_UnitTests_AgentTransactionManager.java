@@ -89,11 +89,11 @@ public class TSLib_UnitTests_AgentTransactionManager
     /* ATM tests */
     
     @Test
-    public void test_perform_PersistentCoordinativeTransaction()
+    public void test_perform_ActivePersistentCoordinativeTransaction()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("started test_perform_PersistentCoordinativeTransaction ");
+        System.out.println("started test_perform_ActivePersistentCoordinativeTransaction ");
         System.out.println("\n");
         
         if (this.CLT == null) this.CLT = new ControlTuple_implement();
@@ -105,8 +105,8 @@ public class TSLib_UnitTests_AgentTransactionManager
         System.out.println("setting ControlTuple fields ");
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(this.CLT, this.ValidLocation);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(this.CLT, this.ValidLocation);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
@@ -115,68 +115,124 @@ public class TSLib_UnitTests_AgentTransactionManager
         {    
             System.out.println("\n"); 
             System.out.println("--------------------------------------");
-            System.out.println("finished test_perform_PersistentCoordinativeTransaction ");
+            System.out.println("finished test_perform_ActivePersistentCoordinativeTransaction ");
             System.out.println("\n");
             return;
         }
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(null, this.ValidLocation);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(null, this.ValidLocation);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(this.CLT, this.InvalidLocation);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(this.CLT, this.InvalidLocation);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(null, this.InvalidLocation);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(null, this.InvalidLocation);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(this.CLT, this.EmptyString);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(this.CLT, this.EmptyString);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(null, this.EmptyString);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(null, this.EmptyString);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(this.CLT, this.RootDir);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(this.CLT, this.RootDir);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(null, this.RootDir);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(null, this.RootDir);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(this.CLT, null);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(this.CLT, null);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(null, null);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(null, null);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ATM.perform_PersistentCoordinativeTransaction(this.CLT, this.ValidLocation);
-        System.out.println("executing perform_PersistentCoordinativeTransaction() ");
+        this.IntValue = this.ATM.perform_ActivePersistentCoordinativeTransaction(this.CLT, this.ValidLocation);
+        System.out.println("executing perform_ActivePersistentCoordinativeTransaction() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("finished test_perform_PersistentCoordinativeTransaction ");
+        System.out.println("finished test_perform_ActivePersistentCoordinativeTransaction ");
         System.out.println("\n");
-    }    
+    }
     
     
+    @Test
+    public void test_perform_PassivePersistentCoordinativeTransaction()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_perform_PassivePersistentCoordinativeTransaction ");
+        System.out.println("\n");
+        
+        if (this.CLT == null) this.CLT = new ControlTuple_implement();
+        
+        
+        this.IntValue = this.ATM.perform_PassivePersistentCoordinativeTransaction(this.ValidLocation);
+        System.out.println("executing perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        /* terminate with valid execution only */
+        if (this.TerminateNow == true)
+        {    
+            System.out.println("\n"); 
+            System.out.println("--------------------------------------");
+            System.out.println("finished test_perform_PassivePersistentCoordinativeTransaction ");
+            System.out.println("\n");
+            return;
+        }
+        
+        this.IntValue = this.ATM.perform_PassivePersistentCoordinativeTransaction(this.InvalidLocation);
+        System.out.println("executing perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.ATM.perform_PassivePersistentCoordinativeTransaction(this.EmptyString);
+        System.out.println("executing perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.ATM.perform_PassivePersistentCoordinativeTransaction(this.RootDir);
+        System.out.println("executing perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.ATM.perform_PassivePersistentCoordinativeTransaction(null);
+        System.out.println("executing perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.ATM.perform_PassivePersistentCoordinativeTransaction(this.ValidLocation);
+        System.out.println("executing perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_perform_PassivePersistentCoordinativeTransaction ");
+        System.out.println("\n");
+    }
     
     @Test
     public void test_AgentTransactionManager()
@@ -189,7 +245,9 @@ public class TSLib_UnitTests_AgentTransactionManager
         /* set to direct the execution of test methods with valid input only */
         this.TerminateNow = true;
         
-        this.test_perform_PersistentCoordinativeTransaction();
+        this.test_perform_ActivePersistentCoordinativeTransaction();
+        
+        this.test_perform_PassivePersistentCoordinativeTransaction();
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");

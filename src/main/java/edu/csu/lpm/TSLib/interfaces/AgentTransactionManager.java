@@ -27,7 +27,15 @@ import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
 public interface AgentTransactionManager extends TransactionManager
 {   
     /* by nature coordination is symmetric - both parties have to exchange control tuples */
-    public int perform_PersistentCoordinativeTransaction(ControlTuple_implement clt, String location);
+
+    /* Active transaction - appends a control tuple and then takes it - send functionality */
+    public int perform_ActivePersistentCoordinativeTransaction(ControlTuple_implement clt, String location);
+    
+    /* Passive transaction - takes a control tuple - performs receive functionality
+    for this method we do not really need the control tuple parameter since an app 
+    may receive a control tuple from any recipient and should perform validation
+    outside the method */
+    public int perform_PassivePersistentCoordinativeTransaction(String ts_location); 
     
     public ControlTuple_implement get_ReplyControlTuple();
     

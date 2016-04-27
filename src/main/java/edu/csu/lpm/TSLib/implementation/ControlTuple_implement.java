@@ -68,7 +68,7 @@ public class ControlTuple_implement implements ControlTuple, Serializable
                     return Tuple.INDICATE_OPERATION_SUCCESS;
                 }    
                 else {    
-                        //System.out.println("ControlTuple.set_ID(): app ID does not exist in the filesystem! ");
+                        System.out.println("ControlTuple.set_SourceID(): app ID does not exist in the filesystem! ");
                         return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
                      }
             } else {
@@ -100,7 +100,7 @@ public class ControlTuple_implement implements ControlTuple, Serializable
                     return Tuple.INDICATE_OPERATION_SUCCESS;
                 }    
                 else {    
-                        //System.out.println("ControlTuple.set_ID(): app ID does not exist in the filesystem! ");
+                        System.out.println("ControlTuple.set_DestinationID(): app ID does not exist in the filesystem! ");
                         return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
                      }
             } else {

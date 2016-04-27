@@ -26,7 +26,8 @@ public interface TransactionManager
 {
     /* we use macros to indicate the general method exit codes within the tuple
     implementation */
-    public final int DEFAULT_SLEEP_INTERVAL = 25000;
+    public final int AGENT_SLEEP_INTERVAL = 10000; /* should be longer */
+    public final int CONTROLLER_SLEEP_INTERVAL = 5000; /* should be shorter to allow shuttling */
     public final int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
     public final int INDICATE_EXCEPTION_OCCURRENCE_STATUS = -2;
     public final int INDICATE_OPERATION_SUCCESS = 0;
