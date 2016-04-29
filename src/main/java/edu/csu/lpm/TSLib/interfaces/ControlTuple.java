@@ -1,21 +1,19 @@
 /*
- * Copyright (C) 2016 kirill.
+ * Linux Policy Machine (LPM) Prototype
+ *   
+ * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Colorado State University
+ * Department of Computer Science,
+ * Fort Collins, CO  80523-1873, USA
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
- */
+ * E-mail contact:
+ * kirillbelyaev@yahoo.com
+ * kirill@cs.colostate.edu
+ *   
+ * This work is licensed under the Creative Commons Attribution-NonCommercial 3.0 Unported License. 
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/3.0/ or send 
+ * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+*/
 
 package edu.csu.lpm.TSLib.interfaces;
 
@@ -29,14 +27,19 @@ public interface ControlTuple extends Tuple
     between two endpoints.
     theoretically only source ID is required for collaboration since the requester can specify the request in the request message field.
     Another reason for that - collaboration is mediated through LPM without consent of the other endpoint in contrast to coordination. */
+    /* However for verifiability collaboration request requires the requesting 
+    app to set both source and destination fields to prove that it knows the destination ID. */
     String SourceID_Field = ""; /* source application ID - in fact full path to its executable */
     
+    /* However for verifiability collaboration request requires the requesting 
+    app to set both source and destination fields to prove that it knows the destination ID. */
     String DestinationID_Field = ""; /* destination application ID - in fact full path to its executable - necessary for verifiable coordination */
     
     String Type_Field = ""; /* indicates type of communication: coordination/collaboration  */
     
     String RequestMessage_Field = ""; /* could incorporate collaboration/coordination request. 
-    For coordination String datatype could still hold a small XML/JSON payload if necessary */
+    For coordination String datatype could still hold a small XML/JSON payload if necessary
+    For collaboration a full valid path to the data object is required */
     
     public String get_SourceID_Field();
     

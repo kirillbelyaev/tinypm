@@ -15,9 +15,21 @@
  * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-Linux Policy Machine (LPM) - managing the application-level OS resource control
-and inter-application interaction in the "containerized" Linux environments
-- project sponsored by the research grant from the National Institute of 
-Standards and Technology (NIST) - http://www.nist.gov/
+package edu.csu.lpm.TSLib.Utilities;
 
-Please refer to the documents in the docs folder.
+import edu.csu.lpm.TSLib.implementation.ContentTuple_implement;
+import java.io.File;
+
+/**
+ *
+ * @author kirill
+ */
+public class utilities 
+{
+    
+    private File assembleReplica(ContentTuple_implement cnt)
+    {
+        return null;
+    }
+    
+}

@@ -1,21 +1,20 @@
 /*
- * Copyright (C) 2016 kirill.
+ * Linux Policy Machine (LPM) Prototype
+ *   
+ * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Colorado State University
+ * Department of Computer Science,
+ * Fort Collins, CO  80523-1873, USA
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
- */
+ * E-mail contact:
+ * kirillbelyaev@yahoo.com
+ * kirill@cs.colostate.edu
+ *   
+ * This work is licensed under the Creative Commons Attribution-NonCommercial 3.0 Unported License. 
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/3.0/ or send 
+ * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+*/
+
 package edu.csu.lpm.TSLib.interfaces;
 
 import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
@@ -26,21 +25,22 @@ import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
  */
 public interface AgentTransactionManager extends TransactionManager
 {   
-    /* by nature coordination is symmetric - both parties have to exchange control tuples */
-
-    /* Active transaction - appends a control tuple and then takes it - send functionality */
-    public int perform_ActivePersistentCoordinativeTransaction(ControlTuple_implement clt, String location);
+    /* Active transaction - appends a control tuple and then takes it - performs send functionality.
+    the method also validates the control tuple parameter */
+    public int perform_ActivePersistentCoordinativeTransaction(ControlTuple_implement clt, String ts_location);
     
-    /* Passive transaction - takes a control tuple - performs receive functionality
+    /* Passive transaction - takes a control tuple - performs receive functionality.
     for this method we do not really need the control tuple parameter since an app 
     may receive a control tuple from any recipient and should perform validation
-    outside the method */
+    outside the method based on proprietary logic.
+    Return value of ZERO signifies success and that the private REPLY_CLT class variable
+    is set to non null and ready to be obtained via get_ReplyControlTuple() */
     public int perform_PassivePersistentCoordinativeTransaction(String ts_location); 
     
+    /* in case perform_PassivePersistentCoordinativeTransaction() returns ZERO 
+    we can obtain the private REPLY_CLT class variable */
     public ControlTuple_implement get_ReplyControlTuple();
     
     public int perform_PersistentCollaborativeTransaction(ControlTuple_implement clt);
-    
-    //File assembleReplica(ContentTuple_implement cnt);
     
 }

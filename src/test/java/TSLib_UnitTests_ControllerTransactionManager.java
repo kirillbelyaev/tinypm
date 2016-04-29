@@ -1,21 +1,19 @@
 /*
- * Copyright (C) 2016 kirill.
+ * Linux Policy Machine (LPM) Prototype
+ *   
+ * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Colorado State University
+ * Department of Computer Science,
+ * Fort Collins, CO  80523-1873, USA
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
- */
+ * E-mail contact:
+ * kirillbelyaev@yahoo.com
+ * kirill@cs.colostate.edu
+ *   
+ * This work is licensed under the Creative Commons Attribution-NonCommercial 3.0 Unported License. 
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/3.0/ or send 
+ * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+*/
 
 import edu.csu.lpm.TSLib.implementation.ContentTuple_implement;
 import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
@@ -141,6 +139,65 @@ public class TSLib_UnitTests_ControllerTransactionManager
 //        System.out.println("\n");
 //    }    
     
+
+    @Test
+    public void test_facilitate_BidirectionalPersistentCoordinativeTransaction()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_facilitate_BidirectionalPersistentCoordinativeTransaction ");
+        System.out.println("\n");
+        
+        this.IntValue = this.CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(this.ValidLocation, this.RootDir);
+        System.out.println("executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        /* terminate with valid execution only */
+        if (this.TerminateNow == true)
+        {    
+            System.out.println("\n"); 
+            System.out.println("--------------------------------------");
+            System.out.println("finished test_facilitate_BidirectionalPersistentCoordinativeTransaction ");
+            System.out.println("\n");
+            return;
+        }
+        
+        this.IntValue = this.CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(this.ValidLocation, this.ValidLocation);
+        System.out.println("executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+               
+        this.IntValue = this.CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(null, null);
+        System.out.println("executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(this.InvalidLocation, this.ValidLocation);
+        System.out.println("executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(this.EmptyString, this.ValidLocation);
+        System.out.println("executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(this.RootDir, this.ValidLocation);
+        System.out.println("executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(this.ValidLocation, this.RootDir);
+        System.out.println("executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_facilitate_BidirectionalPersistentCoordinativeTransaction ");
+        System.out.println("\n");
+    }    
     
     
     @Test
@@ -154,7 +211,7 @@ public class TSLib_UnitTests_ControllerTransactionManager
         /* set to direct the execution of test methods with valid input only */
         this.TerminateNow = true;
         
-        //this.test_facilitate_PersistentCoordinativeTransaction();
+        this.test_facilitate_BidirectionalPersistentCoordinativeTransaction();
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
