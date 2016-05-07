@@ -374,11 +374,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    private File assembleReplica(ContentTuple_implement cnt)
-    {
-        return null;
-    }        
+            
 
     /* in case perform_PassivePersistentCoordinativeTransaction() returns ZERO 
     we can obtain the private REPLY_CLT class variable */

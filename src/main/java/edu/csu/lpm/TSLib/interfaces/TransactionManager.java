@@ -39,5 +39,9 @@ public interface TransactionManager
     public final int INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS = -18;
     public final int INDICATE_READ_CONTROL_TUPLE_FAILED_STATUS = -19;
     
+    public final int INDICATE_APPEND_CONTENT_TUPLE_FAILED_STATUS = -20;
+    public final int INDICATE_TAKE_CONTENT_TUPLE_FAILED_STATUS = -21;
+    
+    
     
 }
