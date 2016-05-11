@@ -41,6 +41,7 @@ public interface TransactionManager
     
     public final int INDICATE_APPEND_CONTENT_TUPLE_FAILED_STATUS = -20;
     public final int INDICATE_TAKE_CONTENT_TUPLE_FAILED_STATUS = -21;
+    public final int INDICATE_CONTENT_TUPLE_NOT_PRESENT_STATUS = -22;
     
     
     

@@ -20,7 +20,6 @@ package edu.csu.lpm.TSLib.implementation;
 import edu.csu.lpm.TSLib.interfaces.AgentTransactionManager;
 import edu.csu.lpm.TSLib.interfaces.TransactionManager;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

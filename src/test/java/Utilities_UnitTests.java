@@ -57,6 +57,8 @@ public class Utilities_UnitTests {
     private final String RootDir = "/";
     
     private int IntValue = -1;
+    private boolean TerminateNow = false;
+    
     
     private Utilities ut = new Utilities ();
     
@@ -73,6 +75,16 @@ public class Utilities_UnitTests {
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
+        
+        /* terminate with valid execution only */
+        if (this.TerminateNow == true)
+        {    
+            System.out.println("\n"); 
+            System.out.println("--------------------------------------");
+            System.out.println("finished test_create_ObjectReplica() ");
+            System.out.println("\n");
+            return;
+        }
         
         this.IntValue = this.ut.create_ObjectReplica(null, null, null);
         System.out.println("executing create_ObjectReplica() ");
@@ -99,5 +111,26 @@ public class Utilities_UnitTests {
         System.out.println("--------------------------------------");
         System.out.println("finished test_create_ObjectReplica() ");
         System.out.println("\n");
+    }
+    
+    @Test
+    public void test_Utilities()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_Utilities ");
+        System.out.println("\n"); 
+        
+        /* set to direct the execution of test methods with valid input only */
+        this.TerminateNow = true;
+        
+        ut.setDebug(true);
+        
+        this.test_create_ObjectReplica();
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_Utilities ");
+        System.out.println("\n");   
     }
 }
