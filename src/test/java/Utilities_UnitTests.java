@@ -21,7 +21,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -113,6 +112,58 @@ public class Utilities_UnitTests {
         System.out.println("\n");
     }
     
+    
+    @Test
+    public void test_create_ObjectReplicaWithDebug() 
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_create_ObjectReplica() ");
+        System.out.println("\n");
+        
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObject, this.ts_location, this.FIELD_APP_PATH_A);
+        System.out.println("executing create_ObjectReplica() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        /* terminate with valid execution only */
+        if (this.TerminateNow == true)
+        {    
+            System.out.println("\n"); 
+            System.out.println("--------------------------------------");
+            System.out.println("finished test_create_ObjectReplica() ");
+            System.out.println("\n");
+            return;
+        }
+        
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(null, null, null);
+        System.out.println("executing create_ObjectReplica() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.InvalidLocation, this.EmptyString, this.EmptyString);
+        System.out.println("executing create_ObjectReplica() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.InvalidLocation, this.RootDir, this.EmptyString);
+        System.out.println("executing create_ObjectReplica() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObject, this.RootDir, this.FIELD_APP_PATH_A);
+        System.out.println("executing create_ObjectReplica() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_create_ObjectReplica() ");
+        System.out.println("\n");
+    }
+    
+    
     @Test
     public void test_Utilities()
     {
@@ -131,6 +182,27 @@ public class Utilities_UnitTests {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_Utilities ");
+        System.out.println("\n");   
+    }
+    
+    @Test
+    public void test_UtilitiesWithDebug()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_UtilitiesWithDebug ");
+        System.out.println("\n"); 
+        
+        /* set to direct the execution of test methods with valid input only */
+        this.TerminateNow = true;
+        
+        ut.setDebug(true);
+        
+        this.test_create_ObjectReplicaWithDebug();
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_UtilitiesWithDebug ");
         System.out.println("\n");   
     }
 }
