@@ -41,6 +41,14 @@ public interface AgentTransactionManager extends TransactionManager
     we can obtain the private REPLY_CLT class variable */
     public ControlTuple_implement get_ReplyControlTuple();
     
-    public int perform_PersistentCollaborativeTransaction(ControlTuple_implement clt);
+    /* by nature collaboration is unidirectional since one party initiates 
+    a request for a data object mediated through controller and waits for replica
+    chunks in the form of content tuples
+    
+    clt - control tuple with collaboration request to append.
+    ts_location - base directory where TS of the requester is located.
+    object_path - absolute path to the location where replica of the requested 
+    data object indicated in the control tuple request field should be assembled. */
+    public int perform_PersistentCollaborativeTransaction(ControlTuple_implement clt, String ts_location, String object_path);
     
 }

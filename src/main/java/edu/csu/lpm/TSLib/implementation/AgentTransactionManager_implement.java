@@ -17,6 +17,7 @@
 
 package edu.csu.lpm.TSLib.implementation;
 
+import edu.csu.lpm.TSLib.Utilities.Utilities;
 import edu.csu.lpm.TSLib.interfaces.AgentTransactionManager;
 import edu.csu.lpm.TSLib.interfaces.TransactionManager;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
@@ -31,6 +32,7 @@ import java.util.logging.Logger;
 public class AgentTransactionManager_implement implements AgentTransactionManager  
 {
     private PersistentTupleSpace_implement PTS = new PersistentTupleSpace_implement();
+    private Utilities UTS = new Utilities();
     private ControlTuple_implement REPLY_CLT = null;
     
     /* by nature coordination is symmetric - both parties have to exchange 
@@ -45,7 +47,10 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
         ControlTuple_implement reply_pct = null;
         
         if (clt == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
         if (ts_location == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (ts_location.isEmpty()) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         /* check if both source/destination IDs are set */
         if (clt.get_SourceID_Field().isEmpty() && clt.get_DestinationID_Field().isEmpty()) return TransactionManager.INDICATE_FIELDS_VALIDATION_FAILED_STATUS;
@@ -368,10 +373,139 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
         return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
 
+    /* by nature collaboration is unidirectional since one party initiates 
+    a request for a data object mediated through controller and waits for replica
+    chunks in the form of content tuples
+    
+    clt - control tuple with collaboration request to append.
+    ts_location - base directory where TS of the requester is located.
+    object_path - absolute path to the location where replica of the requested 
+    data object indicated in the control tuple request field should be assembled. */
     @Override
-    public int perform_PersistentCollaborativeTransaction(ControlTuple_implement clt) 
+    public int perform_PersistentCollaborativeTransaction(ControlTuple_implement clt, String ts_location, String object_path) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ControlTuple_implement request_pct = null;
+        
+        if (clt == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (ts_location == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (ts_location.isEmpty()) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (object_path == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS; 
+        
+        if (object_path.isEmpty()) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS; 
+        
+        /* make sure we do not write replica into the same tuple space directory! */
+        if (object_path.compareTo(ts_location) == 0) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+              
+        /* check if both source/destination IDs are set */
+        if (clt.get_SourceID_Field().isEmpty() && clt.get_DestinationID_Field().isEmpty()) return TransactionManager.INDICATE_FIELDS_VALIDATION_FAILED_STATUS;
+        
+        /* check if type field is set to collaboration */
+        if (!clt.match_on_Type_Field(Tuple.TupleTypes.COLLABORATION.toString())) return TransactionManager.INDICATE_NOT_COORDINATION_TYPE_FIELD_STATUS;
+        
+        if (this.PTS != null)
+        {
+            /* start transaction with creating a TS in persistent storage */
+            if (this.PTS.create_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+            {
+                /* append a valid control tuple */
+                if (this.PTS.append_ControlTuple(clt, ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                {
+                    /* SLEEP 1 - give a chance to TSC (TS Controller) to read and shuttle a control tuple */
+                    try 
+                    {    
+                        Thread.sleep(TransactionManager.AGENT_SLEEP_INTERVAL);   
+                    } catch (InterruptedException ex) 
+                    {
+                        Logger.getLogger(AgentTransactionManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+                        
+                        /* delete tuple space on exit */
+                        if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                        {    
+                            return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
+                        }
+                            
+                        return TransactionManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+                    }
+                
+                } else { /* if append operation failed */
+                            /* delete tuple space on exit */
+                            if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                            {    
+                                return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
+                            }
+                    
+                            return TransactionManager.INDICATE_APPEND_CONTROL_TUPLE_FAILED_STATUS; 
+                       } /* end of if append operation failed */   
+                           
+                /* now let us see if content tuple of replica is appended in response
+                and start assembling replica */
+                if (this.UTS.assemble_ObjectReplica(object_path, ts_location, clt.get_SourceID_Field()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
+                {                       
+                    /* now take our control tuple */
+                    request_pct = this.PTS.take_ControlTuple(ts_location);
+                    
+                    /* if take operation is successful */
+                    if (request_pct != null)
+                    {
+                        /* delete tuple space to complete transaction */
+                        if (this.PTS.delete_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                        {
+                            return TransactionManager.INDICATE_OPERATION_SUCCESS;
+                            
+                        }  else { return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS; } 
+                        
+                    } else { /* if take operation failed */
+                                /* delete tuple space on exit */
+                                if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                {    
+                                    return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
+                                }
+                        
+                                return TransactionManager.INDICATE_TAKE_CONTROL_TUPLE_FAILED_STATUS; 
+                           } /* end of if take operation failed */ 
+                    
+                } else { /* if assemble operation failed */                   
+                            /* now take our control tuple */
+                            request_pct = this.PTS.take_ControlTuple(ts_location);
+                    
+                            /* if take operation is successful */
+                            if (request_pct != null)
+                            {
+                                /* delete tuple space to complete transaction */
+                                if (this.PTS.delete_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                {
+                                    return TransactionManager.INDICATE_REPLICA_ASSEMBLY_FAILED_STATUS;
+                                    
+                                }  else { return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS; } 
+
+                            } else { /* if take operation failed */
+                                        /* delete tuple space on exit */
+                                        if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                        {    
+                                            return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
+                                        }
+
+                                        return TransactionManager.INDICATE_TAKE_CONTROL_TUPLE_FAILED_STATUS; 
+                                   } /* end of if take operation failed */                                              
+                            
+                       } /* end of if assemble operation failed */  
+            
+            } else { /* if create tuple space operation failed */               
+                        /* delete tuple space on exit */
+                        if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                        {    
+                            return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
+                        }
+                        
+                        return TransactionManager.INDICATE_CREATE_TUPLE_SPACE_FAILED_STATUS;             
+                   } /* end of if create tuple space operation failed */            
+        }       
+       
+        return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
             
 

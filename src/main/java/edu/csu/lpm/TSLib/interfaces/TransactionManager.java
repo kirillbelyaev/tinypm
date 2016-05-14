@@ -43,6 +43,7 @@ public interface TransactionManager
     public final int INDICATE_TAKE_CONTENT_TUPLE_FAILED_STATUS = -21;
     public final int INDICATE_CONTENT_TUPLE_NOT_PRESENT_STATUS = -22;
     
-    
+    public final int INDICATE_REPLICA_FRAGMENTATION_FAILED_STATUS = 100;
+    public final int INDICATE_REPLICA_ASSEMBLY_FAILED_STATUS = 101;
     
 }

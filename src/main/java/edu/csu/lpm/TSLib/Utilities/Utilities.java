@@ -829,8 +829,8 @@ public class Utilities
     from the TS Controller.
     replica is recreated by assembling all chunks in received content tuples    
     
-    object_path - absolute path to the location where replica of the requested. 
-    data object indicated in the control tuple request field should be written.
+    object_path - absolute path to the location where replica of the requested 
+    data object indicated in the control tuple request field should be assembled.
     ts_location - base directory where TS of the requester is located.
     id - ID of the requester.
     */
@@ -1003,8 +1003,8 @@ public class Utilities
     from the TS Controller.
     replica is recreated by assembling all chunks in received content tuples    
     
-    object_path - absolute path to the location where replica of the requested. 
-    data object indicated in the control tuple request field should be written.
+    object_path - absolute path to the location where replica of the requested 
+    data object indicated in the control tuple request field should be assembled.
     ts_location - base directory where TS of the requester is located.
     id - ID of the requester.
     */

@@ -17,6 +17,7 @@
 
 package edu.csu.lpm.TSLib.implementation;
 
+import edu.csu.lpm.TSLib.Utilities.Utilities;
 import edu.csu.lpm.TSLib.interfaces.ControllerTransactionManager;
 import edu.csu.lpm.TSLib.interfaces.TransactionManager;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
@@ -30,6 +31,7 @@ import java.util.logging.Logger;
 public class ControllerTransactionManager_implement implements ControllerTransactionManager
 {
     private PersistentTupleSpace_implement PTS = new PersistentTupleSpace_implement();
+    private Utilities UTS = new Utilities();
     
     /* by nature coordination is symmetric - both parties have to exchange control tuples.
     this method performs this in one direction - reading a control tuple from source TS
@@ -221,6 +223,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
 
     /* by nature collaboration is unidirectional since one party initiates 
     a request for a data object mediated through controller */
+    /* ts_location - location for the Tuple Space base directory of the requesting
+    component */
     @Override
     public int facilitate_PersistentCollaborativeTransaction(String ts_location) 
     {
@@ -236,7 +240,7 @@ public class ControllerTransactionManager_implement implements ControllerTransac
             /* start facilitation with reading a control tuple from TS 1 in persistent storage */
             if (this.PTS.count_ControlTuples(ts_location) == 1)
             {
-                /* read control tuple from TS 1 */
+                /* read control tuple from TS */
                 clt = this.PTS.read_ControlTuple(ts_location);
 
                 /* if reading control tuple from TS 1 is successful */
@@ -270,14 +274,14 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                            System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: count_ControlTuples():  destination TS is empty. \n");
                            */
                            
-                           /* append a control tuple to TS 2 */
-                            if (this.PTS.append_ContentTuple(cnt, this.get_TupleSpaceLocation(clt.get_SourceID_Field())) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                            /* start appending replica one content tuple at a time to TS */                          
+                            if (this.UTS.fragment_ObjectReplica(clt.get_RequestMessage_Field(), this.get_TupleSpaceLocation(clt.get_SourceID_Field()), clt.get_SourceID_Field()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
                             {
-                               return TransactionManager.INDICATE_OPERATION_SUCCESS; 
-                               
-                            } else { return TransactionManager.INDICATE_APPEND_CONTROL_TUPLE_FAILED_STATUS; }
-                            
-                       } else { return TransactionManager.INDICATE_APPEND_CONTROL_TUPLE_FAILED_STATUS; } 
+                                return TransactionManager.INDICATE_OPERATION_SUCCESS;
+                                
+                            } else { return TransactionManager.INDICATE_REPLICA_FRAGMENTATION_FAILED_STATUS; }  
+                           
+                       } else { return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS; } 
                        
                    } else { return TransactionManager.INDICATE_FIELDS_VALIDATION_FAILED_STATUS; } 
                    
