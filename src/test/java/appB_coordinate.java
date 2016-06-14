@@ -15,17 +15,19 @@
  * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-import edu.csu.lpm.TSLib.implementation.ControllerTransactionManager_implement;
+import edu.csu.lpm.TSLib.implementation.AgentTransactionManager_implement;
+import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
+import edu.csu.lpm.TSLib.interfaces.TransactionManager;
 
 /**
  *
  * @author kirill
  */
-public class controller implements Runnable
+public class appB_coordinate implements Runnable
 {
     private final String FIELD_APP_PATH_A = "/s/chopin/b/grad/kirill/containers/container-1/bin/applicationA";
     private final String FIELD_APP_PATH_B = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
-    
+     
     private final String BaseLocation = System.getProperty("user.home") + "/containers/";
     
     private final String FIELD_CoordinationMessage1 = "<wscoor:CoordinationContext>" +
@@ -68,39 +70,60 @@ public class controller implements Runnable
     @Override
     public void run() 
     {
-        this.controller();
+        this.appB();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void controller()
+    public void appB()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("controller started test of facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        //System.out.println("app B started test of perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("app B started test of coordination ");
         System.out.println("\n");
         
         int IntValue = -1;
-        ControllerTransactionManager_implement CTM = new ControllerTransactionManager_implement();
+        ControlTuple_implement CLT = new ControlTuple_implement();
+        AgentTransactionManager_implement ATM = new AgentTransactionManager_implement();
         
-        /* in reality obtained via TBD CPC persistent layer */
-        String AbsolutePathTSA = this.BaseLocation + "/container-1/";
-        String AbsolutePathTSB = this.BaseLocation + "/container-2/";
+        //String AbsolutePathA = this.BaseLocation + "/container-1/";
+        String AbsolutePathB = this.BaseLocation + "/container-2/";
         
-        System.out.println("controller TS A AbsolutePath is:" + AbsolutePathTSA);
-        System.out.println("controller TS B AbsolutePath is:" + AbsolutePathTSB);
+        System.out.println("app B TS AbsolutePath is:" + AbsolutePathB);
         
-        while (true) /* run forever */
-        {            
-            IntValue = CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(AbsolutePathTSA, AbsolutePathTSB);
-            System.out.println("controller executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
-            System.out.println("controller method return value is: " + IntValue);
-            System.out.println("\n");
+        IntValue = ATM.perform_PassivePersistentCoordinativeTransaction(AbsolutePathB);
+        System.out.println("app B executing perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("app B method return value is: " + IntValue);
+        System.out.println("\n");
+        
+        if (IntValue == TransactionManager.INDICATE_OPERATION_SUCCESS)
+        {
+            CLT = ATM.get_ReplyControlTuple();
+            
+            System.out.println("app B received control tuple with sourceID: " + CLT.get_SourceID_Field());
+            System.out.println("app B received control tuple with destinationID: " + CLT.get_DestinationID_Field());
+            System.out.println("app B received control tuple with type: " + CLT.get_Type_Field());
+            System.out.println("app B received control tuple with message: " + CLT.get_RequestMessage_Field());    
         }
         
-//        System.out.println("\n"); 
-//        System.out.println("--------------------------------------");
-//        System.out.println("controller finished test facilitate_PersistentCoordinativeTransaction() ");
-//        System.out.println("\n");
+        CLT.set_SourceID_Field(this.FIELD_APP_PATH_B);
+        CLT.set_DestinationID_Field(this.FIELD_APP_PATH_A);
+        CLT.set_Type_Field_to_Coordination();
+        CLT.set_RequestMessage_Field(this.FIELD_CoordinationMessage2);
+        System.out.println("app B setting ControlTuple fields ");
+        System.out.println("\n");
+        
+        IntValue = ATM.perform_ActivePersistentCoordinativeTransaction(CLT, AbsolutePathB);
+        System.out.println("app B executing perform_ActivePersistentCoordinativeTransaction() ");
+        System.out.println("app B method return value is: " + IntValue);
+        System.out.println("\n");
+        
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        //System.out.println("app B finished test of perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("app B finished test of coordination ");
+        System.out.println("\n");
     }
     
 }

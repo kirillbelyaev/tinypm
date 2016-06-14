@@ -28,21 +28,21 @@ import java.io.Serializable;
  */
 public class ContentTuple_implement implements ContentTuple, Serializable 
 {
-    private String ID = ""; 
+    private String DestinationID = ""; 
     private Integer SequenceNumber = -1;
     private StringBuffer Payload = null;
 
     @Override
-    public String get_ID_Field() 
+    public String get_DestinationID_Field() 
     {
-        return this.ID;
+        return this.DestinationID;
     }
 
     /*
         provides extra info with int return type: 0 for success; -1 for error
     */
     @Override
-    public int set_ID_Field(String id)
+    public int set_DestinationID_Field(String id)
     {
         if (id != null)
         {    
@@ -54,21 +54,21 @@ public class ContentTuple_implement implements ContentTuple, Serializable
                 a directory */
                 if (f.isFile())
                 {    
-                    this.ID = id;
+                    this.DestinationID = id;
                     f = null;
                     return Tuple.INDICATE_OPERATION_SUCCESS;
                 }    
                 else {    
-                        System.out.println("ContentTuple.set_ID(): app ID does not exist in the filesystem! ");
+                        System.out.println("ContentTuple.set_DestinationID(): app ID does not exist in the filesystem! ");
                         return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
                      }
             } else {
-                        System.out.println("ContentTuple.set_ID(): app ID is empty! ");  
+                        System.out.println("ContentTuple.set_DestinationID(): app ID is empty! ");  
                         return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;
                    }    
             
         } else {
-                    System.out.println("ContentTuple.set_ID(): app ID is null! ");  
+                    System.out.println("ContentTuple.set_DestinationID(): app ID is null! ");  
                     return Tuple.INDICATE_CONDITIONAL_EXIT_STATUS;     
                }      
     }  
@@ -120,13 +120,13 @@ public class ContentTuple_implement implements ContentTuple, Serializable
     /* introduce template matching methods inside a tuple */
     
     @Override
-    public boolean match_on_ID_Field(String id)
+    public boolean match_on_DestinationID_Field(String id)
     {
         if (id != null)
         {
             if (!id.isEmpty())
             {
-                if (this.ID.equals(id))
+                if (this.DestinationID.equals(id))
                     return true;
             }    
         }

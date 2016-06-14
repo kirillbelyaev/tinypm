@@ -23,7 +23,11 @@ package edu.csu.lpm.TSLib.interfaces;
  */
 public interface ContentTuple extends Tuple 
 {
-    String ID_Field = ""; /* application ID - in fact full path to its executable */
+    /* only destination ID field is used for collaboration
+    It is mediated through LPM without consent of the other endpoint in contrast to coordination.
+    Collaboration is unidirectional in nature - flow is from requester to TSC and back and does not involve
+    second service endpoint */
+    String DestinationID_Field = ""; /* Destination application ID - in fact full path to its executable */
     
     Integer SequenceNumber_Field = null; /* sequence number for the part of the 
     data object. Made Integer instead of an int to be able to hold info about
@@ -31,9 +35,9 @@ public interface ContentTuple extends Tuple
     
     StringBuffer Payload_Field = null; /* could incorporate data object chunks */
     
-    public String get_ID_Field();
+    public String get_DestinationID_Field();
     
-    public int set_ID_Field(String id);
+    public int set_DestinationID_Field(String id);
     
     public Integer get_SequenceNumber_Field();
     
@@ -44,7 +48,7 @@ public interface ContentTuple extends Tuple
     public int set_Payload_Field(StringBuffer payload);
     
     /* introduce template matching methods inside a tuple */
-    public boolean match_on_ID_Field(String id);
+    public boolean match_on_DestinationID_Field(String id);
     
     public boolean match_on_SequenceNumber_Field(Integer n);
     

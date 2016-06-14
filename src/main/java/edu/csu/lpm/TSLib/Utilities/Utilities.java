@@ -164,7 +164,7 @@ public class Utilities
                     Payload.append(buffer.asCharBuffer());
 
                     /* set the corresponding content tuple fields */
-                    if (this.CNT.set_ID_Field(id) != Tuple.INDICATE_OPERATION_SUCCESS)
+                    if (this.CNT.set_DestinationID_Field(id) != Tuple.INDICATE_OPERATION_SUCCESS)
                     {
                         sourceChannel.close();
                         sourceChannel = null;
@@ -442,7 +442,7 @@ public class Utilities
                     Payload.append(buffer.asCharBuffer());
 
                     /* set the corresponding content tuple fields */
-                    if (this.CNT.set_ID_Field(id) != Tuple.INDICATE_OPERATION_SUCCESS)
+                    if (this.CNT.set_DestinationID_Field(id) != Tuple.INDICATE_OPERATION_SUCCESS)
                     {
                         sourceChannel.close();
                         sourceChannel = null;
@@ -680,7 +680,7 @@ public class Utilities
                     Payload.append(buffer.asCharBuffer());
 
                     /* set the corresponding content tuple fields */
-                    if (this.CNT.set_ID_Field(id) != Tuple.INDICATE_OPERATION_SUCCESS)
+                    if (this.CNT.set_DestinationID_Field(id) != Tuple.INDICATE_OPERATION_SUCCESS)
                     {
                         sourceChannel.close();
                         sourceChannel = null;
@@ -917,7 +917,7 @@ public class Utilities
                 }
                 
                 /* if IDs do not match - terminate execution */
-                if (this.CNT.match_on_ID_Field(id) != true)
+                if (this.CNT.match_on_DestinationID_Field(id) != true)
                 {
                     outputChannel.close();
                     outputChannel = null;
@@ -1075,7 +1075,7 @@ public class Utilities
                 }
                 
                 /* if IDs do not match - terminate execution */
-                if (this.CNT.match_on_ID_Field(id) != true)
+                if (this.CNT.match_on_DestinationID_Field(id) != true)
                 {
                     outputChannel.close();
                     outputChannel = null;

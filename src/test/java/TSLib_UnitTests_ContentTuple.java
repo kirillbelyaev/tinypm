@@ -93,7 +93,7 @@ public class TSLib_UnitTests_ContentTuple {
         System.out.println("started test_ContentTuple_set_ID_Field() ");
         System.out.println("\n"); 
         
-        this.IntValue = this.CNT.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        this.IntValue = this.CNT.set_DestinationID_Field(this.FIELD_APP_PATH_VALID);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
@@ -108,22 +108,22 @@ public class TSLib_UnitTests_ContentTuple {
             return;
         }
         
-        this.IntValue = this.CNT.set_ID_Field(this.FIELD_APP_PATH_INVALID);
+        this.IntValue = this.CNT.set_DestinationID_Field(this.FIELD_APP_PATH_INVALID);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
         
-        this.IntValue = this.CNT.set_ID_Field(this.EmptyString);
+        this.IntValue = this.CNT.set_DestinationID_Field(this.EmptyString);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
         
-        this.IntValue = this.CNT.set_ID_Field(this.RootDir);
+        this.IntValue = this.CNT.set_DestinationID_Field(this.RootDir);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
         
-        this.IntValue = this.CNT.set_ID_Field(null);
+        this.IntValue = this.CNT.set_DestinationID_Field(null);
         System.out.println("executing set_ID_Field() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n"); 
@@ -144,7 +144,7 @@ public class TSLib_UnitTests_ContentTuple {
         System.out.println("started test_ContentTuple_get_ID_Field() ");
         System.out.println("\n"); 
         
-        this.StringValue = this.CNT.get_ID_Field();
+        this.StringValue = this.CNT.get_DestinationID_Field();
         assertNotNull(this.StringValue);
         System.out.println("executing get_ID_Field() ");
         System.out.println("ID field is: " + this.StringValue);
@@ -289,22 +289,22 @@ public class TSLib_UnitTests_ContentTuple {
         
         /* now test matching */
         
-        this.Result = this.CNT.match_on_ID_Field(this.FIELD_APP_PATH_VALID);
+        this.Result = this.CNT.match_on_DestinationID_Field(this.FIELD_APP_PATH_VALID);
         System.out.println("executing match_on_ID() ");
         System.out.println("result is: " + this.Result);
         System.out.println("\n"); 
         
-        this.Result = this.CNT.match_on_ID_Field(this.FIELD_APP_PATH_INVALID);
+        this.Result = this.CNT.match_on_DestinationID_Field(this.FIELD_APP_PATH_INVALID);
         System.out.println("executing match_on_ID() ");
         System.out.println("result is: " + this.Result);
         System.out.println("\n"); 
         
-        this.Result = this.CNT.match_on_ID_Field(null);
+        this.Result = this.CNT.match_on_DestinationID_Field(null);
         System.out.println("executing match_on_ID() ");
         System.out.println("result is: " + this.Result);
         System.out.println("\n"); 
         
-        this.Result = this.CNT.match_on_ID_Field(this.EmptyString);
+        this.Result = this.CNT.match_on_DestinationID_Field(this.EmptyString);
         System.out.println("executing match_on_ID() ");
         System.out.println("result is: " + this.Result);
         System.out.println("\n"); 

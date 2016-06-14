@@ -664,7 +664,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         
         this.Body.append(this.FIELD_Payload);
         
-        this.CNT.set_ID_Field(this.FIELD_APP_PATH_VALID);
+        this.CNT.set_DestinationID_Field(this.FIELD_APP_PATH_VALID);
         this.CNT.set_SequenceNumber_Field(this.SampleSequenceNumber);
         this.CNT.set_Payload_Field(this.Body);
         System.out.println("setting ContentTuple fields ");
@@ -754,7 +754,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing read_ContentTuple() ");
         if (this.CNT != null)
         {
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -778,7 +778,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing read_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -791,7 +791,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing read_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -804,7 +804,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing read_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -817,7 +817,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing read_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -830,7 +830,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing read_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -857,7 +857,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing take_ContentTuple() ");
         if (this.CNT != null)
         {
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -881,7 +881,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing take_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -894,7 +894,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing take_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -907,7 +907,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing take_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -920,7 +920,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing take_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
@@ -933,7 +933,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("executing take_ContentTuple() ");
         if (this.CNT != null)
         {    
-            System.out.println("tuple ID field is: " + this.CNT.get_ID_Field());
+            System.out.println("tuple ID field is: " + this.CNT.get_DestinationID_Field());
             System.out.println("tuple Sequence Number field is: " + this.CNT.get_SequenceNumber_Field());
             System.out.println("tuple Payload field is: " + this.CNT.get_Payload_Field());
         }    
