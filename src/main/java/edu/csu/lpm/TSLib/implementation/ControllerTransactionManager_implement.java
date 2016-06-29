@@ -237,6 +237,14 @@ public class ControllerTransactionManager_implement implements ControllerTransac
         
         if (this.PTS != null)
         {
+            /* SLEEP */
+            try 
+            {
+                Thread.sleep(TransactionManager.CONTROLLER_SLEEP_INTERVAL); /* 5 seconds */
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ControllerTransactionManager_implement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             /* start facilitation with reading a control tuple from TS 1 in persistent storage */
             if (this.PTS.count_ControlTuples(ts_location) == 1)
             {
@@ -274,7 +282,11 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                            System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: count_ControlTuples():  destination TS is empty. \n");
                            */
                            
-                            /* start appending replica one content tuple at a time to TS */                          
+                            /* start appending replica one content tuple at a time to TS */
+                            /* call fragment_ObjectReplica() from utilities package and provide it with:
+                            1 - object path obtained from control tuple appended by the requester
+                            2 - location of requester's TS
+                            3 - source ID of the requester obtained from the appended control tuple */
                             if (this.UTS.fragment_ObjectReplica(clt.get_RequestMessage_Field(), this.get_TupleSpaceLocation(clt.get_SourceID_Field()), clt.get_SourceID_Field()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
                             {
                                 return TransactionManager.INDICATE_OPERATION_SUCCESS;

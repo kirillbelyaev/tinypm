@@ -21,7 +21,7 @@ import edu.csu.lpm.TSLib.implementation.ControllerTransactionManager_implement;
  *
  * @author kirill
  */
-public class controller_coordinate implements Runnable
+public class controller_collaborate implements Runnable
 {
     private final String BaseLocation = System.getProperty("user.home") + "/containers/";
     
@@ -36,7 +36,7 @@ public class controller_coordinate implements Runnable
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("controller started test of facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+        System.out.println("controller started test of facilitate_PersistentCollaborativeTransaction() ");
         System.out.println("\n");
         
         int IntValue = -1;
@@ -44,15 +44,15 @@ public class controller_coordinate implements Runnable
         
         /* in reality obtained via TBD CPC persistent layer */
         String AbsolutePathTSA = this.BaseLocation + "/container-1/";
-        String AbsolutePathTSB = this.BaseLocation + "/container-2/";
+        //String AbsolutePathTSB = this.BaseLocation + "/container-2/";
         
         System.out.println("controller TS A AbsolutePath is:" + AbsolutePathTSA);
-        System.out.println("controller TS B AbsolutePath is:" + AbsolutePathTSB);
+        //System.out.println("controller TS B AbsolutePath is:" + AbsolutePathTSB);
         
         while (true) /* run forever */
         {            
-            IntValue = CTM.facilitate_BidirectionalPersistentCoordinativeTransaction(AbsolutePathTSA, AbsolutePathTSB);
-            System.out.println("controller executing facilitate_BidirectionalPersistentCoordinativeTransaction() ");
+            IntValue = CTM.facilitate_PersistentCollaborativeTransaction(AbsolutePathTSA);
+            System.out.println("controller executing facilitate_PersistentCollaborativeTransaction() ");
             System.out.println("controller method return value is: " + IntValue);
             System.out.println("\n");
         }

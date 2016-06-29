@@ -508,7 +508,7 @@ public class Utilities
                     {   
                         Payload = null;
                         
-                        /* emulate the replica assembly for now */
+                        /* emulate the replica assembly for now by the requester */
                         this.assemble_ObjectReplica(object_path+".replica", ts_location, id);
                         
                         StringBuffer EOF = new StringBuffer();
@@ -703,6 +703,20 @@ public class Utilities
                         return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                     
+                    /* SLEEP to allow the requester to consume the content tuple
+                    Note - we introduce the sleep interval for the controller
+                    but do not use it in the assemble_ObjectReplica() for the
+                    requester since we want to maximize the throughput for
+                    requester without introducing further delays in the 
+                    transactional flow */
+                    try 
+                    {
+                        Thread.sleep(TransactionManager.SHORT_SLEEP_INTERVAL); /* 5 milliseconds */
+                    } catch (InterruptedException ex) 
+                    {
+                        Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                     /* now attempt to append the assembled content tuple */
                     if (this.PTS.count_ContentTuples(ts_location) == 0)
                     {    
@@ -768,6 +782,20 @@ public class Utilities
                             return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
                         }    
 
+                        /* SLEEP to allow the requester to consume the content tuple
+                        Note - we introduce the sleep interval for the controller
+                        but do not use it in the assemble_ObjectReplica() for the
+                        requester since we want to maximize the throughput for
+                        requester without introducing further delays in the 
+                        transactional flow */
+                        try 
+                        {
+                            Thread.sleep(TransactionManager.SHORT_SLEEP_INTERVAL); /* 5 milliseconds */
+                        } catch (InterruptedException ex) 
+                        {
+                            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
                         /* now attempt to append the assembled content tuple */
                         if (this.PTS.count_ContentTuples(ts_location) == 0)
                         {    
@@ -882,7 +910,7 @@ public class Utilities
                     return TransactionManager.INDICATE_CONTENT_TUPLE_NOT_PRESENT_STATUS;
                 }
                 
-                /* if payload is empty or (BETTER!) sequence number = -1 - TS controller indicates the EOF */
+                /* if sequence number = -1 - TS controller indicates the EOF */
                 if (this.CNT.match_on_SequenceNumber_Field(-1))
                 {
                     
@@ -1052,7 +1080,7 @@ public class Utilities
                     return TransactionManager.INDICATE_CONTENT_TUPLE_NOT_PRESENT_STATUS;
                 }
                 
-                /* if payload is null or (BETTER!) sequence number = -1 - TS controller indicates the EOF */
+                /* if sequence number = -1 - TS controller indicates the EOF */
                 if (this.CNT.match_on_SequenceNumber_Field(-1))
                 {    
                     break; /* exit for loop*/
@@ -1074,7 +1102,7 @@ public class Utilities
                     return TransactionManager.INDICATE_FIELDS_VALIDATION_FAILED_STATUS;
                 }
                 
-                /* if IDs do not match - terminate execution */
+                /* if destination IDs do not match - terminate execution */
                 if (this.CNT.match_on_DestinationID_Field(id) != true)
                 {
                     outputChannel.close();

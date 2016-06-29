@@ -27,10 +27,10 @@ import org.junit.Test;
  *
  * @author kirill
  */
-public class TSLib_UnitTests_Coordination 
+public class TSLib_UnitTests_Collaboration 
 {
     
-    public TSLib_UnitTests_Coordination() {
+    public TSLib_UnitTests_Collaboration() {
     }
     
     @BeforeClass
@@ -50,40 +50,35 @@ public class TSLib_UnitTests_Coordination
     }
     
     @Test
-    public void test_Coordination()
+    public void test_Collaboration()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("started test_Coordination() ");
+        System.out.println("started test_Collaboration() ");
         System.out.println("\n"); 
         
-        Runnable a = new appA_coordinate();
+        Runnable a = new appA_collaborate();
         Thread appA = new Thread (a);
     
-        Runnable b = new appB_coordinate();
-        Thread appB = new Thread (b);
-        
-        Runnable c = new controller_coordinate();
+        Runnable c = new controller_collaborate();
         Thread controller = new Thread (c);
         
         controller.start();
         
         appA.start();
         
-        appB.start();
-        
         /* pause the main test thread until the working threads complete their work */
         try 
         {
-            Thread.sleep(30000); /* test for one minute or 30 seconds */
+            Thread.sleep(60000); /* test for one minute or 30 seconds */
         } catch (InterruptedException ex) 
         {
-            Logger.getLogger(TSLib_UnitTests_Coordination.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TSLib_UnitTests_Collaboration.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("finished test_Coordination() ");
+        System.out.println("finished test_Collaboration() ");
         System.out.println("\n");   
     }    
     

@@ -25,11 +25,13 @@ public interface TransactionManager
 {
     /* we use macros to indicate the general method exit codes within the tuple
     implementation */
+    public final int SHORT_SLEEP_INTERVAL = 5; /* 5 milliseconds */
     public final int AGENT_SLEEP_INTERVAL = 10000; /* should be longer */
     public final int CONTROLLER_SLEEP_INTERVAL = 5000; /* should be shorter to allow shuttling */
     public final int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
     public final int INDICATE_EXCEPTION_OCCURRENCE_STATUS = -2;
     public final int INDICATE_OPERATION_SUCCESS = 0;
+    public final int INDICATE_NOT_COLLABORATION_TYPE_FIELD_STATUS = -11;
     public final int INDICATE_NOT_COORDINATION_TYPE_FIELD_STATUS = -12;
     public final int INDICATE_FIELDS_VALIDATION_FAILED_STATUS = -13;
     public final int INDICATE_CREATE_TUPLE_SPACE_FAILED_STATUS = -14;

@@ -50,6 +50,7 @@ public class Utilities_UnitTests {
     private final String DataObject = System.getProperty("user.home") + "/waters/logs/secure.log";
     private final String ts_location = System.getProperty("user.home") + "/containers/";
     private final String FIELD_APP_PATH_A = "/s/chopin/b/grad/kirill/containers/container-1/bin/applicationA";
+    /* private final String FIELD_APP_PATH_A = ts_location + "/container-1/bin/applicationA"; */
     
     private final String InvalidLocation = "/non/existent/dir";
     private final String EmptyString = "";

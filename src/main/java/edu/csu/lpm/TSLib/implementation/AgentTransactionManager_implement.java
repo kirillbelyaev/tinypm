@@ -403,7 +403,7 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
         if (clt.get_SourceID_Field().isEmpty() && clt.get_DestinationID_Field().isEmpty()) return TransactionManager.INDICATE_FIELDS_VALIDATION_FAILED_STATUS;
         
         /* check if type field is set to collaboration */
-        if (!clt.match_on_Type_Field(Tuple.TupleTypes.COLLABORATION.toString())) return TransactionManager.INDICATE_NOT_COORDINATION_TYPE_FIELD_STATUS;
+        if (!clt.match_on_Type_Field(Tuple.TupleTypes.COLLABORATION.toString())) return TransactionManager.INDICATE_NOT_COLLABORATION_TYPE_FIELD_STATUS;
         
         if (this.PTS != null)
         {
@@ -413,7 +413,8 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                 /* append a valid control tuple */
                 if (this.PTS.append_ControlTuple(clt, ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                 {
-                    /* SLEEP 1 - give a chance to TSC (TS Controller) to read and shuttle a control tuple */
+                    /* SLEEP 1 - give a chance to TSC (TS Controller) to read
+                    a control tuple */
                     try 
                     {    
                         Thread.sleep(TransactionManager.AGENT_SLEEP_INTERVAL);   
@@ -440,59 +441,76 @@ public class AgentTransactionManager_implement implements AgentTransactionManage
                             return TransactionManager.INDICATE_APPEND_CONTROL_TUPLE_FAILED_STATUS; 
                        } /* end of if append operation failed */   
                            
-                /* now let us see if content tuple of replica is appended in response
-                and start assembling replica */
-                if (this.UTS.assemble_ObjectReplica(object_path, ts_location, clt.get_SourceID_Field()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
-                {                       
-                    /* now take our control tuple */
-                    request_pct = this.PTS.take_ControlTuple(ts_location);
-                    
-                    /* if take operation is successful */
-                    if (request_pct != null)
-                    {
-                        /* delete tuple space to complete transaction */
-                        if (this.PTS.delete_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                /* now let us see if content tuple of replica is appended in 
+                response and start assembling replica */
+                /* perform assemble_ObjectReplica() in a loop since every replica
+                chunk is obtained through a separate method invocation because 
+                of the time disparity between TS Controller and requester - 
+                content tuples are appended and taken without synchronization 
+                in the interaction between two separate processes/threads */
+                for (;;)
+                {
+                    /* if replica assembly is successful we can take the control
+                    tuple and delete our TS */
+                    if (this.UTS.assemble_ObjectReplica(object_path, ts_location, clt.get_SourceID_Field()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
+                    {                       
+                        /* now take our control tuple */
+                        request_pct = this.PTS.take_ControlTuple(ts_location);
+
+                        /* if take operation is successful */
+                        if (request_pct != null)
                         {
-                            return TransactionManager.INDICATE_OPERATION_SUCCESS;
-                            
-                        }  else { return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS; } 
-                        
-                    } else { /* if take operation failed */
-                                /* delete tuple space on exit */
-                                if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
-                                {    
-                                    return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
-                                }
-                        
-                                return TransactionManager.INDICATE_TAKE_CONTROL_TUPLE_FAILED_STATUS; 
-                           } /* end of if take operation failed */ 
-                    
-                } else { /* if assemble operation failed */                   
-                            /* now take our control tuple */
-                            request_pct = this.PTS.take_ControlTuple(ts_location);
-                    
-                            /* if take operation is successful */
-                            if (request_pct != null)
+                            /* delete tuple space to complete transaction */
+                            if (this.PTS.delete_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
                             {
-                                /* delete tuple space to complete transaction */
-                                if (this.PTS.delete_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
-                                {
-                                    return TransactionManager.INDICATE_REPLICA_ASSEMBLY_FAILED_STATUS;
-                                    
-                                }  else { return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS; } 
+                                return TransactionManager.INDICATE_OPERATION_SUCCESS;
 
-                            } else { /* if take operation failed */
-                                        /* delete tuple space on exit */
-                                        if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
-                                        {    
-                                            return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
-                                        }
+                            }  else { return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS; } 
 
-                                        return TransactionManager.INDICATE_TAKE_CONTROL_TUPLE_FAILED_STATUS; 
-                                   } /* end of if take operation failed */                                              
-                            
-                       } /* end of if assemble operation failed */  
-            
+                        } else { /* if take operation failed */
+                                    /* delete tuple space on exit */
+                                    if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+                                    {    
+                                        return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
+                                    }
+
+                                    return TransactionManager.INDICATE_TAKE_CONTROL_TUPLE_FAILED_STATUS; 
+                               } /* end of if take operation failed */ 
+
+                    } else { /* if assemble operation failed */                   
+                                /* now take our control tuple */
+    //                            request_pct = this.PTS.take_ControlTuple(ts_location);
+    //                    
+    //                            /* if take operation is successful */
+    //                            if (request_pct != null)
+    //                            {
+    //                                /* delete tuple space to complete transaction */
+    //                                if (this.PTS.delete_TupleSpace(ts_location) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+    //                                {
+    //                                    return TransactionManager.INDICATE_REPLICA_ASSEMBLY_FAILED_STATUS;
+    //                                    
+    //                                }  else { return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS; } 
+    //
+    //                            } else { /* if take operation failed */
+    //                                        /* delete tuple space on exit */
+    //                                        if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
+    //                                        {    
+    //                                            return TransactionManager.INDICATE_DELETE_TUPLE_SPACE_FAILED_STATUS;
+    //                                        }
+    //
+    //                                        return TransactionManager.INDICATE_TAKE_CONTROL_TUPLE_FAILED_STATUS; 
+    //                                   } /* end of if take operation failed */                                              
+    //
+    
+                               ; /* we have to continue inside the for loop until
+                               all content tuples are received - essentially until 
+                               assemble_ObjectReplica() is successful. Only
+                               after that we will retract the control tuple and
+                               delete our TS to finish transaction */                                   
+                           
+                           } /* end of if assemble operation failed */  
+                } /* end of for loop */
+                
             } else { /* if create tuple space operation failed */               
                         /* delete tuple space on exit */
                         if (this.PTS.delete_TupleSpace(ts_location) != PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
