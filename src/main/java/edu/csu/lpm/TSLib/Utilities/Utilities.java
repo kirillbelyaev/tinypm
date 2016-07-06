@@ -68,10 +68,12 @@ public class Utilities
     ts_location - base directory where TS of the requester is located.
     id - ID of the requester
     */
-    public int create_ObjectReplicaWithDebug(String object_path, String ts_location, String id)
+    public int create_ObjectReplicaWithDebug(String object_path_in, String object_path_out, String ts_location, String id)
     {
-        if (object_path == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
-        if (object_path.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (object_path_in == null || object_path_out == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (object_path_in.isEmpty() || object_path_out.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        /* make sure source and destination are not the same */
+        if (object_path_in.compareTo(object_path_out) == 0 ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         final int chunkSize = 1024 * 1024; /* 1 MB */
         final int bufferSize = 1024 * 1024; /* 1 MB */
@@ -80,7 +82,7 @@ public class Utilities
         
         try 
         {
-            sourceChannel = new FileInputStream(object_path).getChannel();
+            sourceChannel = new FileInputStream(object_path_in).getChannel();
         } catch (FileNotFoundException ex) 
         {
             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
@@ -251,7 +253,7 @@ public class Utilities
                         
                         /* emulate the replica assembly for now */
                         System.out.println("\n");
-                        System.out.println("assemble_ObjectReplica return value is: " + this.assemble_ObjectReplicaWithDebug(object_path+".replica", ts_location, id));
+                        System.out.println("assemble_ObjectReplica return value is: " + this.assemble_ObjectReplicaWithDebug(object_path_out, ts_location, id));
      
                         StringBuffer EOF = new StringBuffer();
                         
@@ -306,7 +308,7 @@ public class Utilities
                         
                         /* take the EOF content tuple as well */
                         System.out.println("\n");
-                        System.out.println("assemble_ObjectReplica return value is: " + this.assemble_ObjectReplicaWithDebug(object_path+".replica", ts_location, id));
+                        System.out.println("assemble_ObjectReplica return value is: " + this.assemble_ObjectReplicaWithDebug(object_path_out, ts_location, id));
      
                         break;
                         
@@ -323,7 +325,7 @@ public class Utilities
                       
                       /* emulate the replica assembly for now by the requester */
                       System.out.println("\n");
-                      System.out.println("assemble_ObjectReplica return value is: " + this.assemble_ObjectReplicaWithDebug(object_path+".replica", ts_location, id));
+                      System.out.println("assemble_ObjectReplica return value is: " + this.assemble_ObjectReplicaWithDebug(object_path_out, ts_location, id));
                       
                       //return 100; /* test: terminate execution to get the 1st chunk and compare */
                     }
@@ -372,10 +374,12 @@ public class Utilities
     ts_location - base directory where TS of the requester is located.
     id - ID of the requester
     */
-    public int create_ObjectReplica(String object_path, String ts_location, String id)
+    public int create_ObjectReplica(String object_path_in, String object_path_out, String ts_location, String id)
     {
-        if (object_path == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
-        if (object_path.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (object_path_in == null || object_path_out == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (object_path_in.isEmpty() || object_path_out.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        /* make sure source and destination are not the same */
+        if (object_path_in.compareTo(object_path_out) == 0 ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         final int chunkSize = 1024 * 1024; /* 1 MB */
         final int bufferSize = 1024 * 1024; /* 1 MB */
@@ -384,7 +388,7 @@ public class Utilities
         
         try 
         {
-            sourceChannel = new FileInputStream(object_path).getChannel();
+            sourceChannel = new FileInputStream(object_path_in).getChannel();
         } catch (FileNotFoundException ex) 
         {
             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
@@ -509,7 +513,7 @@ public class Utilities
                         Payload = null;
                         
                         /* emulate the replica assembly for now by the requester */
-                        this.assemble_ObjectReplica(object_path+".replica", ts_location, id);
+                        this.assemble_ObjectReplica(object_path_out, ts_location, id);
                         
                         StringBuffer EOF = new StringBuffer();
                         
@@ -553,7 +557,7 @@ public class Utilities
                         EOF = null;
                         
                         /* take the EOF content tuple as well */
-                        this.assemble_ObjectReplica(object_path+".replica", ts_location, id);
+                        this.assemble_ObjectReplica(object_path_out, ts_location, id);
      
                         break;
                         
@@ -564,7 +568,7 @@ public class Utilities
                       Payload = null;
                       
                       /* emulate the replica assembly for now by the requester */ 
-                      this.assemble_ObjectReplica(object_path+".replica", ts_location, id);
+                      this.assemble_ObjectReplica(object_path_out, ts_location, id);
                     }
                 
                 } /* end of while loop */

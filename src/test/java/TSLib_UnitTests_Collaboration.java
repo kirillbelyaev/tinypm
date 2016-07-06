@@ -63,6 +63,12 @@ public class TSLib_UnitTests_Collaboration
         Runnable c = new controller_collaborate();
         Thread controller = new Thread (c);
         
+        /* add benchmark info */
+        Runtime runtime = Runtime.getRuntime();
+        final long MEGABYTE = 1024L * 1024L;
+        long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_collaboration(): Used VM Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
+        
         controller.start();
         
         appA.start();
@@ -70,11 +76,18 @@ public class TSLib_UnitTests_Collaboration
         /* pause the main test thread until the working threads complete their work */
         try 
         {
-            Thread.sleep(60000); /* test for one minute or 30 seconds */
+            //Thread.sleep(90000); /* test for one minute or 30 seconds */
+            /* add additional sleep periods for larger objects */
+            Thread.sleep(90000*4); 
         } catch (InterruptedException ex) 
         {
             Logger.getLogger(TSLib_UnitTests_Collaboration.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_collaboration(): Used VM Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
+        System.out.println("test_collaboration(): VM Memory usage (MB) increased at: " + (usedMemoryAfter-usedMemoryBefore) / MEGABYTE);
+        
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");

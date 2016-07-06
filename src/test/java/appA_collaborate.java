@@ -24,19 +24,25 @@ import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
  */
 public class appA_collaborate implements Runnable
 {
-    private final String BaseLocation = System.getProperty("user.home") + "/containers/";
+    //private final String BaseLocation = System.getProperty("user.home") + "/containers/";
+    private final String BaseLocation = "/s/missouri/a/nobackup/kirill/containers";
     
     /* need absolute path without variable substitution with // */
+    /*
     private final String FIELD_APP_PATH_A = "/s/chopin/b/grad/kirill/containers/container-1/bin/applicationA";
     private final String FIELD_APP_PATH_B = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
+    */
+    
+    private final String FIELD_APP_PATH_A = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
+    private final String FIELD_APP_PATH_B = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";
     
     /*
     private final String FIELD_APP_PATH_A = BaseLocation + "/container-1/bin/applicationA";
     private final String FIELD_APP_PATH_B = BaseLocation + "/container-2/bin/applicationB";
     */
 
-    private final String FIELD_CollaborationMessage = System.getProperty("user.home") + "/waters/logs/secure.log";
-    
+    //private final String FIELD_CollaborationMessage = System.getProperty("user.home") + "/waters/logs/secure.log";
+    private final String FIELD_CollaborationMessage = "/s/missouri/a/nobackup/kirill/logs/secure.log";
 
     @Override
     public void run() 
@@ -60,9 +66,10 @@ public class appA_collaborate implements Runnable
         String AbsolutePathTSA = this.BaseLocation + "/container-1/";
         //String AbsolutePathB = this.BaseLocation + "/container-2/";
         
-        String ReplicationLocation = System.getProperty("user.home") + "/waters/logs/secure.log.replica";
+        //String ReplicationLocation = System.getProperty("user.home") + "/waters/logs/secure.log.replica";
+        String ReplicationLocation = "/s/missouri/a/nobackup/kirill/logs/secure.log.replica";
         
-        System.out.println("app A TS AbsolutePath is:" + AbsolutePathTSA);
+        System.out.println("APP A: app A TS AbsolutePath is:" + AbsolutePathTSA);
         
         CLT.set_SourceID_Field(this.FIELD_APP_PATH_A);
         CLT.set_DestinationID_Field(this.FIELD_APP_PATH_B);
@@ -71,11 +78,26 @@ public class appA_collaborate implements Runnable
         System.out.println("app A setting ControlTuple fields ");
         System.out.println("\n");
         
+        /* add benchmark info */
+        Runtime runtime = Runtime.getRuntime();
+        final long MEGABYTE = 1024L * 1024L;
+        long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("APP A: VM Used Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
+        
+        long startTime = System.currentTimeMillis();
+        
         IntValue = ATM.perform_PersistentCollaborativeTransaction(CLT, AbsolutePathTSA, ReplicationLocation);
         System.out.println("app A executing perform_PersistentCollaborativeTransaction() ");
         System.out.println("app A method return value is: " + IntValue);
         System.out.println("\n");
         
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+        System.out.println("APP A: replication took in seconds: " +  elapsedTime / 1000.0 );
+        
+        long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("APP A: VM Used Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
+        System.out.println("APP A: VM Memory usage (MB) increased at: " + (usedMemoryAfter-usedMemoryBefore) / MEGABYTE);
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");

@@ -23,7 +23,8 @@ import edu.csu.lpm.TSLib.implementation.ControllerTransactionManager_implement;
  */
 public class controller_collaborate implements Runnable
 {
-    private final String BaseLocation = System.getProperty("user.home") + "/containers/";
+    //private final String BaseLocation = System.getProperty("user.home") + "/containers/";
+    private final String BaseLocation = "/s/missouri/a/nobackup/kirill/containers";
     
     @Override
     public void run() 

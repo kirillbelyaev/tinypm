@@ -47,9 +47,10 @@ public class Utilities_UnitTests {
     public void tearDown() {
     }
 
-    private final String DataObject = System.getProperty("user.home") + "/waters/logs/secure.log";
-    private final String ts_location = System.getProperty("user.home") + "/containers/";
-    private final String FIELD_APP_PATH_A = "/s/chopin/b/grad/kirill/containers/container-1/bin/applicationA";
+    private final String DataObjectPath = "/s/missouri/a/nobackup/kirill/logs/secure.log";
+    private final String DataObjectReplicaPath = "/s/missouri/a/nobackup/kirill/logs/secure.log.replica";
+    private final String ts_location = "/s/missouri/a/nobackup/kirill/containers/";
+    private final String FIELD_APP_PATH_A = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
     /* private final String FIELD_APP_PATH_A = ts_location + "/container-1/bin/applicationA"; */
     
     private final String InvalidLocation = "/non/existent/dir";
@@ -59,10 +60,8 @@ public class Utilities_UnitTests {
     private int IntValue = -1;
     private boolean TerminateNow = false;
     
-    
     private Utilities ut = new Utilities ();
-    
-    
+        
     @Test
     public void test_create_ObjectReplica() 
     {
@@ -71,7 +70,7 @@ public class Utilities_UnitTests {
         System.out.println("started test_create_ObjectReplica() ");
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplica(this.DataObject, this.ts_location, this.FIELD_APP_PATH_A);
+        this.IntValue = this.ut.create_ObjectReplica(this.DataObjectPath, this.DataObjectReplicaPath, this.ts_location, this.FIELD_APP_PATH_A);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
@@ -86,22 +85,22 @@ public class Utilities_UnitTests {
             return;
         }
         
-        this.IntValue = this.ut.create_ObjectReplica(null, null, null);
+        this.IntValue = this.ut.create_ObjectReplica(null, null, null, null);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplica(this.InvalidLocation, this.EmptyString, this.EmptyString);
+        this.IntValue = this.ut.create_ObjectReplica(this.InvalidLocation, this.InvalidLocation, this.EmptyString, this.EmptyString);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplica(this.InvalidLocation, this.RootDir, this.EmptyString);
+        this.IntValue = this.ut.create_ObjectReplica(this.InvalidLocation, this.InvalidLocation, this.RootDir, this.EmptyString);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplica(this.DataObject, this.RootDir, this.FIELD_APP_PATH_A);
+        this.IntValue = this.ut.create_ObjectReplica(this.DataObjectPath, this.DataObjectReplicaPath, this.RootDir, this.FIELD_APP_PATH_A);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
@@ -122,7 +121,7 @@ public class Utilities_UnitTests {
         System.out.println("started test_create_ObjectReplica() ");
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObject, this.ts_location, this.FIELD_APP_PATH_A);
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObjectPath, this.DataObjectReplicaPath, this.ts_location, this.FIELD_APP_PATH_A);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
@@ -137,22 +136,22 @@ public class Utilities_UnitTests {
             return;
         }
         
-        this.IntValue = this.ut.create_ObjectReplicaWithDebug(null, null, null);
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(null, null, null, null);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.InvalidLocation, this.EmptyString, this.EmptyString);
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.InvalidLocation, this.InvalidLocation, this.EmptyString, this.EmptyString);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.InvalidLocation, this.RootDir, this.EmptyString);
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.InvalidLocation, this.InvalidLocation, this.RootDir, this.EmptyString);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObject, this.RootDir, this.FIELD_APP_PATH_A);
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObjectPath, this.DataObjectReplicaPath, this.RootDir, this.FIELD_APP_PATH_A);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
@@ -166,7 +165,7 @@ public class Utilities_UnitTests {
     
     
     @Test
-    public void test_Utilities()
+    public void test_replication()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -178,7 +177,23 @@ public class Utilities_UnitTests {
         
         ut.setDebug(true);
         
+        /* add benchmark info */
+        Runtime runtime = Runtime.getRuntime();
+        final long MEGABYTE = 1024L * 1024L;
+        long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_create_ObjectReplica: Used VM Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
+        
+        long startTime = System.currentTimeMillis();
+        
         this.test_create_ObjectReplica();
+        
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+        System.out.println("test_create_ObjectReplica: replication took in seconds: " +  elapsedTime / 1000.0 );
+        
+        long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_create_ObjectReplica: Used VM Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
+        System.out.println("test_create_ObjectReplica: VM Memory usage (MB) increased at: " + (usedMemoryAfter - usedMemoryBefore) / MEGABYTE);
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -187,7 +202,7 @@ public class Utilities_UnitTests {
     }
     
     @Test
-    public void test_UtilitiesWithDebug()
+    public void test_replicationWithDebug()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
