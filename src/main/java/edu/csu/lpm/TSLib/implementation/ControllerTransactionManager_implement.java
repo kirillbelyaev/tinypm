@@ -136,8 +136,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     the TBD CPC layer - check if such an access control policy exists */
     private boolean validate_Coordination(String sid, String did)
     {
-        String id1 = "/s/chopin/b/grad/kirill/containers/container-1/bin/applicationA";
-        String id2 = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
+        String id1 = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
+        String id2 = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";
         
         if (sid != null && did != null)
         {

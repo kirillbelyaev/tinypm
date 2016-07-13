@@ -57,13 +57,13 @@ public class TSLib_UnitTests_Coordination
         System.out.println("started test_Coordination() ");
         System.out.println("\n"); 
         
-        Runnable a = new appA_coordinate();
+        Runnable a = new ComponentA_coordinate();
         Thread appA = new Thread (a);
     
-        Runnable b = new appB_coordinate();
+        Runnable b = new ComponentB_coordinate();
         Thread appB = new Thread (b);
         
-        Runnable c = new controller_coordinate();
+        Runnable c = new Controller_coordinate();
         Thread controller = new Thread (c);
         
         controller.start();

@@ -15,6 +15,7 @@
  * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
+import edu.csu.lpm.TSLib.factory.TSL_Factory;
 import edu.csu.lpm.TSLib.implementation.AgentTransactionManager_implement;
 import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
 import edu.csu.lpm.TSLib.interfaces.TransactionManager;
@@ -23,12 +24,20 @@ import edu.csu.lpm.TSLib.interfaces.TransactionManager;
  *
  * @author kirill
  */
-public class appA_coordinate implements Runnable
+public class ComponentA_coordinate implements Runnable
 {
+    /*
     private final String FIELD_APP_PATH_A = "/s/chopin/b/grad/kirill/containers/container-1/bin/applicationA";
     private final String FIELD_APP_PATH_B = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
+    */
     
+    private final String FIELD_APP_PATH_A = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
+    private final String FIELD_APP_PATH_B = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";
+    
+    /*
     private final String BaseLocation = System.getProperty("user.home") + "/containers/";
+    */
+    private final String BaseLocation = "/s/missouri/a/nobackup/kirill/containers";
     
     private final String FIELD_CoordinationMessage1 = "<wscoor:CoordinationContext>" +
     "<wsu:Expires>2012-04-22T00:00:00.0000000-07:00</wsu:Expires>\n" +
@@ -83,8 +92,15 @@ public class appA_coordinate implements Runnable
         System.out.println("\n");
         
         int IntValue = -1;
+        TSL_Factory tf = new TSL_Factory();
+        /*
         ControlTuple_implement CLT = new ControlTuple_implement();
+        */
+        ControlTuple_implement CLT = tf.obtain_ControlTuple();
+        /*
         AgentTransactionManager_implement ATM = new AgentTransactionManager_implement();
+        */
+        AgentTransactionManager_implement ATM = tf.obtain_AgentTransactionManager();
         
         String AbsolutePathA = this.BaseLocation + "/container-1/";
         //String AbsolutePathB = this.BaseLocation + "/container-2/";

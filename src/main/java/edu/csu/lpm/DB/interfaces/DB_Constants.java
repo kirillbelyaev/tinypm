@@ -23,8 +23,8 @@ public interface DB_Constants
 	final String BASEDIR = "/var/tmp/";
 	
 	final String SQLITE_DRV = "org.sqlite.JDBC";
-	final String DB_URI = "jdbc:sqlite:tinypm.db";
-        final String DB_NAME = "tinypm.db";
+	final String DB_URI = "jdbc:sqlite:lpm.db";
+        final String DB_NAME = "lpm.db";
 	
 	final String charSet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
         
@@ -86,8 +86,7 @@ public interface DB_Constants
         final String UPDATE_PCS_DB_ON_PCID_AND_CAPS_SQL = "update " + PolicyClassesTable.PCS_DB_TABLE_NAME + " set " + PolicyClassesTable.COLUMN_POLICY_CLASS_POLICIES + " = ? "  + "where " + PolicyClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
         
         final String UPDATE_PCS_DB_ON_PCID_SQL = "update " + PolicyClassesTable.PCS_DB_TABLE_NAME + " set " + PolicyClassesTable.COLUMN_POLICY_CLASS_NAME + " = ? "  + "where " + PolicyClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
-        
-        
+                
         final String DELETE_FROM_PCS_DB_ON_PCID_SQL = "delete from " + PolicyClassesTable.PCS_DB_TABLE_NAME + " where " + PolicyClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
 
         

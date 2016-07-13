@@ -57,10 +57,10 @@ public class TSLib_UnitTests_Collaboration
         System.out.println("started test_Collaboration() ");
         System.out.println("\n"); 
         
-        Runnable a = new appA_collaborate();
+        Runnable a = new ComponentA_collaborate();
         Thread appA = new Thread (a);
     
-        Runnable c = new controller_collaborate();
+        Runnable c = new Controller_collaborate();
         Thread controller = new Thread (c);
         
         /* add benchmark info */
@@ -78,7 +78,7 @@ public class TSLib_UnitTests_Collaboration
         {
             //Thread.sleep(90000); /* test for one minute or 30 seconds */
             /* add additional sleep periods for larger objects */
-            Thread.sleep(90000*4); 
+            Thread.sleep(90000*8); 
         } catch (InterruptedException ex) 
         {
             Logger.getLogger(TSLib_UnitTests_Collaboration.class.getName()).log(Level.SEVERE, null, ex);
