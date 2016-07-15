@@ -13,16 +13,16 @@ communication between processes is usually done resorting to remote interfaces.
 
 package edu.csu.lpm.DB.DTO;
 
-import edu.csu.lpm.DB.interfaces.PolicyClassesTable;
 import edu.csu.lpm.interfaces.LinuxCapabilitiesPolicyContainer;
 import java.io.Serializable;
+import edu.csu.lpm.DB.interfaces.CapabilitiesClassesTable;
 
 /**
  *
  * @author kirill
  */
 
-public class PolicyClassesTableRecord implements Record, Serializable
+public class CapabilitiesClassesTableRecord implements Record, Serializable
 {
     private String COLUMN_POLICY_CLASS_ID = ""; /* primary key */
     
@@ -38,7 +38,7 @@ public class PolicyClassesTableRecord implements Record, Serializable
     private String UPDATE_COLUMN = "";
     
     
-public PolicyClassesTableRecord()
+public CapabilitiesClassesTableRecord()
 	{
             
 	}
@@ -49,20 +49,20 @@ public PolicyClassesTableRecord()
     }
     
     public void set_UPDATE_COLUMN_to_POLICY_CLASS_ID() {
-        this.UPDATE_COLUMN = PolicyClassesTable.COLUMN_POLICY_CLASS_ID;
+        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID;
     }
     
     public void set_UPDATE_COLUMN_to_POLICY_CLASS_NAME() {
-        this.UPDATE_COLUMN = PolicyClassesTable.COLUMN_POLICY_CLASS_NAME;
+        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME;
     }
     
     public void set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES() {
-        this.UPDATE_COLUMN = PolicyClassesTable.COLUMN_POLICY_CLASS_POLICIES;
+        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES;
     }
 
 
     public void set_UPDATE_COLUMN_to_STATUS() {
-        this.UPDATE_COLUMN = PolicyClassesTable.COLUMN_STATUS;
+        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_STATUS;
     }
     
     public String get_COLUMN_POLICY_CLASS_NAME() {
@@ -260,13 +260,13 @@ public PolicyClassesTableRecord()
     
     public String produce_PCS_DB_DDL()
     {
-        String Columns = "( " + PolicyClassesTable.COLUMN_POLICY_CLASS_ID + ", " + PolicyClassesTable.COLUMN_POLICY_CLASS_NAME + ", " + PolicyClassesTable.COLUMN_STATUS + ", ";
+        String Columns = "( " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + ", " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME + ", " + CapabilitiesClassesTable.COLUMN_STATUS + ", ";
         
-        for (int i = 0; i < PolicyClassesTable.LCS.length; i++)
-            if (i != PolicyClassesTable.LCS.length - 1)
-                Columns = Columns.concat(PolicyClassesTable.LCS[i].toString() + ", ");
+        for (int i = 0; i < CapabilitiesClassesTable.LCS.length; i++)
+            if (i != CapabilitiesClassesTable.LCS.length - 1)
+                Columns = Columns.concat(CapabilitiesClassesTable.LCS[i].toString() + ", ");
             else 
-                Columns = Columns.concat(PolicyClassesTable.LCS[i].toString() + " ) ");  
+                Columns = Columns.concat(CapabilitiesClassesTable.LCS[i].toString() + " ) ");  
         
         return Columns;
     }     

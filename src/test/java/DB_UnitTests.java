@@ -16,7 +16,7 @@
 */
 
 import edu.csu.lpm.DB.DTO.AppsTableRecord;
-import edu.csu.lpm.DB.DTO.PolicyClassesTableRecord;
+import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.DB_Dispatcher;
 import edu.csu.lpm.DB.implementation.RecordDAO_implement;
@@ -324,7 +324,7 @@ public class DB_UnitTests {
         boolean boolValue = false;
         
         String value = null;
-        PolicyClassesTableRecord r = new PolicyClassesTableRecord();
+        CapabilitiesClassesTableRecord r = new CapabilitiesClassesTableRecord();
         
         r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
         r.set_COLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
@@ -509,7 +509,7 @@ public class DB_UnitTests {
         int output = -1;
         boolean Out;
         
-        PolicyClassesTableRecord r = new PolicyClassesTableRecord();
+        CapabilitiesClassesTableRecord r = new CapabilitiesClassesTableRecord();
         DB_Dispatcher dd = new DB_Dispatcher();
         RecordDAO_implement db = null;
 
@@ -541,7 +541,7 @@ public class DB_UnitTests {
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
         
-        PolicyClassesTableRecord[] recs = (PolicyClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
+        CapabilitiesClassesTableRecord[] recs = (CapabilitiesClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
         assertTrue("read_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	System.out.println("read_Policy_Classes_Table_Records_On_PCID: array value is: " + recs);
         
@@ -555,7 +555,7 @@ public class DB_UnitTests {
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
-        recs = (PolicyClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
+        recs = (CapabilitiesClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
         assertTrue("read_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
@@ -567,7 +567,7 @@ public class DB_UnitTests {
         }
         
         
-        recs = (PolicyClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_All_Classes();
+        recs = (CapabilitiesClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_All_Classes();
         assertTrue("read_Policy_Classes_Table_Records_On_All_Classes: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)

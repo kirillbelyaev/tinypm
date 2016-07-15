@@ -31,7 +31,7 @@ import edu.csu.lpm.interfaces.LinuxCapabilitiesPolicyContainer;
  *
  * @author kirill
  */
-public interface PolicyClassesTable extends Record
+public interface CapabilitiesClassesTable extends Record
 {
     final String PCS_DB_TABLE_NAME = "pcs_db";
     final String PCS_DB_NAME = "pcs.db";

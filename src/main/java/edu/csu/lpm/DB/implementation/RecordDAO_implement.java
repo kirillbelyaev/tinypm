@@ -16,17 +16,17 @@ package edu.csu.lpm.DB.implementation;
 
 import edu.csu.lpm.DB.DAO.RecordDAO;
 import edu.csu.lpm.DB.DTO.AppsTableRecord;
-import edu.csu.lpm.DB.DTO.PolicyClassesTableRecord;
+import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.interfaces.AppsTable;
 import edu.csu.lpm.DB.interfaces.DB_Constants;
-import edu.csu.lpm.DB.interfaces.PolicyClassesTable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import edu.csu.lpm.DB.interfaces.CapabilitiesClassesTable;
 
 /**
  *
@@ -104,11 +104,11 @@ public class RecordDAO_implement implements RecordDAO
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            PolicyClassesTableRecord pcr = null;
+            CapabilitiesClassesTableRecord pcr = null;
 
             try
             {
-                pcr = new PolicyClassesTableRecord();
+                pcr = new CapabilitiesClassesTableRecord();
                 
                 pcr.set_COLUMN_POLICY_CLASS_ID(r.get_COLUMN_POLICY_CLASS_ID());
                 
@@ -581,7 +581,7 @@ public class RecordDAO_implement implements RecordDAO
     
        
     @Override
-    public PolicyClassesTableRecord[] read_Policy_Classes_Table_Records_On_PCID(PolicyClassesTableRecord r) throws RecordDAO_Exception       
+    public CapabilitiesClassesTableRecord[] read_Policy_Classes_Table_Records_On_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception       
     {
             if (r == null) return null;
             if (this.conn == null) return null;
@@ -589,7 +589,7 @@ public class RecordDAO_implement implements RecordDAO
             PreparedStatement ps = null;
             ResultSet rs = null;
 
-            ArrayList <PolicyClassesTableRecord> rows = new ArrayList<PolicyClassesTableRecord>();
+            ArrayList <CapabilitiesClassesTableRecord> rows = new ArrayList<CapabilitiesClassesTableRecord>();
 
             try 
             {
@@ -607,15 +607,15 @@ public class RecordDAO_implement implements RecordDAO
 
                     while (rs.next()) 
                     {
-                            if (PolicyClassesTable.PCS_DB_TABLE_NAME.equals(PolicyClassesTable.PCS_DB_TABLE_NAME))
+                            if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                             {
-                                    PolicyClassesTableRecord rec = new PolicyClassesTableRecord();
+                                    CapabilitiesClassesTableRecord rec = new CapabilitiesClassesTableRecord();
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(PolicyClassesTable.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID));
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_NAME(rs.getString(PolicyClassesTable.COLUMN_POLICY_CLASS_NAME));
+                                    rec.set_COLUMN_POLICY_CLASS_NAME(rs.getString(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME));
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_POLICIES(rs.getString(PolicyClassesTable.COLUMN_POLICY_CLASS_POLICIES));
+                                    rec.set_COLUMN_POLICY_CLASS_POLICIES(rs.getString(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES));
                                     
                                     rec.set_COLUMN_STATUS(rs.getString(AppsTable.COLUMN_STATUS));
 
@@ -631,21 +631,21 @@ public class RecordDAO_implement implements RecordDAO
 
                     if (rows.isEmpty()) return null;
 
-                    PolicyClassesTableRecord [] array = new PolicyClassesTableRecord [ rows.size() ];
+                    CapabilitiesClassesTableRecord [] array = new CapabilitiesClassesTableRecord [ rows.size() ];
                     rows.toArray(array);
                     return array;
     }
     
     
     @Override
-    public PolicyClassesTableRecord[] read_Policy_Classes_Table_Records_On_All_Classes() throws RecordDAO_Exception       
+    public CapabilitiesClassesTableRecord[] read_Policy_Classes_Table_Records_On_All_Classes() throws RecordDAO_Exception       
     {
             if (this.conn == null) return null;
 
             PreparedStatement ps = null;
             ResultSet rs = null;
 
-            ArrayList <PolicyClassesTableRecord> rows = new ArrayList<PolicyClassesTableRecord>();
+            ArrayList <CapabilitiesClassesTableRecord> rows = new ArrayList<CapabilitiesClassesTableRecord>();
 
             try 
             {
@@ -661,15 +661,15 @@ public class RecordDAO_implement implements RecordDAO
 
                     while (rs.next()) 
                     {
-                            if (PolicyClassesTable.PCS_DB_TABLE_NAME.equals(PolicyClassesTable.PCS_DB_TABLE_NAME))
+                            if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                             {
-                                    PolicyClassesTableRecord rec = new PolicyClassesTableRecord();
+                                    CapabilitiesClassesTableRecord rec = new CapabilitiesClassesTableRecord();
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(PolicyClassesTable.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID));
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_NAME(rs.getString(PolicyClassesTable.COLUMN_POLICY_CLASS_NAME));
+                                    rec.set_COLUMN_POLICY_CLASS_NAME(rs.getString(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME));
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_POLICIES(rs.getString(PolicyClassesTable.COLUMN_POLICY_CLASS_POLICIES));
+                                    rec.set_COLUMN_POLICY_CLASS_POLICIES(rs.getString(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES));
                                     
                                     rec.set_COLUMN_STATUS(rs.getString(AppsTable.COLUMN_STATUS));
 
@@ -685,7 +685,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     if (rows.isEmpty()) return null;
 
-                    PolicyClassesTableRecord [] array = new PolicyClassesTableRecord [ rows.size() ];
+                    CapabilitiesClassesTableRecord [] array = new CapabilitiesClassesTableRecord [ rows.size() ];
                     rows.toArray(array);
                     return array;
     }
@@ -717,7 +717,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     while (rs.next()) 
                     {
-                            if (PolicyClassesTable.PCS_DB_TABLE_NAME.equals(PolicyClassesTable.PCS_DB_TABLE_NAME))
+                            if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                             {
                                     count = rs.getInt(DB_Constants.COUNT);
                             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -730,7 +730,7 @@ public class RecordDAO_implement implements RecordDAO
                     return count;
     }
     
-    private int check_If_Policy_Classes_Table_Record_Exists(PolicyClassesTableRecord r) throws RecordDAO_Exception //on PCID
+    private int check_If_Policy_Classes_Table_Record_Exists(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception //on PCID
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -766,7 +766,7 @@ public class RecordDAO_implement implements RecordDAO
                     return EMPTY_RESULT; //no entry exists
     }
     
-    private int insert_Policy_Classes_Table_Record(PolicyClassesTableRecord r) throws RecordDAO_Exception
+    private int insert_Policy_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -775,7 +775,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    if (PolicyClassesTable.PCS_DB_TABLE_NAME.equals(PolicyClassesTable.PCS_DB_TABLE_NAME))
+                    if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                     {
                             ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_PCS_DB_SQL);
 
@@ -799,7 +799,7 @@ public class RecordDAO_implement implements RecordDAO
     }
     
     
-    private int update_Policy_Classes_Table_Record_on_PCID(PolicyClassesTableRecord r) throws RecordDAO_Exception
+    private int update_Policy_Classes_Table_Record_on_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -808,7 +808,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    if (PolicyClassesTable.PCS_DB_TABLE_NAME.equals(PolicyClassesTable.PCS_DB_TABLE_NAME))
+                    if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                     {	
                             ps = this.conn.prepareStatement(DB_Constants.UPDATE_PCS_DB_ON_PCID_SQL);
 
@@ -833,7 +833,7 @@ public class RecordDAO_implement implements RecordDAO
                     return INDICATE_EXECUTION_SUCCESS;
     }
     
-    private int update_Policy_Classes_Table_Record_on_PCID_and_POLICIES(PolicyClassesTableRecord r) throws RecordDAO_Exception
+    private int update_Policy_Classes_Table_Record_on_PCID_and_POLICIES(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -842,7 +842,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    if (PolicyClassesTable.PCS_DB_TABLE_NAME.equals(PolicyClassesTable.PCS_DB_TABLE_NAME))
+                    if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                     {	
                             ps = this.conn.prepareStatement(DB_Constants.UPDATE_PCS_DB_ON_PCID_AND_CAPS_SQL);
 
@@ -865,7 +865,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int write_Policy_Classes_Table_Record(PolicyClassesTableRecord r) throws RecordDAO_Exception
+    public int write_Policy_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
@@ -878,11 +878,11 @@ public class RecordDAO_implement implements RecordDAO
                 } else if (this.check_If_Policy_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
                 {//if record exists - just update it	
 
-                        if (r.get_UPDATE_COLUMN().equals(PolicyClassesTable.COLUMN_POLICY_CLASS_NAME)) /* check if the update column
+                        if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME)) /* check if the update column
                             is a name column */
                             if (this.update_Policy_Classes_Table_Record_on_PCID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-                        if (r.get_UPDATE_COLUMN().equals(PolicyClassesTable.COLUMN_POLICY_CLASS_POLICIES)) /* check if the update column
+                        if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES)) /* check if the update column
                             is policies column */
                             if (this.update_Policy_Classes_Table_Record_on_PCID_and_POLICIES(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
@@ -893,7 +893,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int delete_Policy_Classes_Table_Records_On_PCID(PolicyClassesTableRecord r) throws RecordDAO_Exception
+    public int delete_Policy_Classes_Table_Records_On_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;

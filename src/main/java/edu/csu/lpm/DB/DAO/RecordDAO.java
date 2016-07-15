@@ -15,7 +15,7 @@ without exposing details of the database.
 package edu.csu.lpm.DB.DAO;
 
 import edu.csu.lpm.DB.DTO.AppsTableRecord;
-import edu.csu.lpm.DB.DTO.PolicyClassesTableRecord;
+import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 
 /**
@@ -64,14 +64,14 @@ public interface RecordDAO extends DB_Base
     
     public int drop_Table_PCS_DB() throws RecordDAO_Exception;
     
-    public PolicyClassesTableRecord[] read_Policy_Classes_Table_Records_On_PCID(PolicyClassesTableRecord r) throws RecordDAO_Exception;
+    public CapabilitiesClassesTableRecord[] read_Policy_Classes_Table_Records_On_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
-    public PolicyClassesTableRecord[] read_Policy_Classes_Table_Records_On_All_Classes() throws RecordDAO_Exception;
+    public CapabilitiesClassesTableRecord[] read_Policy_Classes_Table_Records_On_All_Classes() throws RecordDAO_Exception;
     
     public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID() throws RecordDAO_Exception;
     
-    public int write_Policy_Classes_Table_Record(PolicyClassesTableRecord r) throws RecordDAO_Exception;
+    public int write_Policy_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
-    public int delete_Policy_Classes_Table_Records_On_PCID(PolicyClassesTableRecord r) throws RecordDAO_Exception;
+    public int delete_Policy_Classes_Table_Records_On_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
      
 }

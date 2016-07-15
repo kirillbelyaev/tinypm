@@ -10,7 +10,7 @@ package edu.csu.lpm.implementation;
 
 import edu.csu.lpm.DB.DAO.RecordDAO;
 import edu.csu.lpm.DB.DTO.AppsTableRecord;
-import edu.csu.lpm.DB.DTO.PolicyClassesTableRecord;
+import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.DB_Dispatcher;
 import edu.csu.lpm.DB.implementation.RecordDAO_implement;
@@ -32,7 +32,7 @@ public class Parser_implement implements Parser
     private StringTokenizer tokenizer = null;
     private ArrayList <String> commandParameters = null;
 
-    private PolicyClassesTableRecord pcrec = null;
+    private CapabilitiesClassesTableRecord pcrec = null;
     private AppsTableRecord apprec = null;
     
     private DB_Dispatcher dd = null;
@@ -99,7 +99,7 @@ public class Parser_implement implements Parser
     }
     
     
-    private void refill_ResultOutput_with_POLICY_CLASS_ID_AND_NAME(PolicyClassesTableRecord[] r) 
+    private void refill_ResultOutput_with_POLICY_CLASS_ID_AND_NAME(CapabilitiesClassesTableRecord[] r) 
     {
         if (r == null) return;
         this.ResultOutput.clear();
@@ -298,7 +298,7 @@ public class Parser_implement implements Parser
         
         
         /* initialize the records only once and then reuse in other methods to save memory */ 
-        if (this.pcrec == null) this.pcrec = new PolicyClassesTableRecord();
+        if (this.pcrec == null) this.pcrec = new CapabilitiesClassesTableRecord();
         
         if (this.apprec == null) this.apprec = new AppsTableRecord();
         
@@ -350,7 +350,7 @@ public class Parser_implement implements Parser
     private Integer parse_and_execute_SHOW_POLICY_CLASSES(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
-        PolicyClassesTableRecord[] ra = null;
+        CapabilitiesClassesTableRecord[] ra = null;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 1)
@@ -431,7 +431,7 @@ public class Parser_implement implements Parser
     
     private ArrayList<String> get_POLICY_CLASS_POLICIES(String pcid)
     {
-        PolicyClassesTableRecord pcr [] = null;
+        CapabilitiesClassesTableRecord pcr [] = null;
         ArrayList<String> caps = null;
 
         if (pcid == null || pcid.isEmpty()) return null;
