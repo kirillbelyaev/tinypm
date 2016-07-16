@@ -15,7 +15,7 @@
  * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-import edu.csu.lpm.DB.DTO.AppsTableRecord;
+import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.DB_Dispatcher;
@@ -105,13 +105,13 @@ public class DB_UnitTests {
         System.out.println("--------------------------------------");
         System.out.println("started test_Apps_Table_Record... ");
         
-        AppsTableRecord r = new AppsTableRecord();
+        ComponentsTableRecord r = new ComponentsTableRecord();
         String value = null;
         
-        r.set_COLUMN_APP_DESC(this.COLUMN_APP_DESC);
-        r.set_COLUMN_APP_PATH(this.COLUMN_APP_PATH);
-        r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.set_COLUMN_APP_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
+        r.set_COLUMN_COMPONENT_DESC(this.COLUMN_APP_DESC);
+        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
+        r.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
         r.set_Status_Active();
         
         value = r.get_COLUMN_STATUS();
@@ -128,26 +128,26 @@ public class DB_UnitTests {
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
-        value = r.get_COLUMN_APP_PATH();
+        value = r.get_COLUMN_COMPONENT_PATH_ID();
 	assertNotNull(value);
 	System.out.println("app path is: " + value);
         
-        r.set_COLUMN_APP_PATH(this.COLUMN_APP_PATH_INVALID);
+        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH_INVALID);
         
-        value = r.get_COLUMN_APP_PATH();
+        value = r.get_COLUMN_COMPONENT_PATH_ID();
 	assertNotNull(value);
 	System.out.println("app path is: " + value);
         
         
-        value = r.get_COLUMN_APP_DESC();
+        value = r.get_COLUMN_COMPONENT_DESC();
 	assertNotNull(value);
 	System.out.println("app desc is: " + value);
         
-        value = r.get_COLUMN_POLICY_CLASS_ID();
+        value = r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID();
 	assertNotNull(value);
 	System.out.println("PCID is: " + value);
         
-        value = r.get_COLUMN_APP_CONTAINER_ID();
+        value = r.get_COLUMN_COMPONENT_CONTAINER_ID();
 	assertNotNull(value);
 	System.out.println("app container ID is: " + value);
         
@@ -200,7 +200,7 @@ public class DB_UnitTests {
         int output = -1;
         boolean Out;
         
-        AppsTableRecord r = new AppsTableRecord();
+        ComponentsTableRecord r = new ComponentsTableRecord();
         DB_Dispatcher dd = new DB_Dispatcher();
         RecordDAO_implement db = null;
 
@@ -214,11 +214,11 @@ public class DB_UnitTests {
         output = db.createTable_APPS_DB();
 	assertTrue("createTable_APPS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        r.set_COLUMN_APP_PATH(this.COLUMN_APP_PATH);
-        r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
+        r.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
         
-        r.set_COLUMN_APP_DESC(this.COLUMN_APP_DESC);
-        r.set_COLUMN_APP_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
+        r.set_COLUMN_COMPONENT_DESC(this.COLUMN_APP_DESC);
+        r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
         r.set_Status_Active();
         
         
@@ -227,7 +227,7 @@ public class DB_UnitTests {
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         
         
-        AppsTableRecord[] recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
+        ComponentsTableRecord[] recs = (ComponentsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
         assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	System.out.println("read_Apps_Table_Records_On_APP_and_PCID: array value is: " + recs);
         
@@ -241,33 +241,33 @@ public class DB_UnitTests {
         System.out.println("write_Apps_Table_Record: value is: " + output);
         
         
-        recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
+        recs = (ComponentsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
         assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_APP_DESC());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_APP_PATH());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_POLICY_CLASS_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_APP_CONTAINER_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_COMPONENT_DESC());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_COMPONENT_CONTAINER_ID());
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
-        recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_All_APPs();
+        recs = (ComponentsTableRecord[]) db.read_Apps_Table_Records_On_All_APPs();
         assertTrue("read_Apps_Table_Records_On_All_APPs: Reply has unexpected return:", Out = recs == null | recs != null);
         
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_All_APPs: rec array index 0 app value is: " + recs[0].get_COLUMN_APP_PATH());
+            System.out.println("read_Apps_Table_Records_On_All_APPs: rec array index 0 app value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
         }
         
         
-        recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_PCID(r);
+        recs = (ComponentsTableRecord[]) db.read_Apps_Table_Records_On_PCID(r);
         assertTrue("read_Apps_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
         
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_PCID: rec array index 0 app value is: " + recs[0].get_COLUMN_APP_PATH());
+            System.out.println("read_Apps_Table_Records_On_PCID: rec array index 0 app value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
         }
         
         
@@ -281,15 +281,15 @@ public class DB_UnitTests {
         System.out.println("delete_Apps_Table_Records_On_APP_and_PCID: value is: " + output);
         
         
-        recs = (AppsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
+        recs = (ComponentsTableRecord[]) db.read_Apps_Table_Records_On_APP_and_PCID(r);
         assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_APP_DESC());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_APP_PATH());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_POLICY_CLASS_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_APP_CONTAINER_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_COMPONENT_DESC());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_COMPONENT_CONTAINER_ID());
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         

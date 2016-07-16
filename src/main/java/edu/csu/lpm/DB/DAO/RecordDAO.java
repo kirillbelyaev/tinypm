@@ -14,7 +14,7 @@ without exposing details of the database.
 
 package edu.csu.lpm.DB.DAO;
 
-import edu.csu.lpm.DB.DTO.AppsTableRecord;
+import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 
@@ -43,19 +43,19 @@ public interface RecordDAO extends DB_Base
     
     public int dropTable_APPS_DB() throws RecordDAO_Exception;
     
-    public AppsTableRecord[] read_Apps_Table_Records_On_APP(AppsTableRecord r) throws RecordDAO_Exception;
+    public ComponentsTableRecord[] read_Apps_Table_Records_On_APP(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public AppsTableRecord[] read_Apps_Table_Records_On_APP_and_PCID(AppsTableRecord r) throws RecordDAO_Exception;
+    public ComponentsTableRecord[] read_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public AppsTableRecord[] read_Apps_Table_Records_On_PCID(AppsTableRecord r) throws RecordDAO_Exception;
+    public ComponentsTableRecord[] read_Apps_Table_Records_On_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public AppsTableRecord[] read_Apps_Table_Records_On_All_APPs() throws RecordDAO_Exception;
+    public ComponentsTableRecord[] read_Apps_Table_Records_On_All_APPs() throws RecordDAO_Exception;
     
-    public Integer count_Distinct_Apps_Table_Records_on_PCID(AppsTableRecord r) throws RecordDAO_Exception;
+    public Integer count_Distinct_Apps_Table_Records_on_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
      
-    public int write_Apps_Table_Record(AppsTableRecord r) throws RecordDAO_Exception;
+    public int write_Apps_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public int delete_Apps_Table_Records_On_APP_and_PCID(AppsTableRecord r) throws RecordDAO_Exception;
+    public int delete_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     
      /* policy classes table operations */

@@ -15,10 +15,9 @@ without exposing details of the database.
 package edu.csu.lpm.DB.implementation;
 
 import edu.csu.lpm.DB.DAO.RecordDAO;
-import edu.csu.lpm.DB.DTO.AppsTableRecord;
+import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
-import edu.csu.lpm.DB.interfaces.AppsTable;
 import edu.csu.lpm.DB.interfaces.DB_Constants;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +26,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import edu.csu.lpm.DB.interfaces.CapabilitiesClassesTable;
+import edu.csu.lpm.DB.interfaces.ComponentsTable;
 
 /**
  *
@@ -55,7 +55,7 @@ public class RecordDAO_implement implements RecordDAO
             } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }	
     }
         
-    private int check_If_Apps_Table_Record_Exists(AppsTableRecord r) throws RecordDAO_Exception //on app_path and PCID
+    private int check_If_Apps_Table_Record_Exists(ComponentsTableRecord r) throws RecordDAO_Exception //on app_path and PCID
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -75,7 +75,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_APP_PATH());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
                     
                     //ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
@@ -100,7 +100,7 @@ public class RecordDAO_implement implements RecordDAO
         
         
     @Override
-    public int write_Apps_Table_Record(AppsTableRecord r) throws RecordDAO_Exception
+    public int write_Apps_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             
@@ -110,7 +110,7 @@ public class RecordDAO_implement implements RecordDAO
             {
                 pcr = new CapabilitiesClassesTableRecord();
                 
-                pcr.set_COLUMN_POLICY_CLASS_ID(r.get_COLUMN_POLICY_CLASS_ID());
+                pcr.set_COLUMN_POLICY_CLASS_ID(r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
                 
                 if (this.check_If_Policy_Classes_Table_Record_Exists(pcr) == EMPTY_RESULT) return INDICATE_CONDITIONAL_EXIT_STATUS; //no record exists
                 
@@ -122,7 +122,7 @@ public class RecordDAO_implement implements RecordDAO
                 } else if (this.check_If_Apps_Table_Record_Exists(r) == RECORD_EXISTS) 
                 {/* record exists */
                     /* if record exists - just update it */	
-                    if (r.get_UPDATE_COLUMN().equals(AppsTable.COLUMN_POLICY_CLASS_ID)) /* check if the update column
+                    if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID)) /* check if the update column
                             is a PCID column */
                     {
                         if (this.update_Apps_Table_Record_on_APP_and_PCID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -134,7 +134,7 @@ public class RecordDAO_implement implements RecordDAO
     }
 
     
-    private int insert_Apps_Table_Record(AppsTableRecord r) throws RecordDAO_Exception
+    private int insert_Apps_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -143,16 +143,16 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    if (AppsTable.APPS_DB_TABLE_NAME.equals(AppsTable.APPS_DB_TABLE_NAME))
+                    if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                     {
                             ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_APPS_DB_SQL);
 
                             int index = 1;
 
-                            ps.setString(index++, r.get_COLUMN_APP_DESC());
-                            ps.setString(index++, r.get_COLUMN_APP_PATH());
-                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
-                            ps.setString(index++, r.get_COLUMN_APP_CONTAINER_ID());
+                            ps.setString(index++, r.get_COLUMN_COMPONENT_DESC());
+                            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
+                            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_COMPONENT_CONTAINER_ID());
                             ps.setString(index++, r.get_COLUMN_STATUS());
 
                             ps.addBatch();
@@ -168,7 +168,7 @@ public class RecordDAO_implement implements RecordDAO
     }
     
     
-    private int update_Apps_Table_Record_on_APP_and_PCID(AppsTableRecord r) throws RecordDAO_Exception
+    private int update_Apps_Table_Record_on_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -177,14 +177,14 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    if (AppsTable.APPS_DB_TABLE_NAME.equals(AppsTable.APPS_DB_TABLE_NAME))
+                    if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                     {	
                             ps = this.conn.prepareStatement(DB_Constants.UPDATE_APPS_DB_ON_APP_SET_PCID_SQL);
 
                             int index = 1;
                             
-                            ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
-                            ps.setString(index++, r.get_COLUMN_APP_PATH());
+                            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
                             
                             
                             /*
@@ -206,7 +206,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int delete_Apps_Table_Records_On_APP_and_PCID(AppsTableRecord r) throws RecordDAO_Exception
+    public int delete_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
              if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -220,8 +220,8 @@ public class RecordDAO_implement implements RecordDAO
 
                     int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_APP_PATH());
-                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     ps.executeUpdate();
@@ -281,7 +281,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public AppsTableRecord[] read_Apps_Table_Records_On_APP(AppsTableRecord r) throws RecordDAO_Exception       
+    public ComponentsTableRecord[] read_Apps_Table_Records_On_APP(ComponentsTableRecord r) throws RecordDAO_Exception       
     {
             if (r == null) return null;
             if (this.conn == null) return null;
@@ -289,7 +289,7 @@ public class RecordDAO_implement implements RecordDAO
             PreparedStatement ps = null;
             ResultSet rs = null;
 
-            ArrayList <AppsTableRecord> rows = new ArrayList<AppsTableRecord>();
+            ArrayList <ComponentsTableRecord> rows = new ArrayList<ComponentsTableRecord>();
 
             try 
             {
@@ -297,7 +297,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_APP_PATH());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -305,19 +305,19 @@ public class RecordDAO_implement implements RecordDAO
 
                     while (rs.next()) 
                     {
-                            if (AppsTable.APPS_DB_TABLE_NAME.equals(AppsTable.APPS_DB_TABLE_NAME))
+                            if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                             {
-                                    AppsTableRecord rec = new AppsTableRecord();
+                                    ComponentsTableRecord rec = new ComponentsTableRecord();
                                     
-                                    rec.set_COLUMN_APP_DESC(rs.getString(AppsTable.COLUMN_APP_DESC));
+                                    rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
                                     
-                                    rec.set_COLUMN_APP_PATH(rs.getString(AppsTable.COLUMN_APP_PATH));
+                                    rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(AppsTable.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID));
                                     
-                                    rec.set_COLUMN_APP_CONTAINER_ID(rs.getString(AppsTable.COLUMN_APP_CONTAINER_ID));
+                                    rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
                                     
-                                    rec.set_COLUMN_STATUS(rs.getString(AppsTable.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     
@@ -331,14 +331,14 @@ public class RecordDAO_implement implements RecordDAO
 
                     if (rows.isEmpty()) return null;
 
-                    AppsTableRecord [] array = new AppsTableRecord [ rows.size() ];
+                    ComponentsTableRecord [] array = new ComponentsTableRecord [ rows.size() ];
                     rows.toArray(array);
                     return array;
     }
     
     
     @Override
-    public AppsTableRecord[] read_Apps_Table_Records_On_APP_and_PCID(AppsTableRecord r) throws RecordDAO_Exception       
+    public ComponentsTableRecord[] read_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception       
     {
             if (r == null) return null;
             if (this.conn == null) return null;
@@ -346,7 +346,7 @@ public class RecordDAO_implement implements RecordDAO
             PreparedStatement ps = null;
             ResultSet rs = null;
 
-            ArrayList <AppsTableRecord> rows = new ArrayList<AppsTableRecord>();
+            ArrayList <ComponentsTableRecord> rows = new ArrayList<ComponentsTableRecord>();
 
             try 
             {
@@ -354,7 +354,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_APP_PATH());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
                     
                     //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
 
@@ -364,19 +364,19 @@ public class RecordDAO_implement implements RecordDAO
 
                     while (rs.next()) 
                     {
-                            if (AppsTable.APPS_DB_TABLE_NAME.equals(AppsTable.APPS_DB_TABLE_NAME))
+                            if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                             {
-                                    AppsTableRecord rec = new AppsTableRecord();
+                                    ComponentsTableRecord rec = new ComponentsTableRecord();
                                     
-                                    rec.set_COLUMN_APP_DESC(rs.getString(AppsTable.COLUMN_APP_DESC));
+                                    rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
                                     
-                                    rec.set_COLUMN_APP_PATH(rs.getString(AppsTable.COLUMN_APP_PATH));
+                                    rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(AppsTable.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID));
                                     
-                                    rec.set_COLUMN_APP_CONTAINER_ID(rs.getString(AppsTable.COLUMN_APP_CONTAINER_ID));
+                                    rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
                                     
-                                    rec.set_COLUMN_STATUS(rs.getString(AppsTable.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     
@@ -390,7 +390,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     if (rows.isEmpty()) return null;
 
-                    AppsTableRecord [] array = new AppsTableRecord [ rows.size() ];
+                    ComponentsTableRecord [] array = new ComponentsTableRecord [ rows.size() ];
                     rows.toArray(array);
                     return array;
     }
@@ -398,7 +398,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public AppsTableRecord[] read_Apps_Table_Records_On_PCID(AppsTableRecord r) throws RecordDAO_Exception       
+    public ComponentsTableRecord[] read_Apps_Table_Records_On_PCID(ComponentsTableRecord r) throws RecordDAO_Exception       
     {
             if (r == null) return null;
             if (this.conn == null) return null;
@@ -406,7 +406,7 @@ public class RecordDAO_implement implements RecordDAO
             PreparedStatement ps = null;
             ResultSet rs = null;
 
-            ArrayList <AppsTableRecord> rows = new ArrayList<AppsTableRecord>();
+            ArrayList <ComponentsTableRecord> rows = new ArrayList<ComponentsTableRecord>();
 
             try 
             {
@@ -414,7 +414,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -422,19 +422,19 @@ public class RecordDAO_implement implements RecordDAO
 
                     while (rs.next()) 
                     {
-                            if (AppsTable.APPS_DB_TABLE_NAME.equals(AppsTable.APPS_DB_TABLE_NAME))
+                            if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                             {
-                                    AppsTableRecord rec = new AppsTableRecord();
+                                    ComponentsTableRecord rec = new ComponentsTableRecord();
                                     
-                                    rec.set_COLUMN_APP_DESC(rs.getString(AppsTable.COLUMN_APP_DESC));
+                                    rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
                                     
-                                    rec.set_COLUMN_APP_PATH(rs.getString(AppsTable.COLUMN_APP_PATH));
+                                    rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
                                     
-                                    rec.set_COLUMN_POLICY_CLASS_ID(rs.getString(AppsTable.COLUMN_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID));
                                     
-                                    rec.set_COLUMN_APP_CONTAINER_ID(rs.getString(AppsTable.COLUMN_APP_CONTAINER_ID));
+                                    rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
                                     
-                                    rec.set_COLUMN_STATUS(rs.getString(AppsTable.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     
@@ -448,7 +448,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     if (rows.isEmpty()) return null;
 
-                    AppsTableRecord [] array = new AppsTableRecord [ rows.size() ];
+                    ComponentsTableRecord [] array = new ComponentsTableRecord [ rows.size() ];
                     rows.toArray(array);
                     return array;
     }
@@ -456,14 +456,14 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public AppsTableRecord[] read_Apps_Table_Records_On_All_APPs() throws RecordDAO_Exception //table name, uid
+    public ComponentsTableRecord[] read_Apps_Table_Records_On_All_APPs() throws RecordDAO_Exception //table name, uid
     {
             if (this.conn == null) return null;
 
             PreparedStatement ps = null;
             ResultSet rs = null;
 
-            ArrayList <AppsTableRecord> rows = new ArrayList<AppsTableRecord>();
+            ArrayList <ComponentsTableRecord> rows = new ArrayList<ComponentsTableRecord>();
 
             try 
             {
@@ -479,11 +479,11 @@ public class RecordDAO_implement implements RecordDAO
 
                     while (rs.next()) 
                     {
-                            if (AppsTable.APPS_DB_TABLE_NAME.equals(AppsTable.APPS_DB_TABLE_NAME))
+                            if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                             {
-                                    AppsTableRecord rec = new AppsTableRecord();
+                                    ComponentsTableRecord rec = new ComponentsTableRecord();
                                     
-                                    rec.set_COLUMN_APP_PATH(rs.getString(AppsTable.COLUMN_APP_PATH));
+                                    rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
 
                                     rows.add(rec);
                                     
@@ -497,14 +497,14 @@ public class RecordDAO_implement implements RecordDAO
 
                     if (rows.isEmpty()) return null;
 
-                    AppsTableRecord [] array = new AppsTableRecord [ rows.size() ];
+                    ComponentsTableRecord [] array = new ComponentsTableRecord [ rows.size() ];
                     rows.toArray(array);
                     return array;
     }
      
      
     @Override
-    public Integer count_Distinct_Apps_Table_Records_on_PCID(AppsTableRecord r) throws RecordDAO_Exception
+    public Integer count_Distinct_Apps_Table_Records_on_PCID(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -520,7 +520,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -530,7 +530,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     while (rs.next()) 
                     {
-                            if (AppsTable.APPS_DB_TABLE_NAME.equals(AppsTable.APPS_DB_TABLE_NAME))
+                            if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                             {
                                     count = rs.getInt(DB_Constants.COUNT);
                             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -617,7 +617,7 @@ public class RecordDAO_implement implements RecordDAO
                                     
                                     rec.set_COLUMN_POLICY_CLASS_POLICIES(rs.getString(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES));
                                     
-                                    rec.set_COLUMN_STATUS(rs.getString(AppsTable.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     
@@ -671,7 +671,7 @@ public class RecordDAO_implement implements RecordDAO
                                     
                                     rec.set_COLUMN_POLICY_CLASS_POLICIES(rs.getString(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES));
                                     
-                                    rec.set_COLUMN_STATUS(rs.getString(AppsTable.COLUMN_STATUS));
+                                    rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
 
                                     rows.add(rec);
                                     

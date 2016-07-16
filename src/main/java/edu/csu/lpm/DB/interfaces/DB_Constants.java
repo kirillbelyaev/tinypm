@@ -36,29 +36,29 @@ public interface DB_Constants
         
         /* apps table operations */
         
-        final String APPS_DB_SCHEMA  = " (" + AppsTable.COLUMN_APP_DESC + "," + AppsTable.COLUMN_APP_PATH + "," + AppsTable.COLUMN_POLICY_CLASS_ID + "," + AppsTable.COLUMN_APP_CONTAINER_ID + "," + AppsTable.COLUMN_STATUS + ") ";
+        final String APPS_DB_SCHEMA  = " (" + ComponentsTable.COLUMN_COMPONENT_DESC + "," + ComponentsTable.COLUMN_COMPONENT_PATH_ID + "," + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID + "," + ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID + "," + ComponentsTable.COLUMN_STATUS + ") ";
         
-        final String create_APPS_DB_SQL = "create table " + AppsTable.APPS_DB_TABLE_NAME + APPS_DB_SCHEMA;
+        final String create_APPS_DB_SQL = "create table " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + APPS_DB_SCHEMA;
         
-        final String drop_APPS_DB_SQL = "drop table if exists " + AppsTable.APPS_DB_TABLE_NAME;
+        final String drop_APPS_DB_SQL = "drop table if exists " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_APPS_DB_ON_APP_SQL = "select * from " + AppsTable.APPS_DB_TABLE_NAME + " where " + AppsTable.COLUMN_APP_PATH + " = ?";
+        final String SELECT_FROM_APPS_DB_ON_APP_SQL = "select * from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
-        final String SELECT_FROM_APPS_DB_ALL_APPS_SQL = "select distinct " + AppsTable.COLUMN_APP_PATH + " from " + AppsTable.APPS_DB_TABLE_NAME;
+        final String SELECT_FROM_APPS_DB_ALL_APPS_SQL = "select distinct " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_APPS_DB_COUNT_APPS_ON_PCID_SQL = "select count(*) as " + COUNT + " from " + AppsTable.APPS_DB_TABLE_NAME + " where " + AppsTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String SELECT_FROM_APPS_DB_COUNT_APPS_ON_PCID_SQL = "select count(*) as " + COUNT + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID + " = ?";
         
-        final String SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "select " + ALL + " from " + AppsTable.APPS_DB_TABLE_NAME  + " where " + AppsTable.COLUMN_APP_PATH + " = ? and " + AppsTable.COLUMN_POLICY_CLASS_ID  + " = ?";
+        final String SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID  + " = ?";
         
-        final String SELECT_FROM_APPS_DB_ON_PCID_SQL = "select " + ALL + " from " + AppsTable.APPS_DB_TABLE_NAME  + " where " + AppsTable.COLUMN_POLICY_CLASS_ID  + " = ?";
+        final String SELECT_FROM_APPS_DB_ON_PCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID  + " = ?";
         
-        final String UPDATE_APPS_DB_ON_APP_AND_PCID_SET_PCID_SQL = "update " + AppsTable.APPS_DB_TABLE_NAME + " set " + AppsTable.COLUMN_POLICY_CLASS_ID + " = ? "  + "where " + AppsTable.COLUMN_APP_PATH + " = ? and " + AppsTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String UPDATE_APPS_DB_ON_APP_AND_PCID_SET_PCID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID + " = ?";
         
-        final String UPDATE_APPS_DB_ON_APP_SET_PCID_SQL = "update " + AppsTable.APPS_DB_TABLE_NAME + " set " + AppsTable.COLUMN_POLICY_CLASS_ID + " = ? "  + "where " + AppsTable.COLUMN_APP_PATH + " = ?";
+        final String UPDATE_APPS_DB_ON_APP_SET_PCID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
-        final String INSERT_INTO_APPS_DB_SQL = "insert into " + AppsTable.APPS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
+        final String INSERT_INTO_APPS_DB_SQL = "insert into " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
         
-        final String DELETE_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "delete from " + AppsTable.APPS_DB_TABLE_NAME + " where " + AppsTable.COLUMN_APP_PATH + " = ? and " + AppsTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String DELETE_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "delete from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID + " = ?";
 
         
         /* policy classes table operations */

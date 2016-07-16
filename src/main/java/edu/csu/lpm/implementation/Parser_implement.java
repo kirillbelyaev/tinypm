@@ -9,7 +9,7 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 package edu.csu.lpm.implementation;
 
 import edu.csu.lpm.DB.DAO.RecordDAO;
-import edu.csu.lpm.DB.DTO.AppsTableRecord;
+import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.DB_Dispatcher;
@@ -33,7 +33,7 @@ public class Parser_implement implements Parser
     private ArrayList <String> commandParameters = null;
 
     private CapabilitiesClassesTableRecord pcrec = null;
-    private AppsTableRecord apprec = null;
+    private ComponentsTableRecord apprec = null;
     
     private DB_Dispatcher dd = null;
     private RecordDAO_implement db = null;
@@ -300,7 +300,7 @@ public class Parser_implement implements Parser
         /* initialize the records only once and then reuse in other methods to save memory */ 
         if (this.pcrec == null) this.pcrec = new CapabilitiesClassesTableRecord();
         
-        if (this.apprec == null) this.apprec = new AppsTableRecord();
+        if (this.apprec == null) this.apprec = new ComponentsTableRecord();
         
         this.tokenizer = new StringTokenizer(e, " ");
         
@@ -770,7 +770,7 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 {    
-                    this.apprec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    this.apprec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(this.commandParameters.get(0));
                 }    
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;  
@@ -796,7 +796,7 @@ public class Parser_implement implements Parser
     
     private ArrayList<String> get_POLICY_CLASS_APPS(String pcid)
     {
-        AppsTableRecord[] appsr = null;
+        ComponentsTableRecord[] appsr = null;
         ArrayList<String> apps = null;
 
         if (pcid == null || pcid.isEmpty()) return null;
@@ -805,7 +805,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.apprec == null) return null;
         
-        this.apprec.set_COLUMN_POLICY_CLASS_ID(pcid.trim());
+        this.apprec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(pcid.trim());
 
         try 
         {//execute the db layer
@@ -822,7 +822,7 @@ public class Parser_implement implements Parser
         {    
             apps = new ArrayList<String>();
             for (int i=0; i < appsr.length; i++)
-                apps.add(appsr[i].get_COLUMN_APP_PATH());
+                apps.add(appsr[i].get_COLUMN_COMPONENT_PATH_ID());
         }
         
         return apps;
@@ -846,8 +846,8 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 { 
-                    this.apprec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(0));
-                    apps = this.get_POLICY_CLASS_APPS(this.apprec.get_COLUMN_POLICY_CLASS_ID().trim());
+                    this.apprec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(this.commandParameters.get(0));
+                    apps = this.get_POLICY_CLASS_APPS(this.apprec.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID().trim());
                 } 
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -878,9 +878,9 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 { 
-                    this.apprec.set_COLUMN_APP_PATH(this.commandParameters.get(0));
-                    this.apprec.set_COLUMN_POLICY_CLASS_ID(this.commandParameters.get(1));
-                    this.apprec.set_UPDATE_COLUMN_to_POLICY_CLASS_ID(); /* indicate the update column */
+                    this.apprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0));
+                    this.apprec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(this.commandParameters.get(1));
+                    this.apprec.set_UPDATE_COLUMN_to_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(); /* indicate the update column */
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -888,7 +888,7 @@ public class Parser_implement implements Parser
             
             /* Time to call the enforcer before proceeding to the DB layer */
             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
-            if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.apprec.get_COLUMN_POLICY_CLASS_ID(), this.apprec.get_COLUMN_APP_PATH())) != INDICATE_EXECUTION_SUCCESS)
+            if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.apprec.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(), this.apprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;

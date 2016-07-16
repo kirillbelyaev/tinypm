@@ -30,16 +30,23 @@ import edu.csu.lpm.DB.DTO.Record;
  *
  * @author kirill
  */
-public interface AppsTable extends Record
+public interface ComponentsTable extends Record
 {
-    final String APPS_DB_TABLE_NAME = "apps_db";
-    final String APPS_DB_NAME = "apps.db";
     
-    final String COLUMN_APP_DESC = "description";
-    final String COLUMN_APP_PATH = "app_path";
-    final String COLUMN_POLICY_CLASS_ID = "PCID";
-    final String COLUMN_APP_CONTAINER_ID = "ACID";
-    final String COLUMN_STATUS = "status";
+    final String COMPONENTS_DB_TABLE_NAME = "components_db";
     
+    final String COMPONENTS_DB_NAME = "components.db";
+    
+    final String COLUMN_COMPONENT_DESC = "component_description";
+    
+    final String COLUMN_COMPONENT_PATH_ID = "component_path_id";
+    
+    final String COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID = "CAP_CID";
+    
+    final String COLUMN_COMPONENT_COMMUNICATIVE_POLICY_CLASS_ID = "COM_CID";
+    
+    final String COLUMN_COMPONENT_CONTAINER_ID = "CCID";
+    
+    final String COLUMN_STATUS = "status";   
     
 }
