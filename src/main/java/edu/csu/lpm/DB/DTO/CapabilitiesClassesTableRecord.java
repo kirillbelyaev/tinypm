@@ -305,7 +305,7 @@ public CapabilitiesClassesTableRecord()
     }
     
     
-     public void set_COLUMN_STATUS_Active() 
+    public void set_COLUMN_STATUS_Active() 
     {
             Integer one = 1;
             this.COLUMN_STATUS = one.toString();

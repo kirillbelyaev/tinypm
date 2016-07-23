@@ -17,6 +17,7 @@
 
 import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
+import edu.csu.lpm.DB.DTO.CommunicativeClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.DB_Dispatcher;
 import edu.csu.lpm.DB.implementation.RecordDAO_implement;
@@ -99,7 +100,7 @@ public class DB_UnitTests {
      //Policy_Classes_Table_Record
     
     @Test
-    public void test_Apps_Table_Record() 
+    public void test_Components_Table_Record() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -160,7 +161,7 @@ public class DB_UnitTests {
     
     
     @Test
-    public void test_Apps_Table_create_drop() throws RecordDAO_Exception, SQLException 
+    public void test_Components_Table_create_drop() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -191,7 +192,7 @@ public class DB_UnitTests {
      
      
     @Test
-    public void test_Apps_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
+    public void test_Components_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -307,8 +308,8 @@ public class DB_UnitTests {
         
     }
     
-     @Test
-    public void test_Policy_Classes_Table_Record() 
+    @Test
+    public void test_Capabilities_Classes_Table_Record() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -469,7 +470,7 @@ public class DB_UnitTests {
      
      
      @Test
-     public void test_Policy_Classes_Table_create_drop() throws RecordDAO_Exception, SQLException 
+     public void test_Capabilities_Classes_Table_create_drop() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -500,7 +501,7 @@ public class DB_UnitTests {
     
      
      @Test
-    public void test_Policy_Classes_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
+    public void test_Capabilities_Classes_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -592,5 +593,231 @@ public class DB_UnitTests {
         System.out.println("finished test_Policy_Classes_Table_CRUD_operations... ");
     }    
      
+    
+    /* communicative class tests */
+    
+    @Test
+    public void test_Communicative_Classes_Table_Record() 
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_Communicative_Classes_Table_Record... ");
+        
+        String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
+        String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";       
+        String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
+        
+        int intValue = -1;
+        boolean boolValue = false;
+        
+        String value = null;
+        
+        CommunicativeClassesTableRecord r = new CommunicativeClassesTableRecord();
+        
+        System.out.println("set_COLUMN_CLASS_ID. ");
+        r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        
+        System.out.println("get_COLUMN_CLASS_ID. ");
+        value = r.get_COLUMN_CLASS_ID();
+	assertNotNull(value);
+	System.out.println("CID is: " + value);
+        
+        System.out.println("set_COLUMN_CLASS_NAME. ");
+        r.set_COLUMN_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
+        
+        System.out.println("get_COLUMN_CLASS_NAME. ");
+        value = r.get_COLUMN_CLASS_NAME();
+	assertNotNull(value);
+	System.out.println("Class name is: " + value);
+        
+        System.out.println("set_COLUMN_STATUS. ");
+        r.set_COLUMN_STATUS(this.COLUMN_STATUS);
+        
+        System.out.println("get_COLUMN_STATUS. ");
+        value = r.get_COLUMN_STATUS();
+	assertNotNull(value);
+	System.out.println("status is: " + value);
+        
+        System.out.println("set_COLUMN_STATUS to inactive ");
+        r.set_COLUMN_STATUS_Inactive();
+        
+        System.out.println("get_COLUMN_STATUS. ");
+	value = r.get_COLUMN_STATUS();
+	assertNotNull(value);
+	System.out.println("status is: " + value);
+        
+        System.out.println("set_COLUMN_STATUS to active ");
+        r.set_COLUMN_STATUS_Active();
+	
+        System.out.println("get_COLUMN_STATUS. ");
+        value = r.get_COLUMN_STATUS();
+	assertNotNull(value);
+	System.out.println("status is: " + value);
+        
+        /* set records columns */
+        
+        System.out.println("set_COLUMN_COLLABORATION_RECORD. ");
+        r.set_COLUMN_COLLABORATION_RECORD(component_2_ID, object_path);
+        
+        System.out.println("get_COLUMN_COLLABORATION_RECORD. ");
+        value = r.get_COLUMN_COLLABORATION_RECORD();
+	assertNotNull(value);
+	System.out.println("Collaboration record is: " + value);
+        
+        System.out.println("set_COLUMN_COLLABORATION_RECORD. (invalid input)");
+        r.set_COLUMN_COLLABORATION_RECORD("", "");
+        
+        System.out.println("get_COLUMN_COLLABORATION_RECORD. ");
+        value = r.get_COLUMN_COLLABORATION_RECORD();
+	assertNotNull(value);
+	System.out.println("Collaboration record is: " + value);
+        
+        System.out.println("set_COLUMN_COORDINATION_RECORD. ");
+        r.set_COLUMN_COORDINATION_RECORD(component_1_ID, component_2_ID);
+        
+        System.out.println("get_COLUMN_COORDINATION_RECORD. ");
+        value = r.get_COLUMN_COORDINATION_RECORD();
+	assertNotNull(value);
+	System.out.println("Coordination record is: " + value);
+        
+        System.out.println("set_COLUMN_COORDINATION_RECORD. (invalid input)");
+        r.set_COLUMN_COORDINATION_RECORD("", "");
+        
+        System.out.println("get_COLUMN_COORDINATION_RECORD. ");
+        value = r.get_COLUMN_COORDINATION_RECORD();
+	assertNotNull(value);
+	System.out.println("Coordination record is: " + value);
+        
+        
+        /* update column tests */
+        
+        r.set_UPDATE_COLUMN_to_CLASS_ID();
+        
+        value = r.get_UPDATE_COLUMN();
+	assertNotNull(value);
+	System.out.println("update column is: " + value);
+        
+        r.set_UPDATE_COLUMN_to_CLASS_NAME();
+        
+        value = r.get_UPDATE_COLUMN();
+	assertNotNull(value);
+	System.out.println("update column is: " + value);
+        
+        r.set_UPDATE_COLUMN_to_STATUS();
+        
+        value = r.get_UPDATE_COLUMN();
+	assertNotNull(value);
+	System.out.println("update column is: " + value);
+        
+        r.set_UPDATE_COLUMN_to_COLLABORATION_RECORD();
+        
+        value = r.get_UPDATE_COLUMN();
+	assertNotNull(value);
+	System.out.println("update column is: " + value);
+        
+        r.set_UPDATE_COLUMN_to_COORDINATION_RECORD();
+        
+        value = r.get_UPDATE_COLUMN();
+	assertNotNull(value);
+	System.out.println("update column is: " + value);
+        
+        
+        /*
+          
+        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
+        
+        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
+        
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
+        
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        
+        
+        intValue = r.check_if_Capability_is_valid(cap);
+        System.out.println("return is: " + intValue);
+        
+        intValue = r.check_if_Capability_is_valid(invalidcap);
+        System.out.println("return is: " + intValue);
+        
+        intValue = r.check_if_Capabilities_are_valid(caps);
+        System.out.println("return is: " + intValue);
+        
+        intValue = r.check_if_Capabilities_are_valid(morecaps);
+        System.out.println("return is: " + intValue);
+        
+        intValue = r.check_if_Capabilities_are_valid(morecap);
+        System.out.println("return is: " + intValue);
+        */
+
+        //System.out.println("cap index within enum array is: " + r.check_if_Capability_is_valid(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_KILL.toString()) );
+
+        //System.out.println("Schema DDL is : " + r.produce_PCS_DB_DDL());
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_Communicative_Classes_Table_Record... ");
+    }
     
 }

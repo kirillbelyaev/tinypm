@@ -25,23 +25,31 @@ Department of Computer Science, Fort Collins, CO  80523-1873, USA
 package edu.csu.lpm.DB.interfaces;
 
 import edu.csu.lpm.DB.DTO.Record;
-import edu.csu.lpm.interfaces.LinuxCapabilitiesPolicyContainer;
 
 /**
  *
  * @author kirill
  */
-public interface CapabilitiesClassesTable extends Record
+public interface CommunicativeClassesTable extends Record
 {
-    final String PCS_DB_TABLE_NAME = "capc_db";
-    final String PCS_DB_NAME = "capc.db";
+    
+    final String COMMUNICATIVE_CLASSES_DB_TABLE_NAME = "commc_db";
+    
+    final String COMMUNICATIVE_CLASSES_DB_NAME = "commc.db";
+    
+    final String COLUMN_CLASS_ID = "CID";
+    
+    final String COLUMN_CLASS_NAME = "class_name";
+    
+    /* a biple - component_1 ID; component_2 ID
+    if such a record exists - that serves as a permission for coordination */
+    final String COLUMN_COORDINATION_RECORD = "coordination_record";
+    
+    /* a biple - component ID; data_object_path
+    if such a record exists - that serves as a permission for collaboration */
+    final String COLUMN_COLLABORATION_RECORD = "collaboration_record";
     
     
-    final String COLUMN_POLICY_CLASS_NAME = "class_name";
-    final String COLUMN_POLICY_CLASS_ID = "PCID";
-    final String COLUMN_POLICY_CLASS_POLICIES = "capabilities";  
-    final String COLUMN_STATUS = "status";
-    
-    LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();
+    final String COLUMN_STATUS = "status";   
     
 }
