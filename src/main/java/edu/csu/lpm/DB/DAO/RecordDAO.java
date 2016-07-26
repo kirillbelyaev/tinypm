@@ -58,7 +58,7 @@ public interface RecordDAO extends DB_Base
     public int delete_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     
-     /* policy classes table operations */
+    /* policy classes table operations */
     
     public int create_Table_PCS_DB() throws RecordDAO_Exception;
     
@@ -73,5 +73,12 @@ public interface RecordDAO extends DB_Base
     public int write_Policy_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
     public int delete_Policy_Classes_Table_Records_On_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
-     
+    
+    
+    /* communicative class table operations */
+    
+    public int create_Table_COMMC_DB() throws RecordDAO_Exception;
+    
+    public int drop_Table_COMMC_DB() throws RecordDAO_Exception;
+    
 }

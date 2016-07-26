@@ -469,7 +469,7 @@ public class DB_UnitTests {
     }
      
      
-     @Test
+    @Test
      public void test_Capabilities_Classes_Table_create_drop() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
@@ -818,6 +818,36 @@ public class DB_UnitTests {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("finished test_Communicative_Classes_Table_Record... ");
+    }
+    
+    @Test
+    public void test_Communicative_Classes_Table_create_drop() throws RecordDAO_Exception, SQLException 
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_Communicative_Classes_Table_create_drop... ");
+
+        int output = -1;
+        boolean Out;
+        
+        DB_Dispatcher dd = new DB_Dispatcher();
+        RecordDAO_implement db = null;
+
+        db = dd.dispatch_DB_Access();
+        
+	assertNotNull(db);
+        
+        output = db.drop_Table_COMMC_DB();
+	assertTrue("drop_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+        output = db.create_Table_COMMC_DB();
+	assertTrue("create_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+        db.closeConnection();
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_Communicative_Classes_Table_create_drop... ");
     }
     
 }

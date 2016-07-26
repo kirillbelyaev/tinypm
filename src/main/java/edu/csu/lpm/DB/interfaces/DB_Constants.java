@@ -89,8 +89,13 @@ public interface DB_Constants
                 
         final String DELETE_FROM_PCS_DB_ON_PCID_SQL = "delete from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
 
+        /* communicative class operations */
         
+        final String COMMC_DB_SCHEMA = "( " + CommunicativeClassesTable.COLUMN_CLASS_ID + ", " + CommunicativeClassesTable.COLUMN_CLASS_NAME + ", " + CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD + ", " + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + ", " + CommunicativeClassesTable.COLUMN_STATUS + ") ";
         
+        final String create_COMMC_DB_SQL = "create table " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + COMMC_DB_SCHEMA;
+        
+        final String drop_COMMC_DB_SQL = "drop table if exists " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
         
         
         

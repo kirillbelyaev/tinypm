@@ -926,5 +926,38 @@ public class RecordDAO_implement implements RecordDAO
     }
 
     
+    /* communicative classes table operations */
     
+    @Override
+    public int create_Table_COMMC_DB() throws RecordDAO_Exception
+    {
+        Statement state = null;
+
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        try 
+        {
+                state = this.conn.createStatement();
+                state.executeUpdate(DB_Constants.create_COMMC_DB_SQL);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
+    } 
+       
+       
+    @Override
+    public int drop_Table_COMMC_DB() throws RecordDAO_Exception
+    {
+        Statement state = null;
+
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        try 
+        {
+                state = this.conn.createStatement();
+                state.executeUpdate(DB_Constants.drop_COMMC_DB_SQL);
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                return INDICATE_EXECUTION_SUCCESS;
+    }
 }
