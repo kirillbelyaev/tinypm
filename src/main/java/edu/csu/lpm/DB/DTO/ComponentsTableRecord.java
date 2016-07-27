@@ -33,10 +33,10 @@ public class ComponentsTableRecord implements Record, Serializable
     private String COLUMN_COMPONENT_ID = "";
     
     /* reference to capabilities policy class */
-    private String COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID = "";
+    private String COLUMN_COMPONENT_CAPABILITIES_CLASS_ID = "";
     
     /* reference to communicative policy class */
-    private String COLUMN_COMPONENT_COMMUNICATIVE_POLICY_CLASS_ID = "";
+    private String COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID = "";
     
     /* reserved for future use */
     private String COLUMN_COMPONENT_CONTAINER_ID = "";
@@ -48,21 +48,19 @@ public class ComponentsTableRecord implements Record, Serializable
     
     /* set to indicate which field to update when calling write_Apps_Table_Record() */
     private String UPDATE_COLUMN = "";
-    
-    
-public ComponentsTableRecord()
-	{
-            
-	}
+
     
     public String get_UPDATE_COLUMN() {
         return this.UPDATE_COLUMN;
     }
     
-    public void set_UPDATE_COLUMN_to_COMPONENT_CAPABILITIES_POLICY_CLASS_ID() {
-        this.UPDATE_COLUMN = ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID;
+    public void set_UPDATE_COLUMN_to_COMPONENT_CAPABILITIES_CLASS_ID() {
+        this.UPDATE_COLUMN = ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID;
     }
     
+    public void set_UPDATE_COLUMN_to_COMPONENT_COMMUNICATIVE_CLASS_ID() {
+        this.UPDATE_COLUMN = ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID;
+    }
     
     public void set_UPDATE_COLUMN_to_STATUS() {
         this.UPDATE_COLUMN = ComponentsTable.COLUMN_STATUS;
@@ -102,28 +100,54 @@ public ComponentsTableRecord()
         }
     }
 
-    public String get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID() {
-        return this.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID;
+    public String get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID() {
+        return this.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID;
     }
 
-    public void set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(String COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID) 
+    public void set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(String COLUMN_COMPONENT_CAPABILITIES_CLASS_ID) 
     {    
         Integer id = null;
         
-        if (COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID != null)
+        if (COLUMN_COMPONENT_CAPABILITIES_CLASS_ID != null)
         {
            try
            {//check if string is a number    
-               id = Integer.valueOf(COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID);
-               this.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID = id.toString();
+               id = Integer.valueOf(COLUMN_COMPONENT_CAPABILITIES_CLASS_ID);
+               this.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID = id.toString();
                id = null;
            } catch (NumberFormatException nfex)
            {
                //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
-               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(): PCID string is not a number! ");
+               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(): CID string is not a number! ");
            }    
         }   
     }
+    
+    
+    public String get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID() {
+        return this.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID;
+    }
+
+    
+    public void set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(String COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID) 
+    {    
+        Integer id = null;
+        
+        if (COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID != null)
+        {
+           try
+           {//check if string is a number    
+               id = Integer.valueOf(COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID);
+               this.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID = id.toString();
+               id = null;
+           } catch (NumberFormatException nfex)
+           {
+               //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
+               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(): CID string is not a number! ");
+           }    
+        }   
+    }
+    
 
     public String get_COLUMN_COMPONENT_CONTAINER_ID() {
         return this.COLUMN_COMPONENT_CONTAINER_ID;
@@ -143,7 +167,7 @@ public ComponentsTableRecord()
     
     
     
-     public void set_Status_Active() 
+    public void set_Status_Active() 
     {
             Integer one = 1;
             this.COLUMN_STATUS = one.toString();

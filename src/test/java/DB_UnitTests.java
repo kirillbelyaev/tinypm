@@ -111,7 +111,7 @@ public class DB_UnitTests {
         
         r.set_COLUMN_COMPONENT_DESC(this.COLUMN_APP_DESC);
         r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
-        r.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
         r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
         r.set_Status_Active();
         
@@ -144,7 +144,7 @@ public class DB_UnitTests {
 	assertNotNull(value);
 	System.out.println("app desc is: " + value);
         
-        value = r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID();
+        value = r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID();
 	assertNotNull(value);
 	System.out.println("PCID is: " + value);
         
@@ -216,7 +216,7 @@ public class DB_UnitTests {
 	assertTrue("createTable_APPS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
         r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
-        r.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
         
         r.set_COLUMN_COMPONENT_DESC(this.COLUMN_APP_DESC);
         r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
@@ -249,7 +249,7 @@ public class DB_UnitTests {
         {    
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_COMPONENT_DESC());
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_COMPONENT_CONTAINER_ID());
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
@@ -289,7 +289,7 @@ public class DB_UnitTests {
         {    
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_COMPONENT_DESC());
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_COMPONENT_CONTAINER_ID());
             System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
@@ -500,7 +500,7 @@ public class DB_UnitTests {
     }
     
      
-     @Test
+    @Test
     public void test_Capabilities_Classes_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
@@ -849,5 +849,50 @@ public class DB_UnitTests {
         System.out.println("--------------------------------------");
         System.out.println("finished test_Communicative_Classes_Table_create_drop... ");
     }
+    
+    
+    @Test
+    public void test_Communicative_Classes_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_Communicative_Classes_Table_CRUD_operations... ");
+        
+        int output = -1;
+        boolean Out;
+        
+        CommunicativeClassesTableRecord r = new CommunicativeClassesTableRecord();
+        DB_Dispatcher dd = new DB_Dispatcher();
+        RecordDAO_implement db = null;
+
+        db = dd.dispatch_DB_Access();
+        
+	assertNotNull(db);
+        
+        output = db.drop_Table_COMMC_DB();
+	assertTrue("drop_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+        output = db.create_Table_COMMC_DB();
+	assertTrue("create_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+        
+       
+        r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
+        r.set_COLUMN_STATUS(this.COLUMN_STATUS);
+    
+        r.set_COLUMN_STATUS_Active();
+        
+        
+        
+        output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
+	assertNotNull(output);
+        System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);
+        
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_Communicative_Classes_Table_CRUD_operations... ");
+    }
+    
     
 }

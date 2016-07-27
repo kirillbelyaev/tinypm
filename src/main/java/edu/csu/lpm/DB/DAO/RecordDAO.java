@@ -81,4 +81,7 @@ public interface RecordDAO extends DB_Base
     
     public int drop_Table_COMMC_DB() throws RecordDAO_Exception;
     
+    public Integer count_Distinct_Communicative_Classes_Table_Records_on_CID() throws RecordDAO_Exception;
+    
+    
 }

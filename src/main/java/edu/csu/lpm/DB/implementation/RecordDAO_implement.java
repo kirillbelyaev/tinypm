@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import edu.csu.lpm.DB.interfaces.CapabilitiesClassesTable;
+import edu.csu.lpm.DB.interfaces.CommunicativeClassesTable;
 import edu.csu.lpm.DB.interfaces.ComponentsTable;
 
 /**
@@ -110,7 +111,7 @@ public class RecordDAO_implement implements RecordDAO
             {
                 pcr = new CapabilitiesClassesTableRecord();
                 
-                pcr.set_COLUMN_POLICY_CLASS_ID(r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+                pcr.set_COLUMN_POLICY_CLASS_ID(r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
                 
                 if (this.check_If_Policy_Classes_Table_Record_Exists(pcr) == EMPTY_RESULT) return INDICATE_CONDITIONAL_EXIT_STATUS; //no record exists
                 
@@ -122,7 +123,7 @@ public class RecordDAO_implement implements RecordDAO
                 } else if (this.check_If_Apps_Table_Record_Exists(r) == RECORD_EXISTS) 
                 {/* record exists */
                     /* if record exists - just update it */	
-                    if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID)) /* check if the update column
+                    if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID)) /* check if the update column
                             is a PCID column */
                     {
                         if (this.update_Apps_Table_Record_on_APP_and_PCID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -151,7 +152,7 @@ public class RecordDAO_implement implements RecordDAO
 
                             ps.setString(index++, r.get_COLUMN_COMPONENT_DESC());
                             ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
-                            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
                             ps.setString(index++, r.get_COLUMN_COMPONENT_CONTAINER_ID());
                             ps.setString(index++, r.get_COLUMN_STATUS());
 
@@ -183,7 +184,7 @@ public class RecordDAO_implement implements RecordDAO
 
                             int index = 1;
                             
-                            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+                            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
                             ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
                             
                             
@@ -221,7 +222,7 @@ public class RecordDAO_implement implements RecordDAO
                     int index = 1;
 
                     ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
-                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     ps.executeUpdate();
@@ -313,7 +314,7 @@ public class RecordDAO_implement implements RecordDAO
                                     
                                     rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
                                     
-                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID));
                                     
                                     rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
                                     
@@ -372,7 +373,7 @@ public class RecordDAO_implement implements RecordDAO
                                     
                                     rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
                                     
-                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID));
                                     
                                     rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
                                     
@@ -414,7 +415,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -430,7 +431,7 @@ public class RecordDAO_implement implements RecordDAO
                                     
                                     rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
                                     
-                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID));
+                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID));
                                     
                                     rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
                                     
@@ -520,7 +521,7 @@ public class RecordDAO_implement implements RecordDAO
 
                     int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID());
+                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
 
                     this.conn.setAutoCommit(false);
                     rs = ps.executeQuery();
@@ -959,5 +960,45 @@ public class RecordDAO_implement implements RecordDAO
                 state.executeUpdate(DB_Constants.drop_COMMC_DB_SQL);
         } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
                 return INDICATE_EXECUTION_SUCCESS;
+    }
+    
+    
+    @Override
+    public Integer count_Distinct_Communicative_Classes_Table_Records_on_CID() throws RecordDAO_Exception
+    {
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            int count = -1;
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMMC_DB_COUNT_CLASSES_ON_CID_SQL);
+
+                    int index = 1;
+
+                    //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    //rs = state.executeQuery(statement);
+
+                    while (rs.next()) 
+                    {
+                            if (CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME.equals(CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME))
+                            {
+                                    count = rs.getInt(DB_Constants.COUNT);
+                            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    }
+                        
+                    rs.close();
+
+            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                    return count;
     }
 }
