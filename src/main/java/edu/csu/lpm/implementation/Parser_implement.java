@@ -332,7 +332,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    count = this.db.count_Distinct_Policy_Classes_Table_Records_on_PCID();
+                    count = this.db.count_Distinct_Capabilities_Classes_Table_Records_on_CID();
                     this.set_ResultSize(count);
                     this.refill_ResultOutput(count.toString());
                     return INDICATE_EXECUTION_SUCCESS;
@@ -446,7 +446,7 @@ public class Parser_implement implements Parser
         {//execute the db layer
             if (this.db != null)
             {    
-                pcr = this.db.read_Policy_Classes_Table_Records_On_PCID(this.pcrec);  
+                pcr = this.db.read_Capabilities_Classes_Table_Records_On_CID(this.pcrec);  
             }    
         } catch (RecordDAO_Exception rex) 
         {

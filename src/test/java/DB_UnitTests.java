@@ -60,8 +60,8 @@ public class DB_UnitTests {
     //
      
     @Test
-     public void small_tests() 
-     {
+    public void small_tests() 
+    {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started small_tests... ");
@@ -83,7 +83,7 @@ public class DB_UnitTests {
         System.out.println("--------------------------------------");
         System.out.println("finished small_tests... ");
       
-     }
+    }
     
     
     String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
@@ -537,12 +537,12 @@ public class DB_UnitTests {
         
         
         
-        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID();
+        output = db.count_Distinct_Capabilities_Classes_Table_Records_on_CID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
         
-        CapabilitiesClassesTableRecord[] recs = (CapabilitiesClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
+        CapabilitiesClassesTableRecord[] recs = (CapabilitiesClassesTableRecord[]) db.read_Capabilities_Classes_Table_Records_On_CID(r);
         assertTrue("read_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	System.out.println("read_Policy_Classes_Table_Records_On_PCID: array value is: " + recs);
         
@@ -552,11 +552,11 @@ public class DB_UnitTests {
         System.out.println("write_Policy_Classes_Table_Record: value is: " + output);
         
         
-        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID();
+        output = db.count_Distinct_Capabilities_Classes_Table_Records_on_CID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
-        recs = (CapabilitiesClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_PCID(r);
+        recs = (CapabilitiesClassesTableRecord[]) db.read_Capabilities_Classes_Table_Records_On_CID(r);
         assertTrue("read_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
@@ -583,7 +583,7 @@ public class DB_UnitTests {
 	assertTrue("delete_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("delete_Policy_Classes_Table_Records_On_PCID: value is: " + output);
         
-        output = db.count_Distinct_Policy_Classes_Table_Records_on_PCID();
+        output = db.count_Distinct_Capabilities_Classes_Table_Records_on_CID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Policy_Classes_Table_Records_on_PCID: count is: " + output);
         
@@ -592,307 +592,5 @@ public class DB_UnitTests {
         System.out.println("--------------------------------------");
         System.out.println("finished test_Policy_Classes_Table_CRUD_operations... ");
     }    
-     
-    
-    /* communicative class tests */
-    
-    @Test
-    public void test_Communicative_Classes_Table_Record() 
-    {
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("started test_Communicative_Classes_Table_Record... ");
-        
-        String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
-        String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";       
-        String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
-        
-        int intValue = -1;
-        boolean boolValue = false;
-        
-        String value = null;
-        
-        CommunicativeClassesTableRecord r = new CommunicativeClassesTableRecord();
-        
-        System.out.println("set_COLUMN_CLASS_ID. ");
-        r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        
-        System.out.println("get_COLUMN_CLASS_ID. ");
-        value = r.get_COLUMN_CLASS_ID();
-	assertNotNull(value);
-	System.out.println("CID is: " + value);
-        
-        System.out.println("set_COLUMN_CLASS_NAME. ");
-        r.set_COLUMN_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
-        
-        System.out.println("get_COLUMN_CLASS_NAME. ");
-        value = r.get_COLUMN_CLASS_NAME();
-	assertNotNull(value);
-	System.out.println("Class name is: " + value);
-        
-        System.out.println("set_COLUMN_STATUS. ");
-        r.set_COLUMN_STATUS(this.COLUMN_STATUS);
-        
-        System.out.println("get_COLUMN_STATUS. ");
-        value = r.get_COLUMN_STATUS();
-	assertNotNull(value);
-	System.out.println("status is: " + value);
-        
-        System.out.println("set_COLUMN_STATUS to inactive ");
-        r.set_COLUMN_STATUS_Inactive();
-        
-        System.out.println("get_COLUMN_STATUS. ");
-	value = r.get_COLUMN_STATUS();
-	assertNotNull(value);
-	System.out.println("status is: " + value);
-        
-        System.out.println("set_COLUMN_STATUS to active ");
-        r.set_COLUMN_STATUS_Active();
-	
-        System.out.println("get_COLUMN_STATUS. ");
-        value = r.get_COLUMN_STATUS();
-	assertNotNull(value);
-	System.out.println("status is: " + value);
-        
-        /* set records columns */
-        
-        System.out.println("set_COLUMN_COLLABORATION_RECORD. ");
-        r.set_COLUMN_COLLABORATION_RECORD(component_2_ID, object_path);
-        
-        System.out.println("get_COLUMN_COLLABORATION_RECORD. ");
-        value = r.get_COLUMN_COLLABORATION_RECORD();
-	assertNotNull(value);
-	System.out.println("Collaboration record is: " + value);
-        
-        System.out.println("set_COLUMN_COLLABORATION_RECORD. (invalid input)");
-        r.set_COLUMN_COLLABORATION_RECORD("", "");
-        
-        System.out.println("get_COLUMN_COLLABORATION_RECORD. ");
-        value = r.get_COLUMN_COLLABORATION_RECORD();
-	assertNotNull(value);
-	System.out.println("Collaboration record is: " + value);
-        
-        System.out.println("set_COLUMN_COORDINATION_RECORD. ");
-        r.set_COLUMN_COORDINATION_RECORD(component_1_ID, component_2_ID);
-        
-        System.out.println("get_COLUMN_COORDINATION_RECORD. ");
-        value = r.get_COLUMN_COORDINATION_RECORD();
-	assertNotNull(value);
-	System.out.println("Coordination record is: " + value);
-        
-        System.out.println("set_COLUMN_COORDINATION_RECORD. (invalid input)");
-        r.set_COLUMN_COORDINATION_RECORD("", "");
-        
-        System.out.println("get_COLUMN_COORDINATION_RECORD. ");
-        value = r.get_COLUMN_COORDINATION_RECORD();
-	assertNotNull(value);
-	System.out.println("Coordination record is: " + value);
-        
-        
-        /* update column tests */
-        
-        r.set_UPDATE_COLUMN_to_CLASS_ID();
-        
-        value = r.get_UPDATE_COLUMN();
-	assertNotNull(value);
-	System.out.println("update column is: " + value);
-        
-        r.set_UPDATE_COLUMN_to_CLASS_NAME();
-        
-        value = r.get_UPDATE_COLUMN();
-	assertNotNull(value);
-	System.out.println("update column is: " + value);
-        
-        r.set_UPDATE_COLUMN_to_STATUS();
-        
-        value = r.get_UPDATE_COLUMN();
-	assertNotNull(value);
-	System.out.println("update column is: " + value);
-        
-        r.set_UPDATE_COLUMN_to_COLLABORATION_RECORD();
-        
-        value = r.get_UPDATE_COLUMN();
-	assertNotNull(value);
-	System.out.println("update column is: " + value);
-        
-        r.set_UPDATE_COLUMN_to_COORDINATION_RECORD();
-        
-        value = r.get_UPDATE_COLUMN();
-	assertNotNull(value);
-	System.out.println("update column is: " + value);
-        
-        
-        /*
-          
-        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
-	assertNotNull(boolValue);
-	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
-        
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
-	assertNotNull(boolValue);
-	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
-        
-        
-        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
-	assertNotNull(boolValue);
-	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
-        
-        
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
-	assertNotNull(boolValue);
-	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
-        
-        
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        
-        
-        intValue = r.check_if_Capability_is_valid(cap);
-        System.out.println("return is: " + intValue);
-        
-        intValue = r.check_if_Capability_is_valid(invalidcap);
-        System.out.println("return is: " + intValue);
-        
-        intValue = r.check_if_Capabilities_are_valid(caps);
-        System.out.println("return is: " + intValue);
-        
-        intValue = r.check_if_Capabilities_are_valid(morecaps);
-        System.out.println("return is: " + intValue);
-        
-        intValue = r.check_if_Capabilities_are_valid(morecap);
-        System.out.println("return is: " + intValue);
-        */
-
-        //System.out.println("cap index within enum array is: " + r.check_if_Capability_is_valid(LinuxCAPPolicyContainer.LinuxCapabilities.CAP_KILL.toString()) );
-
-        //System.out.println("Schema DDL is : " + r.produce_PCS_DB_DDL());
-        
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("finished test_Communicative_Classes_Table_Record... ");
-    }
-    
-    @Test
-    public void test_Communicative_Classes_Table_create_drop() throws RecordDAO_Exception, SQLException 
-    {
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("started test_Communicative_Classes_Table_create_drop... ");
-
-        int output = -1;
-        boolean Out;
-        
-        DB_Dispatcher dd = new DB_Dispatcher();
-        RecordDAO_implement db = null;
-
-        db = dd.dispatch_DB_Access();
-        
-	assertNotNull(db);
-        
-        output = db.drop_Table_COMMC_DB();
-	assertTrue("drop_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
-        
-        output = db.create_Table_COMMC_DB();
-	assertTrue("create_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
-        
-        db.closeConnection();
-        
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("finished test_Communicative_Classes_Table_create_drop... ");
-    }
-    
-    
-    @Test
-    public void test_Communicative_Classes_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
-    {
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("started test_Communicative_Classes_Table_CRUD_operations... ");
-        
-        int output = -1;
-        boolean Out;
-        
-        CommunicativeClassesTableRecord r = new CommunicativeClassesTableRecord();
-        DB_Dispatcher dd = new DB_Dispatcher();
-        RecordDAO_implement db = null;
-
-        db = dd.dispatch_DB_Access();
-        
-	assertNotNull(db);
-        
-        output = db.drop_Table_COMMC_DB();
-	assertTrue("drop_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
-        
-        output = db.create_Table_COMMC_DB();
-	assertTrue("create_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
-        
-       
-        r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.set_COLUMN_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
-        r.set_COLUMN_STATUS(this.COLUMN_STATUS);
-    
-        r.set_COLUMN_STATUS_Active();
-        
-        
-        
-        output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
-	assertNotNull(output);
-        System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);
-        
-        
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("finished test_Communicative_Classes_Table_CRUD_operations... ");
-    }
-    
     
 }

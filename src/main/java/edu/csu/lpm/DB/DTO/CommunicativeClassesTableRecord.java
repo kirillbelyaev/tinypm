@@ -16,6 +16,7 @@ package edu.csu.lpm.DB.DTO;
 import edu.csu.lpm.DB.interfaces.CommunicativeClassesTable;
 import java.io.Serializable;
 import java.io.*;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -126,6 +127,115 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
             }
         }
     }
+    
+    /* alternative method to set the field when reading a record from db */
+    public void set_COLUMN_COORDINATION_RECORD(String record) 
+    {
+        final String separator = " ";
+        StringTokenizer tokenizer = null;
+        String component_1_ID = null;
+        String component_2_ID = null;
+        
+        if (record != null)
+        {
+            if (!record.isEmpty())
+            {    
+                tokenizer = new StringTokenizer(record, separator);
+
+                int count = tokenizer.countTokens(); //obtain the number of tokens before cycling through them
+
+                /* terminate if record is not composed out of 2 sub-records */
+                if (count != 2) return;
+                
+                //tokenizer.nextToken(); //skip the 1st token
+
+                while (tokenizer.hasMoreTokens())
+                {
+                    String field = tokenizer.nextToken();
+                    field = field.trim();
+                    
+                    /* 1st pass - assign to 1st variable */
+                    if (component_1_ID == null) component_1_ID = field;
+                    
+                    /* 2nd pass - assign to 2nd variable */
+                    if (component_1_ID != null) component_2_ID = field;
+                }
+            
+        
+                /* now proceed to processing */      
+                if (component_1_ID != null && component_2_ID != null)
+                {
+                    if (!component_1_ID.isEmpty() && !component_2_ID.isEmpty())
+                    {    
+                        File f1 = new File(component_1_ID);
+
+                        File f2 = new File(component_2_ID);
+                        /* set only if an app is an actual file, does exist and not 
+                        a directory */
+                        if (f1.isFile() && f2.isFile()) this.COLUMN_COORDINATION_RECORD = component_1_ID + separator + component_2_ID;
+                        else System.out.println("Communicative_Classes_Table_Record.set_COLUMN_COORDINATION_RECORD(): component does not exist on the filesystem! ");
+                    }
+                }
+        
+            } /* end of if record not empty */
+            
+        } /* end of if record not null */
+    }
+     
+    /* alternative method to set the field when reading a record from db */
+    public void set_COLUMN_COLLABORATION_RECORD(String record) 
+    {
+        final String separator = " ";
+        StringTokenizer tokenizer = null;
+        String componentID = null;
+        String object_path = null;
+        
+        if (record != null)
+        {
+            if (!record.isEmpty())
+            {    
+                tokenizer = new StringTokenizer(record, separator);
+
+                int count = tokenizer.countTokens(); //obtain the number of tokens before cycling through them
+
+                /* terminate if record is not composed out of 2 sub-records */
+                if (count != 2) return;
+                
+                //tokenizer.nextToken(); //skip the 1st token
+
+                while (tokenizer.hasMoreTokens())
+                {
+                    String field = tokenizer.nextToken();
+                    field = field.trim();
+                    
+                    /* 1st pass - assign to 1st variable */
+                    if (componentID == null) componentID = field;
+                    
+                    /* 2nd pass - assign to 2nd variable */
+                    if (componentID != null) object_path = field;
+                }
+            
+        
+                /* now proceed to processing */
+                if (componentID != null && object_path != null)
+                {
+                    if (!componentID.isEmpty() && !object_path.isEmpty())
+                    {    
+                        File f = new File(componentID);
+
+                        File o = new File(object_path);
+
+                        /* set only if an app is an actual file, does exist and not 
+                        a directory */
+                        if (f.isFile() && o.isFile()) this.COLUMN_COLLABORATION_RECORD = componentID + separator + object_path;
+                        else System.out.println("Communicative_Classes_Table_Record.set_COLUMN_COLLABORATION_RECORD(): component does not exist on the filesystem! ");
+                    }
+                }
+            
+            } /* end of if record not empty */
+        
+        } /* end of if record not null */
+    }
 
     public String get_COLUMN_CLASS_ID() 
     {
@@ -146,7 +256,7 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
            } catch (NumberFormatException nfex)
            {
                //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
-               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CAPABILITIES_POLICY_CLASS_ID(): PCID string is not a number! ");
+               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(): CID string is not a number! ");
            }    
         }   
     }

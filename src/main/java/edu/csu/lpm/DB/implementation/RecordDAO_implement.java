@@ -17,6 +17,7 @@ package edu.csu.lpm.DB.implementation;
 import edu.csu.lpm.DB.DAO.RecordDAO;
 import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
+import edu.csu.lpm.DB.DTO.CommunicativeClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.interfaces.DB_Constants;
 import java.sql.Connection;
@@ -582,7 +583,7 @@ public class RecordDAO_implement implements RecordDAO
     
        
     @Override
-    public CapabilitiesClassesTableRecord[] read_Policy_Classes_Table_Records_On_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception       
+    public CapabilitiesClassesTableRecord[] read_Capabilities_Classes_Table_Records_On_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception       
     {
             if (r == null) return null;
             if (this.conn == null) return null;
@@ -693,7 +694,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public Integer count_Distinct_Policy_Classes_Table_Records_on_PCID() throws RecordDAO_Exception
+    public Integer count_Distinct_Capabilities_Classes_Table_Records_on_CID() throws RecordDAO_Exception
     {
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
@@ -1001,4 +1002,61 @@ public class RecordDAO_implement implements RecordDAO
 
                     return count;
     }
+    
+    @Override
+    public CommunicativeClassesTableRecord[] read_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r)
+    throws RecordDAO_Exception       
+    {
+            if (r == null) return null;
+            if (this.conn == null) return null;
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ArrayList <CommunicativeClassesTableRecord> rows = new ArrayList<CommunicativeClassesTableRecord>();
+
+            try 
+            {
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_ALL_FROM_COMMC_DB_ON_CID_SQL);
+
+                    int index = 1;
+
+                    ps.setString(index++, r.get_COLUMN_CLASS_ID());
+                    
+                    //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    rs = ps.executeQuery();
+                    this.conn.setAutoCommit(true);
+
+                    while (rs.next()) 
+                    {                           
+                        CommunicativeClassesTableRecord rec = new CommunicativeClassesTableRecord();
+
+                        rec.set_COLUMN_CLASS_ID(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_ID));
+
+                        rec.set_COLUMN_CLASS_NAME(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_NAME));
+
+                        rec.set_COLUMN_COLLABORATION_RECORD(rs.getString(CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD));
+
+                        rec.set_COLUMN_COORDINATION_RECORD(rs.getString(CommunicativeClassesTable.COLUMN_COORDINATION_RECORD));
+
+                        rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
+
+                        rows.add(rec);
+
+                        rec = null;
+                    }
+                        rs.close();
+                        rs = null;
+
+            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                    if (rows.isEmpty()) return null;
+
+                    CommunicativeClassesTableRecord [] array = new CommunicativeClassesTableRecord [ rows.size() ];
+                    rows.toArray(array);
+                    return array;
+    }
+    
 }
