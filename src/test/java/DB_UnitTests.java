@@ -547,7 +547,7 @@ public class DB_UnitTests {
 	System.out.println("read_Policy_Classes_Table_Records_On_PCID: array value is: " + recs);
         
         
-        output = db.write_Policy_Classes_Table_Record(r);
+        output = db.write_Capabilities_Classes_Table_Record(r);
         assertNotNull(output);
         System.out.println("write_Policy_Classes_Table_Record: value is: " + output);
         
@@ -579,7 +579,7 @@ public class DB_UnitTests {
             System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
-        output = db.delete_Policy_Classes_Table_Records_On_PCID(r);
+        output = db.delete_Capabilities_Classes_Table_Records_On_CID(r);
 	assertTrue("delete_Policy_Classes_Table_Records_On_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("delete_Policy_Classes_Table_Records_On_PCID: value is: " + output);
         

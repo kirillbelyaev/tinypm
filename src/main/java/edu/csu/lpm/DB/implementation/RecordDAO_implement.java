@@ -768,7 +768,7 @@ public class RecordDAO_implement implements RecordDAO
                     return EMPTY_RESULT; //no entry exists
     }
     
-    private int insert_Policy_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
+    private int insert_Capabilities_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -867,7 +867,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int write_Policy_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
+    public int write_Capabilities_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
@@ -875,7 +875,7 @@ public class RecordDAO_implement implements RecordDAO
             {	
                 if (this.check_If_Policy_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
                 {	
-                        if (this.insert_Policy_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        if (this.insert_Capabilities_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
                 } else if (this.check_If_Policy_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
                 {//if record exists - just update it	
@@ -895,7 +895,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int delete_Policy_Classes_Table_Records_On_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
+    public int delete_Capabilities_Classes_Table_Records_On_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -965,7 +965,8 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public Integer count_Distinct_Communicative_Classes_Table_Records_on_CID() throws RecordDAO_Exception
+    public Integer count_Distinct_Communicative_Classes_Table_Records_on_CID()
+    throws RecordDAO_Exception
     {
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
@@ -1058,5 +1059,43 @@ public class RecordDAO_implement implements RecordDAO
                     rows.toArray(array);
                     return array;
     }
+    
+    
+    @Override
+    public int delete_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r) 
+    throws RecordDAO_Exception
+    {
+            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+            String statement = null;
+            PreparedStatement ps = null;
+            
+            try 
+            {	
+                    ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_COMMC_DB_ON_CID_SQL);
+
+                    int index = 1;
+
+                    ps.setString(index++, r.get_COLUMN_CLASS_ID());
+
+                    this.conn.setAutoCommit(false);
+                    ps.executeUpdate();
+                    this.conn.setAutoCommit(true);
+
+            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+            
+            /*
+            Possible refactoring to every method to obtain the int exit code. 
+            but that defeats the purpose of using specialized exception class.
+            
+            } catch(SQLException e) { System.out.println("Exception: " + e.getMessage() ); return INDICATE_SQL_EXCEPTION;}
+            */        
+                    
+                    return INDICATE_EXECUTION_SUCCESS;
+    }
+
+    
+    
     
 }

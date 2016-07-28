@@ -71,9 +71,9 @@ public interface RecordDAO extends DB_Base
     
     public Integer count_Distinct_Capabilities_Classes_Table_Records_on_CID() throws RecordDAO_Exception;
     
-    public int write_Policy_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
+    public int write_Capabilities_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
-    public int delete_Policy_Classes_Table_Records_On_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
+    public int delete_Capabilities_Classes_Table_Records_On_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
     
     /* communicative class table operations */
@@ -86,5 +86,6 @@ public interface RecordDAO extends DB_Base
     
     public CommunicativeClassesTableRecord[] read_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r) throws RecordDAO_Exception;
     
+    public int delete_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r) throws RecordDAO_Exception;
     
 }

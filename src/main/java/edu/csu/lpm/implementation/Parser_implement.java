@@ -407,7 +407,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_Capabilities_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS) 
                     {  
                         this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -570,7 +570,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) == INDICATE_EXECUTION_SUCCESS)
+                    if (this.db.write_Capabilities_Classes_Table_Record(this.pcrec) == INDICATE_EXECUTION_SUCCESS)
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
@@ -700,7 +700,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Policy_Classes_Table_Record(this.pcrec) == INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_Capabilities_Classes_Table_Record(this.pcrec) == INDICATE_EXECUTION_SUCCESS) 
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");

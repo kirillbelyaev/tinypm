@@ -104,8 +104,10 @@ public interface DB_Constants
         
         final String SELECT_FROM_COMMC_DB_COUNT_CLASSES_ON_CID_SQL = "select distinct count(*) as " + COUNT + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
         
+        final String INSERT_INTO_COMMC_DB_SQL = "insert into " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
         
-        
+        final String DELETE_FROM_COMMC_DB_ON_CID_SQL = "delete from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+
         
         
 }

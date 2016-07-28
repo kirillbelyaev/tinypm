@@ -132,6 +132,9 @@ public class DB_Communicative_Classes_Table_UnitTests
         assertTrue("read_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = recs == null | recs != null);
 	System.out.println("read_Communicative_Classes_Table_Records_On_CID: array value is: " + recs);
         
+        output = db.delete_Communicative_Classes_Table_Records_On_CID(r);
+	assertTrue("delete_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("delete_Communicative_Classes_Table_Records_On_CID: value is: " + output);
         
         
         System.out.println("\n"); 
