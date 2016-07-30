@@ -81,13 +81,13 @@ public interface DB_Constants
         
         final String SELECT_FROM_PCS_DB_ON_PCID_SQL = "select " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME  + " where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
         
-        final String INSERT_INTO_PCS_DB_SQL = "insert into " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
+        final String INSERT_INTO_CAPC_DB_SQL = "insert into " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
         
-        final String UPDATE_PCS_DB_ON_PCID_AND_CAPS_SQL = "update " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " set " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES + " = ? "  + "where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String UPDATE_CAPC_DB_COLUMN_CAPS_ON_CID_SQL = "update " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " set " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES + " = ? "  + "where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
         
-        final String UPDATE_PCS_DB_ON_PCID_SQL = "update " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " set " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME + " = ? "  + "where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String UPDATE_CAPC_DB_COLUMN_NAME_ON_CID_SQL = "update " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " set " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME + " = ? "  + "where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
                 
-        final String DELETE_FROM_PCS_DB_ON_PCID_SQL = "delete from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String DELETE_FROM_CAPC_DB_ON_CID_SQL = "delete from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
 
         
         /* communicative class operations */
@@ -104,10 +104,17 @@ public interface DB_Constants
         
         final String SELECT_FROM_COMMC_DB_COUNT_CLASSES_ON_CID_SQL = "select distinct count(*) as " + COUNT + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
         
+        final String SELECT_FROM_COMMC_DB_ON_CID_SQL = "select " + CommunicativeClassesTable.COLUMN_CLASS_ID + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME  + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+               
         final String INSERT_INTO_COMMC_DB_SQL = "insert into " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
         
         final String DELETE_FROM_COMMC_DB_ON_CID_SQL = "delete from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
 
+        final String UPDATE_COMMC_DB_COLUMN_NAME_ON_CID_SQL = "update " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " + CommunicativeClassesTable.COLUMN_CLASS_NAME + " = ? "  + "where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+        
+        final String UPDATE_COMMC_DB_COLUMN_COLLABORATION_RECORD_ON_CID_SQL = "update " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " + CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD + " = ? "  + "where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+        
+        final String UPDATE_COMMC_DB_COLUMN_COORDINATION_RECORD_ON_CID_SQL = "update " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + " = ? "  + "where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
         
         
 }

@@ -86,6 +86,8 @@ public interface RecordDAO extends DB_Base
     
     public CommunicativeClassesTableRecord[] read_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r) throws RecordDAO_Exception;
     
+    public int write_Communicative_Classes_Table_Record(CommunicativeClassesTableRecord r) throws RecordDAO_Exception;
+    
     public int delete_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r) throws RecordDAO_Exception;
     
 }

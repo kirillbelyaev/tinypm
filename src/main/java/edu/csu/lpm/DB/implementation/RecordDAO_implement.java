@@ -114,7 +114,7 @@ public class RecordDAO_implement implements RecordDAO
                 
                 pcr.set_COLUMN_POLICY_CLASS_ID(r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
                 
-                if (this.check_If_Policy_Classes_Table_Record_Exists(pcr) == EMPTY_RESULT) return INDICATE_CONDITIONAL_EXIT_STATUS; //no record exists
+                if (this.check_If_Capabilities_Classes_Table_Record_Exists(pcr) == EMPTY_RESULT) return INDICATE_CONDITIONAL_EXIT_STATUS; //no record exists
                 
                 if (this.check_If_Apps_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
                 {	
@@ -732,7 +732,7 @@ public class RecordDAO_implement implements RecordDAO
                     return count;
     }
     
-    private int check_If_Policy_Classes_Table_Record_Exists(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception //on PCID
+    private int check_If_Capabilities_Classes_Table_Record_Exists(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception //on PCID
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -779,7 +779,7 @@ public class RecordDAO_implement implements RecordDAO
             {
                     if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                     {
-                            ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_PCS_DB_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_CAPC_DB_SQL);
 
                             int index = 1;
 
@@ -801,7 +801,7 @@ public class RecordDAO_implement implements RecordDAO
     }
     
     
-    private int update_Policy_Classes_Table_Record_on_PCID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
+    private int update_Capabilities_Classes_Table_Record_Column_Name_on_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -812,7 +812,7 @@ public class RecordDAO_implement implements RecordDAO
             {
                     if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                     {	
-                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_PCS_DB_ON_PCID_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_CAPC_DB_COLUMN_NAME_ON_CID_SQL);
 
                             int index = 1;
                             
@@ -846,7 +846,7 @@ public class RecordDAO_implement implements RecordDAO
             {
                     if (CapabilitiesClassesTable.PCS_DB_TABLE_NAME.equals(CapabilitiesClassesTable.PCS_DB_TABLE_NAME))
                     {	
-                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_PCS_DB_ON_PCID_AND_CAPS_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_CAPC_DB_COLUMN_CAPS_ON_CID_SQL);
 
                             int index = 1;
                             
@@ -873,16 +873,16 @@ public class RecordDAO_implement implements RecordDAO
 
             try
             {	
-                if (this.check_If_Policy_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
+                if (this.check_If_Capabilities_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
                 {	
                         if (this.insert_Capabilities_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-                } else if (this.check_If_Policy_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
+                } else if (this.check_If_Capabilities_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
                 {//if record exists - just update it	
 
                         if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME)) /* check if the update column
                             is a name column */
-                            if (this.update_Policy_Classes_Table_Record_on_PCID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                            if (this.update_Capabilities_Classes_Table_Record_Column_Name_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
                         if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES)) /* check if the update column
                             is policies column */
@@ -905,7 +905,7 @@ public class RecordDAO_implement implements RecordDAO
             
             try 
             {	
-                    ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_PCS_DB_ON_PCID_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_CAPC_DB_ON_CID_SQL);
 
                     int index = 1;
 
@@ -1095,7 +1095,191 @@ public class RecordDAO_implement implements RecordDAO
                     return INDICATE_EXECUTION_SUCCESS;
     }
 
+    private int insert_Communicative_Classes_Table_Record(CommunicativeClassesTableRecord r)
+    throws RecordDAO_Exception
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        PreparedStatement ps = null;
+
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_COMMC_DB_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_CLASS_NAME());
+            ps.setString(index++, r.get_COLUMN_COLLABORATION_RECORD());
+            ps.setString(index++, r.get_COLUMN_COORDINATION_RECORD());
+            ps.setString(index++, r.get_COLUMN_STATUS());
+
+            ps.addBatch();
+            this.conn.setAutoCommit(false);
+            ps.executeBatch();
+            this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
+    }
     
     
+    @Override
+    public int write_Communicative_Classes_Table_Record(CommunicativeClassesTableRecord r) 
+    throws RecordDAO_Exception
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        try
+        {	
+            if (this.check_If_Communicative_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
+            {	
+                if (this.insert_Communicative_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+            } else if (this.check_If_Communicative_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
+            {//if record exists - just update it	
+
+                if (r.get_UPDATE_COLUMN().equals(CommunicativeClassesTable.COLUMN_CLASS_NAME)) /* check if the update column
+                    is a name column */
+                    if (this.update_Communicative_Classes_Table_Record_Column_Name_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                if (r.get_UPDATE_COLUMN().equals(CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD)) /* check if the update column
+                    is collaboration policy column */
+                    if (this.update_Communicative_Classes_Table_Record_Column_Collaboration_Record_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                if (r.get_UPDATE_COLUMN().equals(CommunicativeClassesTable.COLUMN_COORDINATION_RECORD)) /* check if the update column
+                    is coordination policy column */
+                    if (this.update_Communicative_Classes_Table_Record_Column_Coordination_Record_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }
+
+        } catch (Exception e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                return INDICATE_EXECUTION_SUCCESS;
+    }
+    
+    private int check_If_Communicative_Classes_Table_Record_Exists(CommunicativeClassesTableRecord r)
+    throws RecordDAO_Exception //on CID
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try 
+        {	
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMMC_DB_ON_CID_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
+
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
+
+            if (rs.next())
+            {
+                    rs.close();
+                    rs = null;
+                    //System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
+                    return RECORD_EXISTS; //entry exists
+            }	
+
+            rs.close();
+            rs = null;
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }    
+
+                return EMPTY_RESULT; //no entry exists
+    }
+    
+    private int update_Communicative_Classes_Table_Record_Column_Name_on_CID(CommunicativeClassesTableRecord r) 
+    throws RecordDAO_Exception
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        PreparedStatement ps = null;
+
+        try 
+        {             	
+            ps = this.conn.prepareStatement(DB_Constants.UPDATE_COMMC_DB_COLUMN_NAME_ON_CID_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_CLASS_NAME());
+
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
+
+            /*
+            ps.setString(index++, r.getCOLUMN_CAPS());
+            ps.setString(index++, r.getCOLUMN_STATUS());
+            */
+
+            this.conn.setAutoCommit(false);
+            ps.executeUpdate();
+            this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
+    }
+    
+    
+    private int update_Communicative_Classes_Table_Record_Column_Collaboration_Record_on_CID(CommunicativeClassesTableRecord r)
+    throws RecordDAO_Exception
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        PreparedStatement ps = null;
+
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.UPDATE_COMMC_DB_COLUMN_COLLABORATION_RECORD_ON_CID_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_COLLABORATION_RECORD());
+
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
+
+            this.conn.setAutoCommit(false);
+            ps.executeUpdate();
+            this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
+    }
+    
+    private int update_Communicative_Classes_Table_Record_Column_Coordination_Record_on_CID(CommunicativeClassesTableRecord r)
+    throws RecordDAO_Exception
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        PreparedStatement ps = null;
+
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.UPDATE_COMMC_DB_COLUMN_COORDINATION_RECORD_ON_CID_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_COORDINATION_RECORD());
+
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
+
+            this.conn.setAutoCommit(false);
+            ps.executeUpdate();
+            this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
+    }
     
 }

@@ -15,7 +15,6 @@
  * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
  */
 
-import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.DTO.CommunicativeClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.DB_Dispatcher;
@@ -59,6 +58,14 @@ public class DB_Communicative_Classes_Table_UnitTests
     private final String COLUMN_APP_CONTAINER_ID = "1";
     private final String COLUMN_STATUS = "1";
     private final String COLUMN_POLICY_CLASS_NAME = "web caching service";
+    
+    private final String separator = " ";
+    private final String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
+    private final String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";       
+    private final String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
+        
+    private final String coord_record = component_2_ID + separator + component_1_ID;   
+    private final String collab_record = component_1_ID + separator + object_path; 
     
     
     @Test
@@ -116,11 +123,12 @@ public class DB_Communicative_Classes_Table_UnitTests
         output = db.create_Table_COMMC_DB();
 	assertTrue("create_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-       
+        
         r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
         r.set_COLUMN_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
         r.set_COLUMN_STATUS(this.COLUMN_STATUS);
-    
+        r.set_COLUMN_COLLABORATION_RECORD(this.collab_record);
+        r.set_COLUMN_COORDINATION_RECORD(this.coord_record);
         r.set_COLUMN_STATUS_Active();
         
          
@@ -135,6 +143,43 @@ public class DB_Communicative_Classes_Table_UnitTests
         output = db.delete_Communicative_Classes_Table_Records_On_CID(r);
 	assertTrue("delete_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("delete_Communicative_Classes_Table_Records_On_CID: value is: " + output);
+        
+        output = db.write_Communicative_Classes_Table_Record(r);
+        assertNotNull(output);
+        System.out.println("write_Communicative_Classes_Table_Record: value is: " + output);
+        
+        recs = (CommunicativeClassesTableRecord[]) db.read_Communicative_Classes_Table_Records_On_CID(r);
+        assertTrue("read_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = recs == null | recs != null);
+        
+        if (recs != null)
+        {    
+            System.out.println("read_Communicative_Classes_Table_Records_On_CID:   CID is: " + recs[0].get_COLUMN_CLASS_ID());
+            System.out.println("read_Communicative_Classes_Table_Records_On_CID:   class name is: " + recs[0].get_COLUMN_CLASS_NAME());
+            System.out.println("read_Communicative_Classes_Table_Records_On_CID:   collaboration policy is: " + recs[0].get_COLUMN_COLLABORATION_RECORD());
+            System.out.println("read_Communicative_Classes_Table_Records_On_CID:   coordination policy is: " + recs[0].get_COLUMN_COORDINATION_RECORD());
+            System.out.println("read_Communicative_Classes_Table_Records_On_CID:   status is: " + recs[0].get_COLUMN_STATUS());
+        }
+        
+        output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
+	assertNotNull(output);
+        System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);
+        
+        output = db.write_Communicative_Classes_Table_Record(r);
+        assertNotNull(output);
+        System.out.println("write_Communicative_Classes_Table_Record: value is: " + output);
+        
+        output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
+	assertNotNull(output);
+        System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);
+        
+        
+        output = db.delete_Communicative_Classes_Table_Records_On_CID(r);
+	assertTrue("delete_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("delete_Communicative_Classes_Table_Records_On_CID: value is: " + output);
+        
+        output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
+	assertNotNull(output);
+        System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);
         
         
         System.out.println("\n"); 
