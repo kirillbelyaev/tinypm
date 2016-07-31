@@ -640,7 +640,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public CapabilitiesClassesTableRecord[] read_Policy_Classes_Table_Records_On_All_Classes() throws RecordDAO_Exception       
+    public CapabilitiesClassesTableRecord[] read_Capabilities_Classes_Table_Records_On_All_Classes() throws RecordDAO_Exception       
     {
             if (this.conn == null) return null;
 
@@ -651,7 +651,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_ALL_FROM_PCS_DB_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_ALL_FROM_CAPC_DB_SQL);
                     
                     int index = 1;
 
@@ -939,8 +939,8 @@ public class RecordDAO_implement implements RecordDAO
 
         try 
         {
-                state = this.conn.createStatement();
-                state.executeUpdate(DB_Constants.create_COMMC_DB_SQL);
+            state = this.conn.createStatement();
+            state.executeUpdate(DB_Constants.create_COMMC_DB_SQL);
 
         } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
 
@@ -957,8 +957,9 @@ public class RecordDAO_implement implements RecordDAO
 
         try 
         {
-                state = this.conn.createStatement();
-                state.executeUpdate(DB_Constants.drop_COMMC_DB_SQL);
+            state = this.conn.createStatement();
+            state.executeUpdate(DB_Constants.drop_COMMC_DB_SQL);
+            
         } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
                 return INDICATE_EXECUTION_SUCCESS;
     }
@@ -968,96 +969,93 @@ public class RecordDAO_implement implements RecordDAO
     public Integer count_Distinct_Communicative_Classes_Table_Records_on_CID()
     throws RecordDAO_Exception
     {
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-            int count = -1;
+        int count = -1;
 
-            try 
-            {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMMC_DB_COUNT_CLASSES_ON_CID_SQL);
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMMC_DB_COUNT_CLASSES_ON_CID_SQL);
 
-                    int index = 1;
+            int index = 1;
 
-                    //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+            //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
 
-                    this.conn.setAutoCommit(false);
-                    rs = ps.executeQuery();
-                    this.conn.setAutoCommit(true);
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
 
-                    //rs = state.executeQuery(statement);
+            //rs = state.executeQuery(statement);
 
-                    while (rs.next()) 
-                    {
-                            if (CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME.equals(CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME))
-                            {
-                                    count = rs.getInt(DB_Constants.COUNT);
-                            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-                    }
-                        
-                    rs.close();
+            while (rs.next()) 
+            {    
+                count = rs.getInt(DB_Constants.COUNT);       
+            }
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+            rs.close();
 
-                    return count;
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return count;
     }
     
     @Override
     public CommunicativeClassesTableRecord[] read_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r)
     throws RecordDAO_Exception       
     {
-            if (r == null) return null;
-            if (this.conn == null) return null;
+        if (r == null) return null;
+        if (this.conn == null) return null;
 
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-            ArrayList <CommunicativeClassesTableRecord> rows = new ArrayList<CommunicativeClassesTableRecord>();
+        ArrayList <CommunicativeClassesTableRecord> rows = new ArrayList<CommunicativeClassesTableRecord>();
 
-            try 
-            {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_ALL_FROM_COMMC_DB_ON_CID_SQL);
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_ALL_FROM_COMMC_DB_ON_CID_SQL);
 
-                    int index = 1;
+            int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_CLASS_ID());
-                    
-                    //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
 
-                    this.conn.setAutoCommit(false);
-                    rs = ps.executeQuery();
-                    this.conn.setAutoCommit(true);
+            //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
 
-                    while (rs.next()) 
-                    {                           
-                        CommunicativeClassesTableRecord rec = new CommunicativeClassesTableRecord();
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
 
-                        rec.set_COLUMN_CLASS_ID(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_ID));
+            while (rs.next()) 
+            {                           
+                CommunicativeClassesTableRecord rec = new CommunicativeClassesTableRecord();
 
-                        rec.set_COLUMN_CLASS_NAME(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_NAME));
+                rec.set_COLUMN_CLASS_ID(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_ID));
 
-                        rec.set_COLUMN_COLLABORATION_RECORD(rs.getString(CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD));
+                rec.set_COLUMN_CLASS_NAME(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_NAME));
 
-                        rec.set_COLUMN_COORDINATION_RECORD(rs.getString(CommunicativeClassesTable.COLUMN_COORDINATION_RECORD));
+                rec.set_COLUMN_COLLABORATION_RECORD(rs.getString(CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD));
 
-                        rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
+                rec.set_COLUMN_COORDINATION_RECORD(rs.getString(CommunicativeClassesTable.COLUMN_COORDINATION_RECORD));
 
-                        rows.add(rec);
+                rec.set_COLUMN_STATUS(rs.getString(CommunicativeClassesTable.COLUMN_STATUS));
 
-                        rec = null;
-                    }
-                        rs.close();
-                        rs = null;
+                rows.add(rec);
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                rec = null;
+            }
+                rs.close();
+                rs = null;
 
-                    if (rows.isEmpty()) return null;
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
 
-                    CommunicativeClassesTableRecord [] array = new CommunicativeClassesTableRecord [ rows.size() ];
-                    rows.toArray(array);
-                    return array;
+        if (rows.isEmpty()) return null;
+
+        CommunicativeClassesTableRecord [] array = new CommunicativeClassesTableRecord [ rows.size() ];
+        rows.toArray(array);
+        return array;
     }
     
     
@@ -1065,26 +1063,26 @@ public class RecordDAO_implement implements RecordDAO
     public int delete_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r) 
     throws RecordDAO_Exception
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            String statement = null;
-            PreparedStatement ps = null;
-            
-            try 
-            {	
-                    ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_COMMC_DB_ON_CID_SQL);
+        String statement = null;
+        PreparedStatement ps = null;
 
-                    int index = 1;
+        try 
+        {	
+            ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_COMMC_DB_ON_CID_SQL);
 
-                    ps.setString(index++, r.get_COLUMN_CLASS_ID());
+            int index = 1;
 
-                    this.conn.setAutoCommit(false);
-                    ps.executeUpdate();
-                    this.conn.setAutoCommit(true);
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
-            
+            this.conn.setAutoCommit(false);
+            ps.executeUpdate();
+            this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
             /*
             Possible refactoring to every method to obtain the int exit code. 
             but that defeats the purpose of using specialized exception class.
@@ -1092,7 +1090,7 @@ public class RecordDAO_implement implements RecordDAO
             } catch(SQLException e) { System.out.println("Exception: " + e.getMessage() ); return INDICATE_SQL_EXCEPTION;}
             */        
                     
-                    return INDICATE_EXECUTION_SUCCESS;
+            return INDICATE_EXECUTION_SUCCESS;
     }
 
     private int insert_Communicative_Classes_Table_Record(CommunicativeClassesTableRecord r)
@@ -1281,5 +1279,59 @@ public class RecordDAO_implement implements RecordDAO
 
                 return INDICATE_EXECUTION_SUCCESS;
     }
+    
+    @Override
+    public CommunicativeClassesTableRecord[] read_Communicative_Classes_Table_Records_On_All_Classes() 
+    throws RecordDAO_Exception       
+    {
+        if (this.conn == null) return null;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        ArrayList <CommunicativeClassesTableRecord> rows = new ArrayList<CommunicativeClassesTableRecord>();
+
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_ALL_FROM_COMMC_DB_SQL);
+
+            int index = 1;
+
+            //ps.setString(index++, r.getCOLUMN_POLICY_CLASS_ID());
+
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
+
+            while (rs.next()) 
+            {             
+                CommunicativeClassesTableRecord rec = new CommunicativeClassesTableRecord();
+
+                rec.set_COLUMN_CLASS_ID(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_ID));
+
+                rec.set_COLUMN_CLASS_NAME(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_NAME));
+
+                rec.set_COLUMN_COLLABORATION_RECORD(rs.getString(CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD));
+
+                rec.set_COLUMN_COORDINATION_RECORD(rs.getString(CommunicativeClassesTable.COLUMN_COORDINATION_RECORD));
+
+                rec.set_COLUMN_STATUS(rs.getString(CommunicativeClassesTable.COLUMN_STATUS));
+
+                rows.add(rec);
+
+                rec = null;
+            }
+                rs.close();
+                rs = null;
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+        if (rows.isEmpty()) return null;
+
+        CommunicativeClassesTableRecord [] array = new CommunicativeClassesTableRecord [ rows.size() ];
+        rows.toArray(array);
+        return array;
+    }
+    
     
 }

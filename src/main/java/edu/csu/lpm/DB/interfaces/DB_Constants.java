@@ -75,7 +75,7 @@ public interface DB_Constants
         
         final String SELECT_ALL_FROM_PCS_DB_ON_PCID_SQL = "select " + ALL + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME  + " where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID  + " = ?";
         
-        final String SELECT_ALL_FROM_PCS_DB_SQL = "select distinct " + ALL + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME;
+        final String SELECT_ALL_FROM_CAPC_DB_SQL = "select distinct " + ALL + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME;
         
         final String SELECT_FROM_PCS_DB_COUNT_POLICY_CLASSES_ON_PCID_SQL = "select distinct count(*) as " + COUNT + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME;
         

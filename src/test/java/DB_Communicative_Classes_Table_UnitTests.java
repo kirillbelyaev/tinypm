@@ -160,6 +160,18 @@ public class DB_Communicative_Classes_Table_UnitTests
             System.out.println("read_Communicative_Classes_Table_Records_On_CID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
+        recs = (CommunicativeClassesTableRecord[]) db.read_Communicative_Classes_Table_Records_On_All_Classes();
+        assertTrue("read_Communicative_Classes_Table_Records_On_All_Classes: Reply has unexpected return:", Out = recs == null | recs != null);
+	
+        if (recs != null)
+        {    
+            System.out.println("read_Communicative_Classes_Table_Records_On_All_Classes:   CID is: " + recs[0].get_COLUMN_CLASS_ID());
+            System.out.println("read_Communicative_Classes_Table_Records_On_All_Classes:   class name is: " + recs[0].get_COLUMN_CLASS_NAME());
+            System.out.println("read_Communicative_Classes_Table_Records_On_All_Classes:   collaboration policy is: " + recs[0].get_COLUMN_COLLABORATION_RECORD());
+            System.out.println("read_Communicative_Classes_Table_Records_On_All_Classes:   coordination policy is: " + recs[0].get_COLUMN_COORDINATION_RECORD());
+            System.out.println("read_Communicative_Classes_Table_Records_On_All_Classes:   status is: " + recs[0].get_COLUMN_STATUS());
+        }
+        
         output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);

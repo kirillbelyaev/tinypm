@@ -568,7 +568,7 @@ public class DB_UnitTests {
         }
         
         
-        recs = (CapabilitiesClassesTableRecord[]) db.read_Policy_Classes_Table_Records_On_All_Classes();
+        recs = (CapabilitiesClassesTableRecord[]) db.read_Capabilities_Classes_Table_Records_On_All_Classes();
         assertTrue("read_Policy_Classes_Table_Records_On_All_Classes: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)

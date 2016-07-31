@@ -359,7 +359,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    ra = this.db.read_Policy_Classes_Table_Records_On_All_Classes();
+                    ra = this.db.read_Capabilities_Classes_Table_Records_On_All_Classes();
                     if (ra != null)
                     {    
                         this.set_ResultSize(ra.length);
