@@ -33,13 +33,13 @@ import edu.csu.lpm.interfaces.LinuxCapabilitiesPolicyContainer;
  */
 public interface CapabilitiesClassesTable extends Record
 {
-    final String PCS_DB_TABLE_NAME = "capc_db";
-    final String PCS_DB_NAME = "capc.db";
+    final String CAPC_DB_TABLE_NAME = "capc_db";
+    final String CAPC_DB_NAME = "capc.db";
     
     
-    final String COLUMN_POLICY_CLASS_NAME = "class_name";
-    final String COLUMN_POLICY_CLASS_ID = "PCID";
-    final String COLUMN_POLICY_CLASS_POLICIES = "capabilities";  
+    final String COLUMN_CLASS_NAME = "class_name";
+    final String COLUMN_CLASS_ID = "PCID";
+    final String COLUMN_CAPABILITIES = "capabilities";  
     final String COLUMN_STATUS = "status";
     
     LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();

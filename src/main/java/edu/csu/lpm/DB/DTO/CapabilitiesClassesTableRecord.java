@@ -24,11 +24,11 @@ import edu.csu.lpm.DB.interfaces.CapabilitiesClassesTable;
 
 public class CapabilitiesClassesTableRecord implements Record, Serializable
 {
-    private String COLUMN_POLICY_CLASS_ID = ""; /* primary key */
+    private String COLUMN_CLASS_ID = ""; /* primary key */
     
-    private String COLUMN_POLICY_CLASS_NAME = "";
+    private String COLUMN_CLASS_NAME = "";
     
-    private String COLUMN_POLICY_CLASS_POLICIES = "";
+    private String COLUMN_CAPABILITIES = "";
     
     private String COLUMN_STATUS = "";
     
@@ -37,27 +37,21 @@ public class CapabilitiesClassesTableRecord implements Record, Serializable
     /* set to indicate which field to update when calling write_Policy_Classes_Table_Record() */
     private String UPDATE_COLUMN = "";
     
-    
-public CapabilitiesClassesTableRecord()
-	{
-            
-	}
-
 
     public String get_UPDATE_COLUMN() {
         return this.UPDATE_COLUMN;
     }
     
-    public void set_UPDATE_COLUMN_to_POLICY_CLASS_ID() {
-        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID;
+    public void set_UPDATE_COLUMN_to_CLASS_ID() {
+        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_CLASS_ID;
     }
     
-    public void set_UPDATE_COLUMN_to_POLICY_CLASS_NAME() {
-        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME;
+    public void set_UPDATE_COLUMN_to_CLASS_NAME() {
+        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_CLASS_NAME;
     }
     
-    public void set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES() {
-        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES;
+    public void set_UPDATE_COLUMN_to_CAPABILITIES() {
+        this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_CAPABILITIES;
     }
 
 
@@ -65,12 +59,12 @@ public CapabilitiesClassesTableRecord()
         this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_STATUS;
     }
     
-    public String get_COLUMN_POLICY_CLASS_NAME() {
-        return this.COLUMN_POLICY_CLASS_NAME;
+    public String get_COLUMN_CLASS_NAME() {
+        return this.COLUMN_CLASS_NAME;
     }
 
-    public void set_COLUMN_POLICY_CLASS_NAME(String COLUMN_POLICY_CLASS_NAME) {
-        if (COLUMN_POLICY_CLASS_NAME != null) this.COLUMN_POLICY_CLASS_NAME = COLUMN_POLICY_CLASS_NAME;
+    public void set_COLUMN_CLASS_NAME(String COLUMN_CLASS_NAME) {
+        if (COLUMN_CLASS_NAME != null) this.COLUMN_CLASS_NAME = COLUMN_CLASS_NAME;
     }
 
     public LinuxCapabilitiesPolicyContainer.LinuxCapabilities[] get_LCS() {
@@ -131,40 +125,40 @@ public CapabilitiesClassesTableRecord()
     }        
     
     
-    public String get_COLUMN_POLICY_CLASS_POLICIES() {
-        return this.COLUMN_POLICY_CLASS_POLICIES;
+    public String get_COLUMN_CAPABILITIES() {
+        return this.COLUMN_CAPABILITIES;
     }
     
     
-    public boolean check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty() {
-        if (this.get_COLUMN_POLICY_CLASS_POLICIES().isEmpty() ) return true;
+    public boolean check_if_COLUMN_CAPABILITIES_is_Empty() {
+        if (this.get_COLUMN_CAPABILITIES().isEmpty() ) return true;
         else return false;
     }
     
 
-    public void set_COLUMN_POLICY_CLASS_POLICIES(String COLUMN_CAPS) {
+    public void set_COLUMN_CAPABILITIES(String COLUMN_CAPS) {
         if (COLUMN_CAPS != null)
         { 
             if (this.check_if_Capabilities_are_valid(COLUMN_CAPS.trim()) != -1 )
-                this.COLUMN_POLICY_CLASS_POLICIES = COLUMN_CAPS.trim();
+                this.COLUMN_CAPABILITIES = COLUMN_CAPS.trim();
             
         }    
             
     }
     
     
-    public void reset_COLUMN_POLICY_CLASS_POLICIES() {
-           this.COLUMN_POLICY_CLASS_POLICIES = "";
+    public void reset_COLUMN_CAPABILITIES() {
+           this.COLUMN_CAPABILITIES = "";
     }
     
     
-    public void add_POLICY_CLASS_POLICY(String CAP) {
+    public void add_CAPABILITY(String CAP) {
         String policies[] = null;
         if (CAP != null)
         {
             if (this.check_if_Capability_is_valid(CAP) == 0)
             {   
-                policies = this.COLUMN_POLICY_CLASS_POLICIES.trim().split(" ");
+                policies = this.COLUMN_CAPABILITIES.trim().split(" ");
                 
                 if (policies != null)
                 {    
@@ -177,23 +171,23 @@ public CapabilitiesClassesTableRecord()
                                 return; // policy already exists
                         }
                         
-                        this.COLUMN_POLICY_CLASS_POLICIES = ""; //reset to incorporate a new policy
+                        this.COLUMN_CAPABILITIES = ""; //reset to incorporate a new policy
                         
                         if (policies[0].length() == 0) //if COLUMN_POLICY_CLASS_POLICIES is empty
                         {    
-                            this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(CAP.trim());
-                            this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(" ");
+                            this.COLUMN_CAPABILITIES = this.COLUMN_CAPABILITIES.concat(CAP.trim());
+                            this.COLUMN_CAPABILITIES = this.COLUMN_CAPABILITIES.concat(" ");
                         } else //if at least a single policy exists
                         {
                             for (int i = 0; i < policies.length; i++)
                             { 
-                                this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(policies[i]);
-                                this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(" ");        
+                                this.COLUMN_CAPABILITIES = this.COLUMN_CAPABILITIES.concat(policies[i]);
+                                this.COLUMN_CAPABILITIES = this.COLUMN_CAPABILITIES.concat(" ");        
                             }
                         
                             //now add the new policy
-                            this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(CAP.trim());
-                            this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(" ");
+                            this.COLUMN_CAPABILITIES = this.COLUMN_CAPABILITIES.concat(CAP.trim());
+                            this.COLUMN_CAPABILITIES = this.COLUMN_CAPABILITIES.concat(" ");
 
                         }                                      
                     }              
@@ -202,21 +196,21 @@ public CapabilitiesClassesTableRecord()
         }    
     }
     
-    public void remove_POLICY_CLASS_POLICY(String CAP) {
+    public void remove_CAPABILITY(String CAP) {
         String policies[] = null;
         if (CAP != null)
         {
             if (this.check_if_Capability_is_valid(CAP) == 0)
             {
                 
-                policies = this.COLUMN_POLICY_CLASS_POLICIES.trim().split(" ");
+                policies = this.COLUMN_CAPABILITIES.trim().split(" ");
                 
                 if (policies != null)
                 {    
                     if (policies.length > 0) //it is always the case since even the empty string is tokenized into a 1 element array
                     {
                         //System.out.println("check_if_Capabilities_are_valid: policies len is: " + policies.length);
-                        this.COLUMN_POLICY_CLASS_POLICIES = ""; //reset to incorporate a new policy
+                        this.COLUMN_CAPABILITIES = ""; //reset to incorporate a new policy
                         
                         for (int i = 0; i < policies.length; i++)
                         {    
@@ -225,8 +219,8 @@ public CapabilitiesClassesTableRecord()
                                 ; // skip the policy 
                             } else //rewrite the rest
                             {    
-                                this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(policies[i]);
-                                this.COLUMN_POLICY_CLASS_POLICIES = this.COLUMN_POLICY_CLASS_POLICIES.concat(" ");  
+                                this.COLUMN_CAPABILITIES = this.COLUMN_CAPABILITIES.concat(policies[i]);
+                                this.COLUMN_CAPABILITIES = this.COLUMN_CAPABILITIES.concat(" ");  
                             }
                         }
                         
@@ -258,9 +252,9 @@ public CapabilitiesClassesTableRecord()
     }
     
     
-    public String produce_PCS_DB_DDL()
+    public String produce_CAPC_DB_DDL()
     {
-        String Columns = "( " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + ", " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME + ", " + CapabilitiesClassesTable.COLUMN_STATUS + ", ";
+        String Columns = "( " + CapabilitiesClassesTable.COLUMN_CLASS_ID + ", " + CapabilitiesClassesTable.COLUMN_CLASS_NAME + ", " + CapabilitiesClassesTable.COLUMN_STATUS + ", ";
         
         for (int i = 0; i < CapabilitiesClassesTable.LCS.length; i++)
             if (i != CapabilitiesClassesTable.LCS.length - 1)
@@ -272,20 +266,20 @@ public CapabilitiesClassesTableRecord()
     }     
     
 
-    public String get_COLUMN_POLICY_CLASS_ID() {
-        return this.COLUMN_POLICY_CLASS_ID;
+    public String get_COLUMN_CLASS_ID() {
+        return this.COLUMN_CLASS_ID;
     }
 
-    public void set_COLUMN_POLICY_CLASS_ID(String COLUMN_POLICY_CLASS_ID) 
+    public void set_COLUMN_CLASS_ID(String COLUMN_CLASS_ID) 
     {   
         Integer id = null;
         
-        if (COLUMN_POLICY_CLASS_ID != null)
+        if (COLUMN_CLASS_ID != null)
         {
            try
            {//check if string is a number    
-               id = Integer.valueOf(COLUMN_POLICY_CLASS_ID);
-               this.COLUMN_POLICY_CLASS_ID = id.toString();
+               id = Integer.valueOf(COLUMN_CLASS_ID);
+               this.COLUMN_CLASS_ID = id.toString();
                id = null;
            } catch (NumberFormatException nfex)
            {

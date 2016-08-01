@@ -61,33 +61,33 @@ public interface DB_Constants
         final String DELETE_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "delete from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
 
         
-        /* policy classes table operations */
+        /* capabilities classes table operations */
         
         //Policy_Classes_Table_Record pctr = new Policy_Classes_Table_Record();
         
         //final String PCS_DB_SCHEMA = pctr.produce_PCS_DB_DDL();
         
-        final String PCS_DB_SCHEMA = "( " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + ", " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME + ", " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES + ", " + CapabilitiesClassesTable.COLUMN_STATUS + ") ";
+        final String CAPC_DB_SCHEMA = "( " + CapabilitiesClassesTable.COLUMN_CLASS_ID + ", " + CapabilitiesClassesTable.COLUMN_CLASS_NAME + ", " + CapabilitiesClassesTable.COLUMN_CAPABILITIES + ", " + CapabilitiesClassesTable.COLUMN_STATUS + ") ";
         
-        final String create_PCS_DB_SQL = "create table " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + PCS_DB_SCHEMA;
+        final String create_CAPC_DB_SQL = "create table " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME + CAPC_DB_SCHEMA;
         
-        final String drop_PCS_DB_SQL = "drop table if exists " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME;
+        final String drop_CAPC_DB_SQL = "drop table if exists " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME;
         
-        final String SELECT_ALL_FROM_PCS_DB_ON_PCID_SQL = "select " + ALL + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME  + " where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID  + " = ?";
+        final String SELECT_ALL_FROM_CAPC_DB_ON_CID_SQL = "select " + ALL + " from " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME  + " where " + CapabilitiesClassesTable.COLUMN_CLASS_ID  + " = ?";
         
-        final String SELECT_ALL_FROM_CAPC_DB_SQL = "select distinct " + ALL + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME;
+        final String SELECT_ALL_FROM_CAPC_DB_SQL = "select distinct " + ALL + " from " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME;
         
-        final String SELECT_FROM_PCS_DB_COUNT_POLICY_CLASSES_ON_PCID_SQL = "select distinct count(*) as " + COUNT + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME;
+        final String SELECT_FROM_CAPC_DB_COUNT_CAPABILITIES_ON_CID_SQL = "select distinct count(*) as " + COUNT + " from " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME;
         
-        final String SELECT_FROM_PCS_DB_ON_PCID_SQL = "select " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME  + " where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String SELECT_FROM_CAPC_DB_ON_CID_SQL = "select " + CapabilitiesClassesTable.COLUMN_CLASS_ID + " from " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME  + " where " + CapabilitiesClassesTable.COLUMN_CLASS_ID + " = ?";
         
-        final String INSERT_INTO_CAPC_DB_SQL = "insert into " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
+        final String INSERT_INTO_CAPC_DB_SQL = "insert into " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
         
-        final String UPDATE_CAPC_DB_COLUMN_CAPS_ON_CID_SQL = "update " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " set " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_POLICIES + " = ? "  + "where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String UPDATE_CAPC_DB_COLUMN_CAPS_ON_CID_SQL = "update " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME + " set " + CapabilitiesClassesTable.COLUMN_CAPABILITIES + " = ? "  + "where " + CapabilitiesClassesTable.COLUMN_CLASS_ID + " = ?";
         
-        final String UPDATE_CAPC_DB_COLUMN_NAME_ON_CID_SQL = "update " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " set " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_NAME + " = ? "  + "where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String UPDATE_CAPC_DB_COLUMN_NAME_ON_CID_SQL = "update " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME + " set " + CapabilitiesClassesTable.COLUMN_CLASS_NAME + " = ? "  + "where " + CapabilitiesClassesTable.COLUMN_CLASS_ID + " = ?";
                 
-        final String DELETE_FROM_CAPC_DB_ON_CID_SQL = "delete from " + CapabilitiesClassesTable.PCS_DB_TABLE_NAME + " where " + CapabilitiesClassesTable.COLUMN_POLICY_CLASS_ID + " = ?";
+        final String DELETE_FROM_CAPC_DB_ON_CID_SQL = "delete from " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME + " where " + CapabilitiesClassesTable.COLUMN_CLASS_ID + " = ?";
 
         
         /* communicative class operations */

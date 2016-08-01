@@ -327,16 +327,16 @@ public class DB_UnitTests {
         String value = null;
         CapabilitiesClassesTableRecord r = new CapabilitiesClassesTableRecord();
         
-        r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.set_COLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
+        r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
         r.set_COLUMN_STATUS(this.COLUMN_STATUS);
         
         
-        value = r.get_COLUMN_POLICY_CLASS_ID();
+        value = r.get_COLUMN_CLASS_ID();
 	assertNotNull(value);
 	System.out.println("PCID is: " + value);
         
-        value = r.get_COLUMN_POLICY_CLASS_NAME();
+        value = r.get_COLUMN_CLASS_NAME();
 	assertNotNull(value);
 	System.out.println("PC name is: " + value);
         
@@ -354,91 +354,91 @@ public class DB_UnitTests {
 	assertNotNull(value);
 	System.out.println("status is: " + value);
         
-        r.set_UPDATE_COLUMN_to_POLICY_CLASS_ID();
+        r.set_UPDATE_COLUMN_to_CLASS_ID();
         
         value = r.get_UPDATE_COLUMN();
 	assertNotNull(value);
 	System.out.println("update column is: " + value);
         
-        r.set_UPDATE_COLUMN_to_POLICY_CLASS_NAME();
+        r.set_UPDATE_COLUMN_to_CLASS_NAME();
         
         value = r.get_UPDATE_COLUMN();
 	assertNotNull(value);
 	System.out.println("update column is: " + value);
         
-        r.set_UPDATE_COLUMN_to_POLICY_CLASS_POLICIES();
+        r.set_UPDATE_COLUMN_to_CAPABILITIES();
         
         value = r.get_UPDATE_COLUMN();
 	assertNotNull(value);
 	System.out.println("update column is: " + value);
         
         
-        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+        boolValue = r.check_if_COLUMN_CAPABILITIES_is_Empty();
 	assertNotNull(boolValue);
 	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        r.add_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
-	assertNotNull(boolValue);
-	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
-        
-        
-        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
-	assertNotNull(value);
-	System.out.println("caps are: " + value);
-        
-        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+        boolValue = r.check_if_COLUMN_CAPABILITIES_is_Empty();
 	assertNotNull(boolValue);
 	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
         
         
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        r.remove_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        boolValue = r.check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty();
+        boolValue = r.check_if_COLUMN_CAPABILITIES_is_Empty();
 	assertNotNull(boolValue);
 	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
         
         
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        r.add_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        boolValue = r.check_if_COLUMN_CAPABILITIES_is_Empty();
+	assertNotNull(boolValue);
+	System.out.println("check_if_COLUMN_POLICY_CLASS_POLICIES_is_Empty: boolean value is: " + boolValue);
+        
+        
+        r.add_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        r.remove_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        r.add_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        r.add_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        r.add_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
-        r.remove_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        value = r.get_COLUMN_POLICY_CLASS_POLICIES();
+        r.remove_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_WRITE.toString());
+        value = r.get_COLUMN_CAPABILITIES();
+	assertNotNull(value);
+	System.out.println("caps are: " + value);
+        
+        r.remove_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        value = r.get_COLUMN_CAPABILITIES();
 	assertNotNull(value);
 	System.out.println("caps are: " + value);
         
@@ -486,10 +486,10 @@ public class DB_UnitTests {
         
 	assertNotNull(db);
         
-        output = db.drop_Table_PCS_DB();
+        output = db.drop_Table_CAPC_DB();
 	assertTrue("drop_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        output = db.create_Table_PCS_DB();
+        output = db.create_Table_CAPC_DB();
 	assertTrue("create_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
         db.closeConnection();
@@ -518,22 +518,22 @@ public class DB_UnitTests {
         
 	assertNotNull(db);
         
-        output = db.drop_Table_PCS_DB();
+        output = db.drop_Table_CAPC_DB();
 	assertTrue("drop_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        output = db.create_Table_PCS_DB();
+        output = db.create_Table_CAPC_DB();
 	assertTrue("create_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
        
-        r.set_COLUMN_POLICY_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.set_COLUMN_POLICY_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
+        r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        r.set_COLUMN_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
         r.set_COLUMN_STATUS(this.COLUMN_STATUS);
         
        
         r.set_COLUMN_STATUS_Active();
         
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
-        r.add_POLICY_CLASS_POLICY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
+        r.add_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString());
+        r.add_CAPABILITY(LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_AUDIT_CONTROL.toString());
         
         
         
@@ -561,9 +561,9 @@ public class DB_UnitTests {
 	
         if (recs != null)
         {    
-            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   PCID is: " + recs[0].get_COLUMN_POLICY_CLASS_ID());
-            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   class name is: " + recs[0].get_COLUMN_POLICY_CLASS_NAME());
-            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   CAPS are: " + recs[0].get_COLUMN_POLICY_CLASS_POLICIES());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   PCID is: " + recs[0].get_COLUMN_CLASS_ID());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   class name is: " + recs[0].get_COLUMN_CLASS_NAME());
+            System.out.println("read_Policy_Classes_Table_Records_On_PCID:   CAPS are: " + recs[0].get_COLUMN_CAPABILITIES());
             System.out.println("read_Policy_Classes_Table_Records_On_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
@@ -573,9 +573,9 @@ public class DB_UnitTests {
 	
         if (recs != null)
         {    
-            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   PCID is: " + recs[0].get_COLUMN_POLICY_CLASS_ID());
-            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   class name is: " + recs[0].get_COLUMN_POLICY_CLASS_NAME());
-            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   CAPS are: " + recs[0].get_COLUMN_POLICY_CLASS_POLICIES());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   PCID is: " + recs[0].get_COLUMN_CLASS_ID());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   class name is: " + recs[0].get_COLUMN_CLASS_NAME());
+            System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   CAPS are: " + recs[0].get_COLUMN_CAPABILITIES());
             System.out.println("read_Policy_Classes_Table_Records_On_All_Classes:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         

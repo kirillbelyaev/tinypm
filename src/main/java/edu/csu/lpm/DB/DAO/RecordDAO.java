@@ -59,11 +59,11 @@ public interface RecordDAO extends DB_Base
     public int delete_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     
-    /* policy classes table operations */
+    /* capabilities classes table operations */
     
-    public int create_Table_PCS_DB() throws RecordDAO_Exception;
+    public int create_Table_CAPC_DB() throws RecordDAO_Exception;
     
-    public int drop_Table_PCS_DB() throws RecordDAO_Exception;
+    public int drop_Table_CAPC_DB() throws RecordDAO_Exception;
     
     public CapabilitiesClassesTableRecord[] read_Capabilities_Classes_Table_Records_On_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
