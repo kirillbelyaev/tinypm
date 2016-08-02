@@ -31,9 +31,8 @@ import static org.junit.Assert.*;
  *
  * @author kirill
  */
-public class DB_Communicative_Classes_Table_UnitTests 
+public class DB_CommunicativeClassesTable_UnitTests 
 {
-    
     
     @BeforeClass
     public static void setUpClass() {

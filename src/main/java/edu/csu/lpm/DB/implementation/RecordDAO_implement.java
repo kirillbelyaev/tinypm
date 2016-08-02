@@ -1,8 +1,21 @@
+
 /*
-tinyPM Prototype
-Kirill Belyaev. Copyright (c) @2015 Colorado State University 
-Department of Computer Science, Fort Collins, CO  80523-1873, USA
+ * Linux Policy Machine (LPM) Prototype
+ *   
+ * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Colorado State University
+ * Department of Computer Science,
+ * Fort Collins, CO  80523-1873, USA
+ *
+ * E-mail contact:
+ * kirillbelyaev@yahoo.com
+ * kirill@cs.colostate.edu
+ *   
+ * This work is licensed under the Creative Commons Attribution-NonCommercial 3.0 Unported License. 
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/3.0/ or send 
+ * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
+
 
 
 /*
@@ -57,7 +70,7 @@ public class RecordDAO_implement implements RecordDAO
             } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }	
     }
         
-    private int check_If_Apps_Table_Record_Exists(ComponentsTableRecord r) throws RecordDAO_Exception //on app_path and PCID
+    private int check_If_Components_Table_Record_Exists(ComponentsTableRecord r) throws RecordDAO_Exception //on app_path and PCID
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -73,7 +86,7 @@ public class RecordDAO_implement implements RecordDAO
                     //ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
                 
                     /* we have to make sure that only a single app record with app_path column exists in the db */
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_APPS_DB_ON_APP_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL);
 
                     int index = 1;
 
@@ -102,7 +115,7 @@ public class RecordDAO_implement implements RecordDAO
         
         
     @Override
-    public int write_Apps_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception
+    public int write_Components_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             
@@ -116,18 +129,18 @@ public class RecordDAO_implement implements RecordDAO
                 
                 if (this.check_If_Capabilities_Classes_Table_Record_Exists(pcr) == EMPTY_RESULT) return INDICATE_CONDITIONAL_EXIT_STATUS; //no record exists
                 
-                if (this.check_If_Apps_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
+                if (this.check_If_Components_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
                 {	
-                        if (this.insert_Apps_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        if (this.insert_Components_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
 
-                } else if (this.check_If_Apps_Table_Record_Exists(r) == RECORD_EXISTS) 
+                } else if (this.check_If_Components_Table_Record_Exists(r) == RECORD_EXISTS) 
                 {/* record exists */
                     /* if record exists - just update it */	
                     if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID)) /* check if the update column
                             is a PCID column */
                     {
-                        if (this.update_Apps_Table_Record_on_APP_and_PCID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        if (this.update_Components_Table_Record_on_Component_and_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                 }
 
@@ -136,7 +149,7 @@ public class RecordDAO_implement implements RecordDAO
     }
 
     
-    private int insert_Apps_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception
+    private int insert_Components_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -147,7 +160,7 @@ public class RecordDAO_implement implements RecordDAO
             {
                     if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                     {
-                            ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_APPS_DB_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_COMPONENTS_DB_SQL);
 
                             int index = 1;
 
@@ -170,7 +183,7 @@ public class RecordDAO_implement implements RecordDAO
     }
     
     
-    private int update_Apps_Table_Record_on_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception
+    private int update_Components_Table_Record_on_Component_and_CID(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -181,7 +194,7 @@ public class RecordDAO_implement implements RecordDAO
             {
                     if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
                     {	
-                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_APPS_DB_ON_APP_SET_PCID_SQL);
+                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_CID_SQL);
 
                             int index = 1;
                             
@@ -208,7 +221,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int delete_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception
+    public int delete_Components_Table_Records_On_Component_and_CID(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
              if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -218,7 +231,7 @@ public class RecordDAO_implement implements RecordDAO
             
             try 
             {	
-                    ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CID_SQL);
 
                     int index = 1;
 
@@ -249,7 +262,7 @@ public class RecordDAO_implement implements RecordDAO
     /* new API methods to support the policy class abstraction */
     
     @Override
-    public int createTable_APPS_DB() throws RecordDAO_Exception
+    public int createTable_Components_DB() throws RecordDAO_Exception
     {
             Statement state = null;
             
@@ -258,7 +271,7 @@ public class RecordDAO_implement implements RecordDAO
             try 
             {
                     state = this.conn.createStatement();
-                    state.executeUpdate(DB_Constants.create_APPS_DB_SQL);
+                    state.executeUpdate(DB_Constants.create_COMPONENTS_DB_SQL);
 
             } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
 
@@ -267,7 +280,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int dropTable_APPS_DB() throws RecordDAO_Exception
+    public int dropTable_Components_DB() throws RecordDAO_Exception
     {
             Statement state = null;
             
@@ -276,14 +289,14 @@ public class RecordDAO_implement implements RecordDAO
             try 
             {
                     state = this.conn.createStatement();
-                    state.executeUpdate(DB_Constants.drop_APPS_DB_SQL);
+                    state.executeUpdate(DB_Constants.drop_COMPONENTS_DB_SQL);
             } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
                     return INDICATE_EXECUTION_SUCCESS;
     }
     
     
     @Override
-    public ComponentsTableRecord[] read_Apps_Table_Records_On_APP(ComponentsTableRecord r) throws RecordDAO_Exception       
+    public ComponentsTableRecord[] read_Components_Table_Records_On_Component(ComponentsTableRecord r) throws RecordDAO_Exception       
     {
             if (r == null) return null;
             if (this.conn == null) return null;
@@ -295,7 +308,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_APPS_DB_ON_APP_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL);
 
                     int index = 1;
 
@@ -340,7 +353,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public ComponentsTableRecord[] read_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception       
+    public ComponentsTableRecord[] read_Components_Table_Records_On_Component_and_CID(ComponentsTableRecord r) throws RecordDAO_Exception       
     {
             if (r == null) return null;
             if (this.conn == null) return null;
@@ -352,7 +365,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CID_SQL);
 
                     int index = 1;
 
@@ -400,7 +413,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public ComponentsTableRecord[] read_Apps_Table_Records_On_PCID(ComponentsTableRecord r) throws RecordDAO_Exception       
+    public ComponentsTableRecord[] read_Components_Table_Records_On_CID(ComponentsTableRecord r) throws RecordDAO_Exception       
     {
             if (r == null) return null;
             if (this.conn == null) return null;
@@ -412,7 +425,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_APPS_DB_ON_PCID_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_CID_SQL);
 
                     int index = 1;
 
@@ -458,7 +471,7 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public ComponentsTableRecord[] read_Apps_Table_Records_On_All_APPs() throws RecordDAO_Exception //table name, uid
+    public ComponentsTableRecord[] read_Components_Table_Records_On_All_Components() throws RecordDAO_Exception //table name, uid
     {
             if (this.conn == null) return null;
 
@@ -469,7 +482,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_APPS_DB_ALL_APPS_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ALL_COMPONENTS_SQL);
 
                     int index = 1;
 
@@ -506,7 +519,7 @@ public class RecordDAO_implement implements RecordDAO
      
      
     @Override
-    public Integer count_Distinct_Apps_Table_Records_on_PCID(ComponentsTableRecord r) throws RecordDAO_Exception
+    public Integer count_Distinct_Components_Table_Records_on_CID(ComponentsTableRecord r) throws RecordDAO_Exception
     {
             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
             if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -518,7 +531,7 @@ public class RecordDAO_implement implements RecordDAO
 
             try 
             {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_APPS_DB_COUNT_APPS_ON_PCID_SQL);
+                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_CID_SQL);
 
                     int index = 1;
 

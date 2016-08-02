@@ -779,7 +779,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    count = this.db.count_Distinct_Apps_Table_Records_on_PCID(this.apprec);
+                    count = this.db.count_Distinct_Components_Table_Records_on_CID(this.apprec);
                     this.set_ResultSize(count);
                     this.refill_ResultOutput(count.toString());
                     return INDICATE_EXECUTION_SUCCESS;
@@ -811,7 +811,7 @@ public class Parser_implement implements Parser
         {//execute the db layer
             if (this.db != null)
             {    
-                appsr = this.db.read_Apps_Table_Records_On_PCID(this.apprec);  
+                appsr = this.db.read_Components_Table_Records_On_CID(this.apprec);  
             }    
         } catch (RecordDAO_Exception rex) 
         {
@@ -904,7 +904,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Apps_Table_Record(this.apprec) == INDICATE_EXECUTION_SUCCESS) {    
+                    if (this.db.write_Components_Table_Record(this.apprec) == INDICATE_EXECUTION_SUCCESS) {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
                         return INDICATE_EXECUTION_SUCCESS;

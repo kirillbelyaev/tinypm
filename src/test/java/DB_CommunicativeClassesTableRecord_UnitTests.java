@@ -29,8 +29,7 @@ import static org.junit.Assert.*;
  */
 public class DB_CommunicativeClassesTableRecord_UnitTests 
 {
-    
-    
+       
     @BeforeClass
     public static void setUpClass() {
     }

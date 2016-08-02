@@ -1,8 +1,21 @@
+
 /*
-tinyPM Prototype
-Kirill Belyaev. Copyright (c) @2015 Colorado State University 
-Department of Computer Science, Fort Collins, CO  80523-1873, USA
+ * Linux Policy Machine (LPM) Prototype
+ *   
+ * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Colorado State University
+ * Department of Computer Science,
+ * Fort Collins, CO  80523-1873, USA
+ *
+ * E-mail contact:
+ * kirillbelyaev@yahoo.com
+ * kirill@cs.colostate.edu
+ *   
+ * This work is licensed under the Creative Commons Attribution-NonCommercial 3.0 Unported License. 
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/3.0/ or send 
+ * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
+
 
 /*
  Data access object
@@ -38,25 +51,25 @@ public interface RecordDAO extends DB_Base
     
     /* new API methods to support the policy class abstraction */
     
-    /* apps table operations */
+    /* Components table operations */
     
-    public int createTable_APPS_DB() throws RecordDAO_Exception;
+    public int createTable_Components_DB() throws RecordDAO_Exception;
     
-    public int dropTable_APPS_DB() throws RecordDAO_Exception;
+    public int dropTable_Components_DB() throws RecordDAO_Exception;
     
-    public ComponentsTableRecord[] read_Apps_Table_Records_On_APP(ComponentsTableRecord r) throws RecordDAO_Exception;
+    public ComponentsTableRecord[] read_Components_Table_Records_On_Component(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public ComponentsTableRecord[] read_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
+    public ComponentsTableRecord[] read_Components_Table_Records_On_Component_and_CID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public ComponentsTableRecord[] read_Apps_Table_Records_On_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
+    public ComponentsTableRecord[] read_Components_Table_Records_On_CID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public ComponentsTableRecord[] read_Apps_Table_Records_On_All_APPs() throws RecordDAO_Exception;
+    public ComponentsTableRecord[] read_Components_Table_Records_On_All_Components() throws RecordDAO_Exception;
     
-    public Integer count_Distinct_Apps_Table_Records_on_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
+    public Integer count_Distinct_Components_Table_Records_on_CID(ComponentsTableRecord r) throws RecordDAO_Exception;
      
-    public int write_Apps_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception;
+    public int write_Components_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public int delete_Apps_Table_Records_On_APP_and_PCID(ComponentsTableRecord r) throws RecordDAO_Exception;
+    public int delete_Components_Table_Records_On_Component_and_CID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     
     /* capabilities classes table operations */

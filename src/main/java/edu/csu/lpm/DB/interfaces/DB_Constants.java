@@ -1,7 +1,19 @@
+
 /*
-tinyPM Prototype
-Kirill Belyaev. Copyright (c) @2015 Colorado State University 
-Department of Computer Science, Fort Collins, CO  80523-1873, USA
+ * Linux Policy Machine (LPM) Prototype
+ *   
+ * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Colorado State University
+ * Department of Computer Science,
+ * Fort Collins, CO  80523-1873, USA
+ *
+ * E-mail contact:
+ * kirillbelyaev@yahoo.com
+ * kirill@cs.colostate.edu
+ *   
+ * This work is licensed under the Creative Commons Attribution-NonCommercial 3.0 Unported License. 
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/3.0/ or send 
+ * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
 
@@ -34,31 +46,31 @@ public interface DB_Constants
         
         /* new API methods to support the policy class abstraction */
         
-        /* apps table operations */
+        /* COMPONENTS table operations */
         
-        final String APPS_DB_SCHEMA  = " (" + ComponentsTable.COLUMN_COMPONENT_DESC + "," + ComponentsTable.COLUMN_COMPONENT_PATH_ID + "," + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + "," + ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID + "," + ComponentsTable.COLUMN_STATUS + ") ";
+        final String COMPONENTS_DB_SCHEMA  = " (" + ComponentsTable.COLUMN_COMPONENT_DESC + "," + ComponentsTable.COLUMN_COMPONENT_PATH_ID + "," + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + "," + ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID + "," + ComponentsTable.COLUMN_STATUS + ") ";
         
-        final String create_APPS_DB_SQL = "create table " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + APPS_DB_SCHEMA;
+        final String create_COMPONENTS_DB_SQL = "create table " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + COMPONENTS_DB_SCHEMA;
         
-        final String drop_APPS_DB_SQL = "drop table if exists " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
+        final String drop_COMPONENTS_DB_SQL = "drop table if exists " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_APPS_DB_ON_APP_SQL = "select * from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
+        final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL = "select * from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
-        final String SELECT_FROM_APPS_DB_ALL_APPS_SQL = "select distinct " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
+        final String SELECT_FROM_COMPONENTS_DB_ALL_COMPONENTS_SQL = "select distinct " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_APPS_DB_COUNT_APPS_ON_PCID_SQL = "select count(*) as " + COUNT + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
+        final String SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_CID_SQL = "select count(*) as " + COUNT + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
         
-        final String SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
+        final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
         
-        final String SELECT_FROM_APPS_DB_ON_PCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
+        final String SELECT_FROM_COMPONENTS_DB_ON_CID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
         
-        final String UPDATE_APPS_DB_ON_APP_AND_PCID_SET_PCID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
+        final String UPDATE_COMPONENTS_DB_ON_COMPONENT_AND_CID_SET_CID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
         
-        final String UPDATE_APPS_DB_ON_APP_SET_PCID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
+        final String UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_CID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
-        final String INSERT_INTO_APPS_DB_SQL = "insert into " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
+        final String INSERT_INTO_COMPONENTS_DB_SQL = "insert into " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
         
-        final String DELETE_FROM_APPS_DB_ON_APP_AND_PCID_SQL = "delete from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
+        final String DELETE_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CID_SQL = "delete from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
 
         
         /* capabilities classes table operations */
