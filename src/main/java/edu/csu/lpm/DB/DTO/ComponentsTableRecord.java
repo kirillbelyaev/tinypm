@@ -156,6 +156,16 @@ public class ComponentsTableRecord implements Record, Serializable
     public void set_COLUMN_COMPONENT_CONTAINER_ID(String COLUMN_COMPONENT_CONTAINER_ID) {
         if (COLUMN_COMPONENT_CONTAINER_ID != null) this.COLUMN_COMPONENT_CONTAINER_ID = COLUMN_COMPONENT_CONTAINER_ID;
     }
+    
+    public String get_COLUMN_COMPONENT_ID() 
+    {
+        return this.COLUMN_COMPONENT_ID;
+    }
+
+    public void set_COLUMN_COMPONENT_ID(String COLUMN_COMPONENT_ID) 
+    {
+        if (COLUMN_COMPONENT_ID != null) this.COLUMN_COMPONENT_ID = COLUMN_COMPONENT_ID;
+    }
 
     public String get_COLUMN_STATUS() {
         return this.COLUMN_STATUS;
@@ -179,6 +189,15 @@ public class ComponentsTableRecord implements Record, Serializable
             this.COLUMN_STATUS = zero.toString();
     }
 
-    
+    public String get_COLUMN_COMPONENT_TUPLE_SPACE_PATH() 
+    {
+        return this.COLUMN_COMPONENT_TUPLE_SPACE_PATH;
+    }
      
+    
+    public void set_COLUMN_COMPONENT_TUPLE_SPACE_PATH(String COLUMN_COMPONENT_TUPLE_SPACE_PATH) 
+    {
+        if (COLUMN_COMPONENT_TUPLE_SPACE_PATH != null) this.COLUMN_COMPONENT_TUPLE_SPACE_PATH = COLUMN_COMPONENT_TUPLE_SPACE_PATH;
+    }
+    
 }

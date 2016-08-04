@@ -33,7 +33,18 @@ import static org.junit.Assert.*;
  * @author kirill
  */
 public class DB_ComponentsTable_UnitTests 
-{
+{  
+    private final String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
+    private final String COLUMN_COMPONENT_DESC = "icmp ping tool";
+    private final String COLUMN_COMPONENT_PATH_ID = "/bin/ping";
+    private final String COLUMN_COMPONENT_INVALID_PATH_ID = "/bin/x/ping";
+    private final String COLUMN_COMPONENT_CAP_CLASS_ID = "1";
+    private final String COLUMN_COMPONENT_COM_CLASS_ID = "1";
+    private final String COLUMN_COMPONENT_CONTAINER_ID = "";
+    private final String COLUMN_COMPONENT_ID = "";
+    private final String COLUMN_COMPONENT_TUPLE_SPACE_PATH = "";
+    private final String COLUMN_STATUS = "1";
+    
     
     @BeforeClass
     public static void setUpClass() {
@@ -50,10 +61,6 @@ public class DB_ComponentsTable_UnitTests
     @After
     public void tearDown() {
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
      
     @Test
     public void small_tests() 
@@ -81,87 +88,12 @@ public class DB_ComponentsTable_UnitTests
       
     }
     
-    
-    String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
-    
-    //Apps_Table_Record
-    private final String COLUMN_APP_DESC = "icmp ping tool";
-    private final String COLUMN_APP_PATH = "/bin/ping";
-    private final String COLUMN_APP_PATH_INVALID = "/bin/x/ping";
-    private final String COLUMN_POLICY_CLASS_ID = "1";
-    private final String COLUMN_APP_CONTAINER_ID = "1";
-    private final String COLUMN_STATUS = "1";
-    private final String COLUMN_POLICY_CLASS_NAME = "general applications policy class";
-    
-     //Policy_Classes_Table_Record
-    
-    @Test
-    public void test_Components_Table_Record() 
-    {
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("started test_Apps_Table_Record... ");
-        
-        ComponentsTableRecord r = new ComponentsTableRecord();
-        String value = null;
-        
-        r.set_COLUMN_COMPONENT_DESC(this.COLUMN_APP_DESC);
-        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
-        r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
-        r.set_Status_Active();
-        
-        value = r.get_COLUMN_STATUS();
-	assertNotNull(value);
-	System.out.println("status is: " + value);
-        
-        r.set_COLUMN_STATUS(null);
-	value = r.get_COLUMN_STATUS();
-	assertNotNull(value);
-	System.out.println("status is: " + value);
-        
-        r.set_Status_Inactive();
-	value = r.get_COLUMN_STATUS();
-	assertNotNull(value);
-	System.out.println("status is: " + value);
-        
-        value = r.get_COLUMN_COMPONENT_PATH_ID();
-	assertNotNull(value);
-	System.out.println("app path is: " + value);
-        
-        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH_INVALID);
-        
-        value = r.get_COLUMN_COMPONENT_PATH_ID();
-	assertNotNull(value);
-	System.out.println("app path is: " + value);
-        
-        
-        value = r.get_COLUMN_COMPONENT_DESC();
-	assertNotNull(value);
-	System.out.println("app desc is: " + value);
-        
-        value = r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID();
-	assertNotNull(value);
-	System.out.println("PCID is: " + value);
-        
-        value = r.get_COLUMN_COMPONENT_CONTAINER_ID();
-	assertNotNull(value);
-	System.out.println("app container ID is: " + value);
-        
-        System.out.println("\n"); 
-        System.out.println("--------------------------------------");
-        System.out.println("finished test_Apps_Table_Record... ");
-        
-    }
-    
-    
-    
     @Test
     public void test_Components_Table_create_drop() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("started test_Apps_Table_create_drop... ");
+        System.out.println("started test_Components_Table_create_drop... ");
 
         int output = -1;
         boolean Out;
@@ -183,7 +115,7 @@ public class DB_ComponentsTable_UnitTests
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("finished test_Apps_Table_create_drop... ");
+        System.out.println("finished test_Components_Table_create_drop... ");
     }
      
      
@@ -192,7 +124,7 @@ public class DB_ComponentsTable_UnitTests
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("started test_Apps_Table_CRUD_operations... ");
+        System.out.println("started test_Components_Table_CRUD_operations... ");
         
         int output = -1;
         boolean Out;
@@ -211,11 +143,13 @@ public class DB_ComponentsTable_UnitTests
         output = db.createTable_Components_DB();
 	assertTrue("createTable_APPS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
-        r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        
-        r.set_COLUMN_COMPONENT_DESC(this.COLUMN_APP_DESC);
-        r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
+        r.set_COLUMN_COMPONENT_DESC(this.COLUMN_COMPONENT_DESC);
+        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_PATH_ID);
+        r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_COMPONENT_CAP_CLASS_ID);
+        r.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.COLUMN_COMPONENT_COM_CLASS_ID);
+        r.set_COLUMN_COMPONENT_TUPLE_SPACE_PATH(this.COLUMN_COMPONENT_TUPLE_SPACE_PATH);
+        r.set_COLUMN_COMPONENT_ID(this.COLUMN_COMPONENT_ID);
+        r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_COMPONENT_CONTAINER_ID);
         r.set_Status_Active();
         
         
@@ -300,7 +234,7 @@ public class DB_ComponentsTable_UnitTests
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("finished test_Apps_Table_CRUD_operations... ");
+        System.out.println("finished test_Components_Table_CRUD_operations... ");
         
     }
 

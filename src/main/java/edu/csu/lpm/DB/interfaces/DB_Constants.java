@@ -48,7 +48,10 @@ public interface DB_Constants
         
         /* COMPONENTS table operations */
         
-        final String COMPONENTS_DB_SCHEMA  = " (" + ComponentsTable.COLUMN_COMPONENT_DESC + "," + ComponentsTable.COLUMN_COMPONENT_PATH_ID + "," + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + "," + ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID + "," + ComponentsTable.COLUMN_STATUS + ") ";
+        final String COMPONENTS_DB_SCHEMA  = " (" + ComponentsTable.COLUMN_COMPONENT_DESC + "," + ComponentsTable.COLUMN_COMPONENT_PATH_ID 
+        + "," + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + "," + ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID 
+        + "," + ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID + "," + ComponentsTable.COLUMN_COMPONENT_ID + "," 
+        + ComponentsTable.COLUMN_COMPONENT_TUPLE_SPACE_PATH + "," + ComponentsTable.COLUMN_STATUS + ") ";
         
         final String create_COMPONENTS_DB_SQL = "create table " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + COMPONENTS_DB_SCHEMA;
         
@@ -66,9 +69,12 @@ public interface DB_Constants
         
         final String UPDATE_COMPONENTS_DB_ON_COMPONENT_AND_CID_SET_CID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
         
-        final String UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_CID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
+        final String UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_CAPCID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
-        final String INSERT_INTO_COMPONENTS_DB_SQL = "insert into " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
+        final String UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_COMCID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
+        
+        
+        final String INSERT_INTO_COMPONENTS_DB_SQL = "insert into " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?, ?, ?, ?) ";
         
         final String DELETE_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CID_SQL = "delete from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
 

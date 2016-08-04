@@ -45,6 +45,10 @@ public interface RecordDAO extends DB_Base
     final int INDICATE_EXECUTION_SUCCESS = 0;
     final int RECORD_EXISTS = 1;
     final int INDICATE_SQL_EXCEPTION = -2;
+
+    final int INDICATE_CAPABILITIES_CLASS_RECORD_DOES_NOT_EXIST_STATUS = -3;
+    final int INDICATE_COMMUNICATIVE_CLASS_RECORD_DOES_NOT_EXIST_STATUS = -4;
+    
     
     public void closeConnection() throws RecordDAO_Exception;
     

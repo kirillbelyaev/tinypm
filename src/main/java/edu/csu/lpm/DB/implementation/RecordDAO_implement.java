@@ -62,161 +62,210 @@ public class RecordDAO_implement implements RecordDAO
     @Override
     public void closeConnection() throws RecordDAO_Exception
     {
-            if (this.conn == null) return;
-        
-            try 
-            {
-                    this.conn.close();
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }	
+        if (this.conn == null) return;
+
+        try 
+        {
+            this.conn.close();
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }	
     }
-        
-    private int check_If_Components_Table_Record_Exists(ComponentsTableRecord r) throws RecordDAO_Exception //on app_path and PCID
+    
+    //on component_path_ID and CID  
+    private int check_If_Components_Table_Record_Exists(ComponentsTableRecord r) 
+    throws RecordDAO_Exception 
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-            try 
-            {	
-                    /* too specific selection - an app record with a particular pcid might surely not exist
-                    but there might be a record with a different pcid thus creating several
-                    records of an app belonging to different policy classes that is NOT what we want */     
-                    //ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
-                
-                    /* we have to make sure that only a single app record with app_path column exists in the db */
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL);
+        try 
+        {	
+            /* too specific selection - a component record with a particular cid might surely not exist
+            but there might be a record with a different cid thus creating several
+            records of a component belonging to different policy classes that is NOT what we want */     
+            //ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
 
-                    int index = 1;
+            /* we have to make sure that only a single component record with app_path_ID column exists in the db */
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL);
 
-                    ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
-                    
-                    //ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
+            int index = 1;
 
-                    this.conn.setAutoCommit(false);
-                    rs = ps.executeQuery();
-                    this.conn.setAutoCommit(true);
+            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
 
-                    if (rs.next())
-                    {
-                            rs.close();
-                            rs = null;
-                            return RECORD_EXISTS; //entry exists
-                    }	
+            //ps.setString(index++, r.get_COLUMN_POLICY_CLASS_ID());
 
-                    rs.close();
-                    rs = null;
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }    
+            if (rs.next())
+            {
+                rs.close();
+                rs = null;
+                return RECORD_EXISTS; //entry exists
+            }	
 
-                    return EMPTY_RESULT; //no entry exists
+            rs.close();
+            rs = null;
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }    
+
+                return EMPTY_RESULT; //no entry exists
     }
         
         
     @Override
-    public int write_Components_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception
+    public int write_Components_Table_Record(ComponentsTableRecord r) 
+    throws RecordDAO_Exception
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        CapabilitiesClassesTableRecord capr = null;
+        CommunicativeClassesTableRecord comr = null;
+        
+        try
+        {
+            capr = new CapabilitiesClassesTableRecord();
+
+            comr = new CommunicativeClassesTableRecord();
             
-            CapabilitiesClassesTableRecord pcr = null;
+            capr.set_COLUMN_CLASS_ID(r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
 
-            try
-            {
-                pcr = new CapabilitiesClassesTableRecord();
+            comr.set_COLUMN_CLASS_ID(r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
+            
+            if (this.check_If_Capabilities_Classes_Table_Record_Exists(capr) == EMPTY_RESULT) return RecordDAO.INDICATE_CAPABILITIES_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
+
+            if (this.check_If_Communicative_Classes_Table_Record_Exists(comr) == EMPTY_RESULT) return RecordDAO.INDICATE_COMMUNICATIVE_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
+            
+            if (this.check_If_Components_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
+            {	
+                if (this.insert_Components_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+
+            } else if (this.check_If_Components_Table_Record_Exists(r) == RECORD_EXISTS) 
+            {/* record exists */
+                /* if record exists - just update it */	
+                if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID)) /* check if the update column
+                        is a CAP CID column */
+                {
+                    if (this.update_Components_Table_Record_CAPCID_on_Component(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } 
                 
-                pcr.set_COLUMN_CLASS_ID(r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
-                
-                if (this.check_If_Capabilities_Classes_Table_Record_Exists(pcr) == EMPTY_RESULT) return INDICATE_CONDITIONAL_EXIT_STATUS; //no record exists
-                
-                if (this.check_If_Components_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
-                {	
-                        if (this.insert_Components_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID)) /* check if the update column
+                        is a COM CID column */
+                {
+                    if (this.update_Components_Table_Record_COMCID_on_Component(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }    
+            }
 
-
-                } else if (this.check_If_Components_Table_Record_Exists(r) == RECORD_EXISTS) 
-                {/* record exists */
-                    /* if record exists - just update it */	
-                    if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID)) /* check if the update column
-                            is a PCID column */
-                    {
-                        if (this.update_Components_Table_Record_on_Component_and_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
-                    }    
-                }
-
-            } catch (Exception e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
-                    return INDICATE_EXECUTION_SUCCESS;
+        } catch (Exception e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                return INDICATE_EXECUTION_SUCCESS;
     }
 
     
-    private int insert_Components_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception
+    private int insert_Components_Table_Record(ComponentsTableRecord r) 
+    throws RecordDAO_Exception
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            PreparedStatement ps = null;
+        PreparedStatement ps = null;
 
-            try 
-            {
-                    if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
-                    {
-                            ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_COMPONENTS_DB_SQL);
+        try 
+        {            
+            ps = this.conn.prepareStatement(DB_Constants.INSERT_INTO_COMPONENTS_DB_SQL);
 
-                            int index = 1;
+            int index = 1;
 
-                            ps.setString(index++, r.get_COLUMN_COMPONENT_DESC());
-                            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
-                            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
-                            ps.setString(index++, r.get_COLUMN_COMPONENT_CONTAINER_ID());
-                            ps.setString(index++, r.get_COLUMN_STATUS());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_DESC());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_CONTAINER_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_TUPLE_SPACE_PATH());
+            ps.setString(index++, r.get_COLUMN_STATUS());
 
-                            ps.addBatch();
-                            this.conn.setAutoCommit(false);
-                            ps.executeBatch();
-                            this.conn.setAutoCommit(true);
+            ps.addBatch();
+            this.conn.setAutoCommit(false);
+            ps.executeBatch();
+            this.conn.setAutoCommit(true);
 
-                    } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
-
-                    return INDICATE_EXECUTION_SUCCESS;
+                return INDICATE_EXECUTION_SUCCESS;
     }
     
     
-    private int update_Components_Table_Record_on_Component_and_CID(ComponentsTableRecord r) throws RecordDAO_Exception
+    private int update_Components_Table_Record_CAPCID_on_Component(ComponentsTableRecord r) 
+    throws RecordDAO_Exception
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            PreparedStatement ps = null;
+        PreparedStatement ps = null;
 
-            try 
-            {
-                    if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
-                    {	
-                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_CID_SQL);
+        try 
+        {   	
+            ps = this.conn.prepareStatement(DB_Constants.UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_CAPCID_SQL);
 
-                            int index = 1;
-                            
-                            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
-                            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
-                            
-                            
-                            /*
-                            ps.setString(index++, r.getCOLUMN_APP_DESC());
-                            ps.setString(index++, r.getCOLUMN_APP_CONTAINER_ID());
-                            ps.setString(index++, r.getCOLUMN_STATUS());
-                            */
-                            
+            int index = 1;
 
-                            this.conn.setAutoCommit(false);
-                            ps.executeUpdate();
-                            this.conn.setAutoCommit(true);
-                    } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
 
-                    return INDICATE_EXECUTION_SUCCESS;
+            /*
+            ps.setString(index++, r.getCOLUMN_APP_DESC());
+            ps.setString(index++, r.getCOLUMN_APP_CONTAINER_ID());
+            ps.setString(index++, r.getCOLUMN_STATUS());
+            */
+
+
+            this.conn.setAutoCommit(false);
+            ps.executeUpdate();
+            this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
+    }
+    
+    
+    private int update_Components_Table_Record_COMCID_on_Component(ComponentsTableRecord r) 
+    throws RecordDAO_Exception
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        PreparedStatement ps = null;
+
+        try 
+        {   	
+            ps = this.conn.prepareStatement(DB_Constants.UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_COMCID_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
+
+
+            /*
+            ps.setString(index++, r.getCOLUMN_APP_DESC());
+            ps.setString(index++, r.getCOLUMN_APP_CONTAINER_ID());
+            ps.setString(index++, r.getCOLUMN_STATUS());
+            */
+
+
+            this.conn.setAutoCommit(false);
+            ps.executeUpdate();
+            this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
     }
     
     

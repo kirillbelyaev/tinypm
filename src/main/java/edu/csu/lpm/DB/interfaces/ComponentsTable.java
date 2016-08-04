@@ -41,6 +41,9 @@ public interface ComponentsTable extends Record
     
     final String COLUMN_COMPONENT_PATH_ID = "component_path_id";
     
+    /* reserved for future use - could be used for alternative ID mechanisms */
+    final String COLUMN_COMPONENT_ID = "component_id";
+    
     /* reserved for possible use - indicates the component's tuple space location */
     final String COLUMN_COMPONENT_TUPLE_SPACE_PATH = "component_tuple_space_path";
     
