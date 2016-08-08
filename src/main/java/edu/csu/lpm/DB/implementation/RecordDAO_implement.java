@@ -270,7 +270,8 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(ComponentsTableRecord r) throws RecordDAO_Exception
+    public int delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(ComponentsTableRecord r) 
+    throws RecordDAO_Exception
     {
         if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -346,61 +347,65 @@ public class RecordDAO_implement implements RecordDAO
                 return INDICATE_EXECUTION_SUCCESS;
     }
     
-    
+    /* should return a single components record with a distinct pathID */
     @Override
-    public ComponentsTableRecord[] read_Components_Table_Records_On_Component(ComponentsTableRecord r) throws RecordDAO_Exception       
+    public ComponentsTableRecord[] read_Components_Table_Records_On_Component(ComponentsTableRecord r)
+    throws RecordDAO_Exception
     {
-            if (r == null) return null;
-            if (this.conn == null) return null;
+        if (r == null) return null;
+        if (this.conn == null) return null;
 
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-            ArrayList <ComponentsTableRecord> rows = new ArrayList<ComponentsTableRecord>();
+        ArrayList <ComponentsTableRecord> rows = new ArrayList<ComponentsTableRecord>();
 
-            try 
-            {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL);
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL);
 
-                    int index = 1;
+            int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
 
-                    this.conn.setAutoCommit(false);
-                    rs = ps.executeQuery();
-                    this.conn.setAutoCommit(true);
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
 
-                    while (rs.next()) 
-                    {
-                            if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
-                            {
-                                    ComponentsTableRecord rec = new ComponentsTableRecord();
-                                    
-                                    rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
-                                    
-                                    rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
-                                    
-                                    rec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID));
-                                    
-                                    rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
-                                    
-                                    rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
+            while (rs.next()) 
+            {     
+                ComponentsTableRecord rec = new ComponentsTableRecord();
 
-                                    rows.add(rec);
-                                    
-                                    rec = null;	
-                            } else return null;
-                    }
-                        rs.close();
-                        rs = null;
+                rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
 
-                    if (rows.isEmpty()) return null;
+                rec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID));
+                
+                rec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID));
 
-                    ComponentsTableRecord [] array = new ComponentsTableRecord [ rows.size() ];
-                    rows.toArray(array);
-                    return array;
+                rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
+                
+                rec.set_COLUMN_COMPONENT_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_ID));
+                
+                rec.set_COLUMN_COMPONENT_TUPLE_SPACE_PATH(rs.getString(ComponentsTable.COLUMN_COMPONENT_TUPLE_SPACE_PATH));
+
+                rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
+
+                rows.add(rec);
+
+                rec = null;
+            }
+                rs.close();
+                rs = null;
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+        if (rows.isEmpty()) return null;
+
+        ComponentsTableRecord [] array = new ComponentsTableRecord [ rows.size() ];
+        rows.toArray(array);
+        return array;
     }
     
     
@@ -610,7 +615,7 @@ public class RecordDAO_implement implements RecordDAO
     }
     
     
-    /* policy classes table operations */
+    /* capabilities classes table operations */
     
     @Override
     public int create_Table_CAPC_DB() throws RecordDAO_Exception
