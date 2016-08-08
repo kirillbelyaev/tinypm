@@ -270,41 +270,43 @@ public class RecordDAO_implement implements RecordDAO
     
     
     @Override
-    public int delete_Components_Table_Records_On_Component_and_CID(ComponentsTableRecord r) throws RecordDAO_Exception
+    public int delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(ComponentsTableRecord r) throws RecordDAO_Exception
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
-             if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            String statement = null;
-            PreparedStatement ps = null;
-            
-            try 
-            {	
-                    ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CID_SQL);
+        String statement = null;
+        PreparedStatement ps = null;
 
-                    int index = 1;
+        try 
+        {	
+            ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CAPCID_AND_COMCID_SQL);
 
-                    ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
-                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
+            int index = 1;
 
-                    this.conn.setAutoCommit(false);
-                    ps.executeUpdate();
-                    this.conn.setAutoCommit(true);
+            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+            this.conn.setAutoCommit(false);
+            ps.executeUpdate();
+            this.conn.setAutoCommit(true);
 
-                    return INDICATE_EXECUTION_SUCCESS;
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
     }
 
-    
 
     @Override
-    public String getCurrentDatetime() {
+    public String getCurrentDatetime() 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String getCurrentDate() {
+    public String getCurrentDate() 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -313,34 +315,35 @@ public class RecordDAO_implement implements RecordDAO
     @Override
     public int createTable_Components_DB() throws RecordDAO_Exception
     {
-            Statement state = null;
-            
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        Statement state = null;
 
-            try 
-            {
-                    state = this.conn.createStatement();
-                    state.executeUpdate(DB_Constants.create_COMPONENTS_DB_SQL);
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+        try 
+        {
+            state = this.conn.createStatement();
+            state.executeUpdate(DB_Constants.create_COMPONENTS_DB_SQL);
 
-                    return INDICATE_EXECUTION_SUCCESS;
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
     } 
     
     
     @Override
     public int dropTable_Components_DB() throws RecordDAO_Exception
     {
-            Statement state = null;
-            
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        Statement state = null;
 
-            try 
-            {
-                    state = this.conn.createStatement();
-                    state.executeUpdate(DB_Constants.drop_COMPONENTS_DB_SQL);
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
-                    return INDICATE_EXECUTION_SUCCESS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        try 
+        {
+            state = this.conn.createStatement();
+            state.executeUpdate(DB_Constants.drop_COMPONENTS_DB_SQL);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                return INDICATE_EXECUTION_SUCCESS;
     }
     
     

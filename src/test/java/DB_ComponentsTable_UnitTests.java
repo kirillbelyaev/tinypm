@@ -162,7 +162,7 @@ public class DB_ComponentsTable_UnitTests
         assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	System.out.println("read_Apps_Table_Records_On_APP_and_PCID: array value is: " + recs);
         
-        output = db.delete_Components_Table_Records_On_Component_and_CID(r);
+        output = db.delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(r);
 	assertTrue("delete_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("delete_Apps_Table_Records_On_APP_and_PCID: value is: " + output);
         
@@ -207,7 +207,7 @@ public class DB_ComponentsTable_UnitTests
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         
         
-        output = db.delete_Components_Table_Records_On_Component_and_CID(r);
+        output = db.delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(r);
 	assertTrue("delete_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("delete_Apps_Table_Records_On_APP_and_PCID: value is: " + output);
         

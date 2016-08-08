@@ -73,10 +73,12 @@ public interface DB_Constants
         
         final String UPDATE_COMPONENTS_DB_ON_COMPONENT_SET_COMCID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
-        
         final String INSERT_INTO_COMPONENTS_DB_SQL = "insert into " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " values (?, ?, ?, ?, ?, ?, ?, ?) ";
         
-        final String DELETE_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CID_SQL = "delete from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
+        final String DELETE_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CAPCID_SQL = "delete from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
+
+        final String DELETE_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CAPCID_AND_COMCID_SQL = "delete from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?"
+        + " and " + ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID + " = ?";
 
         
         /* capabilities classes table operations */
