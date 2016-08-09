@@ -598,7 +598,7 @@ public class RecordDAO_implement implements RecordDAO
 
         try 
         {
-            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ALL_COMPONENTS_SQL);
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ALL_COMPONENTS_ALL_COLUMNS_SQL);
 
             this.conn.setAutoCommit(false);
             rs = ps.executeQuery();
@@ -640,44 +640,42 @@ public class RecordDAO_implement implements RecordDAO
         return array;
     }
      
-     
+    /* should return a count of all components records that belong to a distinct CAPCID */ 
     @Override
-    public Integer count_Distinct_Components_Table_Records_on_CID(ComponentsTableRecord r) throws RecordDAO_Exception
+    public Integer count_Components_Table_Records_on_CAPCID(ComponentsTableRecord r) 
+    throws RecordDAO_Exception
     {
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-            int count = -1;
+        int count = -1;
 
-            try 
-            {
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_CID_SQL);
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_CAPCID_SQL);
 
-                    int index = 1;
+            int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
 
-                    this.conn.setAutoCommit(false);
-                    rs = ps.executeQuery();
-                    this.conn.setAutoCommit(true);
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
 
-                    //rs = state.executeQuery(statement);
+            //rs = state.executeQuery(statement);
 
-                    while (rs.next()) 
-                    {
-                            if (ComponentsTable.COMPONENTS_DB_TABLE_NAME.equals(ComponentsTable.COMPONENTS_DB_TABLE_NAME))
-                            {
-                                    count = rs.getInt(DB_Constants.COUNT);
-                            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-                    }
-                        rs.close();
+            while (rs.next()) 
+            {              
+                count = rs.getInt(DB_Constants.COUNT);
+            }
+                rs.close();
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
 
-                    return count;
+        return count;
     }
     
     

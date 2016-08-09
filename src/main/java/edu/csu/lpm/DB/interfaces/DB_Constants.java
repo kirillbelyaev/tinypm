@@ -57,11 +57,13 @@ public interface DB_Constants
         
         final String drop_COMPONENTS_DB_SQL = "drop table if exists " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL = "select * from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
+        final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
         final String SELECT_FROM_COMPONENTS_DB_ALL_COMPONENTS_SQL = "select distinct " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_CID_SQL = "select count(*) as " + COUNT + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
+        final String SELECT_FROM_COMPONENTS_DB_ALL_COMPONENTS_ALL_COLUMNS_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
+        
+        final String SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_CAPCID_SQL = "select count(*) as " + COUNT + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
         
         final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CAPCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
         

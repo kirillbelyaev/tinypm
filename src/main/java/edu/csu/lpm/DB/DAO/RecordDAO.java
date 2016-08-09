@@ -71,7 +71,7 @@ public interface RecordDAO extends DB_Base
     
     public ComponentsTableRecord[] read_Components_Table_Records_On_All_Components() throws RecordDAO_Exception;
     
-    public Integer count_Distinct_Components_Table_Records_on_CID(ComponentsTableRecord r) throws RecordDAO_Exception;
+    public Integer count_Components_Table_Records_on_CAPCID(ComponentsTableRecord r) throws RecordDAO_Exception;
      
     public int write_Components_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception;
     

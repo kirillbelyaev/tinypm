@@ -153,7 +153,7 @@ public class DB_ComponentsTable_UnitTests
         r.set_Status_Active();
         
         
-        output = db.count_Distinct_Components_Table_Records_on_CID(r);
+        output = db.count_Components_Table_Records_on_CAPCID(r);
 	assertNotNull(output);
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         
@@ -202,7 +202,7 @@ public class DB_ComponentsTable_UnitTests
         }
         
         
-        output = db.count_Distinct_Components_Table_Records_on_CID(r);
+        output = db.count_Components_Table_Records_on_CAPCID(r);
 	assertNotNull(output);
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         
@@ -225,7 +225,7 @@ public class DB_ComponentsTable_UnitTests
         }
         
         
-        output = db.count_Distinct_Components_Table_Records_on_CID(r);
+        output = db.count_Components_Table_Records_on_CAPCID(r);
 	assertNotNull(output);
         System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
         
