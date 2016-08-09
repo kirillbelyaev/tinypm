@@ -678,6 +678,43 @@ public class RecordDAO_implement implements RecordDAO
         return count;
     }
     
+    /* should return a count of all components records that belong to a distinct COMCID */ 
+    @Override
+    public Integer count_Components_Table_Records_on_COMCID(ComponentsTableRecord r) 
+    throws RecordDAO_Exception
+    {
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        int count = -1;
+
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_COMCID_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
+
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
+
+            //rs = state.executeQuery(statement);
+
+            while (rs.next()) 
+            {              
+                count = rs.getInt(DB_Constants.COUNT);
+            }
+                rs.close();
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+        return count;
+    }
     
     /* capabilities classes table operations */
     

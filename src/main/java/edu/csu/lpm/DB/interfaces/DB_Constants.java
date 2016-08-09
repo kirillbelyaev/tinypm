@@ -65,6 +65,8 @@ public interface DB_Constants
         
         final String SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_CAPCID_SQL = "select count(*) as " + COUNT + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
         
+        final String SELECT_FROM_COMPONENTS_DB_COUNT_COMPONENTS_ON_COMCID_SQL = "select count(*) as " + COUNT + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID + " = ?";
+        
         final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CAPCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
         
         final String SELECT_FROM_COMPONENTS_DB_ON_CAPCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
