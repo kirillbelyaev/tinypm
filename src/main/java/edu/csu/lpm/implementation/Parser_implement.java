@@ -811,7 +811,7 @@ public class Parser_implement implements Parser
         {//execute the db layer
             if (this.db != null)
             {    
-                appsr = this.db.read_Components_Table_Records_On_CID(this.apprec);  
+                appsr = this.db.read_Components_Table_Records_On_CAPCID(this.apprec);  
             }    
         } catch (RecordDAO_Exception rex) 
         {

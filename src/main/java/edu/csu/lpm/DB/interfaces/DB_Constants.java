@@ -65,7 +65,7 @@ public interface DB_Constants
         
         final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_AND_CAPCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
         
-        final String SELECT_FROM_COMPONENTS_DB_ON_CID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
+        final String SELECT_FROM_COMPONENTS_DB_ON_CAPCID_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME  + " where " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID  + " = ?";
         
         final String UPDATE_COMPONENTS_DB_ON_COMPONENT_AND_CID_SET_CID_SQL = "update " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " set " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ? "  + "where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ? and " + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + " = ?";
         

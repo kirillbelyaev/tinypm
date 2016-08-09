@@ -193,7 +193,7 @@ public class DB_ComponentsTable_UnitTests
         }
         
         
-        recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_CID(r);
+        recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_CAPCID(r);
         assertTrue("read_Apps_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
         
         if (recs != null)
