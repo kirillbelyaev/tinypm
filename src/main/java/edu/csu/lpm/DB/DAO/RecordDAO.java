@@ -18,8 +18,8 @@
 
 
 /*
- Data access object
- data access object (DAO) is an object that provides an abstract interface to 
+Data access object
+data access object (DAO) is an object that provides an abstract interface to 
 some type of database or other persistence mechanism. By mapping application 
 calls to the persistence layer, DAO provide some specific data operations 
 without exposing details of the database.
@@ -66,6 +66,8 @@ public interface RecordDAO extends DB_Base
     public ComponentsTableRecord[] read_Components_Table_Records_On_Component_and_CAPCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     public ComponentsTableRecord[] read_Components_Table_Records_On_CAPCID(ComponentsTableRecord r) throws RecordDAO_Exception;
+    
+    public ComponentsTableRecord[] read_Components_Table_Records_On_COMCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     public ComponentsTableRecord[] read_Components_Table_Records_On_All_Components() throws RecordDAO_Exception;
     

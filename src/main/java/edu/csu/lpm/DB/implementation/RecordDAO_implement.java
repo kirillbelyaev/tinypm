@@ -525,6 +525,64 @@ public class RecordDAO_implement implements RecordDAO
         return array;
     }
    
+    /* should return all components records that belong to a distinct COMCID */
+    @Override
+    public ComponentsTableRecord[] read_Components_Table_Records_On_COMCID(ComponentsTableRecord r) 
+    throws RecordDAO_Exception       
+    {
+        if (r == null) return null;
+        if (this.conn == null) return null;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        ArrayList <ComponentsTableRecord> rows = new ArrayList<ComponentsTableRecord>();
+
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMCID_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
+
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
+
+            while (rs.next()) 
+            {
+                ComponentsTableRecord rec = new ComponentsTableRecord();
+
+                rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
+
+                rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
+
+                rec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID));
+
+                rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
+                
+                rec.set_COLUMN_COMPONENT_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_ID));
+                
+                rec.set_COLUMN_COMPONENT_TUPLE_SPACE_PATH(rs.getString(ComponentsTable.COLUMN_COMPONENT_TUPLE_SPACE_PATH));
+
+                rec.set_COLUMN_STATUS(rs.getString(ComponentsTable.COLUMN_STATUS));
+
+                rows.add(rec);
+
+                rec = null;
+            }
+                rs.close();
+                rs = null;
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+        if (rows.isEmpty()) return null;
+
+        ComponentsTableRecord [] array = new ComponentsTableRecord [ rows.size() ];
+        rows.toArray(array);
+        return array;
+    }
     
     
     @Override
