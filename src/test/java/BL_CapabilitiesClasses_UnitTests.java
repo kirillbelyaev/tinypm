@@ -26,9 +26,9 @@ import org.junit.Test;
  *
  * @author kirill
  */
-public class BL_UnitTests {
+public class BL_CapabilitiesClasses_UnitTests {
     
-    public BL_UnitTests() {
+    public BL_CapabilitiesClasses_UnitTests() {
     }
     
     @BeforeClass
@@ -47,13 +47,6 @@ public class BL_UnitTests {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
-    
-    
     @Test
     public void testParser() 
     {
@@ -61,24 +54,24 @@ public class BL_UnitTests {
         boolean Out;
         
         String CMD = "";
-        String CMD_0 = "COUNT_POLICY_CLASSES";
+        String CMD_0 = "COUNT_CAPABILITIES_CLASSES";
         
-        String CMD_9 = "SHOW_POLICY_CLASSES";
-        String CMD_10 = "CREATE_POLICY_CLASS";
-        String CMD_11 = "CREATE_POLICY_CLASS 1 general_applications_policy_class";
-        String CMD_12 = "CREATE_POLICY_CLASS A general_applications_policy_class";
-        String CMD_13 = "CREATE_POLICY_CLASS 2 general_applications_policy_class_2";
+        String CMD_9 = "SHOW_CAPABILITIES_CLASSES";
+        String CMD_10 = "CREATE_CAPABILITIES_CLASS";
+        String CMD_11 = "CREATE_CAPABILITIES_CLASS 1 general_applications_class";
+        String CMD_12 = "CREATE_CAPABILITIES_CLASS A general_applications_class";
+        String CMD_13 = "CREATE_CAPABILITIES_CLASS 2 general_applications_class_2";
         
         
-        String CMD_5 = "ADD_POLICY_CLASS_POLICY 1 CAP_KILL";
+        String CMD_5 = "ADD_CAPABILITIES_CLASS_CAPABILITY 1 CAP_KILL";
         
-        String CMD_6 = "SHOW_POLICY_CLASS_POLICIES 1";
+        String CMD_6 = "SHOW_CAPABILITIES_CLASS_CAPABILITIES 1";
         
-        String CMD_7 = "ADD_POLICY_CLASS_POLICY 1 CAP_CHOWN";
+        String CMD_7 = "ADD_CAPABILITIES_CLASS_CAPABILITY 1 CAP_CHOWN";
         
-        String CMD_8 = "ADD_POLICY_CLASS_POLICY 1 CAP_DAC_OVERRIDE";
+        String CMD_8 = "ADD_CAPABILITIES_CLASS_CAPABILITY 1 CAP_DAC_OVERRIDE";
         
-        String CMD_4 = "REMOVE_POLICY_CLASS_POLICY 1 CAP_CHOWN";
+        String CMD_4 = "REMOVE_CAPABILITIES_CLASS_CAPABILITY 1 CAP_CHOWN";
         
         String CMD_3 = "SHOW_CAPABILITIES abc";
         
@@ -89,24 +82,24 @@ public class BL_UnitTests {
         String CMD_14 = "EXIT";
         
         
-        String CMD_15 = "COUNT_POLICY_CLASS_APPS";
+        String CMD_15 = "COUNT_CAPABILITIES_CLASS_COMPONENTS";
         
-        String CMD_16 = "COUNT_POLICY_CLASS_APPS 1";
+        String CMD_16 = "COUNT_CAPABILITIES_CLASS_COMPONENTS 1";
         
-        String CMD_17 = "COUNT_POLICY_CLASS_APPS 2";
+        String CMD_17 = "COUNT_CAPABILITIES_CLASS_COMPONENTS 2";
         
-        String CMD_18 = "SHOW_POLICY_CLASS_APPS 1";
+        String CMD_18 = "SHOW_CAPABILITIES_CLASS_COMPONENTS 1";
         
         
-        String CMD_19 = "MOVE_APP_TO_POLICY_CLASS 1";
-        String CMD_20 = "MOVE_APP_TO_POLICY_CLASS  /s/chopin/b/grad/kirill/apps/ping 1";
-        String CMD_21 = "MOVE_APP_TO_POLICY_CLASS  /s/chopin/b/grad/kirill/apps/ping 2";
+        String CMD_19 = "MOVE_COMPONENT_TO_CAPABILITIES_CLASS 1";
+        String CMD_20 = "MOVE_COMPONENT_TO_CAPABILITIES_CLASS /s/chopin/b/grad/kirill/apps/ping 1";
+        String CMD_21 = "MOVE_COMPONENT_TO_CAPABILITIES_CLASS /s/chopin/b/grad/kirill/apps/ping 2";
         
-        String CMD_22 = "SHOW_POLICY_CLASS_APPS 2";
+        String CMD_22 = "SHOW_CAPABILITIES_CLASS_COMPONENTS 2";
         
-        String CMD_23 = "MOVE_APP_TO_POLICY_CLASS  /s/chopin/b/grad/kirill/apps/ping 3";
+        String CMD_23 = "MOVE_COMPONENT_TO_CAPABILITIES_CLASS /s/chopin/b/grad/kirill/apps/ping 3";
         
-        String CMD_24 = "SHOW_POLICY_CLASS_APPS 3";
+        String CMD_24 = "SHOW_CAPABILITIES_CLASS_COMPONENTS 3";
         
         
         Parser_implement p = new Parser_implement();

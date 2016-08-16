@@ -1,10 +1,21 @@
 /*
-tinyPM Prototype
-Kirill Belyaev. Copyright (c) @2015 Colorado State University 
-Department of Computer Science, Fort Collins, CO  80523-1873, USA
+ * Linux Policy Machine (LPM) Prototype
+ *   
+ * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Colorado State University
+ * Department of Computer Science,
+ * Fort Collins, CO  80523-1873, USA
+ *
+ * E-mail contact:
+ * kirillbelyaev@yahoo.com
+ * kirill@cs.colostate.edu
+ *   
+ * This work is licensed under the Creative Commons Attribution-NonCommercial 3.0 Unported License. 
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/3.0/ or send 
+ * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-/* Parser interface represents the BL (Business Logic) layer commands available to the user shell*/ 
+/* Parser interface represents the BL (Business Logic) layer commands available to the user shell */ 
 
 package edu.csu.lpm.implementation;
 
@@ -32,8 +43,8 @@ public class Parser_implement implements Parser
     private StringTokenizer tokenizer = null;
     private ArrayList <String> commandParameters = null;
 
-    private CapabilitiesClassesTableRecord pcrec = null;
-    private ComponentsTableRecord apprec = null;
+    private CapabilitiesClassesTableRecord caprec = null;
+    private ComponentsTableRecord comprec = null;
     
     private DB_Dispatcher dd = null;
     private RecordDAO_implement db = null;
@@ -99,14 +110,14 @@ public class Parser_implement implements Parser
     }
     
     
-    private void refill_ResultOutput_with_POLICY_CLASS_ID_AND_NAME(CapabilitiesClassesTableRecord[] r) 
+    private void refill_ResultOutput_with_CAPABILITIES_CLASS_ID_AND_NAME(CapabilitiesClassesTableRecord[] r) 
     {
         if (r == null) return;
         this.ResultOutput.clear();
         String row = null;
         for (int i = 0; i < r.length; i++)
         {
-            row = " PCID: ";
+            row = " CAPID: ";
             row = row.concat(r[i].get_COLUMN_CLASS_ID());
             row = row.concat(" | ");
             row = row.concat(" Class Name: ");
@@ -180,74 +191,74 @@ public class Parser_implement implements Parser
             this.refill_ResultOutput("");
             this.set_ERROR_MESSAGE("");
             
-        } else if (e.indexOf(PM_COMMANDS.COUNT_POLICY_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.COUNT_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_COUNT_POLICY_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_COUNT_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
                
-        } else if (e.indexOf(PM_COMMANDS.SHOW_POLICY_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_SHOW_POLICY_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                  this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                  this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
         
-        } else if (e.indexOf(PM_COMMANDS.CREATE_POLICY_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.CREATE_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_CREATE_POLICY_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_CREATE_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.CREATE_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.CREATE_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
             
-        } else if (e.indexOf(PM_COMMANDS.ADD_POLICY_CLASS_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.ADD_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_ADD_POLICY_CLASS_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.ADD_POLICY_CLASS_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.ADD_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
             
-        } else if (e.indexOf(PM_COMMANDS.SHOW_POLICY_CLASS_POLICIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES_CLASS_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_SHOW_POLICY_CLASS_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASS_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_CAPABILITIES_CLASS_CAPABILITIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
-        } else if (e.indexOf(PM_COMMANDS.REMOVE_POLICY_CLASS_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.REMOVE_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_REMOVE_POLICY_CLASS_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.REMOVE_POLICY_CLASS_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.REMOVE_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
         }  else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_SHOW_CAPABILITIES(e);
-        } else if (e.indexOf(PM_COMMANDS.COUNT_POLICY_CLASS_APPS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.COUNT_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_COUNT_POLICY_CLASS_APPS(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_POLICY_CLASS_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
-        } else if (e.indexOf(PM_COMMANDS.SHOW_POLICY_CLASS_APPS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_SHOW_POLICY_CLASS_APPS(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_POLICY_CLASS_APPS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
-        } else if (e.indexOf(PM_COMMANDS.MOVE_APP_TO_POLICY_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(PM_COMMANDS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
-            if (this.parse_and_execute_MOVE_APP_TO_POLICY_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+            if (this.parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.MOVE_APP_TO_POLICY_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }                         
         } else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
@@ -298,9 +309,9 @@ public class Parser_implement implements Parser
         
         
         /* initialize the records only once and then reuse in other methods to save memory */ 
-        if (this.pcrec == null) this.pcrec = new CapabilitiesClassesTableRecord();
+        if (this.caprec == null) this.caprec = new CapabilitiesClassesTableRecord();
         
-        if (this.apprec == null) this.apprec = new ComponentsTableRecord();
+        if (this.comprec == null) this.comprec = new ComponentsTableRecord();
         
         this.tokenizer = new StringTokenizer(e, " ");
         
@@ -320,7 +331,7 @@ public class Parser_implement implements Parser
     
     /* extended methods */
     
-    private Integer parse_and_execute_COUNT_POLICY_CLASSES(String e)
+    private Integer parse_and_execute_COUNT_CAPABILITIES_CLASSES(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         Integer count = null;
@@ -347,7 +358,7 @@ public class Parser_implement implements Parser
     }        
     
     
-    private Integer parse_and_execute_SHOW_POLICY_CLASSES(String e)
+    private Integer parse_and_execute_SHOW_CAPABILITIES_CLASSES(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         CapabilitiesClassesTableRecord[] ra = null;
@@ -363,7 +374,7 @@ public class Parser_implement implements Parser
                     if (ra != null)
                     {    
                         this.set_ResultSize(ra.length);
-                        this.refill_ResultOutput_with_POLICY_CLASS_ID_AND_NAME(ra);
+                        this.refill_ResultOutput_with_CAPABILITIES_CLASS_ID_AND_NAME(ra);
                         return INDICATE_EXECUTION_SUCCESS;
                     } else return RecordDAO.EMPTY_RESULT;
                 }    
@@ -377,13 +388,13 @@ public class Parser_implement implements Parser
     }
     
     
-    private Integer parse_and_execute_CREATE_POLICY_CLASS(String e)
+    private Integer parse_and_execute_CREATE_CAPABILITIES_CLASS(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
        
@@ -393,12 +404,12 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 {    
-                    this.pcrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
-                    this.pcrec.set_COLUMN_CLASS_NAME(this.commandParameters.get(1));
+                    this.caprec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                    this.caprec.set_COLUMN_CLASS_NAME(this.commandParameters.get(1));
                     
-                    this.pcrec.reset_COLUMN_CAPABILITIES(); /* reset policies */
+                    this.caprec.reset_COLUMN_CAPABILITIES(); /* reset policies */
                     
-                    this.pcrec.set_UPDATE_COLUMN_to_CLASS_NAME(); /* indicate the update column */      
+                    this.caprec.set_UPDATE_COLUMN_to_CLASS_NAME(); /* indicate the update column */      
                 }    
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -407,7 +418,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Capabilities_Classes_Table_Record(this.pcrec) != INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_Capabilities_Classes_Table_Record(this.caprec) != INDICATE_EXECUTION_SUCCESS) 
                     {  
                         this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -429,7 +440,7 @@ public class Parser_implement implements Parser
     }
     
     
-    private ArrayList<String> get_POLICY_CLASS_POLICIES(String pcid)
+    private ArrayList<String> get_CAPABILITIES_CLASS_CAPABILITIES(String pcid)
     {
         CapabilitiesClassesTableRecord pcr [] = null;
         ArrayList<String> caps = null;
@@ -438,15 +449,15 @@ public class Parser_implement implements Parser
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.pcrec == null) return null;
+        if (this.caprec == null) return null;
         
-        this.pcrec.set_COLUMN_CLASS_ID(pcid.trim());
+        this.caprec.set_COLUMN_CLASS_ID(pcid.trim());
 
         try 
         {//execute the db layer
             if (this.db != null)
             {    
-                pcr = this.db.read_Capabilities_Classes_Table_Records_On_CID(this.pcrec);  
+                pcr = this.db.read_Capabilities_Classes_Table_Records_On_CID(this.caprec);  
             }    
         } catch (RecordDAO_Exception rex) 
         {
@@ -473,11 +484,11 @@ public class Parser_implement implements Parser
         return null; /* return NULL by default */
     }
     
-    private int check_if_Policy_Exists (String pcid, String p)
+    private int check_if_Capability_Exists (String pcid, String p)
     {
         if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
+        ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(pcid.trim());
         
         if (caps != null)
             for (int i = 0; i < caps.size(); i++)
@@ -492,11 +503,11 @@ public class Parser_implement implements Parser
     {
         if (pcid == null || pcid.isEmpty() || app == null || app.isEmpty()) return null;
         
-        ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(pcid.trim());
+        ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(pcid.trim());
         
         String policies[] = null;
         
-        /* by now we know that if get_POLICY_CLASS_POLICIES() returns null 
+        /* by now we know that if get_CAPABILITIES_CLASS_CAPABILITIES() returns null 
         - that means that no policies exist. That is because we already 
         ensure that pcid parameter should not be null in the first place,
         otherwise this method will terminate immediately. */
@@ -522,13 +533,13 @@ public class Parser_implement implements Parser
     }
     
     
-    private Integer parse_and_execute_ADD_POLICY_CLASS_POLICY(String e)
+    private Integer parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         
@@ -538,46 +549,46 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 {    
-                    this.pcrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
-                    this.pcrec.set_COLUMN_CAPABILITIES(this.commandParameters.get(1));
+                    this.caprec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                    this.caprec.set_COLUMN_CAPABILITIES(this.commandParameters.get(1));
                     
-                    this.pcrec.set_COLUMN_CLASS_NAME(""); /* make blank in case a policy is added to non-existent
+                    this.caprec.set_COLUMN_CLASS_NAME(""); /* make blank in case a policy is added to non-existent
                     policy class therefore triggering the creation of new policy class record */
                     
-                    this.pcrec.set_UPDATE_COLUMN_to_CAPABILITIES(); /* indicate the update column */
+                    this.caprec.set_UPDATE_COLUMN_to_CAPABILITIES(); /* indicate the update column */
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            if (this.check_if_Policy_Exists(this.pcrec.get_COLUMN_CLASS_ID(), this.pcrec.get_COLUMN_CAPABILITIES()) == INDICATE_EXECUTION_SUCCESS)
+            if (this.check_if_Capability_Exists(this.caprec.get_COLUMN_CLASS_ID(), this.caprec.get_COLUMN_CAPABILITIES()) == INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_POLICY_EXISTS_ERROR.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_CAPABILITY_EXISTS_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
                 
             
-            ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_CLASS_ID().trim());
+            ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(this.caprec.get_COLUMN_CLASS_ID().trim());
             
             if (caps != null) 
             {  /* reset the policies in pc record */  
-                this.pcrec.set_COLUMN_CAPABILITIES(caps.get(0)); 
-                this.pcrec.add_CAPABILITY(this.commandParameters.get(1)); /* do it once more */
+                this.caprec.set_COLUMN_CAPABILITIES(caps.get(0)); 
+                this.caprec.add_CAPABILITY(this.commandParameters.get(1)); /* do it once more */
             
-            } else this.pcrec.add_CAPABILITY(this.commandParameters.get(1)); /* if no policies exist */       
+            } else this.caprec.add_CAPABILITY(this.commandParameters.get(1)); /* if no policies exist */       
 
             
             try 
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Capabilities_Classes_Table_Record(this.pcrec) == INDICATE_EXECUTION_SUCCESS)
+                    if (this.db.write_Capabilities_Classes_Table_Record(this.caprec) == INDICATE_EXECUTION_SUCCESS)
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
                         
                         /* after updating policies for a policy class in the DB layer we
                         finally proceed to the enforcer section */
-                        ArrayList<String> apps = this.get_POLICY_CLASS_APPS(this.pcrec.get_COLUMN_CLASS_ID().trim());
+                        ArrayList<String> apps = this.get_CAPABILITIES_CLASS_COMPONENTS(this.caprec.get_COLUMN_CLASS_ID().trim());
 
                         /* no apps - no enforcement! */
                         if (apps != null)
@@ -588,7 +599,7 @@ public class Parser_implement implements Parser
                             /* execute enforcer for every app that belongs to a policy class */
                             for (int i = 0; i < apps.size(); i++)
                             {    
-                                if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.pcrec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
                                 {   
                                     this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -619,13 +630,13 @@ public class Parser_implement implements Parser
         return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
-    private Integer parse_and_execute_SHOW_POLICY_CLASS_POLICIES(String e)
+    private Integer parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> caps = null;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
@@ -636,8 +647,8 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 { 
-                    this.pcrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
-                    caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_CLASS_ID().trim());
+                    this.caprec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                    caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(this.caprec.get_COLUMN_CLASS_ID().trim());
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -652,13 +663,13 @@ public class Parser_implement implements Parser
         }  else return INDICATE_ARGUMENT_MISMATCH;
     }
 
-    private Integer parse_and_execute_REMOVE_POLICY_CLASS_POLICY(String e)
+    private Integer parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.pcrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
         
@@ -668,30 +679,30 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 {    
-                    this.pcrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
-                    this.pcrec.set_COLUMN_CAPABILITIES(this.commandParameters.get(1));
-                    this.pcrec.set_UPDATE_COLUMN_to_CAPABILITIES(); /* indicate the update column */
+                    this.caprec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                    this.caprec.set_COLUMN_CAPABILITIES(this.commandParameters.get(1));
+                    this.caprec.set_UPDATE_COLUMN_to_CAPABILITIES(); /* indicate the update column */
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            if (this.check_if_Policy_Exists(this.pcrec.get_COLUMN_CLASS_ID(), this.pcrec.get_COLUMN_CAPABILITIES()) == INDICATE_CONDITIONAL_EXIT_STATUS)
+            if (this.check_if_Capability_Exists(this.caprec.get_COLUMN_CLASS_ID(), this.caprec.get_COLUMN_CAPABILITIES()) == INDICATE_CONDITIONAL_EXIT_STATUS)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_POLICY_DOES_NOT_EXIST_ERROR.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_CAPABILITY_DOES_NOT_EXIST_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
             policy does not exist */
             }
                 
-            ArrayList<String> caps = this.get_POLICY_CLASS_POLICIES(this.pcrec.get_COLUMN_CLASS_ID().trim());
+            ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(this.caprec.get_COLUMN_CLASS_ID().trim());
             
             if (caps != null) 
             {  /* reset the policies in pc record */  
-                this.pcrec.set_COLUMN_CAPABILITIES(caps.get(0)); 
-                this.pcrec.remove_CAPABILITY(this.commandParameters.get(1)); /* do it once more */
+                this.caprec.set_COLUMN_CAPABILITIES(caps.get(0)); 
+                this.caprec.remove_CAPABILITY(this.commandParameters.get(1)); /* do it once more */
             
             } else 
             {  
-                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_NO_POLICIES_EXIST_ERROR.toString());
+                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_NO_CAPABILITIES_EXIST_ERROR.toString());
                 return RecordDAO.EMPTY_RESULT; /* if no policies exist */   
             }
             
@@ -700,14 +711,14 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Capabilities_Classes_Table_Record(this.pcrec) == INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_Capabilities_Classes_Table_Record(this.caprec) == INDICATE_EXECUTION_SUCCESS) 
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
                         
                         /* after updating policies for a policy class in the DB layer we
                         finally proceed to the enforcer section */
-                        ArrayList<String> apps = this.get_POLICY_CLASS_APPS(this.pcrec.get_COLUMN_CLASS_ID().trim());
+                        ArrayList<String> apps = this.get_CAPABILITIES_CLASS_COMPONENTS(this.caprec.get_COLUMN_CLASS_ID().trim());
 
                         /* no apps - no enforcement! */
                         if (apps != null)
@@ -718,7 +729,7 @@ public class Parser_implement implements Parser
                             /* execute enforcer for every app that belongs to a policy class */
                             for (int i = 0; i < apps.size(); i++)
                             {    
-                                if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.pcrec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
                                 {
                                     this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -752,13 +763,13 @@ public class Parser_implement implements Parser
     
     /* apps table operations */
     
-    private Integer parse_and_execute_COUNT_POLICY_CLASS_APPS(String e)
+    private Integer parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.apprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         Integer count = null;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
@@ -770,7 +781,7 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 {    
-                    this.apprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(0));
+                    this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(0));
                 }    
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;  
@@ -779,7 +790,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    count = this.db.count_Components_Table_Records_on_CAPCID(this.apprec);
+                    count = this.db.count_Components_Table_Records_on_CAPCID(this.comprec);
                     this.set_ResultSize(count);
                     this.refill_ResultOutput(count.toString());
                     return INDICATE_EXECUTION_SUCCESS;
@@ -794,7 +805,7 @@ public class Parser_implement implements Parser
     } 
     
     
-    private ArrayList<String> get_POLICY_CLASS_APPS(String pcid)
+    private ArrayList<String> get_CAPABILITIES_CLASS_COMPONENTS(String pcid)
     {
         ComponentsTableRecord[] appsr = null;
         ArrayList<String> apps = null;
@@ -803,15 +814,15 @@ public class Parser_implement implements Parser
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.apprec == null) return null;
+        if (this.comprec == null) return null;
         
-        this.apprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(pcid.trim());
+        this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(pcid.trim());
 
         try 
         {//execute the db layer
             if (this.db != null)
             {    
-                appsr = this.db.read_Components_Table_Records_On_CAPCID(this.apprec);  
+                appsr = this.db.read_Components_Table_Records_On_CAPCID(this.comprec);  
             }    
         } catch (RecordDAO_Exception rex) 
         {
@@ -829,13 +840,13 @@ public class Parser_implement implements Parser
     }
     
     
-    private Integer parse_and_execute_SHOW_POLICY_CLASS_APPS(String e)
+    private Integer parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.apprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> apps = null;
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
@@ -846,8 +857,8 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 { 
-                    this.apprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(0));
-                    apps = this.get_POLICY_CLASS_APPS(this.apprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID().trim());
+                    this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(0));
+                    apps = this.get_CAPABILITIES_CLASS_COMPONENTS(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID().trim());
                 } 
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -862,13 +873,13 @@ public class Parser_implement implements Parser
         }  else return INDICATE_ARGUMENT_MISMATCH;
     }
 
-    private Integer parse_and_execute_MOVE_APP_TO_POLICY_CLASS(String e)
+    private Integer parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.apprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
        
@@ -878,9 +889,9 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 { 
-                    this.apprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0));
-                    this.apprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(1));
-                    this.apprec.set_UPDATE_COLUMN_to_COMPONENT_CAPABILITIES_CLASS_ID(); /* indicate the update column */
+                    this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0));
+                    this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(1));
+                    this.comprec.set_UPDATE_COLUMN_to_COMPONENT_CAPABILITIES_CLASS_ID(); /* indicate the update column */
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -888,7 +899,7 @@ public class Parser_implement implements Parser
             
             /* Time to call the enforcer before proceeding to the DB layer */
             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
-            if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.apprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.apprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
+            if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.comprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -904,7 +915,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Components_Table_Record(this.apprec) == INDICATE_EXECUTION_SUCCESS) {    
+                    if (this.db.write_Components_Table_Record(this.comprec) == INDICATE_EXECUTION_SUCCESS) {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
                         return INDICATE_EXECUTION_SUCCESS;

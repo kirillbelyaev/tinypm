@@ -16,8 +16,6 @@
  * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-
-
 /*
 Data access object
 data access object (DAO) is an object that provides an abstract interface to 
@@ -25,6 +23,7 @@ some type of database or other persistence mechanism. By mapping application
 calls to the persistence layer, DAO provide some specific data operations 
 without exposing details of the database.
  */
+
 package edu.csu.lpm.DB.implementation;
 
 import edu.csu.lpm.DB.DAO.RecordDAO;
@@ -161,6 +160,7 @@ public class RecordDAO_implement implements RecordDAO
             }
 
         } catch (Exception e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+        
                 return INDICATE_EXECUTION_SUCCESS;
     }
 
@@ -344,6 +344,7 @@ public class RecordDAO_implement implements RecordDAO
             state.executeUpdate(DB_Constants.drop_COMPONENTS_DB_SQL);
 
         } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+        
                 return INDICATE_EXECUTION_SUCCESS;
     }
     
