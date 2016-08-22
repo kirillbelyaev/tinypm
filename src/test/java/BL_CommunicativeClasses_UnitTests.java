@@ -26,7 +26,7 @@ import org.junit.Test;
  *
  * @author kirill
  */
-public class BL_CapabilitiesClasses_UnitTests 
+public class BL_CommunicativeClasses_UnitTests 
 {
         
     @BeforeClass
@@ -52,13 +52,13 @@ public class BL_CapabilitiesClasses_UnitTests
         boolean Out;
         
         String CMD = "";
-        String CMD_0 = "COUNT_CAPABILITIES_CLASSES";
+        String CMD_0 = "COUNT_COMMUNICATIVE_CLASSES";
         
-        String CMD_9 = "SHOW_CAPABILITIES_CLASSES";
-        String CMD_10 = "CREATE_CAPABILITIES_CLASS";
-        String CMD_11 = "CREATE_CAPABILITIES_CLASS 1 general_applications_class";
-        String CMD_12 = "CREATE_CAPABILITIES_CLASS A general_applications_class";
-        String CMD_13 = "CREATE_CAPABILITIES_CLASS 2 general_applications_class_2";
+        String CMD_9 = "SHOW_COMMUNICATIVE_CLASSES";
+        String CMD_10 = "CREATE_COMMUNICATIVE_CLASS";
+        String CMD_11 = "CREATE_COMMUNICATIVE_CLASS 1 web_caching_service";
+        String CMD_12 = "CREATE_COMMUNICATIVE_CLASS A web_caching_service";
+        String CMD_13 = "CREATE_COMMUNICATIVE_CLASS 2 web_caching_service";
         
         
         String CMD_5 = "ADD_CAPABILITIES_CLASS_CAPABILITY 1 CAP_KILL";
@@ -115,6 +115,7 @@ public class BL_CapabilitiesClasses_UnitTests
         System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
+        /*
         System.out.println("command is: " + CMD_9);
         output = p.parse_and_execute_Command(CMD_9);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
@@ -349,9 +350,8 @@ public class BL_CapabilitiesClasses_UnitTests
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        */
         
-        
-        /*------*/
                 
         
     }

@@ -267,6 +267,16 @@ public class Parser_implement implements Parser
         } else if (e.indexOf(PM_COMMANDS.EXIT.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             return  Parser.INDICATE_IMMEDIATE_EXIT_STATUS;
+            
+            /* add support for communicative classes */
+        } else if (e.indexOf(PM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }     
+            
         } else
         {
             this.parse_and_execute_HELP(e);
@@ -936,6 +946,32 @@ public class Parser_implement implements Parser
         return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
 
+    /* add support for communicative classes */
     
+    private Integer parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        Integer count = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 1)
+        {    
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {   
+                    count = this.db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
+                    this.set_ResultSize(count);
+                    this.refill_ResultOutput(count.toString());
+                    return INDICATE_EXECUTION_SUCCESS;
+                }    
+            } catch (RecordDAO_Exception rex) 
+            {
+                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
     
 }

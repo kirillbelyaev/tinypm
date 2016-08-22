@@ -26,6 +26,7 @@ import java.util.ArrayList;
  *
  * @author kirill
  */
+
 public interface Parser 
 {
     /* we use macros to indicate the general method exit codes within the parser implementation */
@@ -51,8 +52,12 @@ public interface Parser
         SHOW_CAPABILITIES_CLASSES,
         COUNT_CAPABILITIES_CLASSES,
         CREATE_CAPABILITIES_CLASS,
-        DELETE_CAPABILITIES_CLASS /* NOT recommended for implementation due to
+        DELETE_CAPABILITIES_CLASS, /* NOT recommended for implementation due to
         management problems with orphaned applications */
+        
+        /* add support for communicative classes */
+        SHOW_COMMUNICATIVE_CLASSES,
+        COUNT_COMMUNICATIVE_CLASSES
         
     }
     
@@ -76,7 +81,11 @@ public interface Parser
         DB_Layer_WRITE_RECORD_ERROR,
         DB_Layer_CAPABILITY_EXISTS_ERROR,
         DB_Layer_CAPABILITY_DOES_NOT_EXIST_ERROR,
-        DB_Layer_NO_CAPABILITIES_EXIST_ERROR
+        DB_Layer_NO_CAPABILITIES_EXIST_ERROR,
+        
+        /* add support for communicative classes */
+        SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
+        COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE
         
     }
     
@@ -96,8 +105,12 @@ public interface Parser
       /* add new commands */
       + PM_COMMANDS.COUNT_CAPABILITIES_CLASSES + " : show the number of CAPABILITIES classes \n" 
       + PM_COMMANDS.SHOW_CAPABILITIES_CLASSES + " : show the list of CAPABILITIES classes \n"
-      + PM_COMMANDS.CREATE_CAPABILITIES_CLASS + " : create/rename CAPABILITIES class (required arguments: CAPABILITIES class ID (integer), CAPABILITIES_class_name_description) \n";  
+      + PM_COMMANDS.CREATE_CAPABILITIES_CLASS + " : create/rename CAPABILITIES class (required arguments: CAPABILITIES class ID (integer), CAPABILITIES_class_name_description) \n"  
 
+      /* add support for communicative classes */
+      + PM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES + " : show the number of COMMUNICATIVE classes \n" 
+      + PM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES + " : show the list of COMMUNICATIVE classes \n";
+    
     
     public int parse_and_execute_Command(String e);
     
