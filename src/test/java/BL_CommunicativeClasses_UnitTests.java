@@ -52,12 +52,17 @@ public class BL_CommunicativeClasses_UnitTests
         boolean Out;
         
         String CMD = "";
+        
         String CMD_0 = "COUNT_COMMUNICATIVE_CLASSES";
         
-        String CMD_9 = "SHOW_COMMUNICATIVE_CLASSES";
+        String CMD_1 = "SHOW_COMMUNICATIVE_CLASSES";
+        
         String CMD_10 = "CREATE_COMMUNICATIVE_CLASS";
+        
         String CMD_11 = "CREATE_COMMUNICATIVE_CLASS 1 web_caching_service";
+        
         String CMD_12 = "CREATE_COMMUNICATIVE_CLASS A web_caching_service";
+        
         String CMD_13 = "CREATE_COMMUNICATIVE_CLASS 2 web_caching_service";
         
         
@@ -75,7 +80,7 @@ public class BL_CommunicativeClasses_UnitTests
         
         String CMD_2 = "SHOW_CAPABILITIES";
         
-        String CMD_1 = "HELP";
+        String CMD_25 = "HELP";
         
         String CMD_14 = "EXIT";
         
@@ -111,6 +116,13 @@ public class BL_CommunicativeClasses_UnitTests
         
         System.out.println("command is: " + CMD_0);
         output = p.parse_and_execute_Command(CMD_0);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        
+        System.out.println("command is: " + CMD_1);
+        output = p.parse_and_execute_Command(CMD_1);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());

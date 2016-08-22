@@ -22,6 +22,7 @@ package edu.csu.lpm.implementation;
 import edu.csu.lpm.DB.DAO.RecordDAO;
 import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
+import edu.csu.lpm.DB.DTO.CommunicativeClassesTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.DB_Dispatcher;
 import edu.csu.lpm.DB.implementation.RecordDAO_implement;
@@ -64,11 +65,13 @@ public class Parser_implement implements Parser
         this.ei = new Enforcer_implement();
     }
      
-    public String get_ERROR_MESSAGE() {
+    public String get_ERROR_MESSAGE() 
+    {
         return this.ERROR_MESSAGE;
     }
 
-    private void set_ERROR_MESSAGE(String m) {
+    private void set_ERROR_MESSAGE(String m) 
+    {
         if (m != null) this.ERROR_MESSAGE = m;
     }
     
@@ -117,7 +120,7 @@ public class Parser_implement implements Parser
         String row = null;
         for (int i = 0; i < r.length; i++)
         {
-            row = " CAPID: ";
+            row = " CAPC_ID: ";
             row = row.concat(r[i].get_COLUMN_CLASS_ID());
             row = row.concat(" | ");
             row = row.concat(" Class Name: ");
@@ -268,7 +271,7 @@ public class Parser_implement implements Parser
         {
             return  Parser.INDICATE_IMMEDIATE_EXIT_STATUS;
             
-            /* add support for communicative classes */
+        /* add support for communicative classes */
         } else if (e.indexOf(PM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
@@ -276,7 +279,16 @@ public class Parser_implement implements Parser
                 this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }     
-            
+        
+        } else if (e.indexOf(PM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                  this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }
+        
+        /* print out the help message */    
         } else
         {
             this.parse_and_execute_HELP(e);
@@ -972,6 +984,55 @@ public class Parser_implement implements Parser
         }  else return INDICATE_ARGUMENT_MISMATCH;
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
+    
+    private Integer parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        CommunicativeClassesTableRecord[] ra = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 1)
+        { 
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    ra = this.db.read_Communicative_Classes_Table_Records_On_All_Classes();
+                    if (ra != null)
+                    {    
+                        this.set_ResultSize(ra.length);
+                        this.refill_ResultOutput_with_COMMUNICATIVE_CLASS_ID_AND_NAME(ra);
+                        return INDICATE_EXECUTION_SUCCESS;
+                    } else return RecordDAO.EMPTY_RESULT;
+                }    
+            } catch (RecordDAO_Exception rex) 
+            {
+                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
+    private void refill_ResultOutput_with_COMMUNICATIVE_CLASS_ID_AND_NAME(CommunicativeClassesTableRecord[] r) 
+    {
+        if (r == null) return;
+        this.ResultOutput.clear();
+        String row = null;
+        for (int i = 0; i < r.length; i++)
+        {
+            row = " COMC_ID: ";
+            row = row.concat(r[i].get_COLUMN_CLASS_ID());
+            row = row.concat(" | ");
+            row = row.concat(" Class Name: ");
+            row = row.concat(r[i].get_COLUMN_CLASS_NAME());
+            
+            this.ResultOutput.add(row);
+            
+            row = null;
+        }    
     }
     
 }
