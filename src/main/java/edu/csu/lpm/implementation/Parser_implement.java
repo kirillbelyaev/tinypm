@@ -45,6 +45,7 @@ public class Parser_implement implements Parser
     private ArrayList <String> commandParameters = null;
 
     private CapabilitiesClassesTableRecord caprec = null;
+    private CommunicativeClassesTableRecord comrec = null;
     private ComponentsTableRecord comprec = null;
     
     private DB_Dispatcher dd = null;
@@ -288,6 +289,15 @@ public class Parser_implement implements Parser
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
         
+        } else if (e.indexOf(PM_COMMANDS.CREATE_COMMUNICATIVE_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_CREATE_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(PM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } 
+        
+            
         /* print out the help message */    
         } else
         {
@@ -332,6 +342,8 @@ public class Parser_implement implements Parser
         
         /* initialize the records only once and then reuse in other methods to save memory */ 
         if (this.caprec == null) this.caprec = new CapabilitiesClassesTableRecord();
+        
+        if (this.comrec == null) this.comrec = new CommunicativeClassesTableRecord();
         
         if (this.comprec == null) this.comprec = new ComponentsTableRecord();
         
@@ -1033,6 +1045,57 @@ public class Parser_implement implements Parser
             
             row = null;
         }    
+    }
+    
+    private Integer parse_and_execute_CREATE_COMMUNICATIVE_CLASS(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+       
+        if (num_tokens == 3)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 1)
+                {    
+                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                    this.comrec.set_COLUMN_CLASS_NAME(this.commandParameters.get(1));
+                    
+                    //this.caprec.reset_COLUMN_CAPABILITIES(); /* reset policies */
+                    
+                    this.comrec.set_UPDATE_COLUMN_to_CLASS_NAME(); /* indicate the update column */      
+                }    
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    if (this.db.write_Communicative_Classes_Table_Record(this.comrec) != INDICATE_EXECUTION_SUCCESS) 
+                    {  
+                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        return  INDICATE_CONDITIONAL_EXIT_STATUS;
+                    }    
+                    else
+                    {    
+                        this.set_ResultSize(0);
+                        this.refill_ResultOutput("");
+                        return INDICATE_EXECUTION_SUCCESS;
+                    }
+                }    
+            } catch (RecordDAO_Exception rex) 
+            {
+                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
 }

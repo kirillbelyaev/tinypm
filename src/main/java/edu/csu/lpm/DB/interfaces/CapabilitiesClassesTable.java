@@ -36,10 +36,13 @@ public interface CapabilitiesClassesTable extends Record
     final String CAPC_DB_TABLE_NAME = "capc_db";
     final String CAPC_DB_NAME = "capc.db";
     
-    
+    /* no duplicates are allowed for this table - CID can only have a single record */
     final String COLUMN_CLASS_NAME = "class_name";
-    final String COLUMN_CLASS_ID = "PCID";
+    
+    final String COLUMN_CLASS_ID = "CID";
+    
     final String COLUMN_CAPABILITIES = "capabilities";  
+    
     final String COLUMN_STATUS = "status";
     
     LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();

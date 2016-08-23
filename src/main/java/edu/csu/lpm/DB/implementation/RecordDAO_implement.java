@@ -1037,7 +1037,7 @@ public class RecordDAO_implement implements RecordDAO
                     return INDICATE_EXECUTION_SUCCESS;
     }
     
-    
+    /* no duplicates are allowed for this table - CID can only have a single record */
     @Override
     public int write_Capabilities_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {

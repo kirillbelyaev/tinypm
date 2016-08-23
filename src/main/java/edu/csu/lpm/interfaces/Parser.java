@@ -57,7 +57,8 @@ public interface Parser
         
         /* add support for communicative classes */
         SHOW_COMMUNICATIVE_CLASSES,
-        COUNT_COMMUNICATIVE_CLASSES
+        COUNT_COMMUNICATIVE_CLASSES,
+        CREATE_COMMUNICATIVE_CLASS
         
     }
     
@@ -85,8 +86,8 @@ public interface Parser
         
         /* add support for communicative classes */
         SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
-        COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE
-        
+        COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
+        CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
     }
     
     public final String HELP_MESSAGE = ""
@@ -109,7 +110,10 @@ public interface Parser
 
       /* add support for communicative classes */
       + PM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES + " : show the number of COMMUNICATIVE classes \n" 
-      + PM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES + " : show the list of COMMUNICATIVE classes \n";
+      + PM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES + " : show the list of COMMUNICATIVE classes \n"
+      + PM_COMMANDS.CREATE_COMMUNICATIVE_CLASS + " : create/rename COMMUNICATIVE class (required arguments: COMMUNICATIVE class ID (integer), COMMUNICATIVE_class_name_description) \n"  
+
+      ;
     
     
     public int parse_and_execute_Command(String e);

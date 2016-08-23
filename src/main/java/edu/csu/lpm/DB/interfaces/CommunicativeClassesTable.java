@@ -37,6 +37,7 @@ public interface CommunicativeClassesTable extends Record
     
     final String COMMUNICATIVE_CLASSES_DB_NAME = "commc.db";
     
+    /* duplicates are allowed for this table - CID can have multiple records */
     final String COLUMN_CLASS_ID = "CID";
     
     final String COLUMN_CLASS_NAME = "class_name";
