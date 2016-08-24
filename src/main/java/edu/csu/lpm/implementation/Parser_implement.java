@@ -195,114 +195,123 @@ public class Parser_implement implements Parser
             this.refill_ResultOutput("");
             this.set_ERROR_MESSAGE("");
             
-        } else if (e.indexOf(PM_COMMANDS.COUNT_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.COUNT_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_COUNT_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
                
-        } else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_SHOW_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                  this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                  this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
         
-        } else if (e.indexOf(PM_COMMANDS.CREATE_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.CREATE_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_CREATE_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.CREATE_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
             
-        } else if (e.indexOf(PM_COMMANDS.ADD_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.ADD_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.ADD_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
             
-        } else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES_CLASS_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASS_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_CAPABILITIES_CLASS_CAPABILITIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_CAPABILITIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
-        } else if (e.indexOf(PM_COMMANDS.REMOVE_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.REMOVE_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.REMOVE_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
-        }  else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        }  else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_SHOW_CAPABILITIES(e);
-        } else if (e.indexOf(PM_COMMANDS.COUNT_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.COUNT_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
-        } else if (e.indexOf(PM_COMMANDS.SHOW_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
-        } else if (e.indexOf(PM_COMMANDS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }                         
-        } else if (e.indexOf(PM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             this.parse_and_execute_HELP(e);
-        } else if (e.indexOf(PM_COMMANDS.EXIT.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.EXIT.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             return  Parser.INDICATE_IMMEDIATE_EXIT_STATUS;
             
         /* add support for communicative classes */
-        } else if (e.indexOf(PM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }     
         
-        } else if (e.indexOf(PM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                  this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                  this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
         
-        } else if (e.indexOf(PM_COMMANDS.CREATE_COMMUNICATIVE_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.CREATE_COMMUNICATIVE_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_CREATE_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
-        } else if (e.indexOf(PM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
         {
             if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
+        } else if (e.indexOf(LPM_COMMANDS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }    
+            
+            
             
         /* print out the help message */    
         } else
@@ -460,7 +469,7 @@ public class Parser_implement implements Parser
                 {    
                     if (this.db.write_Capabilities_Classes_Table_Record(this.caprec) != INDICATE_EXECUTION_SUCCESS) 
                     {  
-                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                     else
@@ -602,7 +611,7 @@ public class Parser_implement implements Parser
             
             if (this.check_if_Capability_Exists(this.caprec.get_COLUMN_CLASS_ID(), this.caprec.get_COLUMN_CAPABILITIES()) == INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_CAPABILITY_EXISTS_ERROR.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_CAPABILITY_EXISTS_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
                 
@@ -641,12 +650,12 @@ public class Parser_implement implements Parser
                             {    
                                 if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
                                 {   
-                                    this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                                    this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS;
                                 }    
                                 if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
                                 {
-                                    this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                                    this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
                                 }    
                             }
@@ -656,7 +665,7 @@ public class Parser_implement implements Parser
                     }    
                     else
                     {
-                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
@@ -728,7 +737,7 @@ public class Parser_implement implements Parser
             
             if (this.check_if_Capability_Exists(this.caprec.get_COLUMN_CLASS_ID(), this.caprec.get_COLUMN_CAPABILITIES()) == INDICATE_CONDITIONAL_EXIT_STATUS)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_CAPABILITY_DOES_NOT_EXIST_ERROR.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_CAPABILITY_DOES_NOT_EXIST_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
             policy does not exist */
             }
@@ -742,7 +751,7 @@ public class Parser_implement implements Parser
             
             } else 
             {  
-                this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_NO_CAPABILITIES_EXIST_ERROR.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_NO_CAPABILITIES_EXIST_ERROR.toString());
                 return RecordDAO.EMPTY_RESULT; /* if no policies exist */   
             }
             
@@ -771,13 +780,13 @@ public class Parser_implement implements Parser
                             {    
                                 if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
                                 {
-                                    this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                                    this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS;
                                 }
 
                                 if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
                                 {
-                                    this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                                    this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
                                 }    
                             }
@@ -787,7 +796,7 @@ public class Parser_implement implements Parser
                     }
                     else
                     {
-                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
@@ -941,13 +950,13 @@ public class Parser_implement implements Parser
             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
             if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.comprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
             
             if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
             {   
-                this.set_ERROR_MESSAGE(PM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
             }
             
@@ -961,7 +970,7 @@ public class Parser_implement implements Parser
                         return INDICATE_EXECUTION_SUCCESS;
                     } else
                     { 
-                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                 }    
@@ -1085,7 +1094,7 @@ public class Parser_implement implements Parser
                 {    
                     if (this.db.write_Communicative_Classes_Table_Record(this.comrec) != INDICATE_EXECUTION_SUCCESS) 
                     {  
-                        this.set_ERROR_MESSAGE(PM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                     else
@@ -1174,7 +1183,45 @@ public class Parser_implement implements Parser
         return components;
     }
     
-    
+    private Integer parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        Integer count = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        
+        if (num_tokens == 2)
+        {          
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 0)
+                {    
+                    this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0));
+                }    
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;  
+            
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    count = this.db.count_Components_Table_Records_on_COMCID(this.comprec);
+                    this.set_ResultSize(count);
+                    this.refill_ResultOutput(count.toString());
+                    return INDICATE_EXECUTION_SUCCESS;
+                }    
+            } catch (RecordDAO_Exception rex) 
+            {
+                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
     
     
     

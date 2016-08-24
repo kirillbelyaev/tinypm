@@ -36,7 +36,7 @@ public interface Parser
     public int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
     public int INDICATE_EXECUTION_SUCCESS = 0;
     
-    public enum PM_COMMANDS 
+    public enum LPM_COMMANDS 
     {
         EXIT,
         HELP,
@@ -59,11 +59,12 @@ public interface Parser
         SHOW_COMMUNICATIVE_CLASSES,
         COUNT_COMMUNICATIVE_CLASSES,
         CREATE_COMMUNICATIVE_CLASS,
-        SHOW_COMMUNICATIVE_CLASS_COMPONENTS
+        SHOW_COMMUNICATIVE_CLASS_COMPONENTS,
+        COUNT_COMMUNICATIVE_CLASS_COMPONENTS
         
     }
     
-    public enum PM_ERRORS
+    public enum LPM_ERRORS
     {
         COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
         SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
@@ -89,33 +90,36 @@ public interface Parser
         SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
         COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
         CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
-        SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1
+        SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1,
+        COUNT_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1
     }
     
     public final String HELP_MESSAGE = ""
       +  "The following are the commands you can apply at the LPM prompt: \n"
-      + PM_COMMANDS.HELP +  " : print this help info. \n"
-      + PM_COMMANDS.EXIT + " : exit the LPM shell. \n"
-      + PM_COMMANDS.SHOW_CAPABILITIES + " : show all available Linux capabilities supported by the OS kernel \n"  
-      + PM_COMMANDS.SHOW_CAPABILITIES_CLASS_COMPONENTS + " : show a list of components that belong to a CAPABILITIES class (required arguments: CAPABILITIES_class_ID (integer)) \n"   
-      + PM_COMMANDS.COUNT_CAPABILITIES_CLASS_COMPONENTS + " : show the number of components that belong to a CAPABILITIES class (required arguments: CAPABILITIES_class_ID (integer)) \n"
-      + PM_COMMANDS.SHOW_CAPABILITIES_CLASS_CAPABILITIES + " : show the list of CAPABILITIES associated with the CAPABILITIES class  (required arguments: CAPABILITIES_class_ID (integer)) \n"
-      + PM_COMMANDS.ADD_CAPABILITIES_CLASS_CAPABILITY + " : add a CAPABILITY to a CAPABILITIES class (required arguments: CAPABILITIES_class_ID (integer), CAPABILITY) \n"  
-      + PM_COMMANDS.REMOVE_CAPABILITIES_CLASS_CAPABILITY + " : remove a CAPABILITY from a CAPABILITIES class  (required arguments: CAPABILITIES_class_ID (integer), CAPABILITY) \n"
-      + PM_COMMANDS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS + " : move a component to a CAPABILITIES class  (required arguments: component_path_ID, CAPABILITIES_class_ID (integer)) \n"
+      + LPM_COMMANDS.HELP +  " : print this help info. \n"
+      + LPM_COMMANDS.EXIT + " : exit the LPM shell. \n"
+      + LPM_COMMANDS.SHOW_CAPABILITIES + " : show all available Linux capabilities supported by the OS kernel \n"  
+      + LPM_COMMANDS.SHOW_CAPABILITIES_CLASS_COMPONENTS + " : show a list of components that belong to a CAPABILITIES class (required arguments: CAPABILITIES_class_ID (integer)) \n"   
+      + LPM_COMMANDS.COUNT_CAPABILITIES_CLASS_COMPONENTS + " : show the number of components that belong to a CAPABILITIES class (required arguments: CAPABILITIES_class_ID (integer)) \n"
+      + LPM_COMMANDS.SHOW_CAPABILITIES_CLASS_CAPABILITIES + " : show the list of CAPABILITIES associated with the CAPABILITIES class  (required arguments: CAPABILITIES_class_ID (integer)) \n"
+      + LPM_COMMANDS.ADD_CAPABILITIES_CLASS_CAPABILITY + " : add a CAPABILITY to a CAPABILITIES class (required arguments: CAPABILITIES_class_ID (integer), CAPABILITY) \n"  
+      + LPM_COMMANDS.REMOVE_CAPABILITIES_CLASS_CAPABILITY + " : remove a CAPABILITY from a CAPABILITIES class  (required arguments: CAPABILITIES_class_ID (integer), CAPABILITY) \n"
+      + LPM_COMMANDS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS + " : move a component to a CAPABILITIES class  (required arguments: component_path_ID, CAPABILITIES_class_ID (integer)) \n"
 
 
       /* add new commands */
-      + PM_COMMANDS.COUNT_CAPABILITIES_CLASSES + " : show the number of CAPABILITIES classes \n" 
-      + PM_COMMANDS.SHOW_CAPABILITIES_CLASSES + " : show the list of CAPABILITIES classes \n"
-      + PM_COMMANDS.CREATE_CAPABILITIES_CLASS + " : create/rename CAPABILITIES class (required arguments: CAPABILITIES class ID (integer), CAPABILITIES_class_name_description) \n"  
+      + LPM_COMMANDS.COUNT_CAPABILITIES_CLASSES + " : show the number of CAPABILITIES classes \n" 
+      + LPM_COMMANDS.SHOW_CAPABILITIES_CLASSES + " : show the list of CAPABILITIES classes \n"
+      + LPM_COMMANDS.CREATE_CAPABILITIES_CLASS + " : create/rename CAPABILITIES class (required arguments: CAPABILITIES class ID (integer), CAPABILITIES_class_name_description) \n"  
 
       /* add support for communicative classes */
-      + PM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES + " : show the number of COMMUNICATIVE classes \n" 
-      + PM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES + " : show the list of COMMUNICATIVE classes \n"
-      + PM_COMMANDS.CREATE_COMMUNICATIVE_CLASS + " : create/rename COMMUNICATIVE class (required arguments: COMMUNICATIVE class ID (integer), COMMUNICATIVE_class_name_description) \n"  
-      + PM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS + " : show a list of components that belong to a COMMUNICATIVE class (required arguments: COMMUNICATIVE_class_ID (integer)) \n"   
+      + LPM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES + " : show the number of COMMUNICATIVE classes \n" 
+      + LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES + " : show the list of COMMUNICATIVE classes \n"
+      + LPM_COMMANDS.CREATE_COMMUNICATIVE_CLASS + " : create/rename COMMUNICATIVE class (required arguments: COMMUNICATIVE class ID (integer), COMMUNICATIVE_class_name_description) \n"  
+      + LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS + " : show a list of components that belong to a COMMUNICATIVE class (required arguments: COMMUNICATIVE_class_ID (integer)) \n"   
+      + LPM_COMMANDS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS + " : show the number of components that belong to a COMMUNICATIVE class (required arguments: COMMUNICATIVE_class_ID (integer)) \n"
       
+            
       ;
     
     

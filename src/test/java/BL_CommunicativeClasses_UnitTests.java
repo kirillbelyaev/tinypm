@@ -72,21 +72,12 @@ public class BL_CommunicativeClasses_UnitTests
         
         String CMD_8 = "SHOW_COMMUNICATIVE_CLASS_COMPONENTS 2";
         
-       
-       
         
-        String CMD_25 = "HELP";
+        String CMD_9 = "COUNT_COMMUNICATIVE_CLASS_COMPONENTS";
         
-        String CMD_14 = "EXIT";
+        String CMD_10 = "COUNT_COMMUNICATIVE_CLASS_COMPONENTS 1";
         
-        
-        String CMD_15 = "COUNT_CAPABILITIES_CLASS_COMPONENTS";
-        
-        String CMD_16 = "COUNT_CAPABILITIES_CLASS_COMPONENTS 1";
-        
-        String CMD_17 = "COUNT_CAPABILITIES_CLASS_COMPONENTS 2";
-        
-        String CMD_18 = "SHOW_COMMUNICATIVE_CLASS_COMPONENTS 1";
+        String CMD_11 = "COUNT_COMMUNICATIVE_CLASS_COMPONENTS 2";
         
         
         String CMD_19 = "MOVE_COMPONENT_TO_CAPABILITIES_CLASS 1";
@@ -98,6 +89,11 @@ public class BL_CommunicativeClasses_UnitTests
         String CMD_23 = "MOVE_COMPONENT_TO_CAPABILITIES_CLASS /s/chopin/b/grad/kirill/apps/ping 3";
         
         String CMD_24 = "SHOW_CAPABILITIES_CLASS_COMPONENTS 3";
+        
+        
+        String CMD_25 = "HELP";
+        
+        String CMD_26 = "EXIT";
         
         
         Parser_implement p = new Parser_implement();
@@ -163,6 +159,27 @@ public class BL_CommunicativeClasses_UnitTests
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        System.out.println("command is: " + CMD_9);
+        output = p.parse_and_execute_Command(CMD_9);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        System.out.println("command is: " + CMD_10);
+        output = p.parse_and_execute_Command(CMD_10);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        System.out.println("command is: " + CMD_11);
+        output = p.parse_and_execute_Command(CMD_11);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        
+        
         
         /*
         System.out.println("command is: " + CMD_9);
