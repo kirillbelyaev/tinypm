@@ -296,7 +296,13 @@ public class Parser_implement implements Parser
                 this.set_ERROR_MESSAGE(PM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             } 
-        
+        } else if (e.indexOf(PM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(PM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }
             
         /* print out the help message */    
         } else
@@ -624,7 +630,7 @@ public class Parser_implement implements Parser
                         finally proceed to the enforcer section */
                         ArrayList<String> apps = this.get_CAPABILITIES_CLASS_COMPONENTS(this.caprec.get_COLUMN_CLASS_ID().trim());
 
-                        /* no apps - no enforcement! */
+                        /* no components - no enforcement! */
                         if (apps != null)
                         {
                             /* Time to call the enforcer after proceeding to the DB layer */
@@ -754,7 +760,7 @@ public class Parser_implement implements Parser
                         finally proceed to the enforcer section */
                         ArrayList<String> apps = this.get_CAPABILITIES_CLASS_COMPONENTS(this.caprec.get_COLUMN_CLASS_ID().trim());
 
-                        /* no apps - no enforcement! */
+                        /* no components - no enforcement! */
                         if (apps != null)
                         {
                             /* Time to call the enforcer after proceeding to the DB layer */
@@ -795,7 +801,7 @@ public class Parser_implement implements Parser
     }
     
     
-    /* apps table operations */
+    /* components table operations */
     
     private Integer parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(String e)
     {
@@ -1097,5 +1103,83 @@ public class Parser_implement implements Parser
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
+    
+    private Integer parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> components = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        //System.out.println("num_tokens is: " + num_tokens);
+        if (num_tokens == 2)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 0)
+                { 
+                    this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0));
+                    components = this.get_COMMUNICATIVE_CLASS_COMPONENTS(this.comprec.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID().trim());
+                } 
+                else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            if (components != null)
+            {
+                this.set_ResultSize(components.size());
+                this.refill_ResultOutput(components);
+                return INDICATE_EXECUTION_SUCCESS;
+            } else return RecordDAO.EMPTY_RESULT;
+            
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+    }
+    
+    
+    private ArrayList<String> get_COMMUNICATIVE_CLASS_COMPONENTS(String pcid)
+    {
+        ComponentsTableRecord[] compsr = null;
+        ArrayList<String> components = null;
+
+        if (pcid == null || pcid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comprec == null) return null;
+        
+        this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(pcid.trim());
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                compsr = this.db.read_Components_Table_Records_On_COMCID(this.comprec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (compsr != null)
+        {    
+            components = new ArrayList<String>();
+            for (ComponentsTableRecord compsr1 : compsr) 
+            {
+                components.add(compsr1.get_COLUMN_COMPONENT_PATH_ID());
+            }
+        }
+        
+        return components;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

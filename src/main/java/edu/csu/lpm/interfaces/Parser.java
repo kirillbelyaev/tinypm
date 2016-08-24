@@ -58,7 +58,8 @@ public interface Parser
         /* add support for communicative classes */
         SHOW_COMMUNICATIVE_CLASSES,
         COUNT_COMMUNICATIVE_CLASSES,
-        CREATE_COMMUNICATIVE_CLASS
+        CREATE_COMMUNICATIVE_CLASS,
+        SHOW_COMMUNICATIVE_CLASS_COMPONENTS
         
     }
     
@@ -88,6 +89,7 @@ public interface Parser
         SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
         COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE,
         CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2,
+        SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1
     }
     
     public final String HELP_MESSAGE = ""
@@ -112,7 +114,8 @@ public interface Parser
       + PM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES + " : show the number of COMMUNICATIVE classes \n" 
       + PM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES + " : show the list of COMMUNICATIVE classes \n"
       + PM_COMMANDS.CREATE_COMMUNICATIVE_CLASS + " : create/rename COMMUNICATIVE class (required arguments: COMMUNICATIVE class ID (integer), COMMUNICATIVE_class_name_description) \n"  
-
+      + PM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS + " : show a list of components that belong to a COMMUNICATIVE class (required arguments: COMMUNICATIVE_class_ID (integer)) \n"   
+      
       ;
     
     
