@@ -134,9 +134,6 @@ public class RecordDAO_implement implements RecordDAO
 
             comr.set_COLUMN_CLASS_ID(r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
             
-            if (this.check_If_Capabilities_Classes_Table_Record_Exists(capr) == EMPTY_RESULT) return RecordDAO.INDICATE_CAPABILITIES_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
-
-            if (this.check_If_Communicative_Classes_Table_Record_Exists(comr) == EMPTY_RESULT) return RecordDAO.INDICATE_COMMUNICATIVE_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
             
             if (this.check_If_Components_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
             {	
@@ -149,12 +146,16 @@ public class RecordDAO_implement implements RecordDAO
                 if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID)) /* check if the update column
                         is a CAP CID column */
                 {
+                    if (this.check_If_Capabilities_Classes_Table_Record_Exists(capr) == EMPTY_RESULT) return RecordDAO.INDICATE_CAPABILITIES_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
+
                     if (this.update_Components_Table_Record_CAPCID_on_Component(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
                 
                 if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID)) /* check if the update column
                         is a COM CID column */
                 {
+                    if (this.check_If_Communicative_Classes_Table_Record_Exists(comr) == EMPTY_RESULT) return RecordDAO.INDICATE_COMMUNICATIVE_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
+            
                     if (this.update_Components_Table_Record_COMCID_on_Component(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
                 }    
             }

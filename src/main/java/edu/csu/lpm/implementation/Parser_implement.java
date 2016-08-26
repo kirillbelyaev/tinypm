@@ -310,7 +310,13 @@ public class Parser_implement implements Parser
                 this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
-            
+        } else if (e.indexOf(LPM_COMMANDS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }    
             
             
         /* print out the help message */    
@@ -1223,7 +1229,72 @@ public class Parser_implement implements Parser
         return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
-    
+    private Integer parse_and_execute_MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+       
+        if (num_tokens == 3)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 1)
+                { 
+                    this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0));
+                    this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(1));
+                    this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(1));
+                    this.comprec.set_UPDATE_COLUMN_to_COMPONENT_COMMUNICATIVE_CLASS_ID(); /* indicate the update column */
+                    
+                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            
+            /* Time to call the enforcer before proceeding to the DB layer */
+            /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
+            /*
+            if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.comprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }    
+            
+            if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
+            {   
+                this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
+            }
+            */
+                    
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    if (this.db.write_Components_Table_Record(this.comprec) == INDICATE_EXECUTION_SUCCESS) 
+                    {    
+                        this.set_ResultSize(0);
+                        this.refill_ResultOutput("");
+                        return INDICATE_EXECUTION_SUCCESS;
+                    } else
+                    { 
+                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        return  INDICATE_CONDITIONAL_EXIT_STATUS;
+                    }    
+                }    
+            } catch (RecordDAO_Exception rex) 
+            {
+                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }
+            
+            
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
     
     
     
