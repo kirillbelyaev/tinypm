@@ -108,6 +108,12 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
     {
         return this.COLUMN_COLLABORATION_RECORD;
     }
+    
+    public boolean check_if_COLUMN_COLLABORATION_RECORD_is_Empty() 
+    {
+        if (this.get_COLUMN_COLLABORATION_RECORD().isEmpty() ) return true;
+        else return false;
+    }
 
     public void set_COLUMN_COLLABORATION_RECORD(String componentID, String object_path) 
     {
