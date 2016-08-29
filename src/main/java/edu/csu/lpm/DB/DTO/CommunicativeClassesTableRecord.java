@@ -134,6 +134,13 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
         }
     }
     
+    
+    public boolean check_if_COLUMN_COORDINATION_RECORD_is_Empty() 
+    {
+        if (this.get_COLUMN_COORDINATION_RECORD().isEmpty() ) return true;
+        else return false;
+    }
+    
     /* alternative method to set the field when reading a record from db */
     public void set_COLUMN_COORDINATION_RECORD(String record) 
     {

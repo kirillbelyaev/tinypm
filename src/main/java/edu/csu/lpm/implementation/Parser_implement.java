@@ -324,7 +324,14 @@ public class Parser_implement implements Parser
                 this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
-        
+        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }
+            
             
         /* print out the help message */    
         } else
@@ -1260,7 +1267,10 @@ public class Parser_implement implements Parser
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            
+            /* No need for immediate enforcement since communicative policies
+            are only checked upon request of the TSC. In contrast to capabilities
+            that are tied to the executable, communicative policies represent the
+            realistic access control dimension */
             /* Time to call the enforcer before proceeding to the DB layer */
             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
             /*
@@ -1381,6 +1391,90 @@ public class Parser_implement implements Parser
         
         return null; /* return NULL by default */
     }
+    
+    private Integer parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> policies = null;
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        
+        if (num_tokens == 2)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 0)
+                { 
+                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                    policies = this.get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(this.comrec.get_COLUMN_CLASS_ID().trim());
+                    
+                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            if (policies != null)
+            {
+                this.set_ResultSize(policies.size());
+                this.refill_ResultOutput(policies);
+                return INDICATE_EXECUTION_SUCCESS;
+            } else return RecordDAO.EMPTY_RESULT;
+            
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+    }
+    
+    private ArrayList<String> get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(String cid)
+    {
+        CommunicativeClassesTableRecord[] comr = null;
+        ArrayList<String> policies = null;
+
+        if (cid == null || cid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comrec == null) return null;
+        
+        this.comrec.set_COLUMN_CLASS_ID(cid.trim());
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                comr = this.db.read_Communicative_Classes_Table_Records_On_CID(this.comrec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (comr != null)
+        {    
+            policies = new ArrayList<String>();
+            for (int i = 0; i < comr.length; i++)
+            {
+                /* let us make sure that a policy class record does have policies */
+                if (!comr[i].check_if_COLUMN_COORDINATION_RECORD_is_Empty())
+                    policies.add(comr[i].get_COLUMN_COORDINATION_RECORD()); /* add non-empty
+                policies only */
+            }    
+        }
+        
+        /* let us ensure that we return only non-empty policies */
+        if (policies != null)
+            if ( !policies.isEmpty() ) return policies;
+            else return null;
+        
+        return null; /* return NULL by default */
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
 }
