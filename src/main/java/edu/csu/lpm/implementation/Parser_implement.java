@@ -338,6 +338,14 @@ public class Parser_implement implements Parser
                 this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }
+        } else if (e.indexOf(LPM_COMMANDS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        {
+            if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }   
+            
             
             
         /* print out the help message */    
@@ -1541,7 +1549,84 @@ public class Parser_implement implements Parser
         return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
+    private Integer parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(String e)
+    {
+        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        
+        if (num_tokens == 4)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() > 1)
+                {    
+                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                    this.comrec.set_COLUMN_COORDINATION_RECORD(this.commandParameters.get(1) + " " + this.commandParameters.get(2));
+                    
+                    this.comrec.set_COLUMN_CLASS_NAME(""); /* make blank in case a policy is added to non-existent
+                    policy class therefore triggering the creation of new policy class record */
+                    
+                    //this.comrec.set_UPDATE_COLUMN_to_COLLABORATION_RECORD();/* indicate the update column */
+                    
+                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+            
+            if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COORDINATION_RECORD()) == INDICATE_EXECUTION_SUCCESS)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COORDINATION_POLICY_EXISTS_ERROR.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
+            }
+            
+            try 
+            {//execute the db layer
+                if (this.db != null)
+                {    
+                    if (this.db.write_CommunicativeClassesTableRecord(this.comrec) == INDICATE_EXECUTION_SUCCESS)
+                    {    
+                        this.set_ResultSize(0);
+                        this.refill_ResultOutput("");
+                        
+                        /* No need for immediate enforcement since communicative policies
+                        are only checked upon request of the TSC. In contrast to capabilities
+                        that are tied to the executable, communicative policies represent the
+                        realistic access control dimension that is only checked upon request */
+                                           
+                        return INDICATE_EXECUTION_SUCCESS;
+                    }    
+                    else
+                    {
+                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    }
+                }    
+            } catch (RecordDAO_Exception rex) 
+            {
+                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+            }   
+            
+        }  else return INDICATE_ARGUMENT_MISMATCH;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
     
+    private int check_if_CoordinationPolicy_Exists (String cid, String p)
+    {
+        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(cid.trim());
+        
+        if (policies != null)
+            for (int i = 0; i < policies.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (policies.get(i).contains(p.trim())) return INDICATE_EXECUTION_SUCCESS;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
     
     
 }
