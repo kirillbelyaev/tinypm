@@ -1329,6 +1329,43 @@ public class RecordDAO_implement implements RecordDAO
                 return INDICATE_EXECUTION_SUCCESS;
     }
     
+    /* new version taking into account the fact that duplicates are allowed on CID
+    but with distinct coord/collab records */
+    @Override
+    public int write_CommunicativeClassesTableRecord(CommunicativeClassesTableRecord r) 
+    throws RecordDAO_Exception
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        try
+        {	
+            if (this.check_If_CommunicativeClassesTableRecord_Exists(r) == EMPTY_RESULT) //no record exists
+            {	
+                if (this.insert_Communicative_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+            } else if (this.check_If_CommunicativeClassesTableRecord_Exists(r) == RECORD_EXISTS) //record exists
+            {/* no updates are allowed - only inserts and deletes based on coord/collab records */
+               
+                return RECORD_EXISTS;
+//if record exists - just update it	
+
+//                if (r.get_UPDATE_COLUMN().equals(CommunicativeClassesTable.COLUMN_CLASS_NAME)) /* check if the update column
+//                    is a name column */
+//                    if (this.update_Communicative_Classes_Table_Record_Column_Name_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+//
+//                if (r.get_UPDATE_COLUMN().equals(CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD)) /* check if the update column
+//                    is collaboration policy column */
+//                    if (this.update_Communicative_Classes_Table_Record_Column_Collaboration_Record_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+//
+//                if (r.get_UPDATE_COLUMN().equals(CommunicativeClassesTable.COLUMN_COORDINATION_RECORD)) /* check if the update column
+//                    is coordination policy column */
+//                    if (this.update_Communicative_Classes_Table_Record_Column_Coordination_Record_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }
+
+        } catch (Exception e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                return INDICATE_EXECUTION_SUCCESS;
+    }
+    
     private int check_If_Communicative_Classes_Table_Record_Exists(CommunicativeClassesTableRecord r)
     throws RecordDAO_Exception //on CID
     {
@@ -1356,6 +1393,51 @@ public class RecordDAO_implement implements RecordDAO
                     rs = null;
                     //System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
                     return RECORD_EXISTS; //entry exists
+            }	
+
+            rs.close();
+            rs = null;
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }    
+
+                return EMPTY_RESULT; //no entry exists
+    }
+    
+    /* new version taking into account the fact that duplicates are allowed on CID
+    but with distinct coord/collab records */
+    private int check_If_CommunicativeClassesTableRecord_Exists(CommunicativeClassesTableRecord r)
+    throws RecordDAO_Exception //on CID
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try 
+        {	
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMMC_DB_ON_ALL_MAIN_COLUMNS_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
+            
+            //ps.setString(index++, r.get_COLUMN_CLASS_NAME());
+
+            ps.setString(index++, r.get_COLUMN_COLLABORATION_RECORD());
+            
+            ps.setString(index++, r.get_COLUMN_COORDINATION_RECORD());
+            
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
+
+            if (rs.next())
+            {
+                rs.close();
+                rs = null;
+                //System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
+                return RECORD_EXISTS; //entry exists
             }	
 
             rs.close();
