@@ -113,6 +113,8 @@ public interface RecordDAO extends DB_Base
     
     public int delete_Communicative_Classes_Table_Records_On_CID(CommunicativeClassesTableRecord r) throws RecordDAO_Exception;
     
+    public int delete_Communicative_Classes_Table_Record_On_CollaborationRecord_And_CID(CommunicativeClassesTableRecord r) throws RecordDAO_Exception;
+    
     /* new version taking into account the fact that duplicates are allowed on CID
     but with distinct coord/collab records */
     public int write_CommunicativeClassesTableRecord(CommunicativeClassesTableRecord r) throws RecordDAO_Exception; 

@@ -143,15 +143,34 @@ public interface DB_Constants
         + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + " = ?";
         
         
-        final String INSERT_INTO_COMMC_DB_SQL = "insert into " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " values (?, ?, ?, ?, ?) ";
+        final String INSERT_INTO_COMMC_DB_SQL = "insert into " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME 
+        + " values (?, ?, ?, ?, ?) ";
         
-        final String DELETE_FROM_COMMC_DB_ON_CID_SQL = "delete from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+        final String DELETE_FROM_COMMC_DB_ON_CID_SQL = "delete from " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME 
+        + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+        
+        final String DELETE_FROM_COMMC_DB_ON_COLLABORATION_RECORD_AND_CID_SQL = "delete from " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME 
+        + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?" + " and "
+        + CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD + " = ?";
 
-        final String UPDATE_COMMC_DB_COLUMN_NAME_ON_CID_SQL = "update " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " + CommunicativeClassesTable.COLUMN_CLASS_NAME + " = ? "  + "where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+
+        final String UPDATE_COMMC_DB_COLUMN_NAME_ON_CID_SQL = "update " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " 
+        + CommunicativeClassesTable.COLUMN_CLASS_NAME + " = ? "  + "where " 
+        + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
         
-        final String UPDATE_COMMC_DB_COLUMN_COLLABORATION_RECORD_ON_CID_SQL = "update " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " + CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD + " = ? "  + "where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+        final String UPDATE_COMMC_DB_COLUMN_COLLABORATION_RECORD_ON_CID_SQL = "update " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " 
+        + CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD + " = ? "  + "where " 
+        + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
         
-        final String UPDATE_COMMC_DB_COLUMN_COORDINATION_RECORD_ON_CID_SQL = "update " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + " = ? "  + "where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+        final String UPDATE_COMMC_DB_COLUMN_COORDINATION_RECORD_ON_CID_SQL = "update " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " 
+        + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + " = ? "  + "where " 
+        + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
         
         
 }
