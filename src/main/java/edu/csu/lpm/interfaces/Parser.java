@@ -66,7 +66,8 @@ public interface Parser
         SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES,
         ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY,
         ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY,
-        REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY
+        REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY,
+        REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY
         
     }
     
@@ -143,7 +144,8 @@ public interface Parser
       + LPM_COMMANDS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY + " : add a COLLABORATION POLICY to a COMMUNICATIVE class (required arguments: COMMUNICATIVE_class_ID (integer), component path ID, object path) \n"  
       + LPM_COMMANDS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY + " : add a COORDINATION POLICY to a COMMUNICATIVE class (required arguments: COMMUNICATIVE_class_ID (integer), component path ID, component path ID) \n"  
       + LPM_COMMANDS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY + " : remove a COLLABORATION POLICY from a COMMUNICATIVE class  (required arguments: COMMUNICATIVE_class_ID (integer), component path ID, object path) \n"
-            
+      + LPM_COMMANDS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY + " : remove a COORDINATION POLICY from a COMMUNICATIVE class  (required arguments: COMMUNICATIVE_class_ID (integer), component path ID, component path ID) \n"
+
       ;
     
     

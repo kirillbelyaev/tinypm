@@ -1302,6 +1302,41 @@ public class RecordDAO_implement implements RecordDAO
             return INDICATE_EXECUTION_SUCCESS;
     }
     
+    @Override
+    public int delete_Communicative_Classes_Table_Record_On_CoordinationRecord_And_CID(CommunicativeClassesTableRecord r) 
+    throws RecordDAO_Exception
+    {
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        String statement = null;
+        PreparedStatement ps = null;
+
+        try 
+        {	
+            ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_COMMC_DB_ON_COORDINATION_RECORD_AND_CID_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_CLASS_ID());
+            ps.setString(index++, r.get_COLUMN_COORDINATION_RECORD());
+
+            this.conn.setAutoCommit(false);
+            ps.executeUpdate();
+            this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+            /*
+            Possible refactoring to every method to obtain the int exit code. 
+            but that defeats the purpose of using specialized exception class.
+            
+            } catch(SQLException e) { System.out.println("Exception: " + e.getMessage() ); return INDICATE_SQL_EXCEPTION;}
+            */        
+                    
+            return INDICATE_EXECUTION_SUCCESS;
+    }
+    
     
     private int insert_Communicative_Classes_Table_Record(CommunicativeClassesTableRecord r)
     throws RecordDAO_Exception

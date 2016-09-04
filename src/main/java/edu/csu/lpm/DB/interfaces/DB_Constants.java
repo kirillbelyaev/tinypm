@@ -155,6 +155,11 @@ public interface DB_Constants
         + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME 
         + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?" + " and "
         + CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD + " = ?";
+               
+        final String DELETE_FROM_COMMC_DB_ON_COORDINATION_RECORD_AND_CID_SQL = "delete from " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME 
+        + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?" + " and "
+        + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + " = ?";
 
 
         final String UPDATE_COMMC_DB_COLUMN_NAME_ON_CID_SQL = "update " 
