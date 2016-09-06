@@ -14,6 +14,7 @@ communication between processes is usually done resorting to remote interfaces.
 package edu.csu.lpm.DB.DTO;
 
 import edu.csu.lpm.DB.interfaces.CommunicativeClassesTable;
+import edu.csu.lpm.interfaces.Parser;
 import java.io.Serializable;
 import java.io.*;
 import java.util.StringTokenizer;
@@ -115,23 +116,35 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
         else return false;
     }
 
-    public void set_COLUMN_COLLABORATION_RECORD(String componentID, String object_path) 
+    public int set_COLUMN_COLLABORATION_RECORD(String componentID, String object_path) 
     {
         final String separator = " ";
         if (componentID != null && object_path != null)
         {
             if (!componentID.isEmpty() && !object_path.isEmpty())
             {    
-                File f = new File(componentID);
+                File c = new File(componentID);
                 
                 File o = new File(object_path);
                 
                 /* set only if an app is an actual file, does exist and not 
                 a directory */
-                if (f.isFile() && o.isFile()) this.COLUMN_COLLABORATION_RECORD = componentID + separator + object_path;
-                else System.out.println("Communicative_Classes_Table_Record.set_COLUMN_COLLABORATION_RECORD(): component does not exist on the filesystem! ");
+                if (c.isFile() && o.isFile()) 
+                {    
+                    this.COLUMN_COLLABORATION_RECORD = componentID + separator + object_path;
+                    return Parser.INDICATE_EXECUTION_SUCCESS;
+                    
+                } else 
+                {    
+                    System.out.println("Communicative_Classes_Table_Record.set_COLUMN_COLLABORATION_RECORD(): object does not exist on the filesystem! ");
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                }    
             }
+            
+            return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         }
+        
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     

@@ -414,7 +414,7 @@ public class Parser_implement implements Parser
         
         count = this.tokenizer.countTokens(); //obtain the number of tokens before cycling through them
         
-        this.tokenizer.nextToken();//skip the 1st token
+        this.tokenizer.nextToken();//skip the 1st token which is the command itself
         
         while (this.tokenizer.hasMoreTokens())
         {

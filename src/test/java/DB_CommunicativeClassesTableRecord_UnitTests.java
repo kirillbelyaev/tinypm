@@ -122,25 +122,33 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         
         /* collaboration first */
         
+        System.out.println("\n");
         System.out.println("set_COLUMN_COLLABORATION_RECORD. ");
-        r.set_COLUMN_COLLABORATION_RECORD(component_2_ID, object_path);
+        intValue = r.set_COLUMN_COLLABORATION_RECORD(component_2_ID, object_path);
+        System.out.println("set_COLUMN_COLLABORATION_RECORD return code is: " + intValue);
         
+        System.out.println("\n");
         System.out.println("get_COLUMN_COLLABORATION_RECORD. ");
         value = r.get_COLUMN_COLLABORATION_RECORD();
 	assertNotNull(value);
 	System.out.println("Collaboration record is: " + value);
         
+        System.out.println("\n");
         System.out.println("set_COLUMN_COLLABORATION_RECORD. (invalid input)");
-        r.set_COLUMN_COLLABORATION_RECORD("", "");
+        intValue = r.set_COLUMN_COLLABORATION_RECORD("", "");
+        System.out.println("set_COLUMN_COLLABORATION_RECORD return code is: " + intValue);
         
+        System.out.println("\n");
         System.out.println("get_COLUMN_COLLABORATION_RECORD. ");
         value = r.get_COLUMN_COLLABORATION_RECORD();
 	assertNotNull(value);
 	System.out.println("Collaboration record is: " + value);
         
+        System.out.println("\n");
         System.out.println("set_COLUMN_COLLABORATION_RECORD using a method with a single parameter. ");
         r.set_COLUMN_COLLABORATION_RECORD(collab_record);
         
+        System.out.println("\n");
         System.out.println("get_COLUMN_COLLABORATION_RECORD. ");
         value = r.get_COLUMN_COLLABORATION_RECORD();
 	assertNotNull(value);
@@ -148,6 +156,7 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         
         /* now coordination */
         
+        System.out.println("\n");
         System.out.println("set_COLUMN_COORDINATION_RECORD. ");
         r.set_COLUMN_COORDINATION_RECORD(component_1_ID, component_2_ID);
         
