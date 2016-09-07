@@ -158,24 +158,31 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         
         System.out.println("\n");
         System.out.println("set_COLUMN_COORDINATION_RECORD. ");
-        r.set_COLUMN_COORDINATION_RECORD(component_1_ID, component_2_ID);
+        intValue = r.set_COLUMN_COORDINATION_RECORD(component_1_ID, component_2_ID);
+        System.out.println("set_COLUMN_COORDINATION_RECORD return code is: " + intValue);
         
+        System.out.println("\n");
         System.out.println("get_COLUMN_COORDINATION_RECORD. ");
         value = r.get_COLUMN_COORDINATION_RECORD();
 	assertNotNull(value);
 	System.out.println("Coordination record is: " + value);
         
+        System.out.println("\n");
         System.out.println("set_COLUMN_COORDINATION_RECORD. (invalid input)");
-        r.set_COLUMN_COORDINATION_RECORD("", "");
+        intValue = r.set_COLUMN_COORDINATION_RECORD("", "");
+        System.out.println("set_COLUMN_COORDINATION_RECORD return code is: " + intValue);
         
+        System.out.println("\n");
         System.out.println("get_COLUMN_COORDINATION_RECORD. ");
         value = r.get_COLUMN_COORDINATION_RECORD();
 	assertNotNull(value);
 	System.out.println("Coordination record is: " + value);
         
+        System.out.println("\n");
         System.out.println("set_COLUMN_COORDINATION_RECORD using a method with a single parameter. ");
         r.set_COLUMN_COORDINATION_RECORD(coord_record);
         
+        System.out.println("\n");
         System.out.println("get_COLUMN_COORDINATION_RECORD. ");
         value = r.get_COLUMN_COORDINATION_RECORD();
 	assertNotNull(value);

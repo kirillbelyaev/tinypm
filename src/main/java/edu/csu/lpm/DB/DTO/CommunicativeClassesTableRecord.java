@@ -87,22 +87,34 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
         return this.COLUMN_COORDINATION_RECORD;
     }
 
-    public void set_COLUMN_COORDINATION_RECORD(String component_1_ID, String component_2_ID) 
+    public int set_COLUMN_COORDINATION_RECORD(String component_1_ID, String component_2_ID) 
     {
         final String separator = " ";
         if (component_1_ID != null && component_2_ID != null)
         {
             if (!component_1_ID.isEmpty() && !component_2_ID.isEmpty())
             {    
-                File f1 = new File(component_1_ID);
+                File c1 = new File(component_1_ID);
                 
-                File f2 = new File(component_2_ID);
+                File c2 = new File(component_2_ID);
                 /* set only if an app is an actual file, does exist and not 
                 a directory */
-                if (f1.isFile() && f2.isFile()) this.COLUMN_COORDINATION_RECORD = component_1_ID + separator + component_2_ID;
-                else System.out.println("Communicative_Classes_Table_Record.set_COLUMN_COORDINATION_RECORD(): component does not exist on the filesystem! ");
+                if (c1.isFile() && c2.isFile())
+                {    
+                    this.COLUMN_COORDINATION_RECORD = component_1_ID + separator + component_2_ID;          
+                    return Parser.INDICATE_EXECUTION_SUCCESS;
+                }    
+                else 
+                {    
+                    System.out.println("Communicative_Classes_Table_Record.set_COLUMN_COORDINATION_RECORD(): component does not exist on the filesystem! ");
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                }    
             }
+            
+            return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         }
+        
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     public String get_COLUMN_COLLABORATION_RECORD() 
@@ -282,7 +294,7 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
            } catch (NumberFormatException nfex)
            {
                //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
-               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(): CID string is not a number! ");
+               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CLASS_ID(): CID string is not a number! ");
            }    
         }   
     }
