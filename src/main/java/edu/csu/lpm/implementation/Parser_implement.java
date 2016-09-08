@@ -1617,6 +1617,26 @@ public class Parser_implement implements Parser
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
+            /* we can add a policy record only if such a component is associated
+            with a particular class - can not just create a record with a random
+            component */
+            /* both components should belong to the same class */
+            if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
+            }
+            
+            /* we can add a policy record only if such a component is associated
+            with a particular class - can not just create a record with a random
+            component */
+            /* both components should belong to the same class */
+            if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
+            }
+            
             if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COORDINATION_RECORD()) == INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COORDINATION_POLICY_EXISTS_ERROR.toString());
