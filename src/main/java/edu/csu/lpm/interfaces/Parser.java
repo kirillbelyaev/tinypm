@@ -97,6 +97,7 @@ public interface Parser
         DB_Layer_COLLABORATION_POLICY_DOES_NOT_EXIST_ERROR,
         DB_Layer_COORDINATION_POLICY_DOES_NOT_EXIST_ERROR,       
         DB_Layer_DELETE_RECORD_ERROR,
+        DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR,
         
         
         /* add support for communicative classes */

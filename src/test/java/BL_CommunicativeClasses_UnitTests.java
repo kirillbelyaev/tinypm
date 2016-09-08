@@ -152,6 +152,7 @@ public class BL_CommunicativeClasses_UnitTests
         
         String CMD_40 = "REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY 1 " + this.coord_record;
         
+        String CMD_41 = "MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS " + this.component_1_ID + " 1";
         
         /* start parser instance */
         Parser_implement p = new Parser_implement();

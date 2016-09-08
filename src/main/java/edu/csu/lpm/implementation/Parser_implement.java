@@ -1512,6 +1512,15 @@ public class Parser_implement implements Parser
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
+            /* we can add a policy record only if such a component is associated
+            with a particular class - can not just create a record with a random
+            component */
+            if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
+            {
+                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
+                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
+            }    
+            
             if (this.check_if_CollaborationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COLLABORATION_RECORD()) == INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COLLABORATION_POLICY_EXISTS_ERROR.toString());
@@ -1563,6 +1572,21 @@ public class Parser_implement implements Parser
         
         return INDICATE_CONDITIONAL_EXIT_STATUS;
     }
+    
+    private int check_if_Component_belongs_to_Class (String cid, String component)
+    {
+        if (cid == null || cid.isEmpty() || component == null || component.isEmpty()) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> components = this.get_COMMUNICATIVE_CLASS_COMPONENTS(cid.trim());
+        
+        if (components != null)
+            for (int i = 0; i < components.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (components.get(i).contains(component.trim())) return INDICATE_EXECUTION_SUCCESS;
+        
+        return INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
     
     private Integer parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(String e)
     {
