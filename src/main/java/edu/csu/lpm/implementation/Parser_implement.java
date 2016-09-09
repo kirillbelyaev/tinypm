@@ -1126,7 +1126,9 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 {    
-                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                    /* check the validity of input */
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     this.comrec.set_COLUMN_CLASS_NAME(this.commandParameters.get(1));
                     
                     //this.caprec.reset_COLUMN_CAPABILITIES(); /* reset policies */

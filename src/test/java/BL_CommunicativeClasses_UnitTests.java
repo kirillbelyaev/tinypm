@@ -200,6 +200,13 @@ public class BL_CommunicativeClasses_UnitTests
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
         System.out.println("\n");
+        System.out.println("command is: " + CMD_4);
+        output = p.parse_and_execute_Command(CMD_4);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        System.out.println("\n");
         System.out.println("command is: " + CMD_1);
         output = p.parse_and_execute_Command(CMD_1);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
