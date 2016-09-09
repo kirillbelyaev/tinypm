@@ -1498,8 +1498,10 @@ public class Parser_implement implements Parser
             if (this.commandParameters != null)
             {
                 if (this.commandParameters.size() > 1)
-                {    
-                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                {  
+                    /* check the validity of input */
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     /* check the validity of input */
                     if (this.comrec.set_COLUMN_COLLABORATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
                         return INDICATE_CONDITIONAL_EXIT_STATUS;

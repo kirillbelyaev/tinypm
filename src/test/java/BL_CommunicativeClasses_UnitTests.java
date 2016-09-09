@@ -156,6 +156,10 @@ public class BL_CommunicativeClasses_UnitTests
         
         String CMD_42 = "MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS " + this.component_2_ID + " 1";
         
+        /* class id invalid input tests */
+        String CMD_43 = "ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY abc " + this.collab_record;
+        
+        
         /* start parser instance */
         Parser_implement p = new Parser_implement();
         
@@ -541,6 +545,13 @@ public class BL_CommunicativeClasses_UnitTests
         System.out.println("\n");
         System.out.println("command is: " + CMD_40);
         output = p.parse_and_execute_Command(CMD_40);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        System.out.println("\n");
+        System.out.println("command is: " + CMD_43);
+        output = p.parse_and_execute_Command(CMD_43);
         //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("error mesage is: " + p.get_ERROR_MESSAGE());
         System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());

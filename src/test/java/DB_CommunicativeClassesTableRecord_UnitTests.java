@@ -64,6 +64,9 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         
         final String separator = " ";
         final String emptyString = "";
+        final String alpha = "abcd";
+        final String alphanum = "100abcd";
+         
         String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
         String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";       
         String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
@@ -103,6 +106,17 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         System.out.println("set_COLUMN_CLASS_ID. ");
         intValue = r.set_COLUMN_CLASS_ID(separator);
         System.out.println("set_COLUMN_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("set_COLUMN_CLASS_ID. ");
+        intValue = r.set_COLUMN_CLASS_ID(alpha);
+        System.out.println("set_COLUMN_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("set_COLUMN_CLASS_ID. ");
+        intValue = r.set_COLUMN_CLASS_ID(alphanum);
+        System.out.println("set_COLUMN_CLASS_ID return code is: " + intValue);
+        
         
         System.out.println("\n");
         System.out.println("get_COLUMN_CLASS_ID. ");
