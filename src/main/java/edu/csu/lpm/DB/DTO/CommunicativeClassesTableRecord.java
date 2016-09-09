@@ -280,23 +280,32 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
         return this.COLUMN_CLASS_ID;
     }
 
-    public void set_COLUMN_CLASS_ID(String COLUMN_CLASS_ID) 
+    public int set_COLUMN_CLASS_ID(String COLUMN_CLASS_ID) 
     {    
         Integer id = null;
         
         if (COLUMN_CLASS_ID != null)
         {
-           try
-           {//check if string is a number    
-               id = Integer.valueOf(COLUMN_CLASS_ID);
-               this.COLUMN_CLASS_ID = id.toString();
-               id = null;
-           } catch (NumberFormatException nfex)
-           {
-               //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
-               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CLASS_ID(): CID string is not a number! ");
-           }    
-        }   
+           if (!COLUMN_CLASS_ID.isEmpty())
+           {    
+               try
+               {//check if string is a number    
+                   id = Integer.valueOf(COLUMN_CLASS_ID);
+                   this.COLUMN_CLASS_ID = id.toString();
+                   id = null;
+                   return Parser.INDICATE_EXECUTION_SUCCESS;
+               } catch (NumberFormatException nfex)
+               {
+                   //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
+                   System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CLASS_ID(): CID string is not a number! ");
+                   return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+               }
+           }
+           
+           return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        }
+        
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
 
 

@@ -63,6 +63,7 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         System.out.println("started test_Communicative_Classes_Table_Record... ");
         
         final String separator = " ";
+        final String emptyString = "";
         String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
         String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";       
         String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
@@ -79,13 +80,37 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         CommunicativeClassesTableRecord r = new CommunicativeClassesTableRecord();
         
         System.out.println("set_COLUMN_CLASS_ID. ");
-        r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        intValue = r.set_COLUMN_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
+        System.out.println("set_COLUMN_CLASS_ID return code is: " + intValue);
         
+        System.out.println("\n");
         System.out.println("get_COLUMN_CLASS_ID. ");
         value = r.get_COLUMN_CLASS_ID();
 	assertNotNull(value);
 	System.out.println("CID is: " + value);
         
+        System.out.println("\n");
+        System.out.println("set_COLUMN_CLASS_ID. ");
+        intValue = r.set_COLUMN_CLASS_ID(null);
+        System.out.println("set_COLUMN_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("set_COLUMN_CLASS_ID. ");
+        intValue = r.set_COLUMN_CLASS_ID(emptyString);
+        System.out.println("set_COLUMN_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("set_COLUMN_CLASS_ID. ");
+        intValue = r.set_COLUMN_CLASS_ID(separator);
+        System.out.println("set_COLUMN_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("get_COLUMN_CLASS_ID. ");
+        value = r.get_COLUMN_CLASS_ID();
+	assertNotNull(value);
+	System.out.println("CID is: " + value);
+        
+        System.out.println("\n");
         System.out.println("set_COLUMN_CLASS_NAME. ");
         r.set_COLUMN_CLASS_NAME(this.COLUMN_POLICY_CLASS_NAME);
         
