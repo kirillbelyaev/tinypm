@@ -1345,8 +1345,10 @@ public class Parser_implement implements Parser
             if (this.commandParameters != null)
             {
                 if (this.commandParameters.size() > 0)
-                { 
-                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                {
+                    /* check the validity of input */
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     policies = this.get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(this.comrec.get_COLUMN_CLASS_ID().trim());
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -1374,7 +1376,9 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comrec == null) return null;
         
-        this.comrec.set_COLUMN_CLASS_ID(cid.trim());
+        /* check the validity of input */
+        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != Parser.INDICATE_EXECUTION_SUCCESS)
+            return null;
 
         try 
         {//execute the db layer
@@ -1423,8 +1427,10 @@ public class Parser_implement implements Parser
             if (this.commandParameters != null)
             {
                 if (this.commandParameters.size() > 0)
-                { 
-                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                {
+                    /* check the validity of input */
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     policies = this.get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(this.comrec.get_COLUMN_CLASS_ID().trim());
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -1451,7 +1457,9 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comrec == null) return null;
         
-        this.comrec.set_COLUMN_CLASS_ID(cid.trim());
+        /* check the validity of input */
+        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != Parser.INDICATE_EXECUTION_SUCCESS)
+            return null;
 
         try 
         {//execute the db layer
@@ -1607,8 +1615,10 @@ public class Parser_implement implements Parser
             if (this.commandParameters != null)
             {
                 if (this.commandParameters.size() > 1)
-                {    
-                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                {
+                    /* check the validity of input */
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     /* check the validity of input */
                     if (this.comrec.set_COLUMN_COORDINATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -1709,8 +1719,10 @@ public class Parser_implement implements Parser
             if (this.commandParameters != null)
             {
                 if (this.commandParameters.size() > 1)
-                {    
-                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                {
+                    /* check the validity of input */
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     /* check the validity of input */
                     if (this.comrec.set_COLUMN_COLLABORATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -1777,8 +1789,10 @@ public class Parser_implement implements Parser
             if (this.commandParameters != null)
             {
                 if (this.commandParameters.size() > 1)
-                {    
-                    this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
+                {
+                    /* check the validity of input */
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                        return INDICATE_CONDITIONAL_EXIT_STATUS;
                     /* check the validity of input */
                     if (this.comrec.set_COLUMN_COORDINATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
