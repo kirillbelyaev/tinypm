@@ -26,9 +26,9 @@ import org.junit.Test;
  *
  * @author kirill
  */
-public class Utilities_UnitTests {
+public class TSLib_Utilities_UnitTests {
     
-    public Utilities_UnitTests() {
+    public TSLib_Utilities_UnitTests() {
     }
     
     @BeforeClass
