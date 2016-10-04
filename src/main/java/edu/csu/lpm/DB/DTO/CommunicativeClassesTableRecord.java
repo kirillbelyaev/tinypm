@@ -16,7 +16,7 @@
 */
 
 /*
- Data transfer object
+Data transfer object
 Data transfer object (DTO)[1][2] is an object that carries data between 
 processes. The motivation for its use has to do with the fact that 
 communication between processes is usually done resorting to remote interfaces.
@@ -24,8 +24,8 @@ communication between processes is usually done resorting to remote interfaces.
 
 package edu.csu.lpm.DB.DTO;
 
+import edu.csu.lpm.DB.DAO.RecordDAO;
 import edu.csu.lpm.DB.interfaces.CommunicativeClassesTable;
-import edu.csu.lpm.interfaces.Parser;
 import java.io.Serializable;
 import java.io.*;
 import java.util.StringTokenizer;
@@ -34,6 +34,7 @@ import java.util.StringTokenizer;
  *
  * @author kirill
  */
+
 public class CommunicativeClassesTableRecord implements Record, Serializable
 {   
     /* reference to communicative policy class */
@@ -119,19 +120,19 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
                 if (c1.isFile() && c2.isFile())
                 {    
                     this.COLUMN_COORDINATION_RECORD = component_1_ID + separator + component_2_ID;          
-                    return Parser.INDICATE_EXECUTION_SUCCESS;
+                    return RecordDAO.INDICATE_EXECUTION_SUCCESS;
                 }    
                 else 
                 {    
                     System.out.println("Communicative_Classes_Table_Record.set_COLUMN_COORDINATION_RECORD(): component does not exist on the filesystem! ");
-                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }    
             }
             
-            return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
         }
         
-        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     public String get_COLUMN_COLLABORATION_RECORD() 
@@ -161,19 +162,19 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
                 if (c.isFile() && o.isFile()) 
                 {    
                     this.COLUMN_COLLABORATION_RECORD = componentID + separator + object_path;
-                    return Parser.INDICATE_EXECUTION_SUCCESS;
+                    return RecordDAO.INDICATE_EXECUTION_SUCCESS;
                     
                 } else 
                 {    
                     System.out.println("Communicative_Classes_Table_Record.set_COLUMN_COLLABORATION_RECORD(): object does not exist on the filesystem! ");
-                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }    
             }
             
-            return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
         }
         
-        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
@@ -310,19 +311,19 @@ public class CommunicativeClassesTableRecord implements Record, Serializable
                    id = Integer.valueOf(COLUMN_CLASS_ID);
                    this.COLUMN_CLASS_ID = id.toString();
                    id = null;
-                   return Parser.INDICATE_EXECUTION_SUCCESS;
+                   return RecordDAO.INDICATE_EXECUTION_SUCCESS;
                } catch (NumberFormatException nfex)
                {
                    //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
                    System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_CLASS_ID(): CID string is not a number! ");
-                   return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                   return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
                }
            }
            
-           return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+           return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
         }
         
-        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
 
 

@@ -1,4 +1,3 @@
-
 /*
  * Linux Policy Machine (LPM) Prototype
  *   
@@ -46,6 +45,7 @@ import edu.csu.lpm.DB.interfaces.ComponentsTable;
  *
  * @author kirill
  */
+
 public class RecordDAO_implement implements RecordDAO  
 {
     

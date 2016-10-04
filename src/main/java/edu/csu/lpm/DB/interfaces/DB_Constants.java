@@ -1,4 +1,3 @@
-
 /*
  * Linux Policy Machine (LPM) Prototype
  *   
@@ -28,6 +27,7 @@ package edu.csu.lpm.DB.interfaces;
  *
  * @author I829920
  */
+
 public interface DB_Constants 
 {
 	final String initialNameTag = "initialNameTag";
