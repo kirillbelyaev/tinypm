@@ -40,19 +40,23 @@ public class DB_ComponentsTableRecord_UnitTests
     private final String COLUMN_POLICY_CLASS_NAME = "general applications policy class";
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() 
+    {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() 
+    {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() 
+    {
     }
 
     @Test
@@ -90,9 +94,16 @@ public class DB_ComponentsTableRecord_UnitTests
         
         ComponentsTableRecord r = new ComponentsTableRecord();
         String value = null;
+        int intValue = -1;
         
         r.set_COLUMN_COMPONENT_DESC(this.COLUMN_APP_DESC);
-        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
+        
+        System.out.println("\n");
+        System.out.println("set_COLUMN_COMPONENT_PATH_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
+        System.out.println("set_COLUMN_COMPONENT_PATH_ID return code is: " + intValue);
+        
+        
         r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
         r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
         r.set_Status_Active();
@@ -115,7 +126,10 @@ public class DB_ComponentsTableRecord_UnitTests
 	assertNotNull(value);
 	System.out.println("app path is: " + value);
         
-        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH_INVALID);
+        System.out.println("\n");
+        System.out.println("set_COLUMN_COMPONENT_PATH_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH_INVALID);
+        System.out.println("set_COLUMN_COMPONENT_PATH_ID return code is: " + intValue);
         
         value = r.get_COLUMN_COMPONENT_PATH_ID();
 	assertNotNull(value);

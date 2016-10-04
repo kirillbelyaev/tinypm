@@ -26,25 +26,31 @@ import org.junit.Test;
  *
  * @author kirill
  */
-public class Utilities_UnitTests {
+public class TSLib_Utilities_UnitTests 
+{
     
-    public Utilities_UnitTests() {
+    public TSLib_Utilities_UnitTests() 
+    {
     }
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() 
+    {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() 
+    {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() 
+    {
     }
 
     private final String DataObjectPath = "/s/missouri/a/nobackup/kirill/logs/secure.log";
@@ -63,7 +69,7 @@ public class Utilities_UnitTests {
     private Utilities ut = new Utilities ();
         
     @Test
-    public void test_create_ObjectReplica() 
+    private void test_create_ObjectReplica() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -114,7 +120,7 @@ public class Utilities_UnitTests {
     
     
     @Test
-    public void test_create_ObjectReplicaWithDebug() 
+    private void test_create_ObjectReplicaWithDebug() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -165,7 +171,7 @@ public class Utilities_UnitTests {
     
     
     @Test
-    public void test_replication()
+    public void test_Replication()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -202,7 +208,7 @@ public class Utilities_UnitTests {
     }
     
     @Test
-    public void test_replicationWithDebug()
+    public void test_ReplicationWithDebug()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
