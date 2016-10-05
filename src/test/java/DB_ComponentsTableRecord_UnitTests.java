@@ -31,13 +31,17 @@ import static org.junit.Assert.*;
 public class DB_ComponentsTableRecord_UnitTests 
 { 
     private final String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
-    private final String COLUMN_APP_DESC = "icmp ping tool";
-    private final String COLUMN_APP_PATH = "/bin/ping";
-    private final String COLUMN_APP_PATH_INVALID = "/bin/x/ping";
-    private final String COLUMN_POLICY_CLASS_ID = "1";
-    private final String COLUMN_APP_CONTAINER_ID = "1";
+    private final String COLUMN_COMPONENT_DESC = "icmp ping tool";
+    private final String COLUMN_COMPONENT_PATH = "/bin/ping";
+    private final String COLUMN_COMPONENT_PATH_INVALID = "/bin/x/ping";
+    private final String COLUMN_CLASS_ID = "1";
+    private final String ALPHA = "abcd";
+    private final String ALPHANUM = "101abcd";
+    private final String EMPTY_STRING = "";
+    private final String SPACE = " ";
+    private final String COLUMN_COMPONENT_CONTAINER_ID = "1";
     private final String COLUMN_STATUS = "1";
-    private final String COLUMN_POLICY_CLASS_NAME = "general applications policy class";
+    private final String COLUMN_CLASS_NAME = "e-mail service customer A";
     
     @BeforeClass
     public static void setUpClass() 
@@ -96,16 +100,50 @@ public class DB_ComponentsTableRecord_UnitTests
         String value = null;
         int intValue = -1;
         
-        r.set_COLUMN_COMPONENT_DESC(this.COLUMN_APP_DESC);
+        r.set_COLUMN_COMPONENT_DESC(this.COLUMN_COMPONENT_DESC);
         
         System.out.println("\n");
         System.out.println("set_COLUMN_COMPONENT_PATH_ID. ");
-        intValue = r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH);
+        intValue = r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_PATH);
         System.out.println("set_COLUMN_COMPONENT_PATH_ID return code is: " + intValue);
         
+        System.out.println("\n");
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_CLASS_ID);
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID return code is: " + intValue);
         
-        r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_POLICY_CLASS_ID);
-        r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_APP_CONTAINER_ID);
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(null);
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.EMPTY_STRING);
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.SPACE);
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.ALPHA);
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.ALPHANUM);
+        System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_COMPONENT_CONTAINER_ID);
         r.set_Status_Active();
         
         value = r.get_COLUMN_STATUS();
@@ -127,8 +165,9 @@ public class DB_ComponentsTableRecord_UnitTests
 	System.out.println("app path is: " + value);
         
         System.out.println("\n");
+        System.out.println("invalid input");
         System.out.println("set_COLUMN_COMPONENT_PATH_ID. ");
-        intValue = r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_APP_PATH_INVALID);
+        intValue = r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_PATH_INVALID);
         System.out.println("set_COLUMN_COMPONENT_PATH_ID return code is: " + intValue);
         
         value = r.get_COLUMN_COMPONENT_PATH_ID();
