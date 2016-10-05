@@ -378,6 +378,10 @@ public class RecordDAO_implement implements RecordDAO
             {     
                 ComponentsTableRecord rec = new ComponentsTableRecord();
 
+                /* technically all the set operations should be checked on the
+                success return value. However in this case this might not be necessary
+                because fields are set using records that are read from the store */
+                
                 rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
 
                 rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
@@ -440,6 +444,10 @@ public class RecordDAO_implement implements RecordDAO
             while (rs.next()) 
             {               
                 ComponentsTableRecord rec = new ComponentsTableRecord();
+                
+                /* technically all the set operations should be checked on the
+                success output value. However in this case this might not be necessary
+                because fields are set using records that are read from the store */
 
                 rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
 
@@ -496,6 +504,10 @@ public class RecordDAO_implement implements RecordDAO
             while (rs.next()) 
             {
                 ComponentsTableRecord rec = new ComponentsTableRecord();
+                
+                /* technically all the set operations should be checked on the
+                success output value. However in this case this might not be necessary
+                because fields are set using records that are read from the store */
 
                 rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
 
@@ -555,6 +567,10 @@ public class RecordDAO_implement implements RecordDAO
             while (rs.next()) 
             {
                 ComponentsTableRecord rec = new ComponentsTableRecord();
+                
+                /* technically all the set operations should be checked on the
+                success output value. However in this case this might not be necessary
+                because fields are set using records that are read from the store */
 
                 rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
 
@@ -609,6 +625,10 @@ public class RecordDAO_implement implements RecordDAO
             while (rs.next()) 
             {        
                 ComponentsTableRecord rec = new ComponentsTableRecord();
+                
+                /* technically all the set operations should be checked on the
+                success output value. However in this case this might not be necessary
+                because fields are set using records that are read from the store */
 
                 rec.set_COLUMN_COMPONENT_DESC(rs.getString(ComponentsTable.COLUMN_COMPONENT_DESC));
                 

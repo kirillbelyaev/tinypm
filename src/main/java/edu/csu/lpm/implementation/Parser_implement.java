@@ -986,7 +986,11 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 { 
-                    this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0));
+                    if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    {
+                        return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+                    }
+                    
                     this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(1));
                     this.comprec.set_UPDATE_COLUMN_to_COMPONENT_CAPABILITIES_CLASS_ID(); /* indicate the update column */
                     
@@ -1289,7 +1293,11 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 { 
-                    this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0));
+                    if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    {
+                        return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+                    }    
+                    
                     this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(1));
                     this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(1));
                     this.comprec.set_UPDATE_COLUMN_to_COMPONENT_COMMUNICATIVE_CLASS_ID(); /* indicate the update column */
