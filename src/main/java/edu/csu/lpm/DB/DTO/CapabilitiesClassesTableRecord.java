@@ -16,14 +16,15 @@
 */
 
 /*
- Data transfer object
+Data transfer object
 Data transfer object (DTO)[1][2] is an object that carries data between 
 processes. The motivation for its use has to do with the fact that 
 communication between processes is usually done resorting to remote interfaces.
- */
+*/
 
 package edu.csu.lpm.DB.DTO;
 
+import edu.csu.lpm.DB.DAO.RecordDAO;
 import edu.csu.lpm.interfaces.LinuxCapabilitiesPolicyContainer;
 import java.io.Serializable;
 import edu.csu.lpm.DB.interfaces.CapabilitiesClassesTable;
@@ -49,57 +50,68 @@ public class CapabilitiesClassesTableRecord implements Record, Serializable
     private String UPDATE_COLUMN = "";
     
 
-    public String get_UPDATE_COLUMN() {
+    public String get_UPDATE_COLUMN() 
+    {
         return this.UPDATE_COLUMN;
     }
     
-    public void set_UPDATE_COLUMN_to_CLASS_ID() {
+    public void set_UPDATE_COLUMN_to_CLASS_ID() 
+    {
         this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_CLASS_ID;
     }
     
-    public void set_UPDATE_COLUMN_to_CLASS_NAME() {
+    public void set_UPDATE_COLUMN_to_CLASS_NAME() 
+    {
         this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_CLASS_NAME;
     }
     
-    public void set_UPDATE_COLUMN_to_CAPABILITIES() {
+    public void set_UPDATE_COLUMN_to_CAPABILITIES() 
+    {
         this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_CAPABILITIES;
     }
 
 
-    public void set_UPDATE_COLUMN_to_STATUS() {
+    public void set_UPDATE_COLUMN_to_STATUS() 
+    {
         this.UPDATE_COLUMN = CapabilitiesClassesTable.COLUMN_STATUS;
     }
     
-    public String get_COLUMN_CLASS_NAME() {
+    public String get_COLUMN_CLASS_NAME() 
+    {
         return this.COLUMN_CLASS_NAME;
     }
 
-    public void set_COLUMN_CLASS_NAME(String COLUMN_CLASS_NAME) {
+    public void set_COLUMN_CLASS_NAME(String COLUMN_CLASS_NAME) 
+    {
         if (COLUMN_CLASS_NAME != null) this.COLUMN_CLASS_NAME = COLUMN_CLASS_NAME;
     }
 
-    public LinuxCapabilitiesPolicyContainer.LinuxCapabilities[] get_LCS() {
+    public LinuxCapabilitiesPolicyContainer.LinuxCapabilities[] get_LCS() 
+    {
         return this.LCS;
     }
 
-    public void set_LCS(LinuxCapabilitiesPolicyContainer.LinuxCapabilities[] LCS) {
+    public void set_LCS(LinuxCapabilitiesPolicyContainer.LinuxCapabilities[] LCS) 
+    {
         this.LCS = LCS;
     }
     
     
-    public int check_if_Capability_is_valid(String cap) {
+    public int check_if_Capability_is_valid(String cap) 
+    {   
+        if (cap == null) return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (cap.isEmpty()) return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        if (cap == null) return -1;
-        if (cap.isEmpty()) return -1;
-        
-        for (LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS1 : LCS) {
-            if (LCS1.toString().equals(cap.trim())) {
+        for (LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS1 : LCS) 
+        {
+            if (LCS1.toString().equals(cap.trim())) 
+            {
                 //return LCS1.ordinal();  
-                return 0; //Found
+                return RecordDAO.INDICATE_EXECUTION_SUCCESS; //Found
             }
         }
         
-        return -1; //NOT found
+        return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS; //NOT found
     }
     
     public int check_if_Capabilities_are_valid(String caps)
@@ -117,53 +129,56 @@ public class CapabilitiesClassesTableRecord implements Record, Serializable
                     {
                         //System.out.println("check_if_Capabilities_are_valid: policies len is: " + policies.length);
                         for (int i = 0; i < policies.length; i++)
-                            if (this.check_if_Capability_is_valid(policies[i]) == -1)
-                                return -1;
+                            if (this.check_if_Capability_is_valid(policies[i]) == RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS)
+                                return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
                         
-                        return 0; //ALL caps are valid
+                        return RecordDAO.INDICATE_EXECUTION_SUCCESS; //ALL caps are valid
                     }
                     
-                    return -1;
+                    return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 
-                return -1;
+                return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
             }
             
-            return -1;
+            return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
         }
            
-        return -1;  //NOT found      
+        return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;  //NOT found      
     }        
     
     
-    public String get_COLUMN_CAPABILITIES() {
+    public String get_COLUMN_CAPABILITIES() 
+    {
         return this.COLUMN_CAPABILITIES;
     }
     
     
-    public boolean check_if_COLUMN_CAPABILITIES_is_Empty() {
+    public boolean check_if_COLUMN_CAPABILITIES_is_Empty() 
+    {
         if (this.get_COLUMN_CAPABILITIES().isEmpty() ) return true;
         else return false;
     }
     
 
-    public void set_COLUMN_CAPABILITIES(String COLUMN_CAPS) {
+    public void set_COLUMN_CAPABILITIES(String COLUMN_CAPS) 
+    {
         if (COLUMN_CAPS != null)
         { 
             if (this.check_if_Capabilities_are_valid(COLUMN_CAPS.trim()) != -1 )
-                this.COLUMN_CAPABILITIES = COLUMN_CAPS.trim();
-            
-        }    
-            
+                this.COLUMN_CAPABILITIES = COLUMN_CAPS.trim(); 
+        }               
     }
     
     
-    public void reset_COLUMN_CAPABILITIES() {
-           this.COLUMN_CAPABILITIES = "";
+    public void reset_COLUMN_CAPABILITIES() 
+    {
+        this.COLUMN_CAPABILITIES = "";
     }
     
     
-    public void add_CAPABILITY(String CAP) {
+    public void add_CAPABILITY(String CAP) 
+    {
         String policies[] = null;
         if (CAP != null)
         {
@@ -207,7 +222,8 @@ public class CapabilitiesClassesTableRecord implements Record, Serializable
         }    
     }
     
-    public void remove_CAPABILITY(String CAP) {
+    public void remove_CAPABILITY(String CAP) 
+    {
         String policies[] = null;
         if (CAP != null)
         {
@@ -277,7 +293,8 @@ public class CapabilitiesClassesTableRecord implements Record, Serializable
     }     
     
 
-    public String get_COLUMN_CLASS_ID() {
+    public String get_COLUMN_CLASS_ID() 
+    {
         return this.COLUMN_CLASS_ID;
     }
 
@@ -301,25 +318,27 @@ public class CapabilitiesClassesTableRecord implements Record, Serializable
     }
 
 
-    public String get_COLUMN_STATUS() {
+    public String get_COLUMN_STATUS() 
+    {
         return this.COLUMN_STATUS;
     }
 
-    public void set_COLUMN_STATUS(String COLUMN_STATUS) {
+    public void set_COLUMN_STATUS(String COLUMN_STATUS) 
+    {
         if (COLUMN_STATUS != null) this.COLUMN_STATUS = COLUMN_STATUS;
     }
     
     
     public void set_COLUMN_STATUS_Active() 
     {
-            Integer one = 1;
-            this.COLUMN_STATUS = one.toString();
+        Integer one = 1;
+        this.COLUMN_STATUS = one.toString();
     }
 
     public void set_COLUMN_STATUS_Inactive() 
     {
-            Integer zero = 0;
-            this.COLUMN_STATUS = zero.toString();
+        Integer zero = 0;
+        this.COLUMN_STATUS = zero.toString();
     }
 
     
