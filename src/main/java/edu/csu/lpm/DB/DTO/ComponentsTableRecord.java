@@ -144,7 +144,7 @@ public class ComponentsTableRecord implements Record, Serializable
         
         if (COLUMN_COMPONENT_CAPABILITIES_CLASS_ID != null)
         {
-            if (!COLUMN_COMPONENT_PATH_ID.isEmpty())
+            if (!COLUMN_COMPONENT_CAPABILITIES_CLASS_ID.isEmpty())
             {     
                try
                {//check if string is a number    
@@ -173,23 +173,32 @@ public class ComponentsTableRecord implements Record, Serializable
     }
 
     
-    public void set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(String COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID) 
+    public int set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(String COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID) 
     {    
         Integer id = null;
         
         if (COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID != null)
         {
-           try
-           {//check if string is a number    
-               id = Integer.valueOf(COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID);
-               this.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID = id.toString();
-               id = null;
-           } catch (NumberFormatException nfex)
-           {
-               //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
-               System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(): CID string is not a number! ");
-           }    
-        }   
+            if (!COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID.isEmpty())
+            {    
+               try
+               {//check if string is a number    
+                   id = Integer.valueOf(COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID);
+                   this.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID = id.toString();
+                   id = null;
+                   return RecordDAO.INDICATE_EXECUTION_SUCCESS;
+               } catch (NumberFormatException nfex)
+               {
+                   //Logger.getLogger(Policy_Classes_Table_Record.class.getName()).log(Level.SEVERE, null, nfex);
+                   System.out.println("Components_Table_Record.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(): CID string is not a number! ");
+                   return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
+               } 
+            }
+            
+            return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
+        }
+        
+        return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
 
@@ -243,9 +252,20 @@ public class ComponentsTableRecord implements Record, Serializable
     }
      
     
-    public void set_COLUMN_COMPONENT_TUPLE_SPACE_PATH(String COLUMN_COMPONENT_TUPLE_SPACE_PATH) 
+    public int set_COLUMN_COMPONENT_TUPLE_SPACE_PATH(String COLUMN_COMPONENT_TUPLE_SPACE_PATH) 
     {
-        if (COLUMN_COMPONENT_TUPLE_SPACE_PATH != null) this.COLUMN_COMPONENT_TUPLE_SPACE_PATH = COLUMN_COMPONENT_TUPLE_SPACE_PATH;
+        if (COLUMN_COMPONENT_TUPLE_SPACE_PATH != null)
+        {   
+            if (!COLUMN_COMPONENT_TUPLE_SPACE_PATH.isEmpty())
+            {    
+                this.COLUMN_COMPONENT_TUPLE_SPACE_PATH = COLUMN_COMPONENT_TUPLE_SPACE_PATH;
+                return RecordDAO.INDICATE_EXECUTION_SUCCESS;
+            }
+            
+            return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
+        }
+        
+        return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
 }

@@ -107,6 +107,7 @@ public class DB_ComponentsTableRecord_UnitTests
         intValue = r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_PATH);
         System.out.println("set_COLUMN_COMPONENT_PATH_ID return code is: " + intValue);
         
+        
         System.out.println("\n");
         System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID. ");
         intValue = r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_CLASS_ID);
@@ -141,6 +142,44 @@ public class DB_ComponentsTableRecord_UnitTests
         System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID. ");
         intValue = r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.ALPHANUM);
         System.out.println("set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID return code is: " + intValue);
+        
+        
+        System.out.println("\n");
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.COLUMN_CLASS_ID);
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(null);
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.EMPTY_STRING);
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.SPACE);
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.ALPHA);
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID return code is: " + intValue);
+        
+        System.out.println("\n");
+        System.out.println("invalid input");
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID. ");
+        intValue = r.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.ALPHANUM);
+        System.out.println("set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID return code is: " + intValue);
+        
+        
         
         System.out.println("\n");
         r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_COMPONENT_CONTAINER_ID);
