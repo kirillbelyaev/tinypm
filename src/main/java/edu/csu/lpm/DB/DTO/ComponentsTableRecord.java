@@ -54,12 +54,15 @@ public class ComponentsTableRecord implements Record, Serializable
     /* reserved for future use */
     private String COLUMN_COMPONENT_CONTAINER_ID = "";
     
-    /* reserved for possible use - indicates the component's tuple space location */
+    /* reserved for possible use - indicates the component's tuple space location.
+    technically this should be determined automatically based on the path_ID -
+    TS should be located immediately at the 1st level of component's root
+    directory */
     private String COLUMN_COMPONENT_TUPLE_SPACE_PATH = "";
     
     private String COLUMN_STATUS = "";
     
-    /* set to indicate which field to update when calling write_Apps_Table_Record() */
+    /* set to indicate which field to update when calling write_Components_Table_Record() */
     private String UPDATE_COLUMN = "";
 
     

@@ -1195,7 +1195,11 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 { 
-                    this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0));
+                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    {
+                        return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+                    }
+                    
                     components = this.get_COMMUNICATIVE_CLASS_COMPONENTS(this.comprec.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID().trim());
                 } 
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -1223,7 +1227,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comprec == null) return null;
         
-        this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(pcid.trim());
+        if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(pcid.trim()) != Parser.INDICATE_EXECUTION_SUCCESS) return null;
 
         try 
         {//execute the db layer
@@ -1265,7 +1269,10 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 {    
-                    this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0));
+                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    {
+                        return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+                    }    
                 }    
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;  
@@ -1309,12 +1316,18 @@ public class Parser_implement implements Parser
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }    
                     
+                    /*
                     if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
-                    }   
+                    }
+                    */
                     
-                    this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(1));
+                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    {
+                        return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+                    }    
+                        
                     this.comprec.set_UPDATE_COLUMN_to_COMPONENT_COMMUNICATIVE_CLASS_ID(); /* indicate the update column */
                     
                 } else return INDICATE_CONDITIONAL_EXIT_STATUS;

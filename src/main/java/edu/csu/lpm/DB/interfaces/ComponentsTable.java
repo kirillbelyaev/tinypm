@@ -44,7 +44,10 @@ public interface ComponentsTable extends Record
     /* reserved for future use - could be used for alternative ID mechanisms */
     final String COLUMN_COMPONENT_ID = "component_id";
     
-    /* reserved for possible use - indicates the component's tuple space location */
+    /* reserved for possible use - indicates the component's tuple space location.
+    technically this should be determined automatically based on the path_ID -
+    TS should be located immediately at the 1st level of component's root
+    directory */
     final String COLUMN_COMPONENT_TUPLE_SPACE_PATH = "component_tuple_space_path";
     
     final String COLUMN_COMPONENT_CAPABILITIES_CLASS_ID = "CAP_CID";
