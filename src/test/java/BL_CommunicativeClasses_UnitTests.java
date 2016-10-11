@@ -26,28 +26,33 @@ import org.junit.Test;
  *
  * @author kirill
  */
+
 public class BL_CommunicativeClasses_UnitTests 
 {
         
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() 
+    {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() 
+    {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() 
+    {
     }
 
     private final String separator = " ";
-    private final String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
-    private final String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";       
+    private final String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";       
     private final String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
         
     private final String coord_record = component_2_ID + separator + component_1_ID;   

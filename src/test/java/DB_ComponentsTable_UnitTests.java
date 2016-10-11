@@ -32,6 +32,7 @@ import static org.junit.Assert.*;
  *
  * @author kirill
  */
+
 public class DB_ComponentsTable_UnitTests 
 {  
     private final String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
@@ -47,19 +48,23 @@ public class DB_ComponentsTable_UnitTests
     
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() 
+    {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() 
+    {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() 
+    {
     }
      
     @Test
@@ -89,7 +94,7 @@ public class DB_ComponentsTable_UnitTests
     }
     
     @Test
-    public void test_Components_Table_create_drop() throws RecordDAO_Exception, SQLException 
+    public void test_ComponentsTable_create_drop() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -120,7 +125,7 @@ public class DB_ComponentsTable_UnitTests
      
      
     @Test
-    public void test_Components_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
+    public void test_ComponentsTable_CRUD_operations() throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");

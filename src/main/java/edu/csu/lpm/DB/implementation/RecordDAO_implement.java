@@ -69,7 +69,7 @@ public class RecordDAO_implement implements RecordDAO
         } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }	
     }
     
-    //on component_path_ID and CID  
+    /* on component_path_ID */ 
     private int check_If_Components_Table_Record_Exists(ComponentsTableRecord r) 
     throws RecordDAO_Exception 
     {
@@ -84,6 +84,7 @@ public class RecordDAO_implement implements RecordDAO
             /* too specific selection - a component record with a particular cid might surely not exist
             but there might be a record with a different cid thus creating several
             records of a component belonging to different policy classes that is NOT what we want */     
+            
             //ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
 
             /* we have to make sure that only a single component record with app_path_ID column exists in the db */
@@ -132,7 +133,8 @@ public class RecordDAO_implement implements RecordDAO
             
             capr.set_COLUMN_CLASS_ID(r.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
 
-            comr.set_COLUMN_CLASS_ID(r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
+            /* check for valid CID */
+            if (comr.set_COLUMN_CLASS_ID(r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID()) != RecordDAO.INDICATE_EXECUTION_SUCCESS) return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             
             if (this.check_If_Components_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
@@ -1225,6 +1227,10 @@ public class RecordDAO_implement implements RecordDAO
             {                           
                 CommunicativeClassesTableRecord rec = new CommunicativeClassesTableRecord();
 
+                /* technically all the set operations should be checked on the
+                success return value. However in this case this might not be necessary
+                because fields are set using records that are read from the store */
+                
                 rec.set_COLUMN_CLASS_ID(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_ID));
 
                 rec.set_COLUMN_CLASS_NAME(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_NAME));
@@ -1653,6 +1659,10 @@ public class RecordDAO_implement implements RecordDAO
             while (rs.next()) 
             {             
                 CommunicativeClassesTableRecord rec = new CommunicativeClassesTableRecord();
+                
+                /* technically all the set operations should be checked on the
+                success return value. However in this case this might not be necessary
+                because fields are set using records that are read from the store */
 
                 rec.set_COLUMN_CLASS_ID(rs.getString(CommunicativeClassesTable.COLUMN_CLASS_ID));
 

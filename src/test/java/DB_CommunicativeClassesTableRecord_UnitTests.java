@@ -27,23 +27,28 @@ import static org.junit.Assert.*;
  *
  * @author kirill
  */
+
 public class DB_CommunicativeClassesTableRecord_UnitTests 
 {
        
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() 
+    {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() 
+    {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() 
+    {
     }
 
     private final String COLUMN_APP_DESC = "icmp ping tool";
@@ -56,7 +61,7 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
     
     
     @Test
-    public void test_Communicative_Classes_Table_Record() 
+    public void test_CommunicativeClassesTableRecord() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -67,8 +72,8 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         final String alpha = "abcd";
         final String alphanum = "100abcd";
          
-        String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
-        String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";       
+        String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
+        String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";       
         String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
         
         String coord_record = component_2_ID + separator + component_1_ID; 

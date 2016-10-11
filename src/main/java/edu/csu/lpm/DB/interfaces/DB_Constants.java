@@ -48,16 +48,24 @@ public interface DB_Constants
         
         /* COMPONENTS table operations */
         
-        final String COMPONENTS_DB_SCHEMA  = " (" + ComponentsTable.COLUMN_COMPONENT_DESC + "," + ComponentsTable.COLUMN_COMPONENT_PATH_ID 
-        + "," + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID + "," + ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID 
-        + "," + ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID + "," + ComponentsTable.COLUMN_COMPONENT_ID + "," 
-        + ComponentsTable.COLUMN_COMPONENT_TUPLE_SPACE_PATH + "," + ComponentsTable.COLUMN_STATUS + ") ";
+        final String COMPONENTS_DB_SCHEMA  = " (" + ComponentsTable.COLUMN_COMPONENT_DESC 
+        + "," + ComponentsTable.COLUMN_COMPONENT_PATH_ID 
+        + "," + ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID 
+        + "," + ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID 
+        + "," + ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID 
+        + "," + ComponentsTable.COLUMN_COMPONENT_ID 
+        + "," + ComponentsTable.COLUMN_COMPONENT_TUPLE_SPACE_PATH 
+        + "," + ComponentsTable.COLUMN_STATUS + ") ";
         
-        final String create_COMPONENTS_DB_SQL = "create table " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + COMPONENTS_DB_SCHEMA;
+        final String create_COMPONENTS_DB_SQL = "create table " 
+        + ComponentsTable.COMPONENTS_DB_TABLE_NAME + COMPONENTS_DB_SCHEMA;
         
-        final String drop_COMPONENTS_DB_SQL = "drop table if exists " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
+        final String drop_COMPONENTS_DB_SQL = "drop table if exists " 
+        + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
         
-        final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL = "select " + ALL + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
+        final String SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL = "select " + ALL 
+        + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " 
+        + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
         final String SELECT_FROM_COMPONENTS_DB_ALL_COMPONENTS_SQL = "select distinct " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;
         
@@ -118,17 +126,28 @@ public interface DB_Constants
         
         /* communicative class operations */
         
-        final String COMMC_DB_SCHEMA = "( " + CommunicativeClassesTable.COLUMN_CLASS_ID + ", " + CommunicativeClassesTable.COLUMN_CLASS_NAME + ", " + CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD + ", " + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + ", " + CommunicativeClassesTable.COLUMN_STATUS + ") ";
+        final String COMMC_DB_SCHEMA = "( " + CommunicativeClassesTable.COLUMN_CLASS_ID 
+        + ", " + CommunicativeClassesTable.COLUMN_CLASS_NAME + ", " 
+        + CommunicativeClassesTable.COLUMN_COLLABORATION_RECORD + ", " 
+        + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + ", " 
+        + CommunicativeClassesTable.COLUMN_STATUS + ") ";
         
-        final String create_COMMC_DB_SQL = "create table " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + COMMC_DB_SCHEMA;
+        final String create_COMMC_DB_SQL = "create table " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME 
+        + COMMC_DB_SCHEMA;
         
-        final String drop_COMMC_DB_SQL = "drop table if exists " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
+        final String drop_COMMC_DB_SQL = "drop table if exists " 
+        + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
         
-        final String SELECT_ALL_FROM_COMMC_DB_ON_CID_SQL = "select " + ALL + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME  + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID  + " = ?";
+        final String SELECT_ALL_FROM_COMMC_DB_ON_CID_SQL = "select " + ALL 
+        + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME  
+        + " where " + CommunicativeClassesTable.COLUMN_CLASS_ID  + " = ?";
         
-        final String SELECT_ALL_FROM_COMMC_DB_SQL = "select distinct " + ALL + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
+        final String SELECT_ALL_FROM_COMMC_DB_SQL = "select distinct " + ALL 
+        + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
         
-        final String SELECT_FROM_COMMC_DB_COUNT_CLASSES_ON_CID_SQL = "select distinct count(*) as " + COUNT + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
+        final String SELECT_FROM_COMMC_DB_COUNT_CLASSES_ON_CID_SQL = "select distinct count(*) as " 
+        + COUNT + " from " + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME;
         
         final String SELECT_FROM_COMMC_DB_ON_CID_SQL = "select " 
         + CommunicativeClassesTable.COLUMN_CLASS_ID

@@ -31,23 +31,28 @@ import static org.junit.Assert.*;
  *
  * @author kirill
  */
+
 public class DB_CommunicativeClassesTable_UnitTests 
 {
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() 
+    {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() 
+    {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() 
+    {
     }
     
     private final String COLUMN_APP_DESC = "icmp ping tool";
@@ -59,8 +64,8 @@ public class DB_CommunicativeClassesTable_UnitTests
     private final String COLUMN_POLICY_CLASS_NAME = "web caching service";
     
     private final String separator = " ";
-    private final String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
-    private final String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";       
+    private final String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";       
     private final String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
         
     private final String coord_record = component_2_ID + separator + component_1_ID;   
@@ -68,7 +73,8 @@ public class DB_CommunicativeClassesTable_UnitTests
     
     
     @Test
-    public void test_Communicative_Classes_Table_create_drop() throws RecordDAO_Exception, SQLException 
+    public void test_CommunicativeClassesTable_create_drop() 
+    throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -99,7 +105,8 @@ public class DB_CommunicativeClassesTable_UnitTests
     
     
     @Test
-    public void test_Communicative_Classes_Table_CRUD_operations() throws RecordDAO_Exception, SQLException 
+    public void test_CommunicativeClassesTable_CRUD_operations() 
+    throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -197,4 +204,5 @@ public class DB_CommunicativeClassesTable_UnitTests
         System.out.println("--------------------------------------");
         System.out.println("finished test_Communicative_Classes_Table_CRUD_operations... ");
     }
+    
 }
