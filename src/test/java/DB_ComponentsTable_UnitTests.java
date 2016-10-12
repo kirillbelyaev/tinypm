@@ -172,7 +172,7 @@ public class DB_ComponentsTable_UnitTests
         System.out.println("delete_Apps_Table_Records_On_APP_and_PCID: value is: " + output);
         
         
-        output = db.write_Components_Table_Record(r);
+        output = db.write_ComponentsTableRecord(r);
         assertNotNull(output);
         System.out.println("write_Apps_Table_Record: value is: " + output);
         

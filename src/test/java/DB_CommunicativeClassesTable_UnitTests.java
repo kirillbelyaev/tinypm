@@ -90,10 +90,10 @@ public class DB_CommunicativeClassesTable_UnitTests
         
 	assertNotNull(db);
         
-        output = db.drop_Table_COMMC_DB();
+        output = db.dropTable_COMMC_DB();
 	assertTrue("drop_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        output = db.create_Table_COMMC_DB();
+        output = db.createTable_COMMC_DB();
 	assertTrue("create_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
         db.closeConnection();
@@ -123,10 +123,10 @@ public class DB_CommunicativeClassesTable_UnitTests
         
 	assertNotNull(db);
         
-        output = db.drop_Table_COMMC_DB();
+        output = db.dropTable_COMMC_DB();
 	assertTrue("drop_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        output = db.create_Table_COMMC_DB();
+        output = db.createTable_COMMC_DB();
 	assertTrue("create_Table_COMMC_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
         
@@ -137,23 +137,27 @@ public class DB_CommunicativeClassesTable_UnitTests
         r.set_COLUMN_COORDINATION_RECORD(this.coord_record);
         r.set_COLUMN_STATUS_Active();
         
-         
+        System.out.println("\n"); 
         output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);
         
+        System.out.println("\n"); 
         CommunicativeClassesTableRecord[] recs = (CommunicativeClassesTableRecord[]) db.read_Communicative_Classes_Table_Records_On_CID(r);
         assertTrue("read_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = recs == null | recs != null);
 	System.out.println("read_Communicative_Classes_Table_Records_On_CID: array value is: " + recs);
         
+        System.out.println("\n"); 
         output = db.delete_Communicative_Classes_Table_Records_On_CID(r);
 	assertTrue("delete_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("delete_Communicative_Classes_Table_Records_On_CID: value is: " + output);
+        System.out.println("delete_Communicative_Classes_Table_Records_On_CID: return value is: " + output);
         
-        output = db.write_Communicative_Classes_Table_Record(r);
+        System.out.println("\n"); 
+        output = db.write_CommunicativeClassesTableRecord(r);
         assertNotNull(output);
-        System.out.println("write_Communicative_Classes_Table_Record: value is: " + output);
+        System.out.println("write_Communicative_Classes_Table_Record: return value is: " + output);
         
+        System.out.println("\n"); 
         recs = (CommunicativeClassesTableRecord[]) db.read_Communicative_Classes_Table_Records_On_CID(r);
         assertTrue("read_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = recs == null | recs != null);
         
@@ -166,6 +170,7 @@ public class DB_CommunicativeClassesTable_UnitTests
             System.out.println("read_Communicative_Classes_Table_Records_On_CID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
+        System.out.println("\n"); 
         recs = (CommunicativeClassesTableRecord[]) db.read_Communicative_Classes_Table_Records_On_All_Classes();
         assertTrue("read_Communicative_Classes_Table_Records_On_All_Classes: Reply has unexpected return:", Out = recs == null | recs != null);
 	
@@ -178,23 +183,27 @@ public class DB_CommunicativeClassesTable_UnitTests
             System.out.println("read_Communicative_Classes_Table_Records_On_All_Classes:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
+        System.out.println("\n"); 
         output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);
         
-        output = db.write_Communicative_Classes_Table_Record(r);
+        System.out.println("\n"); 
+        output = db.write_CommunicativeClassesTableRecord(r);
         assertNotNull(output);
-        System.out.println("write_Communicative_Classes_Table_Record: value is: " + output);
+        System.out.println("write_Communicative_Classes_Table_Record: return value is: " + output);
         
+        System.out.println("\n"); 
         output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);
         
-        
+        System.out.println("\n"); 
         output = db.delete_Communicative_Classes_Table_Records_On_CID(r);
 	assertTrue("delete_Communicative_Classes_Table_Records_On_CID: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("delete_Communicative_Classes_Table_Records_On_CID: value is: " + output);
+        System.out.println("delete_Communicative_Classes_Table_Records_On_CID: return value is: " + output);
         
+        System.out.println("\n"); 
         output = db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
 	assertNotNull(output);
         System.out.println("count_Distinct_Communicative_Classes_Table_Records_on_CID: count is: " + output);

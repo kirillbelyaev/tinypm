@@ -70,7 +70,7 @@ public class RecordDAO_implement implements RecordDAO
     }
     
     /* on component_path_ID */ 
-    private int check_If_Components_Table_Record_Exists(ComponentsTableRecord r) 
+    private int check_If_ComponentsTableRecord_Exists(ComponentsTableRecord r) 
     throws RecordDAO_Exception 
     {
         if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
@@ -117,7 +117,7 @@ public class RecordDAO_implement implements RecordDAO
         
         
     @Override
-    public int write_Components_Table_Record(ComponentsTableRecord r) 
+    public int write_ComponentsTableRecord(ComponentsTableRecord r) 
     throws RecordDAO_Exception
     {
         if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -137,12 +137,12 @@ public class RecordDAO_implement implements RecordDAO
             if (comr.set_COLUMN_CLASS_ID(r.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID()) != RecordDAO.INDICATE_EXECUTION_SUCCESS) return RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             
-            if (this.check_If_Components_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
+            if (this.check_If_ComponentsTableRecord_Exists(r) == EMPTY_RESULT) //no record exists
             {	
-                if (this.insert_Components_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                if (this.insert_ComponentsTableRecord(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
 
-            } else if (this.check_If_Components_Table_Record_Exists(r) == RECORD_EXISTS) 
+            } else if (this.check_If_ComponentsTableRecord_Exists(r) == RECORD_EXISTS) 
             {/* record exists */
                 /* if record exists - just update it */	
                 if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID)) /* check if the update column
@@ -156,7 +156,8 @@ public class RecordDAO_implement implements RecordDAO
                 if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID)) /* check if the update column
                         is a COM CID column */
                 {
-                    if (this.check_If_Communicative_Classes_Table_Record_Exists(comr) == EMPTY_RESULT) return RecordDAO.INDICATE_COMMUNICATIVE_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
+                    /* we have to make sure a specified CID exists */
+                    if (this.check_If_Communicative_Classes_Table_CID_Exists(comr) == EMPTY_RESULT) return RecordDAO.INDICATE_COMMUNICATIVE_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
             
                     if (this.update_Components_Table_Record_COMCID_on_Component(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
                 }    
@@ -168,7 +169,7 @@ public class RecordDAO_implement implements RecordDAO
     }
 
     
-    private int insert_Components_Table_Record(ComponentsTableRecord r) 
+    private int insert_ComponentsTableRecord(ComponentsTableRecord r) 
     throws RecordDAO_Exception
     {
         if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -743,7 +744,7 @@ public class RecordDAO_implement implements RecordDAO
     /* capabilities classes table operations */
     
     @Override
-    public int create_Table_CAPC_DB() throws RecordDAO_Exception
+    public int createTable_CAPC_DB() throws RecordDAO_Exception
     {
             Statement state = null;
             
@@ -761,7 +762,7 @@ public class RecordDAO_implement implements RecordDAO
        
        
     @Override
-    public int drop_Table_CAPC_DB() throws RecordDAO_Exception
+    public int dropTable_CAPC_DB() throws RecordDAO_Exception
     {
             Statement state = null;
             
@@ -1032,101 +1033,101 @@ public class RecordDAO_implement implements RecordDAO
     
     private int update_Capabilities_Classes_Table_Record_Column_Capabilities_on_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            PreparedStatement ps = null;
+        PreparedStatement ps = null;
 
-            try 
-            {
-                    if (CapabilitiesClassesTable.CAPC_DB_TABLE_NAME.equals(CapabilitiesClassesTable.CAPC_DB_TABLE_NAME))
-                    {	
-                            ps = this.conn.prepareStatement(DB_Constants.UPDATE_CAPC_DB_COLUMN_CAPS_ON_CID_SQL);
+        try 
+        {
+                if (CapabilitiesClassesTable.CAPC_DB_TABLE_NAME.equals(CapabilitiesClassesTable.CAPC_DB_TABLE_NAME))
+                {	
+                        ps = this.conn.prepareStatement(DB_Constants.UPDATE_CAPC_DB_COLUMN_CAPS_ON_CID_SQL);
 
-                            int index = 1;
-                            
-                            ps.setString(index++, r.get_COLUMN_CAPABILITIES());
-                            
-                            ps.setString(index++, r.get_COLUMN_CLASS_ID());
-                            
-                            
-                            this.conn.setAutoCommit(false);
-                            ps.executeUpdate();
-                            this.conn.setAutoCommit(true);
-                    } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        int index = 1;
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                        ps.setString(index++, r.get_COLUMN_CAPABILITIES());
 
-                    return INDICATE_EXECUTION_SUCCESS;
+                        ps.setString(index++, r.get_COLUMN_CLASS_ID());
+
+
+                        this.conn.setAutoCommit(false);
+                        ps.executeUpdate();
+                        this.conn.setAutoCommit(true);
+                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+                return INDICATE_EXECUTION_SUCCESS;
     }
     
     /* no duplicates are allowed for this table - CID can only have a single record */
     @Override
     public int write_Capabilities_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            try
+        try
+        {	
+            if (this.check_If_Capabilities_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
             {	
-                if (this.check_If_Capabilities_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
-                {	
-                        if (this.insert_Capabilities_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.insert_Capabilities_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-                } else if (this.check_If_Capabilities_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
-                {//if record exists - just update it	
+            } else if (this.check_If_Capabilities_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
+            {//if record exists - just update it	
 
-                        if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_CLASS_NAME)) /* check if the update column
-                            is a name column */
-                            if (this.update_Capabilities_Classes_Table_Record_Column_Name_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_CLASS_NAME)) /* check if the update column
+                        is a name column */
+                        if (this.update_Capabilities_Classes_Table_Record_Column_Name_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-                        if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_CAPABILITIES)) /* check if the update column
-                            is policies column */
-                            if (this.update_Capabilities_Classes_Table_Record_Column_Capabilities_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
-                }
+                    if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_CAPABILITIES)) /* check if the update column
+                        is policies column */
+                        if (this.update_Capabilities_Classes_Table_Record_Column_Capabilities_on_CID(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+            }
 
-            } catch (Exception e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
-                    return INDICATE_EXECUTION_SUCCESS;
+        } catch (Exception e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+                return INDICATE_EXECUTION_SUCCESS;
     }
     
     
     @Override
     public int delete_Capabilities_Classes_Table_Records_On_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            String statement = null;
-            PreparedStatement ps = null;
-            
-            try 
-            {	
-                    ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_CAPC_DB_ON_CID_SQL);
+        String statement = null;
+        PreparedStatement ps = null;
 
-                    int index = 1;
+        try 
+        {	
+                ps = this.conn.prepareStatement(DB_Constants.DELETE_FROM_CAPC_DB_ON_CID_SQL);
 
-                    ps.setString(index++, r.get_COLUMN_CLASS_ID());
+                int index = 1;
 
-                    this.conn.setAutoCommit(false);
-                    ps.executeUpdate();
-                    this.conn.setAutoCommit(true);
+                ps.setString(index++, r.get_COLUMN_CLASS_ID());
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
-            
-            /*
-            Possible refactoring to every method to obtain the int exit code. 
-            but that defeats the purpose of using specialized exception class.
-            
-            } catch(SQLException e) { System.out.println("Exception: " + e.getMessage() ); return INDICATE_SQL_EXCEPTION;}
-            */        
-                    
-                    return INDICATE_EXECUTION_SUCCESS;
+                this.conn.setAutoCommit(false);
+                ps.executeUpdate();
+                this.conn.setAutoCommit(true);
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }
+
+        /*
+        Possible refactoring to every method to obtain the int exit code. 
+        but that defeats the purpose of using specialized exception class.
+
+        } catch(SQLException e) { System.out.println("Exception: " + e.getMessage() ); return INDICATE_SQL_EXCEPTION;}
+        */        
+
+                return INDICATE_EXECUTION_SUCCESS;
     }
 
     
     /* communicative classes table operations */
     
     @Override
-    public int create_Table_COMMC_DB() throws RecordDAO_Exception
+    public int createTable_COMMC_DB() throws RecordDAO_Exception
     {
         Statement state = null;
 
@@ -1144,7 +1145,7 @@ public class RecordDAO_implement implements RecordDAO
        
        
     @Override
-    public int drop_Table_COMMC_DB() throws RecordDAO_Exception
+    public int dropTable_COMMC_DB() throws RecordDAO_Exception
     {
         Statement state = null;
 
@@ -1394,7 +1395,7 @@ public class RecordDAO_implement implements RecordDAO
                 return INDICATE_EXECUTION_SUCCESS;
     }
     
-    
+    /* obsolete now */
     @Override
     public int write_Communicative_Classes_Table_Record(CommunicativeClassesTableRecord r) 
     throws RecordDAO_Exception
@@ -1403,11 +1404,11 @@ public class RecordDAO_implement implements RecordDAO
 
         try
         {	
-            if (this.check_If_Communicative_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
+            if (this.check_If_Communicative_Classes_Table_CID_Exists(r) == EMPTY_RESULT) //no record exists
             {	
                 if (this.insert_Communicative_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            } else if (this.check_If_Communicative_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
+            } else if (this.check_If_Communicative_Classes_Table_CID_Exists(r) == RECORD_EXISTS) //record exists
             {//if record exists - just update it	
 
                 if (r.get_UPDATE_COLUMN().equals(CommunicativeClassesTable.COLUMN_CLASS_NAME)) /* check if the update column
@@ -1437,11 +1438,11 @@ public class RecordDAO_implement implements RecordDAO
 
         try
         {	
-            if (this.check_If_CommunicativeClassesTableRecord_Exists(r) == EMPTY_RESULT) //no record exists
+            if (this.check_If_CommunicativeClassesTableCID_Exists(r) == EMPTY_RESULT) //no record exists
             {	
                 if (this.insert_Communicative_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            } else if (this.check_If_CommunicativeClassesTableRecord_Exists(r) == RECORD_EXISTS) //record exists
+            } else if (this.check_If_CommunicativeClassesTableCID_Exists(r) == RECORD_EXISTS) //record exists
             {/* no updates are allowed - only inserts and deletes based on coord/collab records */
                
                 return RECORD_EXISTS;
@@ -1464,7 +1465,8 @@ public class RecordDAO_implement implements RecordDAO
                 return INDICATE_EXECUTION_SUCCESS;
     }
     
-    private int check_If_Communicative_Classes_Table_Record_Exists(CommunicativeClassesTableRecord r)
+    /* less strict one */
+    private int check_If_Communicative_Classes_Table_CID_Exists(CommunicativeClassesTableRecord r)
     throws RecordDAO_Exception //on CID
     {
         if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
@@ -1475,7 +1477,7 @@ public class RecordDAO_implement implements RecordDAO
 
         try 
         {	
-            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMMC_DB_ON_CID_SQL);
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_CID_FROM_COMMC_DB_ON_CID_SQL);
 
             int index = 1;
 
@@ -1503,7 +1505,7 @@ public class RecordDAO_implement implements RecordDAO
     
     /* new version taking into account the fact that duplicates are allowed on CID
     but with distinct coord/collab records */
-    private int check_If_CommunicativeClassesTableRecord_Exists(CommunicativeClassesTableRecord r)
+    private int check_If_CommunicativeClassesTableCID_Exists(CommunicativeClassesTableRecord r)
     throws RecordDAO_Exception //on CID
     {
         if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
@@ -1514,7 +1516,7 @@ public class RecordDAO_implement implements RecordDAO
 
         try 
         {	
-            ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMMC_DB_ON_ALL_MAIN_COLUMNS_SQL);
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_CID_FROM_COMMC_DB_ON_ALL_MAIN_COLUMNS_SQL);
 
             int index = 1;
 

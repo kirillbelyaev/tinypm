@@ -1028,7 +1028,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Components_Table_Record(this.comprec) == INDICATE_EXECUTION_SUCCESS) {    
+                    if (this.db.write_ComponentsTableRecord(this.comprec) == INDICATE_EXECUTION_SUCCESS) {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
                         return INDICATE_EXECUTION_SUCCESS;
@@ -1158,7 +1158,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Communicative_Classes_Table_Record(this.comrec) != INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_CommunicativeClassesTableRecord(this.comrec) != INDICATE_EXECUTION_SUCCESS) 
                     {  
                         this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -1343,7 +1343,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_Components_Table_Record(this.comprec) == INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_ComponentsTableRecord(this.comprec) == INDICATE_EXECUTION_SUCCESS) 
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");

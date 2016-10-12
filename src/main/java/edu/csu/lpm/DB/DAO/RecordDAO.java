@@ -74,16 +74,16 @@ public interface RecordDAO extends DB_Base
     
     public Integer count_Components_Table_Records_on_COMCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
-    public int write_Components_Table_Record(ComponentsTableRecord r) throws RecordDAO_Exception;
+    public int write_ComponentsTableRecord(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     public int delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     
     /* capabilities classes table operations */
     
-    public int create_Table_CAPC_DB() throws RecordDAO_Exception;
+    public int createTable_CAPC_DB() throws RecordDAO_Exception;
     
-    public int drop_Table_CAPC_DB() throws RecordDAO_Exception;
+    public int dropTable_CAPC_DB() throws RecordDAO_Exception;
     
     public CapabilitiesClassesTableRecord[] read_Capabilities_Classes_Table_Records_On_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
@@ -98,9 +98,9 @@ public interface RecordDAO extends DB_Base
     
     /* communicative class table operations */
     
-    public int create_Table_COMMC_DB() throws RecordDAO_Exception;
+    public int createTable_COMMC_DB() throws RecordDAO_Exception;
     
-    public int drop_Table_COMMC_DB() throws RecordDAO_Exception;
+    public int dropTable_COMMC_DB() throws RecordDAO_Exception;
     
     public Integer count_Distinct_Communicative_Classes_Table_Records_on_CID() throws RecordDAO_Exception;
     

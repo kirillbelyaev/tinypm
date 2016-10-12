@@ -75,10 +75,10 @@ public class DB_CapabilitiesClassesTable_UnitTests
         
 	assertNotNull(db);
         
-        output = db.drop_Table_CAPC_DB();
+        output = db.dropTable_CAPC_DB();
 	assertTrue("drop_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        output = db.create_Table_CAPC_DB();
+        output = db.createTable_CAPC_DB();
 	assertTrue("create_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
         db.closeConnection();
@@ -106,10 +106,10 @@ public class DB_CapabilitiesClassesTable_UnitTests
         
 	assertNotNull(db);
         
-        output = db.drop_Table_CAPC_DB();
+        output = db.dropTable_CAPC_DB();
 	assertTrue("drop_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
-        output = db.create_Table_CAPC_DB();
+        output = db.createTable_CAPC_DB();
 	assertTrue("create_Table_PCS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
        
