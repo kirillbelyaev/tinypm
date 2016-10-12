@@ -87,7 +87,8 @@ public class RecordDAO_implement implements RecordDAO
             
             //ps = this.conn.prepareStatement(DB_Constants_Extended.SELECT_FROM_APPS_DB_ON_APP_AND_PCID_SQL);
 
-            /* we have to make sure that only a single component record with app_path_ID column exists in the db */
+            /* we have to make sure that only a single component record with
+            component_path_ID column exists in the db */
             ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_COMPONENTS_DB_ON_COMPONENT_SQL);
 
             int index = 1;
@@ -148,7 +149,8 @@ public class RecordDAO_implement implements RecordDAO
                 if (r.get_UPDATE_COLUMN().equals(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID)) /* check if the update column
                         is a CAP CID column */
                 {
-                    if (this.check_If_Capabilities_Classes_Table_Record_Exists(capr) == EMPTY_RESULT) return RecordDAO.INDICATE_CAPABILITIES_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
+                    /* we have to make sure a specified CID exists */
+                    if (this.check_If_CapabilitiesClassesTableCID_Exists(capr) == EMPTY_RESULT) return RecordDAO.INDICATE_CAPABILITIES_CLASS_RECORD_DOES_NOT_EXIST_STATUS; //no record exists
 
                     if (this.update_Components_Table_Record_CAPCID_on_Component(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
@@ -417,6 +419,55 @@ public class RecordDAO_implement implements RecordDAO
         return array;
     }
     
+    /* should return CID for a distinct component path ID
+    returns null if not found.
+    */
+    @Override
+    public String get_ComponentsTableRecordsCOMCID_On_Component(ComponentsTableRecord r)
+    throws RecordDAO_Exception
+    {
+        if (r == null) return null;
+        if (this.conn == null) return null;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try 
+        {
+            ps = this.conn.prepareStatement(DB_Constants.SELECT_COMCID_FROM_COMPONENTS_DB_ON_COMPONENT_SQL);
+
+            int index = 1;
+
+            ps.setString(index++, r.get_COLUMN_COMPONENT_PATH_ID());
+
+            this.conn.setAutoCommit(false);
+            rs = ps.executeQuery();
+            this.conn.setAutoCommit(true);
+
+            while (rs.next()) 
+            {     
+                ComponentsTableRecord rec = new ComponentsTableRecord();
+
+                /* technically all the set operations should be checked on the
+                success return value. However in this case this might not be necessary
+                because fields are set using records that are read from the store */
+                
+                rec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID));
+                
+                rs.close();
+                rs = null;
+                
+                return rec.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID();     
+            }
+            
+            rs.close();
+            rs = null;
+
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); } 
+
+        return null;
+    }
+    
     /* might not be that useful in practice */
     @Override
     public ComponentsTableRecord[] read_Components_Table_Records_On_Component_and_CAPCID(ComponentsTableRecord r) 
@@ -457,6 +508,8 @@ public class RecordDAO_implement implements RecordDAO
                 rec.set_COLUMN_COMPONENT_PATH_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_PATH_ID));
 
                 rec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CAPABILITIES_CLASS_ID));
+                
+                rec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID));
 
                 rec.set_COLUMN_COMPONENT_CONTAINER_ID(rs.getString(ComponentsTable.COLUMN_COMPONENT_CONTAINER_ID));
 
@@ -928,40 +981,41 @@ public class RecordDAO_implement implements RecordDAO
                     return count;
     }
     
-    private int check_If_Capabilities_Classes_Table_Record_Exists(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception //on PCID
+    private int check_If_CapabilitiesClassesTableCID_Exists(CapabilitiesClassesTableRecord r)
+    throws RecordDAO_Exception //on CID
     {
-            if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
-            if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS; //indicate error
+        if (this.conn == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-            try 
-            {	
-                    ps = this.conn.prepareStatement(DB_Constants.SELECT_FROM_CAPC_DB_ON_CID_SQL);
+        try 
+        {	
+                ps = this.conn.prepareStatement(DB_Constants.SELECT_CID_FROM_CAPC_DB_ON_CID_SQL);
 
-                    int index = 1;
+                int index = 1;
 
-                    ps.setString(index++, r.get_COLUMN_CLASS_ID());
+                ps.setString(index++, r.get_COLUMN_CLASS_ID());
 
-                    this.conn.setAutoCommit(false);
-                    rs = ps.executeQuery();
-                    this.conn.setAutoCommit(true);
+                this.conn.setAutoCommit(false);
+                rs = ps.executeQuery();
+                this.conn.setAutoCommit(true);
 
-                    if (rs.next())
-                    {
-                            rs.close();
-                            rs = null;
-                            //System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
-                            return RECORD_EXISTS; //entry exists
-                    }	
+                if (rs.next())
+                {
+                        rs.close();
+                        rs = null;
+                        //System.out.println("check_If_Apps_Table_Record_Exists: entry exists!");
+                        return RECORD_EXISTS; //entry exists
+                }	
 
-                    rs.close();
-                    rs = null;
+                rs.close();
+                rs = null;
 
-            } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }    
+        } catch(SQLException e) { throw new RecordDAO_Exception( "Exception: " + e.getMessage(), e ); }    
 
-                    return EMPTY_RESULT; //no entry exists
+                return EMPTY_RESULT; //no entry exists
     }
     
     private int insert_Capabilities_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
@@ -1063,17 +1117,17 @@ public class RecordDAO_implement implements RecordDAO
     
     /* no duplicates are allowed for this table - CID can only have a single record */
     @Override
-    public int write_Capabilities_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
+    public int write_CapabilitiesClassesTableRecord(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception
     {
         if (r == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
         try
         {	
-            if (this.check_If_Capabilities_Classes_Table_Record_Exists(r) == EMPTY_RESULT) //no record exists
+            if (this.check_If_CapabilitiesClassesTableCID_Exists(r) == EMPTY_RESULT) //no record exists
             {	
                     if (this.insert_Capabilities_Classes_Table_Record(r) != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
 
-            } else if (this.check_If_Capabilities_Classes_Table_Record_Exists(r) == RECORD_EXISTS) //record exists
+            } else if (this.check_If_CapabilitiesClassesTableCID_Exists(r) == RECORD_EXISTS) //record exists
             {//if record exists - just update it	
 
                     if (r.get_UPDATE_COLUMN().equals(CapabilitiesClassesTable.COLUMN_CLASS_NAME)) /* check if the update column

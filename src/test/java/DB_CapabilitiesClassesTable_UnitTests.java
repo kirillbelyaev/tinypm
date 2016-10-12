@@ -135,7 +135,7 @@ public class DB_CapabilitiesClassesTable_UnitTests
 	System.out.println("read_Policy_Classes_Table_Records_On_PCID: array value is: " + recs);
         
         
-        output = db.write_Capabilities_Classes_Table_Record(r);
+        output = db.write_CapabilitiesClassesTableRecord(r);
         assertNotNull(output);
         System.out.println("write_Policy_Classes_Table_Record: value is: " + output);
         

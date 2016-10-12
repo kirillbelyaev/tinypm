@@ -118,7 +118,10 @@ public interface DB_Constants
         
         final String SELECT_FROM_CAPC_DB_COUNT_CAPABILITIES_ON_CID_SQL = "select distinct count(*) as " + COUNT + " from " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME;
         
-        final String SELECT_FROM_CAPC_DB_ON_CID_SQL = "select " + CapabilitiesClassesTable.COLUMN_CLASS_ID + " from " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME  + " where " + CapabilitiesClassesTable.COLUMN_CLASS_ID + " = ?";
+        final String SELECT_CID_FROM_CAPC_DB_ON_CID_SQL = "select " 
+        + CapabilitiesClassesTable.COLUMN_CLASS_ID + " from " 
+        + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME  + " where " 
+        + CapabilitiesClassesTable.COLUMN_CLASS_ID + " = ?";
         
         final String INSERT_INTO_CAPC_DB_SQL = "insert into " + CapabilitiesClassesTable.CAPC_DB_TABLE_NAME + " values (?, ?, ?, ?) ";
         

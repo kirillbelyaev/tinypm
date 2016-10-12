@@ -68,7 +68,7 @@ public class DB_ComponentsTable_UnitTests
     }
      
     @Test
-    public void small_tests() 
+    public void test_LCS() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -85,12 +85,10 @@ public class DB_ComponentsTable_UnitTests
 //            if (i != LCS.length -1)
 //                System.out.print(LCS[i] + ", ");
 //            else System.out.print(LCS[i] + " ) ");    
-        
-    
+           
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("finished small_tests... ");
-      
+        System.out.println("finished small_tests... "); 
     }
     
     @Test
@@ -111,10 +109,10 @@ public class DB_ComponentsTable_UnitTests
 	assertNotNull(db);
         
         output = db.dropTable_Components_DB();
-	assertTrue("dropTable_APPS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+	assertTrue("dropTable_Components_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
         output = db.createTable_Components_DB();
-	assertTrue("createTable_APPS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+	assertTrue("createTable_Components_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
         db.closeConnection();
         
@@ -125,7 +123,8 @@ public class DB_ComponentsTable_UnitTests
      
      
     @Test
-    public void test_ComponentsTable_CRUD_operations() throws RecordDAO_Exception, SQLException 
+    public void test_ComponentsTable_CRUD_operations() 
+    throws RecordDAO_Exception, SQLException 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -133,6 +132,7 @@ public class DB_ComponentsTable_UnitTests
         
         int output = -1;
         boolean Out;
+        String svalue = null;
         
         ComponentsTableRecord r = new ComponentsTableRecord();
         DB_Dispatcher dd = new DB_Dispatcher();
@@ -143,11 +143,12 @@ public class DB_ComponentsTable_UnitTests
 	assertNotNull(db);
         
         output = db.dropTable_Components_DB();
-	assertTrue("dropTable_APPS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+	assertTrue("dropTable_Components_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
         output = db.createTable_Components_DB();
-	assertTrue("createTable_APPS_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
+	assertTrue("createTable_Components_DB: Reply has unexpected return:", Out = output == 0 | output == -1);
         
+        System.out.println("setting record fields. ");
         r.set_COLUMN_COMPONENT_DESC(this.COLUMN_COMPONENT_DESC);
         r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_PATH_ID);
         r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_COMPONENT_CAP_CLASS_ID);
@@ -157,82 +158,96 @@ public class DB_ComponentsTable_UnitTests
         r.set_COLUMN_COMPONENT_CONTAINER_ID(this.COLUMN_COMPONENT_CONTAINER_ID);
         r.set_Status_Active();
         
-        
+        System.out.println("\n"); 
         output = db.count_Components_Table_Records_on_CAPCID(r);
 	assertNotNull(output);
-        System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
+        System.out.println("count_Distinct_ComponentsTable_Records_on_CAPCID: count is: " + output);
         
-        
+        System.out.println("\n"); 
         ComponentsTableRecord[] recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_Component_and_CAPCID(r);
-        assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
-	System.out.println("read_Apps_Table_Records_On_APP_and_PCID: array value is: " + recs);
+        assertTrue("read_ComponentsTableRecords_On_Component_and_CAPCID: Reply has unexpected return:", Out = recs == null | recs != null);
+	System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID: array value is: " + recs);
         
+        System.out.println("\n"); 
         output = db.delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(r);
-	assertTrue("delete_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("delete_Apps_Table_Records_On_APP_and_PCID: value is: " + output);
+	assertTrue("delete_ComponentsTableRecords_On_Component_and_CAPCID_and_COMCID: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("delete_ComponentsTableRecords_On_Component_and_CAPCID_and_COMCID: value is: " + output);
         
-        
+        System.out.println("\n"); 
         output = db.write_ComponentsTableRecord(r);
         assertNotNull(output);
-        System.out.println("write_Apps_Table_Record: value is: " + output);
+        System.out.println("write_ComponentsTableRecord: value is: " + output);
         
+        System.out.println("\n"); 
+        output = db.write_ComponentsTableRecord(r);
+        assertNotNull(output);
+        System.out.println("write_ComponentsTableRecord: value is: " + output);
         
+        System.out.println("\n"); 
         recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_Component_and_CAPCID(r);
-        assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
+        assertTrue("read_ComponentsTableRecords_On_Component_and_CAPCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_COMPONENT_DESC());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_COMPONENT_CONTAINER_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   desc is: " + recs[0].get_COLUMN_COMPONENT_DESC());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   Component Path ID is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   CAPCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   COMCID is: " + recs[0].get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
+        System.out.println("\n"); 
         recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_All_Components();
-        assertTrue("read_Apps_Table_Records_On_All_APPs: Reply has unexpected return:", Out = recs == null | recs != null);
+        assertTrue("read_ComponentsTableRecords_On_All_Components: Reply has unexpected return:", Out = recs == null | recs != null);
         
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_All_APPs: rec array index 0 app value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_ComponentsTableRecords_On_All_Components: rec array index 0 Component Path ID value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_ComponentsTableRecords_On_All_Components: rec array index 0 CAPCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
+            System.out.println("read_ComponentsTableRecords_On_All_Components: rec array index 0 COMCID is: " + recs[0].get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
         }
         
-        
+        System.out.println("\n"); 
         recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_CAPCID(r);
-        assertTrue("read_Apps_Table_Records_On_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
+        assertTrue("read_ComponentsTableRecords_On_CAPCID: Reply has unexpected return:", Out = recs == null | recs != null);
         
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_PCID: rec array index 0 app value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_ComponentsTableRecords_On_CAPCID: rec array index 0 Components Path ID value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
         }
         
-        
+        System.out.println("\n"); 
         output = db.count_Components_Table_Records_on_CAPCID(r);
 	assertNotNull(output);
-        System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
+        System.out.println("count_Distinct_ComponentsTableRecords_on_CAPCID: count is: " + output);
+        
+        System.out.println("\n"); 
+        svalue = db.get_ComponentsTableRecordsCOMCID_On_Component(r);
+        System.out.println("get_ComponentsTableRecordsCOMCID_On_Component: value is: " + svalue);
         
         
+        System.out.println("\n"); 
         output = db.delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(r);
-	assertTrue("delete_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = output == 0 | output == -1);
-        System.out.println("delete_Apps_Table_Records_On_APP_and_PCID: value is: " + output);
+	assertTrue("delete_ComponentsTableRecords_On_Component_and_CAPCID_and_COMCID: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("delete_ComponentsTableRecords_On_Component_and_CAPCID_and_COMCID: value is: " + output);
         
-        
+        System.out.println("\n"); 
         recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_Component_and_CAPCID(r);
-        assertTrue("read_Apps_Table_Records_On_APP_and_PCID: Reply has unexpected return:", Out = recs == null | recs != null);
+        assertTrue("read_ComponentsTableRecords_On_Component_and_CAPCID: Reply has unexpected return:", Out = recs == null | recs != null);
 	
         if (recs != null)
         {    
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   desc is: " + recs[0].get_COLUMN_COMPONENT_DESC());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   app is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   PCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   CID is: " + recs[0].get_COLUMN_COMPONENT_CONTAINER_ID());
-            System.out.println("read_Apps_Table_Records_On_APP_and_PCID:   status is: " + recs[0].get_COLUMN_STATUS());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   desc is: " + recs[0].get_COLUMN_COMPONENT_DESC());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   Component Path ID is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   CAPCID is: " + recs[0].get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   COMCID is: " + recs[0].get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID());
+            System.out.println("read_ComponentsTableRecords_On_Component_and_CAPCID:   status is: " + recs[0].get_COLUMN_STATUS());
         }
         
-        
+        System.out.println("\n"); 
         output = db.count_Components_Table_Records_on_CAPCID(r);
 	assertNotNull(output);
-        System.out.println("count_Distinct_Apps_Table_Records_on_APP_and_PCID: count is: " + output);
+        System.out.println("count_Distinct_ComponentsTableRecords_on_CAPCID: count is: " + output);
         
         
         db.closeConnection();

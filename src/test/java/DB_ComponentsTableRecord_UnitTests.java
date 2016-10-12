@@ -28,6 +28,7 @@ import static org.junit.Assert.*;
  *
  * @author kirill
  */
+
 public class DB_ComponentsTableRecord_UnitTests 
 { 
     private final String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
@@ -64,7 +65,7 @@ public class DB_ComponentsTableRecord_UnitTests
     }
 
     @Test
-    public void small_tests() 
+    public void test_LCS() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
@@ -187,21 +188,23 @@ public class DB_ComponentsTableRecord_UnitTests
         
         value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
-	System.out.println("status is: " + value);
+	System.out.println("get_COLUMN_STATUS return is: " + value);
         
+        System.out.println("set_COLUMN_STATUS ");
         r.set_COLUMN_STATUS(null);
 	value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
-	System.out.println("status is: " + value);
+	System.out.println("get_COLUMN_STATUS return is: " + value);
         
+        System.out.println("set_Status_Inactive ");
         r.set_Status_Inactive();
 	value = r.get_COLUMN_STATUS();
 	assertNotNull(value);
-	System.out.println("status is: " + value);
+        System.out.println("get_COLUMN_STATUS return is: " + value);
         
         value = r.get_COLUMN_COMPONENT_PATH_ID();
 	assertNotNull(value);
-	System.out.println("app path is: " + value);
+        System.out.println("get_COLUMN_COMPONENT_PATH_ID return is: " + value);
         
         System.out.println("\n");
         System.out.println("invalid input");

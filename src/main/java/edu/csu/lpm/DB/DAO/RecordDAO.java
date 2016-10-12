@@ -78,6 +78,7 @@ public interface RecordDAO extends DB_Base
     
     public int delete_Components_Table_Records_On_Component_and_CAPCID_and_COMCID(ComponentsTableRecord r) throws RecordDAO_Exception;
     
+    public String get_ComponentsTableRecordsCOMCID_On_Component(ComponentsTableRecord r) throws RecordDAO_Exception;
     
     /* capabilities classes table operations */
     
@@ -91,7 +92,7 @@ public interface RecordDAO extends DB_Base
     
     public Integer count_Distinct_Capabilities_Classes_Table_Records_on_CID() throws RecordDAO_Exception;
     
-    public int write_Capabilities_Classes_Table_Record(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
+    public int write_CapabilitiesClassesTableRecord(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
     public int delete_Capabilities_Classes_Table_Records_On_CID(CapabilitiesClassesTableRecord r) throws RecordDAO_Exception;
     
