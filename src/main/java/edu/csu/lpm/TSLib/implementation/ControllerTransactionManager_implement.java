@@ -17,6 +17,7 @@
 
 package edu.csu.lpm.TSLib.implementation;
 
+import edu.csu.lpm.DB.DTO.CommunicativeClassesTableRecord;
 import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.DB_Dispatcher;
@@ -33,10 +34,51 @@ import java.util.logging.Logger;
  *
  * @author kirill
  */
+
 public class ControllerTransactionManager_implement implements ControllerTransactionManager
 {
     private PersistentTupleSpace_implement PTS = new PersistentTupleSpace_implement();
     private Utilities UTS = new Utilities();
+    
+    private CommunicativeClassesTableRecord comrec = null;
+    private ComponentsTableRecord comprec = null;
+    
+    private DB_Dispatcher dd = null;
+    private RecordDAO_implement db = null;
+    
+    private int obtain_DB_Handler()
+    {
+        /*
+        minimize the number of instantiations - do it only once
+        */
+        if (this.dd == null)
+        {    
+            this.dd = new DB_Dispatcher();
+        }
+        
+        /*
+        minimize the number of instantiations - do it only once
+        */
+        if (this.db == null)
+        {    
+            if (this.dd != null)
+            {    
+                try 
+                {
+                        this.db = this.dd.dispatch_DB_Access();
+                } catch (SQLException sex) 
+                {
+                    Logger.getLogger(ControllerTransactionManager_implement.class.getName()).log(Level.SEVERE, null, sex);
+                    return TransactionManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+                }
+            }
+            
+            return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        }
+        
+        if (this.db != null) return TransactionManager.INDICATE_OPERATION_SUCCESS;
+        else return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;   
+    }
     
     /* by nature coordination is symmetric - both parties have to exchange control tuples.
     this method performs this in one direction - reading a control tuple from source TS
@@ -137,8 +179,10 @@ public class ControllerTransactionManager_implement implements ControllerTransac
         return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
-    /* check the validity of source/destination IDs to coordinate using
-    the TBD CPC layer - check if such an access control policy exists */
+    /* 
+    check the validity of source/destination IDs to coordinate using
+    the TBD CPC layer - check if such an access control policy exists 
+    */
     private boolean validate_Coordination(String sid, String did)
     {
         String id1 = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
@@ -152,51 +196,70 @@ public class ControllerTransactionManager_implement implements ControllerTransac
             if (!sid.isEmpty() && !did.isEmpty())
             {
                 /* involve the DB layer to check for policy existence */
-                ComponentsTableRecord r = new ComponentsTableRecord();
-                DB_Dispatcher dd = new DB_Dispatcher();
-                RecordDAO_implement db = null;
-
-                try 
-                {   
-                    
-                    db = dd.dispatch_DB_Access();
-                    
-                } catch(SQLException e) { return false; }             
+                /*
+                call the DB layer
+                */
+                if (this.obtain_DB_Handler() != TransactionManager.INDICATE_OPERATION_SUCCESS)
+                    return false;
                 
-                if (db != null)
+                if (this.comprec == null) this.comprec = new ComponentsTableRecord();
+                
+                /*
+                check source       
+                */        
+                this.comprec.set_COLUMN_COMPONENT_PATH_ID(sid);
+                
+                try 
                 {
-                    try
-                    {
-                        
-                        r.set_COLUMN_COMPONENT_PATH_ID(sid);
-                        cid1 = db.get_ComponentsTableRecordsCOMCID_On_Component(r);
+                    cid1 = this.db.get_ComponentsTableRecordsCOMCID_On_Component(this.comprec);
+                } catch (RecordDAO_Exception rex) 
+                {
+                    Logger.getLogger(ControllerTransactionManager_implement.class.getName()).log(Level.SEVERE, null, rex);
+                    return false;
+                }
 
-                        /* 
-                        component is not even associated with any existing CID.
-                        terminate immediately!
-                        */
-                        if (cid1 == null) return false;
+                /* 
+                component is not even associated with any existing CID.
+                terminate immediately!
+                */
+                if (cid1 == null) return false;
 
-                        r.set_COLUMN_COMPONENT_PATH_ID(did);
-                        cid2 = db.get_ComponentsTableRecordsCOMCID_On_Component(r);
+                /*
+                now check destination
+                */        
+                this.comprec.set_COLUMN_COMPONENT_PATH_ID(did);
+                
+                try 
+                {
+                    cid2 = this.db.get_ComponentsTableRecordsCOMCID_On_Component(this.comprec);
+                } catch (RecordDAO_Exception rex) 
+                {
+                    Logger.getLogger(ControllerTransactionManager_implement.class.getName()).log(Level.SEVERE, null, rex);
+                    return false;
+                }
 
-                        /* 
-                        component is not even associated with any existing CID.
-                        terminate immediately!
-                        */
-                        if (cid2 == null) return false;
+                /* 
+                component is not even associated with any existing CID.
+                terminate immediately!
+                */
+                if (cid2 == null) return false;
 
-                        /* 
-                        if CIDs differ for both components' Path IDs that means
-                        that components are NOT in the same class and we should 
-                        terminate further checking immediately.
-                        Coordination is allowed only for components within the same
-                        communicative class in the first place.
-                        */
-                        if (!cid1.equals(cid2)) return false;
-
-                    } catch(RecordDAO_Exception e) { return false; }  
-                }    
+                /* 
+                if CIDs differ for both components' Path IDs that means
+                that components are NOT in the same class and we should 
+                terminate further checking immediately.
+                Coordination is allowed only for components within the same
+                communicative class in the first place.
+                */
+                if (!cid1.equals(cid2)) return false;    
+                
+                /*
+                now if both components belong to the same CID let us check for
+                coordination record
+                */
+                
+                if (this.comrec == null) this.comrec = new CommunicativeClassesTableRecord();
+                
                 
                 /* return true for now to mock the CPC functionality */
                 if ((sid.compareTo(id1) == 0 || sid.compareTo(id2) == 0) && (did.compareTo(id1) == 0 || did.compareTo(id2) == 0))

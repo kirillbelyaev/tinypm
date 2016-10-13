@@ -419,7 +419,8 @@ public class RecordDAO_implement implements RecordDAO
         return array;
     }
     
-    /* should return CID for a distinct component path ID
+    /* 
+    should return CID for a distinct component path ID.
     returns null if not found.
     */
     @Override
@@ -444,6 +445,8 @@ public class RecordDAO_implement implements RecordDAO
             rs = ps.executeQuery();
             this.conn.setAutoCommit(true);
 
+            if (rs == null) return null;
+            
             while (rs.next()) 
             {     
                 ComponentsTableRecord rec = new ComponentsTableRecord();
