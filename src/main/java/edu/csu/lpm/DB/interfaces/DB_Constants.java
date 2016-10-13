@@ -69,7 +69,9 @@ public interface DB_Constants
         
         final String SELECT_COMCID_FROM_COMPONENTS_DB_ON_COMPONENT_SQL = "select "
         + ComponentsTable.COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID 
-        + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME + " where " 
+        + " from " 
+        + ComponentsTable.COMPONENTS_DB_TABLE_NAME 
+        + " where " 
         + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " = ?";
         
         final String SELECT_FROM_COMPONENTS_DB_ALL_COMPONENTS_SQL = "select distinct " + ComponentsTable.COLUMN_COMPONENT_PATH_ID + " from " + ComponentsTable.COMPONENTS_DB_TABLE_NAME;

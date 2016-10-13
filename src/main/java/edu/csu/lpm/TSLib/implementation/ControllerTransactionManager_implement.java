@@ -17,10 +17,15 @@
 
 package edu.csu.lpm.TSLib.implementation;
 
+import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
+import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
+import edu.csu.lpm.DB.implementation.DB_Dispatcher;
+import edu.csu.lpm.DB.implementation.RecordDAO_implement;
 import edu.csu.lpm.TSLib.Utilities.Utilities;
 import edu.csu.lpm.TSLib.interfaces.ControllerTransactionManager;
 import edu.csu.lpm.TSLib.interfaces.TransactionManager;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -139,13 +144,64 @@ public class ControllerTransactionManager_implement implements ControllerTransac
         String id1 = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
         String id2 = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
         
+        String cid1 = "";
+        String cid2 = "";
+        
         if (sid != null && did != null)
         {
             if (!sid.isEmpty() && !did.isEmpty())
             {
+                /* involve the DB layer to check for policy existence */
+                ComponentsTableRecord r = new ComponentsTableRecord();
+                DB_Dispatcher dd = new DB_Dispatcher();
+                RecordDAO_implement db = null;
+
+                try 
+                {   
+                    
+                    db = dd.dispatch_DB_Access();
+                    
+                } catch(SQLException e) { return false; }             
+                
+                if (db != null)
+                {
+                    try
+                    {
+                        
+                        r.set_COLUMN_COMPONENT_PATH_ID(sid);
+                        cid1 = db.get_ComponentsTableRecordsCOMCID_On_Component(r);
+
+                        /* 
+                        component is not even associated with any existing CID.
+                        terminate immediately!
+                        */
+                        if (cid1 == null) return false;
+
+                        r.set_COLUMN_COMPONENT_PATH_ID(did);
+                        cid2 = db.get_ComponentsTableRecordsCOMCID_On_Component(r);
+
+                        /* 
+                        component is not even associated with any existing CID.
+                        terminate immediately!
+                        */
+                        if (cid2 == null) return false;
+
+                        /* 
+                        if CIDs differ for both components' Path IDs that means
+                        that components are NOT in the same class and we should 
+                        terminate further checking immediately.
+                        Coordination is allowed only for components within the same
+                        communicative class in the first place.
+                        */
+                        if (!cid1.equals(cid2)) return false;
+
+                    } catch(RecordDAO_Exception e) { return false; }  
+                }    
+                
                 /* return true for now to mock the CPC functionality */
                 if ((sid.compareTo(id1) == 0 || sid.compareTo(id2) == 0) && (did.compareTo(id1) == 0 || did.compareTo(id2) == 0))
                     return true;
+            
             }    
         }
         return false;
