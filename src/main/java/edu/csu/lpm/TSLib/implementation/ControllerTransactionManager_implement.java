@@ -17,6 +17,7 @@
 
 package edu.csu.lpm.TSLib.implementation;
 
+import edu.csu.lpm.DB.DAO.RecordDAO;
 import edu.csu.lpm.DB.DTO.CommunicativeClassesTableRecord;
 import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
@@ -27,6 +28,7 @@ import edu.csu.lpm.TSLib.interfaces.ControllerTransactionManager;
 import edu.csu.lpm.TSLib.interfaces.TransactionManager;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -185,11 +187,14 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     */
     private boolean validate_Coordination(String sid, String did)
     {
+        /*
         String id1 = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
         String id2 = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
+        */
         
         String cid1 = "";
         String cid2 = "";
+        String cid = "";
         
         if (sid != null && did != null)
         {
@@ -207,7 +212,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 /*
                 check source       
                 */        
-                this.comprec.set_COLUMN_COMPONENT_PATH_ID(sid);
+                if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(sid) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                    return false;
                 
                 try 
                 {
@@ -227,7 +233,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 /*
                 now check destination
                 */        
-                this.comprec.set_COLUMN_COMPONENT_PATH_ID(did);
+                if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(did) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                    return false;
                 
                 try 
                 {
@@ -251,24 +258,108 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 Coordination is allowed only for components within the same
                 communicative class in the first place.
                 */
-                if (!cid1.equals(cid2)) return false;    
+                if (!cid1.equals(cid2))
+                {    
+                    return false;    
+                } else cid = cid1; /* agree on a common cid */ 
                 
                 /*
                 now if both components belong to the same CID let us check for
-                coordination record
+                the existence of coordination record 
                 */
                 
                 if (this.comrec == null) this.comrec = new CommunicativeClassesTableRecord();
                 
+                /* check the validity of input */
+                if (this.comrec.set_COLUMN_CLASS_ID(cid) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                   return false;
+                /* check the validity of input */
+                if (this.comrec.set_COLUMN_COORDINATION_RECORD(sid, did) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                   return false;
+                
+                if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(),
+                    this.comrec.get_COLUMN_COORDINATION_RECORD()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
+                {
+                    return true; /* allow coordination */
+                } else return false; /* deny coordination */
                 
                 /* return true for now to mock the CPC functionality */
+                /*
                 if ((sid.compareTo(id1) == 0 || sid.compareTo(id2) == 0) && (did.compareTo(id1) == 0 || did.compareTo(id2) == 0))
                     return true;
+                */          
+            } 
             
+            return false;
+        }
+        
+        return false; /* deny coordination by default */
+    }
+    
+    /*
+    adapted from Parser class - technically belongs to BL
+    */
+    private int check_if_CoordinationPolicy_Exists (String cid, String p)
+    {
+        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(cid.trim());
+        
+        if (policies != null)
+            for (int i = 0; i < policies.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (policies.get(i).contains(p.trim())) return TransactionManager.INDICATE_OPERATION_SUCCESS;
+        
+        return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
+    /*
+    adapted from Parser class - technically belongs to BL
+    */
+    private ArrayList<String> get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(String cid)
+    {
+        CommunicativeClassesTableRecord[] comr = null;
+        ArrayList<String> policies = null;
+
+        if (cid == null || cid.isEmpty()) return null;
+        
+        if (this.comrec == null) this.comrec = new CommunicativeClassesTableRecord();
+        
+        /* check the validity of input */
+        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+            return null;
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                comr = this.db.read_Communicative_Classes_Table_Records_On_CID(this.comrec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(ControllerTransactionManager_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (comr != null)
+        {    
+            policies = new ArrayList<String>();
+            for (int i = 0; i < comr.length; i++)
+            {
+                /* let us make sure that a policy class record does have policies */
+                if (!comr[i].check_if_COLUMN_COORDINATION_RECORD_is_Empty())
+                    policies.add(comr[i].get_COLUMN_COORDINATION_RECORD()); /* add non-empty
+                policies only */
             }    
         }
-        return false;
+        
+        /* let us ensure that we return only non-empty policies */
+        if (policies != null)
+            if ( !policies.isEmpty() ) return policies;
+            else return null;
+        
+        return null; /* return NULL by default */
     }
+    
     
     /* check the validity of source/destination IDs to collaborate using
     the TBD CPC layer - check if such an access control policy exists */
