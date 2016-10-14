@@ -28,25 +28,25 @@ import org.junit.Test;
  * @author kirill
  */
 public class TSLib_UnitTests_Coordination 
-{
-    
-    public TSLib_UnitTests_Coordination() {
-    }
-    
+{   
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() 
+    {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() 
+    {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() 
+    {
     }
     
     @Test
@@ -58,19 +58,19 @@ public class TSLib_UnitTests_Coordination
         System.out.println("\n"); 
         
         Runnable a = new ComponentA_coordinate();
-        Thread appA = new Thread (a);
+        Thread compA = new Thread (a);
     
         Runnable b = new ComponentB_coordinate();
-        Thread appB = new Thread (b);
+        Thread compB = new Thread (b);
         
         Runnable c = new Controller_coordinate();
         Thread controller = new Thread (c);
         
         controller.start();
         
-        appA.start();
+        compA.start();
         
-        appB.start();
+        compB.start();
         
         /* pause the main test thread until the working threads complete their work */
         try 

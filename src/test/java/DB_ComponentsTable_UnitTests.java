@@ -36,8 +36,9 @@ import static org.junit.Assert.*;
 public class DB_ComponentsTable_UnitTests 
 {  
     private final String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
-    private final String COLUMN_COMPONENT_DESC = "icmp ping tool";
-    private final String COLUMN_COMPONENT_PATH_ID = "/bin/ping";
+    private final String COLUMN_COMPONENT_DESC = "service component";
+    private final String COLUMN_COMPONENT_1_PATH_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String COLUMN_COMPONENT_2_PATH_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
     private final String COLUMN_COMPONENT_INVALID_PATH_ID = "/bin/x/ping";
     private final String COLUMN_COMPONENT_CAP_CLASS_ID = "1";
     private final String COLUMN_COMPONENT_COM_CLASS_ID = "1";
@@ -150,7 +151,7 @@ public class DB_ComponentsTable_UnitTests
         
         System.out.println("setting record fields. ");
         r.set_COLUMN_COMPONENT_DESC(this.COLUMN_COMPONENT_DESC);
-        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_PATH_ID);
+        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_1_PATH_ID);
         r.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.COLUMN_COMPONENT_CAP_CLASS_ID);
         r.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.COLUMN_COMPONENT_COM_CLASS_ID);
         r.set_COLUMN_COMPONENT_TUPLE_SPACE_PATH(this.COLUMN_COMPONENT_TUPLE_SPACE_PATH);
@@ -159,9 +160,9 @@ public class DB_ComponentsTable_UnitTests
         r.set_Status_Active();
         
         System.out.println("\n"); 
-        output = db.count_Components_Table_Records_on_CAPCID(r);
+        output = db.count_Components_Table_Records_on_COMCID(r);
 	assertNotNull(output);
-        System.out.println("count_Distinct_ComponentsTable_Records_on_CAPCID: count is: " + output);
+        System.out.println("count_Distinct_ComponentsTable_Records_on_COMCID: count is: " + output);
         
         System.out.println("\n"); 
         ComponentsTableRecord[] recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_Component_and_CAPCID(r);
@@ -173,6 +174,9 @@ public class DB_ComponentsTable_UnitTests
 	assertTrue("delete_ComponentsTableRecords_On_Component_and_CAPCID_and_COMCID: Reply has unexpected return:", Out = output == 0 | output == -1);
         System.out.println("delete_ComponentsTableRecords_On_Component_and_CAPCID_and_COMCID: value is: " + output);
         
+        /*
+        add 1st component
+        */
         System.out.println("\n"); 
         output = db.write_ComponentsTableRecord(r);
         assertNotNull(output);
@@ -208,18 +212,53 @@ public class DB_ComponentsTable_UnitTests
         }
         
         System.out.println("\n"); 
-        recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_CAPCID(r);
-        assertTrue("read_ComponentsTableRecords_On_CAPCID: Reply has unexpected return:", Out = recs == null | recs != null);
+        recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_COMCID(r);
+        assertTrue("read_ComponentsTableRecords_On_COMCID: Reply has unexpected return:", Out = recs == null | recs != null);
         
         if (recs != null)
         {    
-            System.out.println("read_ComponentsTableRecords_On_CAPCID: rec array index 0 Components Path ID value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_ComponentsTableRecords_On_COMCID: rec array index 0 Components Path ID value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
         }
         
         System.out.println("\n"); 
-        output = db.count_Components_Table_Records_on_CAPCID(r);
+        output = db.count_Components_Table_Records_on_COMCID(r);
 	assertNotNull(output);
-        System.out.println("count_Distinct_ComponentsTableRecords_on_CAPCID: count is: " + output);
+        System.out.println("count_Distinct_ComponentsTableRecords_on_COMCID: count is: " + output);
+        
+        System.out.println("\n"); 
+        svalue = db.get_ComponentsTableRecordsCOMCID_On_Component(r);
+        System.out.println("get_ComponentsTableRecordsCOMCID_On_Component: value is: " + svalue);
+        
+        /*
+        add 2nd component
+        */
+        
+        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_2_PATH_ID);
+        
+        System.out.println("\n"); 
+        output = db.write_ComponentsTableRecord(r);
+        assertNotNull(output);
+        System.out.println("write_ComponentsTableRecord: value is: " + output);
+        
+        System.out.println("\n"); 
+        output = db.write_ComponentsTableRecord(r);
+        assertNotNull(output);
+        System.out.println("write_ComponentsTableRecord: value is: " + output);
+        
+        System.out.println("\n"); 
+        recs = (ComponentsTableRecord[]) db.read_Components_Table_Records_On_COMCID(r);
+        assertTrue("read_ComponentsTableRecords_On_COMCID: Reply has unexpected return:", Out = recs == null | recs != null);
+        
+        if (recs != null)
+        {    
+            System.out.println("read_ComponentsTableRecords_On_COMCID: rec array index 0 Components Path ID value is: " + recs[0].get_COLUMN_COMPONENT_PATH_ID());
+            System.out.println("read_ComponentsTableRecords_On_COMCID: rec array index 1 Components Path ID value is: " + recs[1].get_COLUMN_COMPONENT_PATH_ID());
+        }
+        
+        System.out.println("\n"); 
+        output = db.count_Components_Table_Records_on_COMCID(r);
+	assertNotNull(output);
+        System.out.println("count_Distinct_ComponentsTableRecords_on_COMCID: count is: " + output);
         
         System.out.println("\n"); 
         svalue = db.get_ComponentsTableRecordsCOMCID_On_Component(r);
@@ -245,10 +284,29 @@ public class DB_ComponentsTable_UnitTests
         }
         
         System.out.println("\n"); 
-        output = db.count_Components_Table_Records_on_CAPCID(r);
+        output = db.count_Components_Table_Records_on_COMCID(r);
 	assertNotNull(output);
-        System.out.println("count_Distinct_ComponentsTableRecords_on_CAPCID: count is: " + output);
+        System.out.println("count_Distinct_ComponentsTableRecords_on_COMCID: count is: " + output);
         
+        
+        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_1_PATH_ID);
+        
+        System.out.println("\n"); 
+        output = db.write_ComponentsTableRecord(r);
+        assertNotNull(output);
+        System.out.println("write_ComponentsTableRecord: value is: " + output);
+        
+        r.set_COLUMN_COMPONENT_PATH_ID(this.COLUMN_COMPONENT_2_PATH_ID);
+        
+        System.out.println("\n"); 
+        output = db.write_ComponentsTableRecord(r);
+        assertNotNull(output);
+        System.out.println("write_ComponentsTableRecord: value is: " + output);
+        
+        System.out.println("\n"); 
+        output = db.count_Components_Table_Records_on_COMCID(r);
+	assertNotNull(output);
+        System.out.println("count_Distinct_ComponentsTableRecords_on_COMCID: count is: " + output);
         
         db.closeConnection();
         

@@ -24,6 +24,7 @@ import edu.csu.lpm.TSLib.interfaces.TransactionManager;
  *
  * @author kirill
  */
+
 public class ComponentA_coordinate implements Runnable
 {
     /*
@@ -31,8 +32,8 @@ public class ComponentA_coordinate implements Runnable
     private final String FIELD_APP_PATH_B = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
     */
     
-    private final String FIELD_APP_PATH_A = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
-    private final String FIELD_APP_PATH_B = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";
+    private final String FIELD_COMP_PATH_A = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String FIELD_COMP_PATH_B = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
     
     /*
     private final String BaseLocation = System.getProperty("user.home") + "/containers/";
@@ -79,16 +80,16 @@ public class ComponentA_coordinate implements Runnable
     @Override
     public void run() 
     {
-        this.appA();
+        this.compA();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void appA()
+    public void compA()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         //System.out.println("app A started test of perform_ActivePersistentCoordinativeTransaction() ");
-        System.out.println("app A started test of coordination ");
+        System.out.println("component A started test of coordination ");
         System.out.println("\n");
         
         int IntValue = -1;
@@ -105,39 +106,39 @@ public class ComponentA_coordinate implements Runnable
         String AbsolutePathA = this.BaseLocation + "/container-1/";
         //String AbsolutePathB = this.BaseLocation + "/container-2/";
         
-        System.out.println("app A TS AbsolutePath is:" + AbsolutePathA);
+        System.out.println("component A TS AbsolutePath is:" + AbsolutePathA);
         
-        CLT.set_SourceID_Field(this.FIELD_APP_PATH_A);
-        CLT.set_DestinationID_Field(this.FIELD_APP_PATH_B);
+        CLT.set_SourceID_Field(this.FIELD_COMP_PATH_A);
+        CLT.set_DestinationID_Field(this.FIELD_COMP_PATH_B);
         CLT.set_Type_Field_to_Coordination();
         CLT.set_RequestMessage_Field(this.FIELD_CoordinationMessage1);
-        System.out.println("app A setting ControlTuple fields ");
+        System.out.println("component A setting ControlTuple fields ");
         System.out.println("\n");
         
         IntValue = ATM.perform_ActivePersistentCoordinativeTransaction(CLT, AbsolutePathA);
-        System.out.println("app A executing perform_ActivePersistentCoordinativeTransaction() ");
-        System.out.println("app A method return value is: " + IntValue);
+        System.out.println("component A executing perform_ActivePersistentCoordinativeTransaction() ");
+        System.out.println("component A method return value is: " + IntValue);
         System.out.println("\n");
         
         IntValue = ATM.perform_PassivePersistentCoordinativeTransaction(AbsolutePathA);
-        System.out.println("app A executing perform_PassivePersistentCoordinativeTransaction() ");
-        System.out.println("app A method return value is: " + IntValue);
+        System.out.println("component A executing perform_PassivePersistentCoordinativeTransaction() ");
+        System.out.println("component A method return value is: " + IntValue);
         System.out.println("\n");
         
         if (IntValue == TransactionManager.INDICATE_OPERATION_SUCCESS)
         {
             CLT = ATM.get_ReplyControlTuple();
             
-            System.out.println("app A received control tuple with sourceID: " + CLT.get_SourceID_Field());
-            System.out.println("app A received control tuple with destinationID: " + CLT.get_DestinationID_Field());
-            System.out.println("app A received control tuple with type: " + CLT.get_Type_Field());
-            System.out.println("app A received control tuple with message: " + CLT.get_RequestMessage_Field());    
+            System.out.println("component A received control tuple with sourceID: " + CLT.get_SourceID_Field());
+            System.out.println("component A received control tuple with destinationID: " + CLT.get_DestinationID_Field());
+            System.out.println("component A received control tuple with type: " + CLT.get_Type_Field());
+            System.out.println("component A received control tuple with message: " + CLT.get_RequestMessage_Field());    
         }
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         //System.out.println("app A finished test of perform_ActivePersistentCoordinativeTransaction() ");
-        System.out.println("app A finished test of coordination ");
+        System.out.println("component A finished test of coordination ");
         System.out.println("\n");
     }
     

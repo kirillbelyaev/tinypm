@@ -106,9 +106,9 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 if (clt != null)
                 {
                     
-                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). read_ControlTuple from TS1 successful. \n");
-                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). sourceID is: " + clt.get_SourceID_Field());
-                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). destinationID is: " + clt.get_DestinationID_Field());
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_UnidirectionalPersistentCoordinativeTransaction(). read_ControlTuple from TS successful. \n");
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_UnidirectionalPersistentCoordinativeTransaction(). sourceID is: " + clt.get_SourceID_Field());
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_UnidirectionalPersistentCoordinativeTransaction(). destinationID is: " + clt.get_DestinationID_Field());
                     
                     /* check if:
                        1: type field is coordination
@@ -120,8 +120,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                    && this.validate_Coordination(clt.get_SourceID_Field(), clt.get_DestinationID_Field()) == true)
                    {
                        
-                       System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). validation of ControlTuple from TS1 successful. \n");                       
-                       System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: get_TupleSpaceLocation(): return value is: " + this.get_TupleSpaceLocation(clt.get_DestinationID_Field()) );
+                       System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_UnidirectionalPersistentCoordinativeTransaction(). validation of ControlTuple from TS successful. \n");                       
+                       System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_UnidirectionalPersistentCoordinativeTransaction() :: get_TupleSpaceLocation(): return value is: " + this.get_TupleSpaceLocation(clt.get_DestinationID_Field()) );
                            
                        /* Now check if we can append a control tuple in destination TS 2 -
                        - if TS is empty and does not have a control tuple present
@@ -129,7 +129,7 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                        if (this.PTS.count_ControlTuples(this.get_TupleSpaceLocation(clt.get_DestinationID_Field())) == 0)
                        {
                            
-                           System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: count_ControlTuples():  destination TS is empty. \n");
+                           System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_UnidirectionalPersistentCoordinativeTransaction() :: count_ControlTuples():  destination TS is empty. \n");
                            
                            /* append a control tuple to TS 2 */
                             if (this.PTS.append_ControlTuple(clt, this.get_TupleSpaceLocation(clt.get_DestinationID_Field())) == PersistentTupleSpace_implement.INDICATE_OPERATION_SUCCESS)
@@ -205,9 +205,11 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 call the DB layer
                 */
                 if (this.obtain_DB_Handler() != TransactionManager.INDICATE_OPERATION_SUCCESS)
-                    return false;
+                    return false; /* terminate if DB access failed */
                 
                 if (this.comprec == null) this.comprec = new ComponentsTableRecord();
+                
+                System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Coordination() :: Obtained DB Handler." );
                 
                 /*
                 check source       
@@ -280,6 +282,7 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(),
                     this.comrec.get_COLUMN_COORDINATION_RECORD()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
                 {
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Coordination() :: Coordination Record Exists." );
                     return true; /* allow coordination */
                 } else return false; /* deny coordination */
                 

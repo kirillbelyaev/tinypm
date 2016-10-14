@@ -28,8 +28,7 @@ import org.junit.Test;
  */
 
 public class BL_CommunicativeClasses_UnitTests 
-{
-        
+{  
     @BeforeClass
     public static void setUpClass() 
     {

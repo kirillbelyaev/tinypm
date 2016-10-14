@@ -27,12 +27,7 @@ import org.junit.Test;
  * @author kirill
  */
 public class TSLib_Utilities_UnitTests 
-{
-    
-    public TSLib_Utilities_UnitTests() 
-    {
-    }
-    
+{   
     @BeforeClass
     public static void setUpClass() 
     {

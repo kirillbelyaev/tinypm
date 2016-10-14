@@ -22,6 +22,7 @@ import edu.csu.lpm.TSLib.implementation.ControllerTransactionManager_implement;
  *
  * @author kirill
  */
+
 public class Controller_coordinate implements Runnable
 {
     /*
