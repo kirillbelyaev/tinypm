@@ -67,7 +67,14 @@ public class ControllerTransactionManager_implement implements ControllerTransac
             {    
                 try 
                 {
-                        this.db = this.dd.dispatch_DB_Access();
+                    this.db = this.dd.dispatch_DB_Access();
+                    
+                    /*
+                    check for proper initialization and return success if true
+                    */
+                    if (this.db != null) return TransactionManager.INDICATE_OPERATION_SUCCESS;
+                    else return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
                 } catch (SQLException sex) 
                 {
                     Logger.getLogger(ControllerTransactionManager_implement.class.getName()).log(Level.SEVERE, null, sex);
@@ -205,7 +212,10 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 call the DB layer
                 */
                 if (this.obtain_DB_Handler() != TransactionManager.INDICATE_OPERATION_SUCCESS)
+                { 
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Coordination() :: Failed to obtain DB Handler." );
                     return false; /* terminate if DB access failed */
+                }    
                 
                 if (this.comprec == null) this.comprec = new ComponentsTableRecord();
                 
@@ -278,6 +288,12 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 /* check the validity of input */
                 if (this.comrec.set_COLUMN_COORDINATION_RECORD(sid, did) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
                    return false;
+                
+                System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Coordination() :: Both components belong to the same CID!"
+                + " About to check for coordination record existence." );
+                
+                System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Coordination():: "
+                + "get_COLUMN_COORDINATION_RECORD():: record is: " + this.comrec.get_COLUMN_COORDINATION_RECORD());
                 
                 if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(),
                     this.comrec.get_COLUMN_COORDINATION_RECORD()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
@@ -403,7 +419,7 @@ public class ControllerTransactionManager_implement implements ControllerTransac
         return false;
     }
     
-    /* obtain the TS location for corresponding app IDs using
+    /* obtain the TS location for corresponding component IDs using
     the TBD CPC layer */
     private String get_TupleSpaceLocation(String id)
     {

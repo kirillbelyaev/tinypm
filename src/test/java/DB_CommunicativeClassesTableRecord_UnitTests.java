@@ -76,7 +76,8 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";       
         String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
         
-        String coord_record = component_2_ID + separator + component_1_ID; 
+        String coord_record_1 = component_1_ID + separator + component_2_ID; 
+        String coord_record_2 = component_2_ID + separator + component_1_ID; 
         
         String collab_record = component_1_ID + separator + object_path; 
         
@@ -224,7 +225,7 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         
         System.out.println("\n");
         System.out.println("set_COLUMN_COORDINATION_RECORD using a method with a single parameter. ");
-        r.set_COLUMN_COORDINATION_RECORD(coord_record);
+        r.set_COLUMN_COORDINATION_RECORD(coord_record_2);
         
         System.out.println("\n");
         System.out.println("get_COLUMN_COORDINATION_RECORD. ");
