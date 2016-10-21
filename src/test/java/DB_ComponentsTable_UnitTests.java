@@ -37,8 +37,8 @@ public class DB_ComponentsTable_UnitTests
 {  
     private final String CAP_ATTR = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.CAP_CHOWN.toString();
     private final String COLUMN_COMPONENT_DESC = "service component";
-    private final String COLUMN_COMPONENT_1_PATH_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
-    private final String COLUMN_COMPONENT_2_PATH_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
+    private final String COLUMN_COMPONENT_1_PATH_ID = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String COLUMN_COMPONENT_2_PATH_ID = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
     private final String COLUMN_COMPONENT_INVALID_PATH_ID = "/bin/x/ping";
     private final String COLUMN_COMPONENT_CAP_CLASS_ID = "1";
     private final String COLUMN_COMPONENT_COM_CLASS_ID = "1";

@@ -48,10 +48,10 @@ public class TSLib_Utilities_UnitTests
     {
     }
 
-    private final String DataObjectPath = "/s/missouri/a/nobackup/kirill/logs/secure.log";
-    private final String DataObjectReplicaPath = "/s/missouri/a/nobackup/kirill/logs/secure.log.replica";
-    private final String ts_location = "/s/missouri/a/nobackup/kirill/containers/";
-    private final String FIELD_APP_PATH_A = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
+    private final String DataObjectPath = "/s/oranges/a/nobackup/kirill/logs/secure.log";
+    private final String DataObjectReplicaPath = "/s/oranges/a/nobackup/kirill/logs/secure.log.replica";
+    private final String ts_location = "/s/oranges/a/nobackup/kirill/containers/";
+    private final String FIELD_COMP_PATH_A = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
     /* private final String FIELD_APP_PATH_A = ts_location + "/container-1/bin/applicationA"; */
     
     private final String InvalidLocation = "/non/existent/dir";
@@ -64,14 +64,14 @@ public class TSLib_Utilities_UnitTests
     private Utilities ut = new Utilities ();
         
     @Test
-    private void test_create_ObjectReplica() 
+    public void test_create_ObjectReplica() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started test_create_ObjectReplica() ");
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplica(this.DataObjectPath, this.DataObjectReplicaPath, this.ts_location, this.FIELD_APP_PATH_A);
+        this.IntValue = this.ut.create_ObjectReplica(this.DataObjectPath, this.DataObjectReplicaPath, this.ts_location, this.FIELD_COMP_PATH_A);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
@@ -101,7 +101,7 @@ public class TSLib_Utilities_UnitTests
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplica(this.DataObjectPath, this.DataObjectReplicaPath, this.RootDir, this.FIELD_APP_PATH_A);
+        this.IntValue = this.ut.create_ObjectReplica(this.DataObjectPath, this.DataObjectReplicaPath, this.RootDir, this.FIELD_COMP_PATH_A);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
@@ -115,14 +115,14 @@ public class TSLib_Utilities_UnitTests
     
     
     @Test
-    private void test_create_ObjectReplicaWithDebug() 
+    public void test_create_ObjectReplicaWithDebug() 
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         System.out.println("started test_create_ObjectReplica() ");
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObjectPath, this.DataObjectReplicaPath, this.ts_location, this.FIELD_APP_PATH_A);
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObjectPath, this.DataObjectReplicaPath, this.ts_location, this.FIELD_COMP_PATH_A);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
@@ -152,7 +152,7 @@ public class TSLib_Utilities_UnitTests
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObjectPath, this.DataObjectReplicaPath, this.RootDir, this.FIELD_APP_PATH_A);
+        this.IntValue = this.ut.create_ObjectReplicaWithDebug(this.DataObjectPath, this.DataObjectReplicaPath, this.RootDir, this.FIELD_COMP_PATH_A);
         System.out.println("executing create_ObjectReplica() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");

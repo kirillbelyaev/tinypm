@@ -23,12 +23,13 @@ import edu.csu.lpm.TSLib.implementation.ControlTuple_implement;
  *
  * @author kirill
  */
+
 public class ComponentA_collaborate implements Runnable
 {
     /*
     private final String BaseLocation = System.getProperty("user.home") + "/containers/";
     */
-    private final String BaseLocation = "/s/missouri/a/nobackup/kirill/containers";
+    private final String BaseLocation = "/s/oranges/a/nobackup/kirill/containers";
     
     /* need absolute path without variable substitution with // */
     /*
@@ -36,8 +37,8 @@ public class ComponentA_collaborate implements Runnable
     private final String FIELD_APP_PATH_B = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
     */
     
-    private final String FIELD_APP_PATH_A = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/applicationA";
-    private final String FIELD_APP_PATH_B = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/applicationB";
+    private final String FIELD_COMP_PATH_A = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String FIELD_COMP_PATH_B = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
     
     /*
     private final String FIELD_APP_PATH_A = BaseLocation + "/container-1/bin/applicationA";
@@ -47,21 +48,21 @@ public class ComponentA_collaborate implements Runnable
     /*
     private final String FIELD_CollaborationMessage = System.getProperty("user.home") + "/waters/logs/secure.log";
     */
-    private final String FIELD_CollaborationMessage = "/s/missouri/a/nobackup/kirill/logs/secure.log";
+    private final String FIELD_CollaborationMessage = "/s/oranges/a/nobackup/kirill/logs/secure.log";
 
     @Override
     public void run() 
     {
-        this.appA();
+        this.compA();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void appA()
+    public void compA()
     {
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
         //System.out.println("app A started test of perform_ActivePersistentCoordinativeTransaction() ");
-        System.out.println("app A started test of collaboration ");
+        System.out.println("component A started test of collaboration ");
         System.out.println("\n");
         
         int IntValue = -1;
@@ -81,41 +82,41 @@ public class ComponentA_collaborate implements Runnable
         /*
         String ReplicationLocation = System.getProperty("user.home") + "/waters/logs/secure.log.replica";
         */
-        String ReplicationLocation = "/s/missouri/a/nobackup/kirill/logs/secure.log.replica";
+        String ReplicationDestinationLocation = "/s/oranges/a/nobackup/kirill/logs/secure.log.replica";
         
-        System.out.println("APP A: app A TS AbsolutePath is:" + AbsolutePathTSA);
+        System.out.println("component A: component A TS AbsolutePath is:" + AbsolutePathTSA);
         
-        CLT.set_SourceID_Field(this.FIELD_APP_PATH_A);
-        CLT.set_DestinationID_Field(this.FIELD_APP_PATH_B);
+        CLT.set_SourceID_Field(this.FIELD_COMP_PATH_A);
+        CLT.set_DestinationID_Field(this.FIELD_COMP_PATH_B);
         CLT.set_Type_Field_to_Collaboration();
         CLT.set_RequestMessage_Field(this.FIELD_CollaborationMessage);
-        System.out.println("app A setting ControlTuple fields ");
+        System.out.println("component A setting ControlTuple fields ");
         System.out.println("\n");
         
         /* add benchmark info */
         Runtime runtime = Runtime.getRuntime();
         final long MEGABYTE = 1024L * 1024L;
         long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
-        System.out.println("APP A: VM Used Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
+        System.out.println("component A: VM Used Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
         
         long startTime = System.currentTimeMillis();
         
-        IntValue = ATM.perform_PersistentCollaborativeTransaction(CLT, AbsolutePathTSA, ReplicationLocation);
-        System.out.println("app A executing perform_PersistentCollaborativeTransaction() ");
-        System.out.println("app A method return value is: " + IntValue);
+        IntValue = ATM.perform_PersistentCollaborativeTransaction(CLT, AbsolutePathTSA, ReplicationDestinationLocation);
+        System.out.println("component A executing perform_PersistentCollaborativeTransaction() ");
+        System.out.println("component A method return value is: " + IntValue);
         System.out.println("\n");
         
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
-        System.out.println("APP A: replication took in seconds: " +  elapsedTime / 1000.0 );
+        System.out.println("component A: replication took in seconds: " +  elapsedTime / 1000.0 );
         
         long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
-        System.out.println("APP A: VM Used Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
-        System.out.println("APP A: VM Memory usage (MB) increased at: " + (usedMemoryAfter-usedMemoryBefore) / MEGABYTE);
+        System.out.println("component A: VM Used Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
+        System.out.println("component A: VM Memory usage (MB) increased at: " + (usedMemoryAfter-usedMemoryBefore) / MEGABYTE);
         
         System.out.println("\n"); 
         System.out.println("--------------------------------------");
-        System.out.println("app A finished test of collaboration ");
+        System.out.println("component A finished test of collaboration ");
         System.out.println("\n");
     }
     

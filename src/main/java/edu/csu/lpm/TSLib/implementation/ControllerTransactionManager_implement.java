@@ -195,8 +195,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     private boolean validate_Coordination(String sid, String did)
     {
         /*
-        String id1 = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
-        String id2 = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
+        String id1 = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
+        String id2 = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
         */
         
         String cid1 = "";
@@ -384,8 +384,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     the TBD CPC layer - check if such an access control policy exists */
     private boolean validate_Collaboration(String sid, String did)
     {
-        String id1 = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
-        String id2 = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
+        String id1 = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
+        String id2 = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
         
         if (sid != null && did != null)
         {
@@ -404,8 +404,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     an access control policy exists */
     private boolean validate_CollaborativeRequest(String sid, String request)
     {
-        String id1 = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
-        String id2 = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
+        String id1 = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
+        String id2 = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
         
         if (sid != null && request != null)
         {
@@ -425,8 +425,8 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     {
         String ts_location = null;
         /* mock IDs */
-        String id1 = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
-        String id2 = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";
+        String id1 = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
+        String id2 = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
         
         if (id != null)
         {
@@ -435,13 +435,13 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 /* return mock TS location for now to mock the CPC functionality */
                 if (id.compareTo(id1) == 0)
                 {
-                    ts_location = "/s/missouri/a/nobackup/kirill/containers/container-1/";
+                    ts_location = "/s/oranges/a/nobackup/kirill/containers/container-1/";
                     return ts_location;
                 }
                 
                 if (id.compareTo(id2) == 0)
                 {
-                    ts_location = "/s/missouri/a/nobackup/kirill/containers/container-2/";
+                    ts_location = "/s/oranges/a/nobackup/kirill/containers/container-2/";
                     return ts_location;
                 }
             }    

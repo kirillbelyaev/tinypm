@@ -27,26 +27,27 @@ import org.junit.Test;
  *
  * @author kirill
  */
+
 public class TSLib_UnitTests_Collaboration 
-{
-    
-    public TSLib_UnitTests_Collaboration() {
-    }
-    
+{   
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() 
+    {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() 
+    {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() 
+    {
     }
     
     @Test
@@ -58,7 +59,7 @@ public class TSLib_UnitTests_Collaboration
         System.out.println("\n"); 
         
         Runnable a = new ComponentA_collaborate();
-        Thread appA = new Thread (a);
+        Thread compA = new Thread (a);
     
         Runnable c = new Controller_collaborate();
         Thread controller = new Thread (c);
@@ -71,7 +72,7 @@ public class TSLib_UnitTests_Collaboration
         
         controller.start();
         
-        appA.start();
+        compA.start();
         
         /* pause the main test thread until the working threads complete their work */
         try 
