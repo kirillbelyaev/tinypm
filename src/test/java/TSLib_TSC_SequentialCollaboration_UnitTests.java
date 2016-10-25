@@ -36,6 +36,7 @@ public class TSLib_TSC_SequentialCollaboration_UnitTests
     private final Integer thirty_two = 32;
     private final Integer forty_eight = 48;
     private final Integer sixty_four = 64;
+    private final Integer one_hundred_and_twenty_eight = 128;
     
     @BeforeClass
     public static void setUpClass() 
@@ -116,6 +117,199 @@ public class TSLib_TSC_SequentialCollaboration_UnitTests
         
         
         for (Integer i = 0; i < this.eight; i++)
+        {    
+            Runnable c = new Controller_collaborate_Sequentially(i);
+            Thread controller = new Thread (c);
+            controller.start();
+        }
+        
+        /* add benchmark info */
+        /*
+        Runtime runtime = Runtime.getRuntime();
+        final long MEGABYTE = 1024L * 1024L;
+        long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_SequentialCollaboration(): Used VM Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
+        */
+        
+        
+        /* pause the main test thread until the working threads complete their work */
+        try 
+        {
+            //Thread.sleep(90000); /* test for one minute or 30 seconds */
+            /* add additional sleep periods for larger objects */
+            Thread.sleep(90000*8); 
+        } catch (InterruptedException ex) 
+        {
+            Logger.getLogger(TSLib_TSC_SequentialCollaboration_UnitTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /*
+        long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_SequentialCollaboration(): Used VM Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
+        System.out.println("test_SequentialCollaboration(): VM Memory usage (MB) increased at: " + (usedMemoryAfter-usedMemoryBefore) / MEGABYTE);
+        */
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_SequentialCollaboration() ");
+        System.out.println("\n");   
+    }
+    
+    @Test
+    public void test_SequentialCollaboration_16()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_SequentialCollaboration() ");
+        System.out.println("\n"); 
+        
+        
+        for (Integer i = 0; i < this.sixteen; i++)
+        {    
+            Runnable c = new Controller_collaborate_Sequentially(i);
+            Thread controller = new Thread (c);
+            controller.start();
+        }
+        
+        /* add benchmark info */
+        /*
+        Runtime runtime = Runtime.getRuntime();
+        final long MEGABYTE = 1024L * 1024L;
+        long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_SequentialCollaboration(): Used VM Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
+        */
+        
+        
+        /* pause the main test thread until the working threads complete their work */
+        try 
+        {
+            //Thread.sleep(90000); /* test for one minute or 30 seconds */
+            /* add additional sleep periods for larger objects */
+            Thread.sleep(90000*8); 
+        } catch (InterruptedException ex) 
+        {
+            Logger.getLogger(TSLib_TSC_SequentialCollaboration_UnitTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /*
+        long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_SequentialCollaboration(): Used VM Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
+        System.out.println("test_SequentialCollaboration(): VM Memory usage (MB) increased at: " + (usedMemoryAfter-usedMemoryBefore) / MEGABYTE);
+        */
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_SequentialCollaboration() ");
+        System.out.println("\n");   
+    }
+    
+    
+    @Test
+    public void test_SequentialCollaboration_32()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_SequentialCollaboration() ");
+        System.out.println("\n"); 
+        
+        
+        for (Integer i = 0; i < this.thirty_two; i++)
+        {    
+            Runnable c = new Controller_collaborate_Sequentially(i);
+            Thread controller = new Thread (c);
+            controller.start();
+        }
+        
+        /* add benchmark info */
+        /*
+        Runtime runtime = Runtime.getRuntime();
+        final long MEGABYTE = 1024L * 1024L;
+        long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_SequentialCollaboration(): Used VM Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
+        */
+        
+        
+        /* pause the main test thread until the working threads complete their work */
+        try 
+        {
+            //Thread.sleep(90000); /* test for one minute or 30 seconds */
+            /* add additional sleep periods for larger objects */
+            Thread.sleep(90000*8); 
+        } catch (InterruptedException ex) 
+        {
+            Logger.getLogger(TSLib_TSC_SequentialCollaboration_UnitTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /*
+        long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_SequentialCollaboration(): Used VM Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
+        System.out.println("test_SequentialCollaboration(): VM Memory usage (MB) increased at: " + (usedMemoryAfter-usedMemoryBefore) / MEGABYTE);
+        */
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_SequentialCollaboration() ");
+        System.out.println("\n");   
+    }
+    
+    @Test
+    public void test_SequentialCollaboration_64()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_SequentialCollaboration() ");
+        System.out.println("\n"); 
+        
+        
+        for (Integer i = 0; i < this.sixty_four; i++)
+        {    
+            Runnable c = new Controller_collaborate_Sequentially(i);
+            Thread controller = new Thread (c);
+            controller.start();
+        }
+        
+        /* add benchmark info */
+        /*
+        Runtime runtime = Runtime.getRuntime();
+        final long MEGABYTE = 1024L * 1024L;
+        long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_SequentialCollaboration(): Used VM Memory (MB) before replication: " + usedMemoryBefore / MEGABYTE);
+        */
+        
+        
+        /* pause the main test thread until the working threads complete their work */
+        try 
+        {
+            //Thread.sleep(90000); /* test for one minute or 30 seconds */
+            /* add additional sleep periods for larger objects */
+            Thread.sleep(90000*8); 
+        } catch (InterruptedException ex) 
+        {
+            Logger.getLogger(TSLib_TSC_SequentialCollaboration_UnitTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /*
+        long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("test_SequentialCollaboration(): Used VM Memory (MB) after replication: " + usedMemoryAfter / MEGABYTE);
+        System.out.println("test_SequentialCollaboration(): VM Memory usage (MB) increased at: " + (usedMemoryAfter-usedMemoryBefore) / MEGABYTE);
+        */
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_SequentialCollaboration() ");
+        System.out.println("\n");   
+    }
+    
+    @Test
+    public void test_SequentialCollaboration_128()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_SequentialCollaboration() ");
+        System.out.println("\n"); 
+        
+        
+        for (Integer i = 0; i < this.one_hundred_and_twenty_eight; i++)
         {    
             Runnable c = new Controller_collaborate_Sequentially(i);
             Thread controller = new Thread (c);
