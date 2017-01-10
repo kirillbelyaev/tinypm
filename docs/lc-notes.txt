@@ -1,0 +1,32 @@
+
+#set capability
+setcap CAP_NET_RAW+ep /home/kirill/ping
+
+#remove capability
+setcap CAP_NET_RAW-ep /home/kirill/ping
+
+#remove a single cap - but gives error
+setcap -r /home/kirill/ping CAP_NET_RAW-ep 
+
+#A case when only a single CAP is present 
+#remove all caps
+setcap ALL-ep /home/kirill/ping
+
+#add all caps
+setcap ALL+ep /home/kirill/ping
+
+
+
+
+#set multiple caps
+setcap CAP_NET_RAW,CAP_NET_BIND_SERVICE+ep /home/kirill/ping
+
+#obtain cap info on the file
+/sbin/getcap ./ping
+
+
+#the api format - add the caps
+setcap CAP_NET_ADMIN,CAP_NET_RAW,CAP_NET_BIND_SERVICE+ep /home/kirill/ping
+
+# readd the caps skipping the cap intended to be removed
+setcap CAP_NET_ADMIN,CAP_NET_RAW+ep /home/kirill/ping 
