@@ -27,6 +27,7 @@ import edu.csu.lpm.TSLib.Utilities.Utilities;
 import edu.csu.lpm.TSLib.interfaces.ControllerTransactionManager;
 import edu.csu.lpm.TSLib.interfaces.TransactionManager;
 import edu.csu.lpm.TSLib.interfaces.Tuple;
+import edu.csu.lpm.implementation.Parser_implement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -367,6 +368,72 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                 /* let us make sure that a policy class record does have policies */
                 if (!comr[i].check_if_COLUMN_COORDINATION_RECORD_is_Empty())
                     policies.add(comr[i].get_COLUMN_COORDINATION_RECORD()); /* add non-empty
+                policies only */
+            }    
+        }
+        
+        /* let us ensure that we return only non-empty policies */
+        if (policies != null)
+            if ( !policies.isEmpty() ) return policies;
+            else return null;
+        
+        return null; /* return NULL by default */
+    }
+    
+    /*
+    adapted from Parser class - technically belongs to BL
+    */
+    private int check_if_CollaborationPolicy_Exists (String cid, String p)
+    {
+        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(cid.trim());
+        
+        if (policies != null)
+            for (int i = 0; i < policies.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (policies.get(i).contains(p.trim())) return TransactionManager.INDICATE_OPERATION_SUCCESS;
+        
+        return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
+    /*
+    adapted from Parser class - technically belongs to BL
+    */
+    private ArrayList<String> get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(String cid)
+    {
+        CommunicativeClassesTableRecord[] comr = null;
+        ArrayList<String> policies = null;
+
+        if (cid == null || cid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comrec == null) return null;
+        
+        /* check the validity of input */
+        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+            return null;
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                comr = this.db.read_Communicative_Classes_Table_Records_On_CID(this.comrec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (comr != null)
+        {    
+            policies = new ArrayList<String>();
+            for (int i = 0; i < comr.length; i++)
+            {
+                /* let us make sure that a policy class record does have policies */
+                if (!comr[i].check_if_COLUMN_COLLABORATION_RECORD_is_Empty())
+                    policies.add(comr[i].get_COLUMN_COLLABORATION_RECORD()); /* add non-empty
                 policies only */
             }    
         }
