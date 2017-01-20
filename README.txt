@@ -1,7 +1,7 @@
 /*
- * Linux Policy Machine (LPM) Prototype
+ * Lightweight Policy Machine for Linux (LPM) Reference Monitor Prototype
  *   
- * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Copyright (C) 2015-2017 Kirill A Belyaev
  * Colorado State University
  * Department of Computer Science,
  * Fort Collins, CO  80523-1873, USA
@@ -15,9 +15,10 @@
  * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-Linux Policy Machine (LPM) - managing the application-level OS resource control
-and inter-application interaction in the "containerized" Linux environments
-- project sponsored by the research grant from the National Institute of 
+Lightweight Policy Machine for Linux (LPM) Reference Monitor - regulation of the
+service-level OS resource control and inter-component information flow in the 
+"containerized" Linux environments.
+The project sponsored by the research grant from the National Institute of 
 Standards and Technology (NIST) - http://www.nist.gov/
 
 Please refer to the documents in the docs folder.

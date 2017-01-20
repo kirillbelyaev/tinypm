@@ -1,7 +1,7 @@
 /*
- * Linux Policy Machine (LPM) Prototype
+ * Lightweight Policy Machine for Linux (LPM) Reference Monitor Prototype
  *   
- * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Copyright (C) 2015-2017 Kirill A Belyaev
  * Colorado State University
  * Department of Computer Science,
  * Fort Collins, CO  80523-1873, USA
@@ -447,26 +447,130 @@ public class ControllerTransactionManager_implement implements ControllerTransac
     }
     
     
-    /* check the validity of source/destination IDs to collaborate using
-    the TBD CPC layer - check if such an access control policy exists */
-    private boolean validate_Collaboration(String sid, String did)
+    /* 
+    check the validity of source ID and destination ID to collaborate using
+    the TBD CPC layer - check if such an access control collaboration policy 
+    exists -- a mapping between this source ID and the data object requested
+    */
+    private boolean validate_Collaboration(String sid, String did, String request)
     {
-        String id1 = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
-        String id2 = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
+        String cid1 = "";
+        String cid2 = "";
+        String cid = "";
         
-        if (sid != null && did != null)
+        if (sid != null && did != null && request != null)
         {
-            if (!sid.isEmpty() && !did.isEmpty())
+            if (!sid.isEmpty() && !did.isEmpty() && !request.isEmpty())
             {
-                /* return true for now to mock the CPC functionality */
-                if ((sid.compareTo(id1) == 0 || sid.compareTo(id2) == 0) && (did.compareTo(id1) == 0 || did.compareTo(id2) == 0))
-                    return true;
-            }    
+                /* involve the DB layer to check for policy existence */
+                /*
+                call the DB layer
+                */
+                if (this.obtain_DB_Handler() != TransactionManager.INDICATE_OPERATION_SUCCESS)
+                { 
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Collaboration() :: Failed to obtain DB Handler." );
+                    return false; /* terminate if DB access failed */
+                }    
+                
+                if (this.comprec == null) this.comprec = new ComponentsTableRecord();
+                
+                System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Collaboration() :: Obtained DB Handler." );
+                
+                /*
+                check source       
+                */        
+                if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(sid) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                    return false;
+                
+                try 
+                {
+                    cid1 = this.db.get_ComponentsTableRecordsCOMCID_On_Component(this.comprec);
+                } catch (RecordDAO_Exception rex) 
+                {
+                    Logger.getLogger(ControllerTransactionManager_implement.class.getName()).log(Level.SEVERE, null, rex);
+                    return false;
+                }
+
+                /* 
+                component is not even associated with any existing CID.
+                terminate immediately!
+                */
+                if (cid1 == null) return false;
+
+                /*
+                now check destination - the destination technically is not required 
+                by the Tuple Space protocol for collaboration because the flow 
+                is unidirectional. However, for security reasons we require that
+                the source indicates the destination ID aside from the object ID.
+                This extra line of protection ensures the check whether both
+                component IDs belong to the same communicative class.
+                */        
+                if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(did) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                    return false;
+                
+                try 
+                {
+                    cid2 = this.db.get_ComponentsTableRecordsCOMCID_On_Component(this.comprec);
+                } catch (RecordDAO_Exception rex) 
+                {
+                    Logger.getLogger(ControllerTransactionManager_implement.class.getName()).log(Level.SEVERE, null, rex);
+                    return false;
+                }
+
+                /* 
+                component is not even associated with any existing CID.
+                terminate immediately!
+                */
+                if (cid2 == null) return false;
+
+                /* 
+                if CIDs differ for both components' Path IDs that means
+                that components are NOT in the same class and we should 
+                terminate further checking immediately.
+                Collaboration is allowed only for components within the same
+                communicative class in the first place.
+                */
+                if (!cid1.equals(cid2))
+                {    
+                    return false;    
+                } else cid = cid1; /* agree on a common cid */ 
+                
+                /*
+                now if both components belong to the same CID let us check for
+                the existence of collaboration record 
+                */
+                
+                if (this.comrec == null) this.comrec = new CommunicativeClassesTableRecord();
+                
+                /* check the validity of input */
+                if (this.comrec.set_COLUMN_CLASS_ID(cid) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                   return false;
+                /* check the validity of input */
+                if (this.comrec.set_COLUMN_COLLABORATION_RECORD(sid, request) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                   return false;
+                
+                System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Collaboration() :: Both components belong to the same CID!"
+                + " About to check for collaboration record existence." );
+                
+                System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Collaboration():: "
+                + "get_COLUMN_COLLABORATION_RECORD():: record is: " + this.comrec.get_COLUMN_COLLABORATION_RECORD());
+                
+                if (this.check_if_CollaborationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(),
+                    this.comrec.get_COLUMN_COLLABORATION_RECORD()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
+                {
+                    System.out.println("DEBUG: ControllerTransactionManager_implement:: validate_Collaboration() :: Collaboration Record Exists." );
+                    return true; /* allow collaboration */
+                } else return false; /* deny collaboration */
+                
+            } 
+            
+            return false;
         }
-        return false;
+        
+        return false; /* deny collaboration by default */        
     }
     
-    /* check if the replication policy mapping exists between this source ID
+    /* OBSOLETE: check if the replication policy mapping exists between this source ID
     and the data request to collaborate using the TBD CPC layer - check if such
     an access control policy exists */
     private boolean validate_CollaborativeRequest(String sid, String request)
@@ -563,34 +667,32 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                           between them is enabled 
                     */
                    if (clt.match_on_Type_Field(Tuple.TupleTypes.COLLABORATION.toString()) == true 
-                   && this.validate_Collaboration(clt.get_SourceID_Field(), clt.get_DestinationID_Field()) == true)
+                        && this.validate_Collaboration(clt.get_SourceID_Field(), 
+                        clt.get_DestinationID_Field(), 
+                        clt.get_RequestMessage_Field()) == true)
                    {
                        /*
                        System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction(). validation of ControlTuple from TS1 successful. \n");                       
                        System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: get_TupleSpaceLocation(): return value is: " + this.get_TupleSpaceLocation(clt.get_DestinationID_Field()) );
                        */
-                       
-                       /* Now check if we can replicate the data object specified in the request field.
-                       info should be obtained through translation function */
-                       if (this.validate_CollaborativeRequest(clt.get_SourceID_Field(), clt.get_RequestMessage_Field()) == true)
-                       {
-                           /*
-                           System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: count_ControlTuples():  destination TS is empty. \n");
-                           */
-                           
-                            /* start appending replica one content tuple at a time to TS */
-                            /* call fragment_ObjectReplica() from utilities package and provide it with:
-                            1 - object path obtained from control tuple appended by the requester
-                            2 - location of requester's TS
-                            3 - source ID of the requester obtained from the appended control tuple */
-                            if (this.UTS.fragment_ObjectReplica(clt.get_RequestMessage_Field(), this.get_TupleSpaceLocation(clt.get_SourceID_Field()), clt.get_SourceID_Field()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
-                            {
-                                return TransactionManager.INDICATE_OPERATION_SUCCESS;
-                                
-                            } else { return TransactionManager.INDICATE_REPLICA_FRAGMENTATION_FAILED_STATUS; }  
-                           
-                       } else { return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS; } 
-                       
+                    
+                       /*
+                       System.out.println("DEBUG: ControllerTransactionManager_implement:: facilitate_PersistentCoordinativeTransaction() :: count_ControlTuples():  destination TS is empty. \n");
+                       */
+
+                        /* start appending replica one content tuple at a time to TS */
+                        /* call fragment_ObjectReplica() from utilities package and provide it with:
+                        1 - object path obtained from control tuple appended by the requester
+                        2 - location of requester's TS
+                        3 - source ID of the requester obtained from the appended control tuple */
+                        if (this.UTS.fragment_ObjectReplica(clt.get_RequestMessage_Field(), 
+                           this.get_TupleSpaceLocation(clt.get_SourceID_Field()), 
+                           clt.get_SourceID_Field()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
+                        {
+                            return TransactionManager.INDICATE_OPERATION_SUCCESS;
+
+                        } else { return TransactionManager.INDICATE_REPLICA_FRAGMENTATION_FAILED_STATUS; }  
+
                    } else { return TransactionManager.INDICATE_FIELDS_VALIDATION_FAILED_STATUS; } 
                    
                 } else { return TransactionManager.INDICATE_READ_CONTROL_TUPLE_FAILED_STATUS; }
@@ -599,7 +701,6 @@ public class ControllerTransactionManager_implement implements ControllerTransac
         }                
                 
         return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
