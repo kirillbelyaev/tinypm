@@ -1,7 +1,7 @@
 /*
- * Linux Policy Machine (LPM) Prototype
+ * Lightweight Policy Machine for Linux (LPM) Reference Monitor Prototype
  *   
- * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Copyright (C) 2015-2017 Kirill A Belyaev
  * Colorado State University
  * Department of Computer Science,
  * Fort Collins, CO  80523-1873, USA
@@ -21,7 +21,7 @@ data access object (DAO) is an object that provides an abstract interface to
 some type of database or other persistence mechanism. By mapping application 
 calls to the persistence layer, DAO provide some specific data operations 
 without exposing details of the database.
- */
+*/
 
 package edu.csu.lpm.DB.implementation;
 

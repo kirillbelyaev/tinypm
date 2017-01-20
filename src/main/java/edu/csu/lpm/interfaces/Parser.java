@@ -1,7 +1,7 @@
 /*
- * Linux Policy Machine (LPM) Prototype
+ * Lightweight Policy Machine for Linux (LPM) Reference Monitor Prototype
  *   
- * Copyright (C) 2015-2016  Kirill A Belyaev
+ * Copyright (C) 2015-2017 Kirill A Belyaev
  * Colorado State University
  * Department of Computer Science,
  * Fort Collins, CO  80523-1873, USA
@@ -15,8 +15,8 @@
  * a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-
-/* Parser interface represents the BL (Business Logic) layer commands available to the user shell */ 
+/* Parser interface represents the BL (Business Logic) layer commands available 
+to the user shell */ 
 
 package edu.csu.lpm.interfaces;
 
