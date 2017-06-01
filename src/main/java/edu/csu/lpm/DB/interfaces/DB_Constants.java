@@ -23,6 +23,8 @@
 
 package edu.csu.lpm.DB.interfaces;
 
+import edu.csu.lpm.DB.DAO.UserAuthDAO;
+
 /**
  *
  * @author I829920
@@ -209,6 +211,26 @@ public interface DB_Constants
         + CommunicativeClassesTable.COMMUNICATIVE_CLASSES_DB_TABLE_NAME + " set " 
         + CommunicativeClassesTable.COLUMN_COORDINATION_RECORD + " = ? "  + "where " 
         + CommunicativeClassesTable.COLUMN_CLASS_ID + " = ?";
+        
+        /*
+        auth db constants
+        */
+        
+        final String create_USER_AUTH_DB_SQL = "create table if not exists " 
+        + UserAuthDAO.USER_AUTH_DB_TABLE_NAME + UserAuthDAO.USER_AUTH_DB_SCHEMA;
+        
+        final String INSERT_INTO_USER_AUTH_DB_SQL = "insert into " 
+        + UserAuthDAO.USER_AUTH_DB_TABLE_NAME + " values (?, ?) ";
+        
+        final String UPDATE_PASSWORD_IN_USER_AUTH = "update " 
+        + UserAuthDAO.USER_AUTH_DB_TABLE_NAME + " set " 
+        + UserAuthDAO.PASSWORD + " = ? "  + "where " 
+        + UserAuthDAO.USERNAME+ " = ? ";
+        
+        final String SELECT_FROM_USER_AUTH = "select " + ALL + " from " 
+        + UserAuthDAO.USER_AUTH_DB_TABLE_NAME;
+        
+        
         
         
 }
