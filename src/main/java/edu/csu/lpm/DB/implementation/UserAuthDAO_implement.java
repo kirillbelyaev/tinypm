@@ -48,7 +48,7 @@ public final class UserAuthDAO_implement implements UserAuthDAO
 
         this.createTable_Authentication_DB();
         
-        if (this.checkTableExist() == false) 
+        if (this.checkTableExists() == false) 
         {
            this.insert_default_Authentication_DB();
         }
@@ -189,7 +189,7 @@ public final class UserAuthDAO_implement implements UserAuthDAO
         return INDICATE_EXECUTION_SUCCESS;
     }
 
-    private boolean checkTableExist() 
+    private boolean checkTableExists() 
     {
         try 
         {
