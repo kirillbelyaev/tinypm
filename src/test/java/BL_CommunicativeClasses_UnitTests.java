@@ -165,7 +165,7 @@ public class BL_CommunicativeClasses_UnitTests
         
         
         /* start parser instance */
-        Parser_implement p = new Parser_implement();
+        Parser_implement p = Parser_implement.getInstance();
         
         System.out.println("\n");
         System.out.println("command is: " + CMD);

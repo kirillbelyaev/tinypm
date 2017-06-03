@@ -25,7 +25,7 @@ import java.util.Scanner;
 public class LPM_Shell 
 {
 
-private Parser_implement p = new Parser_implement();
+private Parser_implement p = Parser_implement.getInstance();
     
 private void show_Prompt()
 {

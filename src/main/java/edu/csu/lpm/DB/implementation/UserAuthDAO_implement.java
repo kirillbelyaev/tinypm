@@ -79,7 +79,7 @@ public final class UserAuthDAO_implement implements UserAuthDAO
 
     private void initConnection(Connection c) throws SQLException 
     {
-        conn = c;
+        this.conn = c;
     }
 
     @Override

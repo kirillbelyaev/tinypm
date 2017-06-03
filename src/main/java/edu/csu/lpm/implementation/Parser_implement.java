@@ -41,8 +41,7 @@ import java.util.logging.Logger;
  */
 
 public class Parser_implement implements Parser   
-{
-    
+{   
     private StringTokenizer tokenizer = null;
     private ArrayList <String> commandParameters = null;
 
@@ -57,17 +56,43 @@ public class Parser_implement implements Parser
     private int resultSize = -1;
     
     private String ERROR_MESSAGE = null;
-    private Enforcer_implement ei = null;
     
+    private Enforcer_implement en = null;
+    
+    /*
+    Singleton design pattern:
+    Ensure a class has only one instance, and provide a global point of access to it.
+    limit the creation & access through a single class reference
+    */
+    private static Parser_implement parser = null;
 
-    public Parser_implement() 
+    /*
+    limit the access through private constructor
+    */
+    private Parser_implement() 
     {
         this.dd = new DB_Dispatcher();
         this.ResultOutput = new ArrayList();
         this.ERROR_MESSAGE = new String();
-        this.ei = new Enforcer_implement();
+        this.en = new Enforcer_implement();
+    }
+    
+    /*
+    Singleton design pattern:
+    Ensure a class has only one instance, and provide a global point of access to it.
+    limit the creation & access through a single class reference
+    */
+    public static Parser_implement getInstance() 
+    {
+        if (Parser_implement.parser == null) 
+        {
+            Parser_implement.parser = new Parser_implement();
+        }
+        
+        return Parser_implement.parser;
     }
      
+    @Override
     public String get_ERROR_MESSAGE() 
     {
         return this.ERROR_MESSAGE;
@@ -137,7 +162,7 @@ public class Parser_implement implements Parser
     }
     
     
-    private void refill_Result_Output_with_all_Capabilities() 
+    private void refill_ResultOutput_with_all_Capabilities() 
     {
         LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();
         
@@ -386,7 +411,7 @@ public class Parser_implement implements Parser
     {
         if (e == null || e.isEmpty()) return;
         this.set_ResultSize(0);
-        this.refill_Result_Output_with_all_Capabilities();
+        this.refill_ResultOutput_with_all_Capabilities();
     }
     
     
@@ -698,12 +723,12 @@ public class Parser_implement implements Parser
                             /* execute enforcer for every app that belongs to a policy class */
                             for (int i = 0; i < apps.size(); i++)
                             {    
-                                if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
                                 {   
                                     this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS;
                                 }    
-                                if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
+                                if (this.en.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
                                 {
                                     this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
@@ -828,13 +853,13 @@ public class Parser_implement implements Parser
                             /* execute enforcer for every app that belongs to a policy class */
                             for (int i = 0; i < apps.size(); i++)
                             {    
-                                if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
                                 {
                                     this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS;
                                 }
 
-                                if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
+                                if (this.en.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
                                 {
                                     this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
@@ -1013,13 +1038,13 @@ public class Parser_implement implements Parser
             
             /* Time to call the enforcer before proceeding to the DB layer */
             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
-            if (this.ei.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.comprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
+            if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.comprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
             
-            if (this.ei.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
+            if (this.en.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
             {   
                 this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error

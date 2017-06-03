@@ -100,7 +100,7 @@ public class BL_CapabilitiesClasses_UnitTests
         String CMD_24 = "SHOW_CAPABILITIES_CLASS_COMPONENTS 3";
         
         
-        Parser_implement p = new Parser_implement();
+        Parser_implement p = Parser_implement.getInstance();
         
         System.out.println("command is: " + CMD);
         output = p.parse_and_execute_Command(CMD); 

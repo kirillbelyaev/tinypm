@@ -152,10 +152,15 @@ public interface Parser
       + LPM_COMMANDS.CHANGE_PASSWORD + ": change the authentication details for system login{required OLD PASSWORD, NEW PASSWORD} \n"
       ;
     
-    
+    /*
+    Parser interface should only provide three public methods to post an access 
+    control policy and obtain corresponding output and error message if any. 
+    */
     public int parse_and_execute_Command(String e);
     
     public ArrayList get_ResultOutput();
+    
+    public String get_ERROR_MESSAGE();
     
     
 }
