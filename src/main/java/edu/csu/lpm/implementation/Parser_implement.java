@@ -200,8 +200,207 @@ public class Parser_implement implements Parser
     }        
     
     
-    @Override
-    public int parse_and_execute_Command(String e)
+//    @Override
+//    public int parseInput(String e)
+//    {
+//        if (e == null) return INDICATE_INVALID_ARGUMENT_VALUE;
+//        
+//        if (this.obtain_DB_Handler() != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+//        
+//        this.set_ERROR_MESSAGE("");
+//        this.refill_ResultOutput("");
+//        
+//        e = e.trim();
+//        
+//        if (e.isEmpty() || e.equals("")) 
+//        {
+//            this.refill_ResultOutput("");
+//            this.set_ERROR_MESSAGE("");
+//            return INDICATE_EXECUTION_SUCCESS;
+//        } else if (e.equals("\n")) 
+//        {
+//            this.refill_ResultOutput("");
+//            this.set_ERROR_MESSAGE("");
+//            
+//        } else if (e.indexOf(LPM_COMMANDS.COUNT_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_COUNT_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }    
+//               
+//        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                  this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//        
+//        } else if (e.indexOf(LPM_COMMANDS.CREATE_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_CREATE_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            } 
+//            
+//        } else if (e.indexOf(LPM_COMMANDS.ADD_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//            
+//        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASS_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_CAPABILITIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//        } else if (e.indexOf(LPM_COMMANDS.REMOVE_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//        }  else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            this.parse_and_execute_SHOW_CAPABILITIES(e);
+//        } else if (e.indexOf(LPM_COMMANDS.COUNT_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            } 
+//        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//        } else if (e.indexOf(LPM_COMMANDS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }                         
+//        } else if (e.indexOf(LPM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            this.parse_and_execute_HELP(e);
+//        } else if (e.indexOf(LPM_COMMANDS.EXIT.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            return  Parser.INDICATE_IMMEDIATE_EXIT_STATUS;
+//            
+//        /* add support for communicative classes */
+//        } else if (e.indexOf(LPM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }     
+//        
+//        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                  this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//        
+//        } else if (e.indexOf(LPM_COMMANDS.CREATE_COMMUNICATIVE_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_CREATE_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            } 
+//        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//        } else if (e.indexOf(LPM_COMMANDS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }    
+//        } else if (e.indexOf(LPM_COMMANDS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }    
+//        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }    
+//        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//        } else if (e.indexOf(LPM_COMMANDS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }
+//        } else if (e.indexOf(LPM_COMMANDS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }   
+//        } else if (e.indexOf(LPM_COMMANDS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }    
+//        } else if (e.indexOf(LPM_COMMANDS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
+//        {
+//            if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+//            {
+//                this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+//                return INDICATE_CONDITIONAL_EXIT_STATUS;
+//            }    
+//            
+//            
+//        /* print out the help message */    
+//        } else
+//        {
+//            this.parse_and_execute_HELP(e);
+//        }    
+//        
+//        return INDICATE_EXECUTION_SUCCESS;
+//    }
+    
+    /*
+        enhanced re-write using case statements  
+    */
+    public int parseInput(String e)
     {
         if (e == null) return INDICATE_INVALID_ARGUMENT_VALUE;
         
@@ -221,182 +420,181 @@ public class Parser_implement implements Parser
         {
             this.refill_ResultOutput("");
             this.set_ERROR_MESSAGE("");
-            
-        } else if (e.indexOf(LPM_COMMANDS.COUNT_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_COUNT_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }    
-               
-        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                  this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
+            return INDICATE_EXECUTION_SUCCESS;    
+        }
         
-        } else if (e.indexOf(LPM_COMMANDS.CREATE_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_CREATE_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } 
-            
-        } else if (e.indexOf(LPM_COMMANDS.ADD_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
-            
-        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASS_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_CAPABILITIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
-        } else if (e.indexOf(LPM_COMMANDS.REMOVE_CAPABILITIES_CLASS_CAPABILITY.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
-        }  else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            this.parse_and_execute_SHOW_CAPABILITIES(e);
-        } else if (e.indexOf(LPM_COMMANDS.COUNT_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } 
-        } else if (e.indexOf(LPM_COMMANDS.SHOW_CAPABILITIES_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
-        } else if (e.indexOf(LPM_COMMANDS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }                         
-        } else if (e.indexOf(LPM_COMMANDS.HELP.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            this.parse_and_execute_HELP(e);
-        } else if (e.indexOf(LPM_COMMANDS.EXIT.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            return  Parser.INDICATE_IMMEDIATE_EXIT_STATUS;
-            
-        /* add support for communicative classes */
-        } else if (e.indexOf(LPM_COMMANDS.COUNT_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }     
+        Parser.LPM_COMMANDS lpmCmd = Parser.LPM_COMMANDS.valueOf(e.split(" ")[0]);
         
-        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASSES.toString()) == INDICATE_EXECUTION_SUCCESS) 
+        switch (lpmCmd) 
         {
-            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                  this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
-        
-        } else if (e.indexOf(LPM_COMMANDS.CREATE_COMMUNICATIVE_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_CREATE_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } 
-        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
-        } else if (e.indexOf(LPM_COMMANDS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }    
-        } else if (e.indexOf(LPM_COMMANDS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }    
-        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }    
-        } else if (e.indexOf(LPM_COMMANDS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
-        } else if (e.indexOf(LPM_COMMANDS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }
-        } else if (e.indexOf(LPM_COMMANDS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }   
-        } else if (e.indexOf(LPM_COMMANDS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }    
-        } else if (e.indexOf(LPM_COMMANDS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY.toString()) == INDICATE_EXECUTION_SUCCESS) 
-        {
-            if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
-            {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
-            }    
+            case COUNT_CAPABILITIES_CLASSES:
+                if (this.parse_and_execute_COUNT_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } 
+                break;
+            case SHOW_CAPABILITIES_CLASSES:
+                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case CREATE_CAPABILITIES_CLASS:
+                if (this.parse_and_execute_CREATE_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } 
+                break;
+            case ADD_CAPABILITIES_CLASS_CAPABILITY:
+                if (this.parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case SHOW_CAPABILITIES_CLASS_CAPABILITIES:
+                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_CAPABILITIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case REMOVE_CAPABILITIES_CLASS_CAPABILITY:
+                if (this.parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case SHOW_CAPABILITIES:
+                this.parse_and_execute_SHOW_CAPABILITIES(e);
+                break;
+            case COUNT_CAPABILITIES_CLASS_COMPONENTS:
+                if (this.parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } 
+                break;
+            case SHOW_CAPABILITIES_CLASS_COMPONENTS:
+                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case MOVE_COMPONENT_TO_CAPABILITIES_CLASS:
+                if (this.parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }    
+            /* add support for communicative classes */
+                break;
+            case COUNT_COMMUNICATIVE_CLASSES:
+                if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } 
+                break;
+            case SHOW_COMMUNICATIVE_CLASSES:
+                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                      this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case CREATE_COMMUNICATIVE_CLASS:
+                if (this.parse_and_execute_CREATE_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } 
+                break;
+            case SHOW_COMMUNICATIVE_CLASS_COMPONENTS:
+                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case COUNT_COMMUNICATIVE_CLASS_COMPONENTS:
+                if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }  
+                break;
+            case MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS:
+                if (this.parse_and_execute_MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }    
+                break;
+            case SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES:
+                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }  
+                break;
+            case SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES:
+                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY:
+                if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY:
+                if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }   
+                break;
+            case REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY:
+                if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                }
+                break;
+            case REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY:
+                if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } 
+                break;
+            case HELP:
+                this.parse_and_execute_HELP(e);
+                break;
+            case EXIT:
+                return  Parser.INDICATE_IMMEDIATE_EXIT_STATUS;
+        }
             
-            
-        /* print out the help message */    
+        /* print out the help message */  
+        /*
         } else
         {
             this.parse_and_execute_HELP(e);
-        }    
+        } 
+        */
         
         return INDICATE_EXECUTION_SUCCESS;
     }
-    
     
     private void parse_and_execute_HELP(String e)
     {

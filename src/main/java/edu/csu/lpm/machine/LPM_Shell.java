@@ -41,7 +41,7 @@ public void process_UserInput() throws Exception
     { //shell loop starts
 
         show_Prompt();
-        x = p.parse_and_execute_Command(keyboard.nextLine().trim());
+        x = p.parseInput(keyboard.nextLine().trim());
         System.out.println(p.get_ERROR_MESSAGE());
         System.out.println(p.get_ResultOutput());
         if (x == Parser.INDICATE_IMMEDIATE_EXIT_STATUS) break;        

@@ -153,10 +153,10 @@ public interface Parser
       ;
     
     /*
-    Parser interface should only provide three public methods to post an access 
+    Parser interface should only provide three public methods to enter an access 
     control policy and obtain corresponding output and error message if any. 
     */
-    public int parse_and_execute_Command(String e);
+    public int parseInput(String e);
     
     public ArrayList get_ResultOutput();
     

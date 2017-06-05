@@ -254,7 +254,7 @@ public class Parser_implement implements Parser
      * @return
      */
     @Override
-    public int parse_and_execute_Command(String e) 
+    public int parseInput(String e) 
     {   
         if (e == null) 
         {
