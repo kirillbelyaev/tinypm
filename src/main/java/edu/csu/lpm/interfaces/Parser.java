@@ -160,7 +160,7 @@ public interface Parser
     
     public ArrayList get_ResultOutput();
     
-    public String get_ERROR_MESSAGE();
+    public String get_ErrorMessage();
     
     
 }

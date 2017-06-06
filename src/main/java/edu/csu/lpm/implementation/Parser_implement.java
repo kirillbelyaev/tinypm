@@ -55,7 +55,7 @@ public class Parser_implement implements Parser
     private ArrayList <String> ResultOutput = null;
     private int resultSize = -1;
     
-    private String ERROR_MESSAGE = null;
+    private String ErrorMessage = null;
     
     private Enforcer_implement en = null;
     
@@ -73,7 +73,7 @@ public class Parser_implement implements Parser
     {
         this.dd = new DB_Dispatcher();
         this.ResultOutput = new ArrayList();
-        this.ERROR_MESSAGE = new String();
+        this.ErrorMessage = new String();
         this.en = new Enforcer_implement();
     }
     
@@ -93,14 +93,14 @@ public class Parser_implement implements Parser
     }
      
     @Override
-    public String get_ERROR_MESSAGE() 
+    public String get_ErrorMessage() 
     {
-        return this.ERROR_MESSAGE;
+        return this.ErrorMessage;
     }
 
-    private void set_ERROR_MESSAGE(String m) 
+    private void set_ErrorMessage(String m) 
     {
-        if (m != null) this.ERROR_MESSAGE = m;
+        if (m != null) this.ErrorMessage = m;
     }
     
     private int get_ResultSize() 
@@ -157,7 +157,6 @@ public class Parser_implement implements Parser
             this.ResultOutput.add(row);
             
             row = null;
-            //this.ResultOutput.add(r[i].get_COLUMN_POLICY_CLASS_NAME());
         }    
     }
     
@@ -172,9 +171,10 @@ public class Parser_implement implements Parser
         
         this.ResultOutput.add("Linux Capabilities (consult the capabilities (7) manual page for an overview of Linux capabilities) are:");
         
-        for (LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS1 : LCS) {
+        for (LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS1 : LCS) 
+        {
             this.ResultOutput.add(LCS1.toString());
-            }
+        }
     }
     
     
@@ -190,13 +190,13 @@ public class Parser_implement implements Parser
                         this.db = this.dd.dispatch_DB_Access();
                 } catch (SQLException sex) 
                 {
-                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, sex);
+                    Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, sex);
                 }
             }
         }
         
-        if (this.db != null) return INDICATE_EXECUTION_SUCCESS;
-        else return INDICATE_CONDITIONAL_EXIT_STATUS;   
+        if (this.db != null) return Parser.INDICATE_EXECUTION_SUCCESS;
+        else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;   
     }        
     
     
@@ -400,13 +400,14 @@ public class Parser_implement implements Parser
     /*
         enhanced re-write using case statements  
     */
+    @Override
     public int parseInput(String e)
     {
-        if (e == null) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
-        if (this.obtain_DB_Handler() != INDICATE_EXECUTION_SUCCESS) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.obtain_DB_Handler() != Parser.INDICATE_EXECUTION_SUCCESS) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        this.set_ERROR_MESSAGE("");
+        this.set_ErrorMessage("");
         this.refill_ResultOutput("");
         
         e = e.trim();
@@ -414,13 +415,13 @@ public class Parser_implement implements Parser
         if (e.isEmpty() || e.equals("")) 
         {
             this.refill_ResultOutput("");
-            this.set_ERROR_MESSAGE("");
-            return INDICATE_EXECUTION_SUCCESS;
+            this.set_ErrorMessage("");
+            return Parser.INDICATE_EXECUTION_SUCCESS;
         } else if (e.equals("\n")) 
         {
             this.refill_ResultOutput("");
-            this.set_ERROR_MESSAGE("");
-            return INDICATE_EXECUTION_SUCCESS;    
+            this.set_ErrorMessage("");
+            return Parser.INDICATE_EXECUTION_SUCCESS;    
         }
         
         Parser.LPM_COMMANDS lpmCmd = Parser.LPM_COMMANDS.valueOf(e.split(" ")[0]);
@@ -428,154 +429,154 @@ public class Parser_implement implements Parser
         switch (lpmCmd) 
         {
             case COUNT_CAPABILITIES_CLASSES:
-                if (this.parse_and_execute_COUNT_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_COUNT_CAPABILITIES_CLASSES(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.COUNT_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
                 break;
             case SHOW_CAPABILITIES_CLASSES:
-                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASSES(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.SHOW_CAPABILITIES_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case CREATE_CAPABILITIES_CLASS:
-                if (this.parse_and_execute_CREATE_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_CREATE_CAPABILITIES_CLASS(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.CREATE_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
                 break;
             case ADD_CAPABILITIES_CLASS_CAPABILITY:
-                if (this.parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.ADD_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case SHOW_CAPABILITIES_CLASS_CAPABILITIES:
-                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_CAPABILITIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_CAPABILITIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case REMOVE_CAPABILITIES_CLASS_CAPABILITY:
-                if (this.parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.REMOVE_CAPABILITIES_CLASS_CAPABILITY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case SHOW_CAPABILITIES:
                 this.parse_and_execute_SHOW_CAPABILITIES(e);
                 break;
             case COUNT_CAPABILITIES_CLASS_COMPONENTS:
-                if (this.parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.COUNT_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
                 break;
             case SHOW_CAPABILITIES_CLASS_COMPONENTS:
-                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.SHOW_CAPABILITIES_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case MOVE_COMPONENT_TO_CAPABILITIES_CLASS:
-                if (this.parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.MOVE_COMPONENT_TO_CAPABILITIES_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }    
             /* add support for communicative classes */
                 break;
             case COUNT_COMMUNICATIVE_CLASSES:
-                if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
                 break;
             case SHOW_COMMUNICATIVE_CLASSES:
-                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                      this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASSES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_NONE.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case CREATE_COMMUNICATIVE_CLASS:
-                if (this.parse_and_execute_CREATE_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_CREATE_COMMUNICATIVE_CLASS(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.CREATE_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
                 break;
             case SHOW_COMMUNICATIVE_CLASS_COMPONENTS:
-                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case COUNT_COMMUNICATIVE_CLASS_COMPONENTS:
-                if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.COUNT_COMMUNICATIVE_CLASS_COMPONENTS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }  
                 break;
             case MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS:
-                if (this.parse_and_execute_MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }    
                 break;
             case SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES:
-                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }  
                 break;
             case SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES:
-                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_1.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY:
-                if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY:
-                if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }   
                 break;
             case REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY:
-                if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 }
                 break;
             case REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY:
-                if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == INDICATE_ARGUMENT_MISMATCH)
+                if (this.parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
                 {
-                    this.set_ERROR_MESSAGE(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
-                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.set_ErrorMessage(LPM_ERRORS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_3.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
                 break;
             case HELP:
@@ -593,7 +594,7 @@ public class Parser_implement implements Parser
         } 
         */
         
-        return INDICATE_EXECUTION_SUCCESS;
+        return Parser.INDICATE_EXECUTION_SUCCESS;
     }
     
     private void parse_and_execute_HELP(String e)
@@ -601,7 +602,7 @@ public class Parser_implement implements Parser
         if (e == null || e.isEmpty()) return;
         this.set_ResultSize(0);
         this.refill_ResultOutput("");
-        this.set_ERROR_MESSAGE(HELP_MESSAGE);
+        this.set_ErrorMessage(Parser.HELP_MESSAGE);
     }
     
     
@@ -614,9 +615,9 @@ public class Parser_implement implements Parser
     
     
     
-    private int tokenize_and_build_command_parameters(String e)
+    private int tokenize_and_build_CommandParameters(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         int count = -1;
         
         if (this.commandParameters == null)
@@ -635,7 +636,7 @@ public class Parser_implement implements Parser
         
         if (this.comprec == null) this.comprec = new ComponentsTableRecord();
         
-        this.tokenizer = new StringTokenizer(e, " ");
+        if (this.tokenizer == null) this.tokenizer = new StringTokenizer(e, " ");
         
         count = this.tokenizer.countTokens(); //obtain the number of tokens before cycling through them
         
@@ -648,16 +649,21 @@ public class Parser_implement implements Parser
             this.commandParameters.add(field);
         }
         
+        /* 
+        nullify the tokenizer for the next invocation
+        */
+        this.tokenizer = null;
+        
         return count;
     }
     
-    /* extended methods */
+    /* extended execute methods */
     
     private Integer parse_and_execute_COUNT_CAPABILITIES_CLASSES(String e)
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         Integer count = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 1)
         {    
@@ -684,7 +690,7 @@ public class Parser_implement implements Parser
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         CapabilitiesClassesTableRecord[] ra = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 1)
         { 
@@ -718,7 +724,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
        
         if (num_tokens == 3)
         {    
@@ -742,7 +748,7 @@ public class Parser_implement implements Parser
                 {    
                     if (this.db.write_CapabilitiesClassesTableRecord(this.caprec) != INDICATE_EXECUTION_SUCCESS) 
                     {  
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                     else
@@ -821,9 +827,9 @@ public class Parser_implement implements Parser
     }
     
     
-    private ArrayList<String>  prepare_EnforcerParameters (String pcid, String app)
+    private ArrayList<String>  prepare_EnforcerParameters (String pcid, String component)
     {
-        if (pcid == null || pcid.isEmpty() || app == null || app.isEmpty()) return null;
+        if (pcid == null || pcid.isEmpty() || component == null || component.isEmpty()) return null;
         
         ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(pcid.trim());
         
@@ -844,11 +850,11 @@ public class Parser_implement implements Parser
             for (int i = 0; i < policies.length; i++)
                 caps.add(policies[i].trim());
                         
-            caps.add(app.trim()); //add the application entry last
-        } else /* no policies exist for the app */
+            caps.add(component.trim()); //add the component entry last
+        } else /* no policies exist for the component */
         {
             caps = new ArrayList<String>();
-            caps.add(app);
+            caps.add(component);
         }    
         
         return caps;
@@ -863,7 +869,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 3)
         {    
@@ -884,7 +890,7 @@ public class Parser_implement implements Parser
             
             if (this.check_if_Capability_Exists(this.caprec.get_COLUMN_CLASS_ID(), this.caprec.get_COLUMN_CAPABILITIES()) == INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_CAPABILITY_EXISTS_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_CAPABILITY_EXISTS_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
                 
@@ -910,25 +916,25 @@ public class Parser_implement implements Parser
                         
                         /* after updating policies for a policy class in the DB layer we
                         finally proceed to the enforcer section */
-                        ArrayList<String> apps = this.get_CAPABILITIES_CLASS_COMPONENTS(this.caprec.get_COLUMN_CLASS_ID().trim());
+                        ArrayList<String> components = this.get_CAPABILITIES_CLASS_COMPONENTS(this.caprec.get_COLUMN_CLASS_ID().trim());
 
                         /* no components - no enforcement! */
-                        if (apps != null)
+                        if (components != null)
                         {
                             /* Time to call the enforcer after proceeding to the DB layer */
                             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */
                             
-                            /* execute enforcer for every app that belongs to a policy class */
-                            for (int i = 0; i < apps.size(); i++)
+                            /* execute enforcer for every component that belongs to a policy class */
+                            for (int i = 0; i < components.size(); i++)
                             {    
-                                if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), components.get(i))) != INDICATE_EXECUTION_SUCCESS)
                                 {   
-                                    this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                                    this.set_ErrorMessage(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS;
                                 }    
                                 if (this.en.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
                                 {
-                                    this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                                    this.set_ErrorMessage(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
                                 }    
                             }
@@ -938,7 +944,7 @@ public class Parser_implement implements Parser
                     }    
                     else
                     {
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
@@ -961,7 +967,7 @@ public class Parser_implement implements Parser
         if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> caps = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 2)
         {    
@@ -993,7 +999,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 3)
         {    
@@ -1010,7 +1016,7 @@ public class Parser_implement implements Parser
             
             if (this.check_if_Capability_Exists(this.caprec.get_COLUMN_CLASS_ID(), this.caprec.get_COLUMN_CAPABILITIES()) == INDICATE_CONDITIONAL_EXIT_STATUS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_CAPABILITY_DOES_NOT_EXIST_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_CAPABILITY_DOES_NOT_EXIST_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
             policy does not exist */
             }
@@ -1024,7 +1030,7 @@ public class Parser_implement implements Parser
             
             } else 
             {  
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_NO_CAPABILITIES_EXIST_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_NO_CAPABILITIES_EXIST_ERROR.toString());
                 return RecordDAO.EMPTY_RESULT; /* if no policies exist */   
             }
             
@@ -1040,26 +1046,26 @@ public class Parser_implement implements Parser
                         
                         /* after updating policies for a policy class in the DB layer we
                         finally proceed to the enforcer section */
-                        ArrayList<String> apps = this.get_CAPABILITIES_CLASS_COMPONENTS(this.caprec.get_COLUMN_CLASS_ID().trim());
+                        ArrayList<String> components = this.get_CAPABILITIES_CLASS_COMPONENTS(this.caprec.get_COLUMN_CLASS_ID().trim());
 
                         /* no components - no enforcement! */
-                        if (apps != null)
+                        if (components != null)
                         {
                             /* Time to call the enforcer after proceeding to the DB layer */
                             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */
                             
-                            /* execute enforcer for every app that belongs to a policy class */
-                            for (int i = 0; i < apps.size(); i++)
+                            /* execute enforcer for every component that belongs to a policy class */
+                            for (int i = 0; i < components.size(); i++)
                             {    
-                                if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), apps.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), components.get(i))) != INDICATE_EXECUTION_SUCCESS)
                                 {
-                                    this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                                    this.set_ErrorMessage(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS;
                                 }
 
                                 if (this.en.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
                                 {
-                                    this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                                    this.set_ErrorMessage(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                                     return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
                                 }    
                             }
@@ -1069,7 +1075,7 @@ public class Parser_implement implements Parser
                     }
                     else
                     {
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
@@ -1094,7 +1100,7 @@ public class Parser_implement implements Parser
         if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         Integer count = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 2)
         { 
@@ -1132,8 +1138,8 @@ public class Parser_implement implements Parser
     
     private ArrayList<String> get_CAPABILITIES_CLASS_COMPONENTS(String pcid)
     {
-        ComponentsTableRecord[] appsr = null;
-        ArrayList<String> apps = null;
+        ComponentsTableRecord[] componentsr = null;
+        ArrayList<String> components = null;
 
         if (pcid == null || pcid.isEmpty()) return null;
         
@@ -1147,21 +1153,21 @@ public class Parser_implement implements Parser
         {//execute the db layer
             if (this.db != null)
             {    
-                appsr = this.db.read_Components_Table_Records_On_CAPCID(this.comprec);  
+                componentsr = this.db.read_Components_Table_Records_On_CAPCID(this.comprec);  
             }    
         } catch (RecordDAO_Exception rex) 
         {
             Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
         }
         
-        if (appsr != null)
+        if (componentsr != null)
         {    
-            apps = new ArrayList<String>();
-            for (int i=0; i < appsr.length; i++)
-                apps.add(appsr[i].get_COLUMN_COMPONENT_PATH_ID());
+            components = new ArrayList<String>();
+            for (int i=0; i < componentsr.length; i++)
+                components.add(componentsr[i].get_COLUMN_COMPONENT_PATH_ID());
         }
         
-        return apps;
+        return components;
     }
     
     
@@ -1173,8 +1179,8 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        ArrayList<String> apps = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        ArrayList<String> components = null;
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 2)
         {    
@@ -1187,15 +1193,15 @@ public class Parser_implement implements Parser
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }
                     
-                    apps = this.get_CAPABILITIES_CLASS_COMPONENTS(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID().trim());
+                    components = this.get_CAPABILITIES_CLASS_COMPONENTS(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID().trim());
                 } 
                 else return INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            if (apps != null)
+            if (components != null)
             {
-                this.set_ResultSize(apps.size());
-                this.refill_ResultOutput(apps);
+                this.set_ResultSize(components.size());
+                this.refill_ResultOutput(components);
                 return INDICATE_EXECUTION_SUCCESS;
             } else return RecordDAO.EMPTY_RESULT;
             
@@ -1210,7 +1216,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
        
         if (num_tokens == 3)
         {    
@@ -1238,13 +1244,13 @@ public class Parser_implement implements Parser
             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
             if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.comprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
             
             if (this.en.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
             {   
-                this.set_ERROR_MESSAGE(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
             }
             
@@ -1258,7 +1264,7 @@ public class Parser_implement implements Parser
                         return INDICATE_EXECUTION_SUCCESS;
                     } else
                     { 
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                 }    
@@ -1279,7 +1285,7 @@ public class Parser_implement implements Parser
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         Integer count = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 1)
         {    
@@ -1306,7 +1312,7 @@ public class Parser_implement implements Parser
     {
         if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
         CommunicativeClassesTableRecord[] ra = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 1)
         { 
@@ -1358,7 +1364,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
        
         if (num_tokens == 3)
         {    
@@ -1384,7 +1390,7 @@ public class Parser_implement implements Parser
                 {    
                     if (this.db.write_CommunicativeClassesTableRecord(this.comrec) != INDICATE_EXECUTION_SUCCESS) 
                     {  
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                     else
@@ -1412,7 +1418,7 @@ public class Parser_implement implements Parser
         if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> components = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
         if (num_tokens == 2)
         {    
@@ -1486,7 +1492,7 @@ public class Parser_implement implements Parser
         if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         Integer count = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 2)
         {          
@@ -1528,7 +1534,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
        
         if (num_tokens == 3)
         {    
@@ -1574,7 +1580,7 @@ public class Parser_implement implements Parser
                         return INDICATE_EXECUTION_SUCCESS;
                     } else
                     { 
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return  INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                 }    
@@ -1599,7 +1605,7 @@ public class Parser_implement implements Parser
         if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> policies = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 2)
         {    
@@ -1681,7 +1687,7 @@ public class Parser_implement implements Parser
         if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> policies = null;
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 2)
         {    
@@ -1762,7 +1768,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 4)
         {    
@@ -1790,13 +1796,13 @@ public class Parser_implement implements Parser
             component */
             if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
             }    
             
             if (this.check_if_CollaborationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COLLABORATION_RECORD()) == INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COLLABORATION_POLICY_EXISTS_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COLLABORATION_POLICY_EXISTS_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
             
@@ -1818,7 +1824,7 @@ public class Parser_implement implements Parser
                     }    
                     else
                     {
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
@@ -1869,7 +1875,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 4)
         {    
@@ -1898,7 +1904,7 @@ public class Parser_implement implements Parser
             /* both components should belong to the same class */
             if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
             }
             
@@ -1908,13 +1914,13 @@ public class Parser_implement implements Parser
             /* both components should belong to the same class */
             if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
             }
             
             if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COORDINATION_RECORD()) == INDICATE_EXECUTION_SUCCESS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COORDINATION_POLICY_EXISTS_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COORDINATION_POLICY_EXISTS_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
             
@@ -1936,7 +1942,7 @@ public class Parser_implement implements Parser
                     }    
                     else
                     {
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
@@ -1973,7 +1979,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 4)
         {    
@@ -1999,7 +2005,7 @@ public class Parser_implement implements Parser
             
             if (this.check_if_CollaborationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COLLABORATION_RECORD()) == INDICATE_CONDITIONAL_EXIT_STATUS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COLLABORATION_POLICY_DOES_NOT_EXIST_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COLLABORATION_POLICY_DOES_NOT_EXIST_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
             
@@ -2021,7 +2027,7 @@ public class Parser_implement implements Parser
                     }    
                     else
                     {
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_DELETE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_DELETE_RECORD_ERROR.toString());
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
@@ -2043,7 +2049,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        int num_tokens = this.tokenize_and_build_command_parameters(e.trim());
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
         if (num_tokens == 4)
         {    
@@ -2069,7 +2075,7 @@ public class Parser_implement implements Parser
             
             if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COORDINATION_RECORD()) == INDICATE_CONDITIONAL_EXIT_STATUS)
             {
-                this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_COORDINATION_POLICY_DOES_NOT_EXIST_ERROR.toString());
+                this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COORDINATION_POLICY_DOES_NOT_EXIST_ERROR.toString());
                 return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
             
@@ -2091,7 +2097,7 @@ public class Parser_implement implements Parser
                     }    
                     else
                     {
-                        this.set_ERROR_MESSAGE(LPM_ERRORS.DB_Layer_DELETE_RECORD_ERROR.toString());
+                        this.set_ErrorMessage(LPM_ERRORS.DB_Layer_DELETE_RECORD_ERROR.toString());
                         return INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    

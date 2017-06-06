@@ -42,7 +42,7 @@ public void process_UserInput() throws Exception
 
         show_Prompt();
         x = p.parseInput(keyboard.nextLine().trim());
-        System.out.println(p.get_ERROR_MESSAGE());
+        System.out.println(p.get_ErrorMessage());
         System.out.println(p.get_ResultOutput());
         if (x == Parser.INDICATE_IMMEDIATE_EXIT_STATUS) break;        
     } //end of for loop

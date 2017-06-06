@@ -82,7 +82,7 @@ public class Parser_implement implements Parser
         return Parser_implement.parser;
     }
 
-    public String get_ERROR_MESSAGE() 
+    public String get_ErrorMessage() 
     {
         return Parser_implement.ERROR_MESSAGE;
     }
