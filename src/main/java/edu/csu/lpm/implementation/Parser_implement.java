@@ -1595,11 +1595,11 @@ public class Parser_implement implements Parser
     
     private Integer parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comrec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> policies = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
@@ -1611,21 +1611,22 @@ public class Parser_implement implements Parser
                 if (this.commandParameters.size() > 0)
                 {
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
                     policies = this.get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(this.comrec.get_COLUMN_CLASS_ID().trim());
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             if (policies != null)
             {
                 this.set_ResultSize(policies.size());
                 this.refill_ResultOutput(policies);
-                return INDICATE_EXECUTION_SUCCESS;
+                return Parser.INDICATE_EXECUTION_SUCCESS;
             } else return RecordDAO.EMPTY_RESULT;
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
     }
     
     
@@ -1641,7 +1642,7 @@ public class Parser_implement implements Parser
         if (this.comrec == null) return null;
         
         /* check the validity of input */
-        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != Parser.INDICATE_EXECUTION_SUCCESS)
+        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
             return null;
 
         try 
@@ -1677,11 +1678,11 @@ public class Parser_implement implements Parser
     
     private Integer parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comrec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> policies = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
@@ -1693,21 +1694,22 @@ public class Parser_implement implements Parser
                 if (this.commandParameters.size() > 0)
                 {
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
                     policies = this.get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(this.comrec.get_COLUMN_CLASS_ID().trim());
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             if (policies != null)
             {
                 this.set_ResultSize(policies.size());
                 this.refill_ResultOutput(policies);
-                return INDICATE_EXECUTION_SUCCESS;
+                return Parser.INDICATE_EXECUTION_SUCCESS;
             } else return RecordDAO.EMPTY_RESULT;
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
     }
     
     private ArrayList<String> get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(String cid)
@@ -1722,7 +1724,7 @@ public class Parser_implement implements Parser
         if (this.comrec == null) return null;
         
         /* check the validity of input */
-        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != Parser.INDICATE_EXECUTION_SUCCESS)
+        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
             return null;
 
         try 
@@ -1759,11 +1761,11 @@ public class Parser_implement implements Parser
     
     private Integer parse_and_execute_ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comrec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
@@ -1774,19 +1776,19 @@ public class Parser_implement implements Parser
                 if (this.commandParameters.size() > 1)
                 {  
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_COLLABORATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_COLLABORATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     
                     this.comrec.set_COLUMN_CLASS_NAME(""); /* make blank in case a policy is added to non-existent
                     policy class therefore triggering the creation of new policy class record */
                     
                     //this.comrec.set_UPDATE_COLUMN_to_COLLABORATION_RECORD();/* indicate the update column */
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             /* we can add a policy record only if such a component is associated
             with a particular class - can not just create a record with a random
@@ -1794,20 +1796,20 @@ public class Parser_implement implements Parser
             if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
             }    
             
-            if (this.check_if_CollaborationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COLLABORATION_RECORD()) == INDICATE_EXECUTION_SUCCESS)
+            if (this.check_if_CollaborationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COLLABORATION_RECORD()) == Parser.INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COLLABORATION_POLICY_EXISTS_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
             
             try 
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_CommunicativeClassesTableRecord(this.comrec) == INDICATE_EXECUTION_SUCCESS)
+                    if (this.db.write_CommunicativeClassesTableRecord(this.comrec) == RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
@@ -1817,12 +1819,12 @@ public class Parser_implement implements Parser
                         that are tied to the executable, communicative policies represent the
                         realistic access control dimension that is only checked upon request */
                                            
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     }    
                     else
                     {
                         this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
             } catch (RecordDAO_Exception rex) 
@@ -1830,47 +1832,47 @@ public class Parser_implement implements Parser
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }   
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     private int check_if_CollaborationPolicy_Exists (String cid, String p)
     {
-        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(cid.trim());
         
         if (policies != null)
             for (int i = 0; i < policies.size(); i++)
                 //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-                if (policies.get(i).contains(p.trim())) return INDICATE_EXECUTION_SUCCESS;
+                if (policies.get(i).contains(p.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     private int check_if_Component_belongs_to_Class (String cid, String component)
     {
-        if (cid == null || cid.isEmpty() || component == null || component.isEmpty()) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (cid == null || cid.isEmpty() || component == null || component.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> components = this.get_COMMUNICATIVE_CLASS_COMPONENTS(cid.trim());
         
         if (components != null)
             for (int i = 0; i < components.size(); i++)
                 //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-                if (components.get(i).contains(component.trim())) return INDICATE_EXECUTION_SUCCESS;
+                if (components.get(i).contains(component.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
     private Integer parse_and_execute_ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comrec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
@@ -1881,19 +1883,19 @@ public class Parser_implement implements Parser
                 if (this.commandParameters.size() > 1)
                 {
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_COORDINATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_COORDINATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     
                     this.comrec.set_COLUMN_CLASS_NAME(""); /* make blank in case a policy is added to non-existent
                     policy class therefore triggering the creation of new policy class record */
                     
                     //this.comrec.set_UPDATE_COLUMN_to_COLLABORATION_RECORD();/* indicate the update column */
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             /* we can add a policy record only if such a component is associated
             with a particular class - can not just create a record with a random
@@ -1902,7 +1904,7 @@ public class Parser_implement implements Parser
             if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
             }
             
             /* we can add a policy record only if such a component is associated
@@ -1912,20 +1914,20 @@ public class Parser_implement implements Parser
             if (this.check_if_Component_belongs_to_Class(this.commandParameters.get(0), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COMPONENT_DOES_NOT_BELONG_TO_CLASS_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; /* return if component is not associated with a class */
             }
             
-            if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COORDINATION_RECORD()) == INDICATE_EXECUTION_SUCCESS)
+            if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COORDINATION_RECORD()) == Parser.INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COORDINATION_POLICY_EXISTS_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
             
             try 
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_CommunicativeClassesTableRecord(this.comrec) == INDICATE_EXECUTION_SUCCESS)
+                    if (this.db.write_CommunicativeClassesTableRecord(this.comrec) == RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
@@ -1935,12 +1937,12 @@ public class Parser_implement implements Parser
                         that are tied to the executable, communicative policies represent the
                         realistic access control dimension that is only checked upon request */
                                            
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     }    
                     else
                     {
                         this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
             } catch (RecordDAO_Exception rex) 
@@ -1948,33 +1950,33 @@ public class Parser_implement implements Parser
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }   
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     private int check_if_CoordinationPolicy_Exists (String cid, String p)
     {
-        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(cid.trim());
         
         if (policies != null)
             for (int i = 0; i < policies.size(); i++)
                 //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-                if (policies.get(i).contains(p.trim())) return INDICATE_EXECUTION_SUCCESS;
+                if (policies.get(i).contains(p.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
     private Integer parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comrec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
@@ -1985,11 +1987,11 @@ public class Parser_implement implements Parser
                 if (this.commandParameters.size() > 1)
                 {
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_COLLABORATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_COLLABORATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     
                     //this.comrec.set_COLUMN_CLASS_NAME(""); 
                     /* make blank in case a policy is added to non-existent
@@ -1997,20 +1999,20 @@ public class Parser_implement implements Parser
                     
                     //this.comrec.set_UPDATE_COLUMN_to_COLLABORATION_RECORD();/* indicate the update column */
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            if (this.check_if_CollaborationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COLLABORATION_RECORD()) == INDICATE_CONDITIONAL_EXIT_STATUS)
+            if (this.check_if_CollaborationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COLLABORATION_RECORD()) == Parser.INDICATE_CONDITIONAL_EXIT_STATUS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COLLABORATION_POLICY_DOES_NOT_EXIST_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
             
             try 
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.delete_Communicative_Classes_Table_Record_On_CollaborationRecord_And_CID(this.comrec) == INDICATE_EXECUTION_SUCCESS)
+                    if (this.db.delete_Communicative_Classes_Table_Record_On_CollaborationRecord_And_CID(this.comrec) == RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
@@ -2020,12 +2022,12 @@ public class Parser_implement implements Parser
                         that are tied to the executable, communicative policies represent the
                         realistic access control dimension that is only checked upon request */
                                            
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     }    
                     else
                     {
                         this.set_ErrorMessage(LPM_ERRORS.DB_Layer_DELETE_RECORD_ERROR.toString());
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
             } catch (RecordDAO_Exception rex) 
@@ -2033,18 +2035,18 @@ public class Parser_implement implements Parser
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }   
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     private Integer parse_and_execute_REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comrec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
@@ -2055,11 +2057,11 @@ public class Parser_implement implements Parser
                 if (this.commandParameters.size() > 1)
                 {
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_COORDINATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_COORDINATION_RECORD(this.commandParameters.get(1), this.commandParameters.get(2)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     
                     //this.comrec.set_COLUMN_CLASS_NAME(""); 
                     /* make blank in case a policy is added to non-existent
@@ -2067,20 +2069,20 @@ public class Parser_implement implements Parser
                     
                     //this.comrec.set_UPDATE_COLUMN_to_COLLABORATION_RECORD();/* indicate the update column */
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COORDINATION_RECORD()) == INDICATE_CONDITIONAL_EXIT_STATUS)
+            if (this.check_if_CoordinationPolicy_Exists(this.comrec.get_COLUMN_CLASS_ID(), this.comrec.get_COLUMN_COORDINATION_RECORD()) == Parser.INDICATE_CONDITIONAL_EXIT_STATUS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.DB_Layer_COORDINATION_POLICY_DOES_NOT_EXIST_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; /* return if policy already exists */
             }
             
             try 
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.delete_Communicative_Classes_Table_Record_On_CoordinationRecord_And_CID(this.comrec) == INDICATE_EXECUTION_SUCCESS)
+                    if (this.db.delete_Communicative_Classes_Table_Record_On_CoordinationRecord_And_CID(this.comrec) == RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
@@ -2090,12 +2092,12 @@ public class Parser_implement implements Parser
                         that are tied to the executable, communicative policies represent the
                         realistic access control dimension that is only checked upon request */
                                            
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     }    
                     else
                     {
                         this.set_ErrorMessage(LPM_ERRORS.DB_Layer_DELETE_RECORD_ERROR.toString());
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
             } catch (RecordDAO_Exception rex) 
@@ -2103,9 +2105,9 @@ public class Parser_implement implements Parser
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }   
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
