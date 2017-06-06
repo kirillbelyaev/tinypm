@@ -739,8 +739,7 @@ public class Parser_implement implements Parser
                     this.caprec.reset_COLUMN_CAPABILITIES(); /* reset policies */
                     
                     this.caprec.set_UPDATE_COLUMN_to_CLASS_NAME(); /* indicate the update column */      
-                }    
-                else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             try 
@@ -961,11 +960,11 @@ public class Parser_implement implements Parser
     
     private Integer parse_and_execute_SHOW_CAPABILITIES_CLASS_CAPABILITIES(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.caprec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> caps = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
@@ -979,26 +978,26 @@ public class Parser_implement implements Parser
                     this.caprec.set_COLUMN_CLASS_ID(this.commandParameters.get(0));
                     caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(this.caprec.get_COLUMN_CLASS_ID().trim());
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             if (caps != null)
             {
                 this.set_ResultSize(caps.size());
                 this.refill_ResultOutput(caps);
-                return INDICATE_EXECUTION_SUCCESS;
+                return Parser.INDICATE_EXECUTION_SUCCESS;
             } else return RecordDAO.EMPTY_RESULT;
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
     }
 
     private Integer parse_and_execute_REMOVE_CAPABILITIES_CLASS_CAPABILITY(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.caprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.caprec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
@@ -1012,13 +1011,13 @@ public class Parser_implement implements Parser
                     this.caprec.set_COLUMN_CAPABILITIES(this.commandParameters.get(1));
                     this.caprec.set_UPDATE_COLUMN_to_CAPABILITIES(); /* indicate the update column */
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
-            if (this.check_if_Capability_Exists(this.caprec.get_COLUMN_CLASS_ID(), this.caprec.get_COLUMN_CAPABILITIES()) == INDICATE_CONDITIONAL_EXIT_STATUS)
+            if (this.check_if_Capability_Exists(this.caprec.get_COLUMN_CLASS_ID(), this.caprec.get_COLUMN_CAPABILITIES()) == Parser.INDICATE_CONDITIONAL_EXIT_STATUS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.DB_Layer_CAPABILITY_DOES_NOT_EXIST_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; /* return if
             policy does not exist */
             }
                 
@@ -1040,7 +1039,7 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_CapabilitiesClassesTableRecord(this.caprec) == INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_CapabilitiesClassesTableRecord(this.caprec) == RecordDAO.INDICATE_EXECUTION_SUCCESS) 
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
@@ -1058,47 +1057,45 @@ public class Parser_implement implements Parser
                             /* execute enforcer for every component that belongs to a policy class */
                             for (int i = 0; i < components.size(); i++)
                             {    
-                                if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), components.get(i))) != INDICATE_EXECUTION_SUCCESS)
+                                if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.caprec.get_COLUMN_CLASS_ID(), components.get(i))) != Enforcer.INDICATE_EXECUTION_SUCCESS)
                                 {
                                     this.set_ErrorMessage(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
-                                    return INDICATE_CONDITIONAL_EXIT_STATUS;
+                                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                                 }
 
-                                if (this.en.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
+                                if (this.en.execute_CMD() != Enforcer.INDICATE_EXECUTION_SUCCESS)
                                 {
                                     this.set_ErrorMessage(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
-                                    return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
+                                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
                                 }    
                             }
                         }
                         
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     }
                     else
                     {
                         this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }
                 }    
             } catch (RecordDAO_Exception rex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }       
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
-    /* components table operations */
-    
     private Integer parse_and_execute_COUNT_CAPABILITIES_CLASS_COMPONENTS(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         Integer count = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
@@ -1114,9 +1111,8 @@ public class Parser_implement implements Parser
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }    
-                }    
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;  
+                }  else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            }  else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;  
             
             try 
             {//execute the db layer
@@ -1125,15 +1121,15 @@ public class Parser_implement implements Parser
                     count = this.db.count_Components_Table_Records_on_CAPCID(this.comprec);
                     this.set_ResultSize(count);
                     this.refill_ResultOutput(count.toString());
-                    return INDICATE_EXECUTION_SUCCESS;
+                    return Parser.INDICATE_EXECUTION_SUCCESS;
                 }    
             } catch (RecordDAO_Exception rex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     } 
     
     
@@ -1148,7 +1144,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comprec == null) return null;
         
-        if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(pcid.trim()) != Parser.INDICATE_EXECUTION_SUCCESS) return null;
+        if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(pcid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS) return null;
 
         try 
         {//execute the db layer
@@ -1174,11 +1170,11 @@ public class Parser_implement implements Parser
     
     private Integer parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> components = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
@@ -1189,33 +1185,33 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 { 
-                    if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }
                     
                     components = this.get_CAPABILITIES_CLASS_COMPONENTS(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID().trim());
-                } 
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             if (components != null)
             {
                 this.set_ResultSize(components.size());
                 this.refill_ResultOutput(components);
-                return INDICATE_EXECUTION_SUCCESS;
+                return Parser.INDICATE_EXECUTION_SUCCESS;
             } else return RecordDAO.EMPTY_RESULT;
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
     }
 
     private Integer parse_and_execute_MOVE_COMPONENT_TO_CAPABILITIES_CLASS(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
        
@@ -1225,48 +1221,48 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 { 
-                    if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }
                     
-                    if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(this.commandParameters.get(1)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }   
                     
                     this.comprec.set_UPDATE_COLUMN_to_COMPONENT_CAPABILITIES_CLASS_ID(); /* indicate the update column */
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             
             /* Time to call the enforcer before proceeding to the DB layer */
             /* terminate if cmd is not prepared correctly - actually if prepare_EnforcerParameters() returns null */ 
-            if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.comprec.get_COLUMN_COMPONENT_PATH_ID())) != INDICATE_EXECUTION_SUCCESS)
+            if (this.en.build_EnforcerCMD_Parameters(this.prepare_EnforcerParameters(this.comprec.get_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(), this.comprec.get_COLUMN_COMPONENT_PATH_ID())) != Enforcer.INDICATE_EXECUTION_SUCCESS)
             {
                 this.set_ErrorMessage(LPM_ERRORS.Enforcer_CMD_Parameters_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS;
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             }    
             
-            if (this.en.execute_CMD() != INDICATE_EXECUTION_SUCCESS)
+            if (this.en.execute_CMD() != Enforcer.INDICATE_EXECUTION_SUCCESS)
             {   
                 this.set_ErrorMessage(LPM_ERRORS.Enforcer_execute_CMD_ERROR.toString());
-                return INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS; //terminate if libcap execution involves error
             }
             
             try 
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_ComponentsTableRecord(this.comprec) == INDICATE_EXECUTION_SUCCESS) {    
+                    if (this.db.write_ComponentsTableRecord(this.comprec) == RecordDAO.INDICATE_EXECUTION_SUCCESS) {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     } else
                     { 
                         this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
-                        return  INDICATE_CONDITIONAL_EXIT_STATUS;
+                        return  Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                 }    
             } catch (RecordDAO_Exception rex) 
@@ -1275,9 +1271,9 @@ public class Parser_implement implements Parser
             }
             
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
 
     /* add support for communicative classes */
