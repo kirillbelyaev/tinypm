@@ -1280,7 +1280,7 @@ public class Parser_implement implements Parser
     
     private Integer parse_and_execute_COUNT_COMMUNICATIVE_CLASSES(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         Integer count = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
@@ -1293,21 +1293,21 @@ public class Parser_implement implements Parser
                     count = this.db.count_Distinct_Communicative_Classes_Table_Records_on_CID();
                     this.set_ResultSize(count);
                     this.refill_ResultOutput(count.toString());
-                    return INDICATE_EXECUTION_SUCCESS;
+                    return Parser.INDICATE_EXECUTION_SUCCESS;
                 }    
             } catch (RecordDAO_Exception rex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
     private Integer parse_and_execute_SHOW_COMMUNICATIVE_CLASSES(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         CommunicativeClassesTableRecord[] ra = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         //System.out.println("num_tokens is: " + num_tokens);
@@ -1322,16 +1322,16 @@ public class Parser_implement implements Parser
                     {    
                         this.set_ResultSize(ra.length);
                         this.refill_ResultOutput_with_COMMUNICATIVE_CLASS_ID_AND_NAME(ra);
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     } else return RecordDAO.EMPTY_RESULT;
                 }    
             } catch (RecordDAO_Exception rex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     private void refill_ResultOutput_with_COMMUNICATIVE_CLASS_ID_AND_NAME(CommunicativeClassesTableRecord[] r) 
@@ -1355,11 +1355,11 @@ public class Parser_implement implements Parser
     
     private Integer parse_and_execute_CREATE_COMMUNICATIVE_CLASS(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comrec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
        
@@ -1370,49 +1370,50 @@ public class Parser_implement implements Parser
                 if (this.commandParameters.size() > 1)
                 {    
                     /* check the validity of input */
-                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
-                        return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    if (this.comrec.set_COLUMN_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
                     this.comrec.set_COLUMN_CLASS_NAME(this.commandParameters.get(1));
                     
                     //this.caprec.reset_COLUMN_CAPABILITIES(); /* reset policies */
                     
-                    this.comrec.set_UPDATE_COLUMN_to_CLASS_NAME(); /* indicate the update column */      
-                }    
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    this.comrec.set_UPDATE_COLUMN_to_CLASS_NAME(); /* indicate the update column */   
+                    
+                }  else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             try 
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_CommunicativeClassesTableRecord(this.comrec) != INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_CommunicativeClassesTableRecord(this.comrec) != RecordDAO.INDICATE_EXECUTION_SUCCESS) 
                     {  
                         this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
-                        return  INDICATE_CONDITIONAL_EXIT_STATUS;
+                        return  Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                     else
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     }
                 }    
             } catch (RecordDAO_Exception rex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     private Integer parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COMPONENTS(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         ArrayList<String> components = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
@@ -1423,24 +1424,24 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 { 
-                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }
                     
                     components = this.get_COMMUNICATIVE_CLASS_COMPONENTS(this.comprec.get_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID().trim());
-                } 
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                    
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             if (components != null)
             {
                 this.set_ResultSize(components.size());
                 this.refill_ResultOutput(components);
-                return INDICATE_EXECUTION_SUCCESS;
+                return Parser.INDICATE_EXECUTION_SUCCESS;
             } else return RecordDAO.EMPTY_RESULT;
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
     }
     
     
@@ -1455,7 +1456,7 @@ public class Parser_implement implements Parser
         tokenize_and_build_command_parameters() method - terminate */
         if (this.comprec == null) return null;
         
-        if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(pcid.trim()) != Parser.INDICATE_EXECUTION_SUCCESS) return null;
+        if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(pcid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS) return null;
 
         try 
         {//execute the db layer
@@ -1482,11 +1483,11 @@ public class Parser_implement implements Parser
     
     private Integer parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         Integer count = null;
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
@@ -1497,13 +1498,12 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 0)
                 {    
-                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }    
-                }    
-                else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;  
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;  
             
             try 
             {//execute the db layer
@@ -1512,24 +1512,24 @@ public class Parser_implement implements Parser
                     count = this.db.count_Components_Table_Records_on_COMCID(this.comprec);
                     this.set_ResultSize(count);
                     this.refill_ResultOutput(count.toString());
-                    return INDICATE_EXECUTION_SUCCESS;
+                    return Parser.INDICATE_EXECUTION_SUCCESS;
                 }    
             } catch (RecordDAO_Exception rex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     private Integer parse_and_execute_MOVE_COMPONENT_TO_COMMUNICATIVE_CLASS(String e)
     {
-        if (e == null || e.isEmpty()) return INDICATE_INVALID_ARGUMENT_VALUE;
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
         /* if record is not created beforehand by 
         tokenize_and_build_command_parameters() method - terminate */
-        if (this.comprec == null) return INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (this.comprec == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
        
@@ -1539,7 +1539,7 @@ public class Parser_implement implements Parser
             {
                 if (this.commandParameters.size() > 1)
                 { 
-                    if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    if (this.comprec.set_COLUMN_COMPONENT_PATH_ID(this.commandParameters.get(0)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }    
@@ -1551,15 +1551,15 @@ public class Parser_implement implements Parser
                     }
                     */
                     
-                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(1)) != Parser.INDICATE_EXECUTION_SUCCESS)
+                    if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(this.commandParameters.get(1)) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
                     {
                         return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                     }    
                         
                     this.comprec.set_UPDATE_COLUMN_to_COMPONENT_COMMUNICATIVE_CLASS_ID(); /* indicate the update column */
                     
-                } else return INDICATE_CONDITIONAL_EXIT_STATUS;
-            } else return INDICATE_CONDITIONAL_EXIT_STATUS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
             
             /* No need for immediate enforcement since communicative policies
             are only checked upon request of the TSC. In contrast to capabilities
@@ -1570,15 +1570,15 @@ public class Parser_implement implements Parser
             {//execute the db layer
                 if (this.db != null)
                 {    
-                    if (this.db.write_ComponentsTableRecord(this.comprec) == INDICATE_EXECUTION_SUCCESS) 
+                    if (this.db.write_ComponentsTableRecord(this.comprec) == RecordDAO.INDICATE_EXECUTION_SUCCESS) 
                     {    
                         this.set_ResultSize(0);
                         this.refill_ResultOutput("");
-                        return INDICATE_EXECUTION_SUCCESS;
+                        return Parser.INDICATE_EXECUTION_SUCCESS;
                     } else
                     { 
                         this.set_ErrorMessage(LPM_ERRORS.DB_Layer_WRITE_RECORD_ERROR.toString());
-                        return  INDICATE_CONDITIONAL_EXIT_STATUS;
+                        return  Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                     }    
                 }    
             } catch (RecordDAO_Exception rex) 
@@ -1587,9 +1587,9 @@ public class Parser_implement implements Parser
             }
             
             
-        }  else return INDICATE_ARGUMENT_MISMATCH;
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
         
-        return INDICATE_CONDITIONAL_EXIT_STATUS;
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
     
