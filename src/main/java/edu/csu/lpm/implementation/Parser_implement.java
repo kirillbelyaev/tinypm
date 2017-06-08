@@ -54,7 +54,7 @@ public class Parser_implement implements Parser
     private RecordDAO_implement db = null;
     
     private ArrayList <String> ResultOutput = null;
-    private int resultSize = -1;
+    private int ResultSize = -1;
     
     private String ErrorMessage = null;
     
@@ -106,12 +106,12 @@ public class Parser_implement implements Parser
     
     private int get_ResultSize() 
     {
-        return this.resultSize;
+        return this.ResultSize;
     }
 
     private void set_ResultSize(int n) 
     {
-        this.resultSize = n;
+        this.ResultSize = n;
     }
     
     @Override
@@ -162,7 +162,7 @@ public class Parser_implement implements Parser
     }
     
     
-    private void refill_ResultOutput_with_all_Capabilities() 
+    private void refill_ResultOutput_with_AllCapabilities() 
     {
         LinuxCapabilitiesPolicyContainer.LinuxCapabilities LCS[] = LinuxCapabilitiesPolicyContainer.LinuxCapabilities.values();
         
@@ -178,6 +178,47 @@ public class Parser_implement implements Parser
         }
     }
     
+    private int tokenize_and_build_CommandParameters(String e)
+    {
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+        int count = -1;
+        
+        if (this.commandParameters == null)
+        {    
+             this.commandParameters = new ArrayList <String>();
+        } else
+        {
+            this.commandParameters.clear();
+        }    
+        
+        
+        /* initialize the records only once and then reuse in other methods to save memory */ 
+        if (this.caprec == null) this.caprec = new CapabilitiesClassesTableRecord();
+        
+        if (this.comrec == null) this.comrec = new CommunicativeClassesTableRecord();
+        
+        if (this.comprec == null) this.comprec = new ComponentsTableRecord();
+        
+        if (this.tokenizer == null) this.tokenizer = new StringTokenizer(e, " ");
+        
+        count = this.tokenizer.countTokens(); //obtain the number of tokens before cycling through them
+        
+        this.tokenizer.nextToken();//skip the 1st token which is the command itself
+        
+        while (this.tokenizer.hasMoreTokens())
+        {
+            String field = this.tokenizer.nextToken();
+            field = field.trim();
+            this.commandParameters.add(field);
+        }
+        
+        /* 
+        nullify the tokenizer for the next invocation
+        */
+        this.tokenizer = null;
+        
+        return count;
+    }
     
     
     private int obtain_DB_Handler()
@@ -598,6 +639,9 @@ public class Parser_implement implements Parser
         return Parser.INDICATE_EXECUTION_SUCCESS;
     }
     
+
+    /* extended execute methods */
+    
     private void parse_and_execute_HELP(String e)
     {
         if (e == null || e.isEmpty()) return;
@@ -611,54 +655,9 @@ public class Parser_implement implements Parser
     {
         if (e == null || e.isEmpty()) return;
         this.set_ResultSize(0);
-        this.refill_ResultOutput_with_all_Capabilities();
+        this.refill_ResultOutput_with_AllCapabilities();
     }
     
-    
-    
-    private int tokenize_and_build_CommandParameters(String e)
-    {
-        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
-        int count = -1;
-        
-        if (this.commandParameters == null)
-        {    
-             this.commandParameters = new ArrayList <String>();
-        } else
-        {
-            this.commandParameters.clear();
-        }    
-        
-        
-        /* initialize the records only once and then reuse in other methods to save memory */ 
-        if (this.caprec == null) this.caprec = new CapabilitiesClassesTableRecord();
-        
-        if (this.comrec == null) this.comrec = new CommunicativeClassesTableRecord();
-        
-        if (this.comprec == null) this.comprec = new ComponentsTableRecord();
-        
-        if (this.tokenizer == null) this.tokenizer = new StringTokenizer(e, " ");
-        
-        count = this.tokenizer.countTokens(); //obtain the number of tokens before cycling through them
-        
-        this.tokenizer.nextToken();//skip the 1st token which is the command itself
-        
-        while (this.tokenizer.hasMoreTokens())
-        {
-            String field = this.tokenizer.nextToken();
-            field = field.trim();
-            this.commandParameters.add(field);
-        }
-        
-        /* 
-        nullify the tokenizer for the next invocation
-        */
-        this.tokenizer = null;
-        
-        return count;
-    }
-    
-    /* extended execute methods */
     
     private Integer parse_and_execute_COUNT_CAPABILITIES_CLASSES(String e)
     {
@@ -763,65 +762,6 @@ public class Parser_implement implements Parser
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
             }
         }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
-        
-        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-    }
-    
-    
-    private ArrayList<String> get_CAPABILITIES_CLASS_CAPABILITIES(String pcid)
-    {
-        CapabilitiesClassesTableRecord pcr [] = null;
-        ArrayList<String> caps = null;
-
-        if (pcid == null || pcid.isEmpty()) return null;
-        
-        /* if record is not created beforehand by 
-        tokenize_and_build_command_parameters() method - terminate */
-        if (this.caprec == null) return null;
-        
-        this.caprec.set_COLUMN_CLASS_ID(pcid.trim());
-
-        try 
-        {//execute the db layer
-            if (this.db != null)
-            {    
-                pcr = this.db.read_Capabilities_Classes_Table_Records_On_CID(this.caprec);  
-            }    
-        } catch (RecordDAO_Exception rex) 
-        {
-            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
-        }
-        
-        if (pcr != null)
-        {    
-            caps = new ArrayList<String>();
-            for (int i = 0; i < pcr.length; i++)
-            {
-                /* let us make sure that a policy class record does have policies */
-                if (!pcr[i].check_if_COLUMN_CAPABILITIES_is_Empty())
-                    caps.add(pcr[i].get_COLUMN_CAPABILITIES()); /* add non-empty
-                policies only */
-            }    
-        }
-        
-        /* let us ensure that we return only non-empty policies */
-        if (caps != null)
-            if ( !caps.isEmpty() ) return caps;
-            else return null;
-        
-        return null; /* return NULL by default */
-    }
-    
-    private int check_if_Capability_Exists (String pcid, String p)
-    {
-        if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-        
-        ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(pcid.trim());
-        
-        if (caps != null)
-            for (int i = 0; i < caps.size(); i++)
-                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-                if (caps.get(i).contains(p.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
         
         return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
@@ -1133,41 +1073,6 @@ public class Parser_implement implements Parser
     } 
     
     
-    private ArrayList<String> get_CAPABILITIES_CLASS_COMPONENTS(String pcid)
-    {
-        ComponentsTableRecord[] componentsr = null;
-        ArrayList<String> components = null;
-
-        if (pcid == null || pcid.isEmpty()) return null;
-        
-        /* if record is not created beforehand by 
-        tokenize_and_build_command_parameters() method - terminate */
-        if (this.comprec == null) return null;
-        
-        if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(pcid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS) return null;
-
-        try 
-        {//execute the db layer
-            if (this.db != null)
-            {    
-                componentsr = this.db.read_Components_Table_Records_On_CAPCID(this.comprec);  
-            }    
-        } catch (RecordDAO_Exception rex) 
-        {
-            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
-        }
-        
-        if (componentsr != null)
-        {    
-            components = new ArrayList<String>();
-            for (int i=0; i < componentsr.length; i++)
-                components.add(componentsr[i].get_COLUMN_COMPONENT_PATH_ID());
-        }
-        
-        return components;
-    }
-    
-    
     private Integer parse_and_execute_SHOW_CAPABILITIES_CLASS_COMPONENTS(String e)
     {
         if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
@@ -1445,42 +1350,6 @@ public class Parser_implement implements Parser
     }
     
     
-    private ArrayList<String> get_COMMUNICATIVE_CLASS_COMPONENTS(String pcid)
-    {
-        ComponentsTableRecord[] compsr = null;
-        ArrayList<String> components = null;
-
-        if (pcid == null || pcid.isEmpty()) return null;
-        
-        /* if record is not created beforehand by 
-        tokenize_and_build_command_parameters() method - terminate */
-        if (this.comprec == null) return null;
-        
-        if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(pcid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS) return null;
-
-        try 
-        {//execute the db layer
-            if (this.db != null)
-            {    
-                compsr = this.db.read_Components_Table_Records_On_COMCID(this.comprec);  
-            }    
-        } catch (RecordDAO_Exception rex) 
-        {
-            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
-        }
-        
-        if (compsr != null)
-        {    
-            components = new ArrayList<String>();
-            for (ComponentsTableRecord compsr1 : compsr) 
-            {
-                components.add(compsr1.get_COLUMN_COMPONENT_PATH_ID());
-            }
-        }
-        
-        return components;
-    }
-    
     private Integer parse_and_execute_COUNT_COMMUNICATIVE_CLASS_COMPONENTS(String e)
     {
         if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
@@ -1630,52 +1499,6 @@ public class Parser_implement implements Parser
     }
     
     
-    private ArrayList<String> get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(String cid)
-    {
-        CommunicativeClassesTableRecord[] comr = null;
-        ArrayList<String> policies = null;
-
-        if (cid == null || cid.isEmpty()) return null;
-        
-        /* if record is not created beforehand by 
-        tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return null;
-        
-        /* check the validity of input */
-        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
-            return null;
-
-        try 
-        {//execute the db layer
-            if (this.db != null)
-            {    
-                comr = this.db.read_Communicative_Classes_Table_Records_On_CID(this.comrec);  
-            }    
-        } catch (RecordDAO_Exception rex) 
-        {
-            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
-        }
-        
-        if (comr != null)
-        {    
-            policies = new ArrayList<String>();
-            for (int i = 0; i < comr.length; i++)
-            {
-                /* let us make sure that a policy class record does have policies */
-                if (!comr[i].check_if_COLUMN_COLLABORATION_RECORD_is_Empty())
-                    policies.add(comr[i].get_COLUMN_COLLABORATION_RECORD()); /* add non-empty
-                policies only */
-            }    
-        }
-        
-        /* let us ensure that we return only non-empty policies */
-        if (policies != null)
-            if ( !policies.isEmpty() ) return policies;
-            else return null;
-        
-        return null; /* return NULL by default */
-    }
-    
     private Integer parse_and_execute_SHOW_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(String e)
     {
         if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
@@ -1712,53 +1535,7 @@ public class Parser_implement implements Parser
         }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
     }
     
-    private ArrayList<String> get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(String cid)
-    {
-        CommunicativeClassesTableRecord[] comr = null;
-        ArrayList<String> policies = null;
-
-        if (cid == null || cid.isEmpty()) return null;
-        
-        /* if record is not created beforehand by 
-        tokenize_and_build_command_parameters() method - terminate */
-        if (this.comrec == null) return null;
-        
-        /* check the validity of input */
-        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
-            return null;
-
-        try 
-        {//execute the db layer
-            if (this.db != null)
-            {    
-                comr = this.db.read_Communicative_Classes_Table_Records_On_CID(this.comrec);  
-            }    
-        } catch (RecordDAO_Exception rex) 
-        {
-            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
-        }
-        
-        if (comr != null)
-        {    
-            policies = new ArrayList<String>();
-            for (int i = 0; i < comr.length; i++)
-            {
-                /* let us make sure that a policy class record does have policies */
-                if (!comr[i].check_if_COLUMN_COORDINATION_RECORD_is_Empty())
-                    policies.add(comr[i].get_COLUMN_COORDINATION_RECORD()); /* add non-empty
-                policies only */
-            }    
-        }
-        
-        /* let us ensure that we return only non-empty policies */
-        if (policies != null)
-            if ( !policies.isEmpty() ) return policies;
-            else return null;
-        
-        return null; /* return NULL by default */
-    }
-    
-    
+   
     private Integer parse_and_execute_ADD_COMMUNICATIVE_CLASS_COLLABORATION_POLICY(String e)
     {
         if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
@@ -1833,34 +1610,6 @@ public class Parser_implement implements Parser
             }   
             
         }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
-        
-        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-    }
-    
-    private int check_if_CollaborationPolicy_Exists (String cid, String p)
-    {
-        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-        
-        ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(cid.trim());
-        
-        if (policies != null)
-            for (int i = 0; i < policies.size(); i++)
-                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-                if (policies.get(i).contains(p.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
-        
-        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-    }
-    
-    private int check_if_Component_belongs_to_Class (String cid, String component)
-    {
-        if (cid == null || cid.isEmpty() || component == null || component.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-        
-        ArrayList<String> components = this.get_COMMUNICATIVE_CLASS_COMPONENTS(cid.trim());
-        
-        if (components != null)
-            for (int i = 0; i < components.size(); i++)
-                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-                if (components.get(i).contains(component.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
         
         return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
@@ -1951,20 +1700,6 @@ public class Parser_implement implements Parser
             }   
             
         }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
-        
-        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-    }
-    
-    private int check_if_CoordinationPolicy_Exists (String cid, String p)
-    {
-        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-        
-        ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(cid.trim());
-        
-        if (policies != null)
-            for (int i = 0; i < policies.size(); i++)
-                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
-                if (policies.get(i).contains(p.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
         
         return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
@@ -2110,5 +1845,271 @@ public class Parser_implement implements Parser
         return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
+    /*
+        all BL operations that invoke corresponding DB operations on obtaining 
+        corresponding records
+    */
+    
+    private ArrayList<String> get_CAPABILITIES_CLASS_CAPABILITIES(String pcid)
+    {
+        CapabilitiesClassesTableRecord pcr [] = null;
+        ArrayList<String> caps = null;
+
+        if (pcid == null || pcid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.caprec == null) return null;
+        
+        this.caprec.set_COLUMN_CLASS_ID(pcid.trim());
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                pcr = this.db.read_Capabilities_Classes_Table_Records_On_CID(this.caprec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (pcr != null)
+        {    
+            caps = new ArrayList<String>();
+            for (int i = 0; i < pcr.length; i++)
+            {
+                /* let us make sure that a policy class record does have policies */
+                if (!pcr[i].check_if_COLUMN_CAPABILITIES_is_Empty())
+                    caps.add(pcr[i].get_COLUMN_CAPABILITIES()); /* add non-empty
+                policies only */
+            }    
+        }
+        
+        /* let us ensure that we return only non-empty policies */
+        if (caps != null)
+            if ( !caps.isEmpty() ) return caps;
+            else return null;
+        
+        return null; /* return NULL by default */
+    }
+    
+    private ArrayList<String> get_CAPABILITIES_CLASS_COMPONENTS(String pcid)
+    {
+        ComponentsTableRecord[] componentsr = null;
+        ArrayList<String> components = null;
+
+        if (pcid == null || pcid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comprec == null) return null;
+        
+        if (this.comprec.set_COLUMN_COMPONENT_CAPABILITIES_CLASS_ID(pcid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS) return null;
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                componentsr = this.db.read_Components_Table_Records_On_CAPCID(this.comprec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (componentsr != null)
+        {    
+            components = new ArrayList<String>();
+            for (int i=0; i < componentsr.length; i++)
+                components.add(componentsr[i].get_COLUMN_COMPONENT_PATH_ID());
+        }
+        
+        return components;
+    }
+    
+    private ArrayList<String> get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(String cid)
+    {
+        CommunicativeClassesTableRecord[] comr = null;
+        ArrayList<String> policies = null;
+
+        if (cid == null || cid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comrec == null) return null;
+        
+        /* check the validity of input */
+        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+            return null;
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                comr = this.db.read_Communicative_Classes_Table_Records_On_CID(this.comrec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (comr != null)
+        {    
+            policies = new ArrayList<String>();
+            for (int i = 0; i < comr.length; i++)
+            {
+                /* let us make sure that a policy class record does have policies */
+                if (!comr[i].check_if_COLUMN_COLLABORATION_RECORD_is_Empty())
+                    policies.add(comr[i].get_COLUMN_COLLABORATION_RECORD()); /* add non-empty
+                policies only */
+            }    
+        }
+        
+        /* let us ensure that we return only non-empty policies */
+        if (policies != null)
+            if ( !policies.isEmpty() ) return policies;
+            else return null;
+        
+        return null; /* return NULL by default */
+    }
+    
+    private ArrayList<String> get_COMMUNICATIVE_CLASS_COMPONENTS(String pcid)
+    {
+        ComponentsTableRecord[] compsr = null;
+        ArrayList<String> components = null;
+
+        if (pcid == null || pcid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comprec == null) return null;
+        
+        if (this.comprec.set_COLUMN_COMPONENT_COMMUNICATIVE_CLASS_ID(pcid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS) return null;
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                compsr = this.db.read_Components_Table_Records_On_COMCID(this.comprec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (compsr != null)
+        {    
+            components = new ArrayList<String>();
+            for (ComponentsTableRecord compsr1 : compsr) 
+            {
+                components.add(compsr1.get_COLUMN_COMPONENT_PATH_ID());
+            }
+        }
+        
+        return components;
+    }
+    
+    private ArrayList<String> get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(String cid)
+    {
+        CommunicativeClassesTableRecord[] comr = null;
+        ArrayList<String> policies = null;
+
+        if (cid == null || cid.isEmpty()) return null;
+        
+        /* if record is not created beforehand by 
+        tokenize_and_build_command_parameters() method - terminate */
+        if (this.comrec == null) return null;
+        
+        /* check the validity of input */
+        if (this.comrec.set_COLUMN_CLASS_ID(cid.trim()) != RecordDAO.INDICATE_EXECUTION_SUCCESS)
+            return null;
+
+        try 
+        {//execute the db layer
+            if (this.db != null)
+            {    
+                comr = this.db.read_Communicative_Classes_Table_Records_On_CID(this.comrec);  
+            }    
+        } catch (RecordDAO_Exception rex) 
+        {
+            Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, rex);
+        }
+        
+        if (comr != null)
+        {    
+            policies = new ArrayList<String>();
+            for (int i = 0; i < comr.length; i++)
+            {
+                /* let us make sure that a policy class record does have policies */
+                if (!comr[i].check_if_COLUMN_COORDINATION_RECORD_is_Empty())
+                    policies.add(comr[i].get_COLUMN_COORDINATION_RECORD()); /* add non-empty
+                policies only */
+            }    
+        }
+        
+        /* let us ensure that we return only non-empty policies */
+        if (policies != null)
+            if ( !policies.isEmpty() ) return policies;
+            else return null;
+        
+        return null; /* return NULL by default */
+    }
+    
+    private int check_if_Capability_Exists (String pcid, String p)
+    {
+        if (pcid == null || pcid.isEmpty() || p == null || p.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(pcid.trim());
+        
+        if (caps != null)
+            for (int i = 0; i < caps.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (caps.get(i).contains(p.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
+        
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
+    private int check_if_CollaborationPolicy_Exists (String cid, String p)
+    {
+        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COLLABORATION_POLICIES(cid.trim());
+        
+        if (policies != null)
+            for (int i = 0; i < policies.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (policies.get(i).contains(p.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
+        
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
+    private int check_if_Component_belongs_to_Class (String cid, String component)
+    {
+        if (cid == null || cid.isEmpty() || component == null || component.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> components = this.get_COMMUNICATIVE_CLASS_COMPONENTS(cid.trim());
+        
+        if (components != null)
+            for (int i = 0; i < components.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (components.get(i).contains(component.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
+        
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
+    
+    private int check_if_CoordinationPolicy_Exists (String cid, String p)
+    {
+        if (cid == null || cid.isEmpty() || p == null || p.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        ArrayList<String> policies = this.get_COMMUNICATIVE_CLASS_COORDINATION_POLICIES(cid.trim());
+        
+        if (policies != null)
+            for (int i = 0; i < policies.size(); i++)
+                //if (caps.get(i).compareTo(p.trim()) == 0) return 0;
+                if (policies.get(i).contains(p.trim())) return Parser.INDICATE_EXECUTION_SUCCESS;
+        
+        return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+    }
     
 }
