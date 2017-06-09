@@ -1867,6 +1867,67 @@ public class Parser_implement implements Parser
         return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
     
+    
+    /**
+     * Does all the work for change password command.
+     * Format: CHANGE_PASSWORD <old-password> <new-password>
+     * @param e
+     * @return 
+     */
+    private Integer parse_and_execute_CHANGE_AUTH_PASSWORD(String e)
+    {
+        if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+        
+        if (this.authdb == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        //cmdParam[1] = old-password
+        //cmdParam[2] = new-password
+                        
+        int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
+        
+        if (num_tokens == 3)
+        {    
+            if (this.commandParameters != null)
+            {
+                if (this.commandParameters.size() < 3) return Parser.INDICATE_ARGUMENT_MISMATCH;
+            
+            } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+         
+            try 
+            {
+                String old_password = this.commandParameters.get(1);
+                String actualPassword = this.authdb.getPasswordFromDB();
+
+                /*
+                    check if either of passwords is null
+                */
+                if (old_password == null && actualPassword == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                
+                if(!old_password.equals(actualPassword)) 
+                {
+                    this.set_ErrorMessage("Invalid Detail. Unable to perform command");
+                    return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
+                }
+
+                String new_password = this.commandParameters.get(2);
+
+                if (new_password == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                
+                if (this.authdb.updateAuthPassword(new_password) == RecordDAO.INDICATE_EXECUTION_SUCCESS)
+                {    
+                    this.set_ErrorMessage("Auth Password changed successfully");
+                    return Parser.INDICATE_EXECUTION_SUCCESS;
+                } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                
+            } catch (SQLException sex) 
+            {
+                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, sex);
+                return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+            }
+        
+        }  else return Parser.INDICATE_ARGUMENT_MISMATCH;
+    }
+    
     /*
         all BL operations that invoke corresponding DB operations on obtaining 
         corresponding records
