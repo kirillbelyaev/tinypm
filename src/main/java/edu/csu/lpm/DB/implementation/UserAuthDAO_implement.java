@@ -112,12 +112,12 @@ public final class UserAuthDAO_implement implements UserAuthDAO
         return INDICATE_EXECUTION_SUCCESS;
     }
 
-    public String getUsernameFromDB() throws SQLException 
+    public String getAuthUsernameFromDB() throws SQLException 
     {
         return this.getFromDB(true);
     }
 
-    public String getPasswordFromDB() throws SQLException 
+    public String getAuthPasswordFromDB() throws SQLException 
     {
         return this.getFromDB(false);
     }

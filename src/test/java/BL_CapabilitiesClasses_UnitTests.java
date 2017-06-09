@@ -99,6 +99,12 @@ public class BL_CapabilitiesClasses_UnitTests
         
         String CMD_24 = "SHOW_CAPABILITIES_CLASS_COMPONENTS 3";
         
+        /* check change auth passwd command */
+        String CMD_25 = "CHANGE_AUTH_PASSWORD  ";
+        
+        String CMD_26 = "CHANGE_AUTH_PASSWORD old_pass";
+        
+        String CMD_27 = "CHANGE_AUTH_PASSWORD old_pass new_pass";
         
         Parser_implement p = Parser_implement.getInstance();
         
@@ -353,7 +359,24 @@ public class BL_CapabilitiesClasses_UnitTests
         
         /*------*/
                 
+        /* check change auth passwd command */
+        System.out.println("command is: " + CMD_25);
+        output = p.parseInput(CMD_25);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ErrorMessage());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
         
+        System.out.println("command is: " + CMD_26);
+        output = p.parseInput(CMD_26);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ErrorMessage());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
+        
+        System.out.println("command is: " + CMD_27);
+        output = p.parseInput(CMD_27);
+        //assertTrue("parse_and_execute_Command: Reply has unexpected return:", Out = output == 0 | output == -1);
+        System.out.println("error mesage is: " + p.get_ErrorMessage());
+        System.out.println("parser.getResultOutput is: " + p.get_ResultOutput());
     }
     
 }

@@ -223,6 +223,39 @@ public class Parser_implement implements Parser
         return count;
     }
     
+    private ArrayList<String>  prepare_EnforcerParameters (String pcid, String component)
+    {
+        if (pcid == null || pcid.isEmpty() || component == null || component.isEmpty()) return null;
+        
+        ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(pcid.trim());
+        
+        String policies[] = null;
+        
+        /* by now we know that if get_CAPABILITIES_CLASS_CAPABILITIES() returns null 
+        - that means that no policies exist. That is because we already 
+        ensure that pcid parameter should not be null in the first place,
+        otherwise this method will terminate immediately. */
+        if (caps != null)
+        { 
+            /* obtain the policies in the 1st element */
+            policies = caps.get(0).trim().split(" "); 
+            
+            /* let's reuse the list */
+            caps.clear();
+            
+            for (int i = 0; i < policies.length; i++)
+                caps.add(policies[i].trim());
+                        
+            caps.add(component.trim()); //add the component entry last
+        } else /* no policies exist for the component */
+        {
+            caps = new ArrayList<String>();
+            caps.add(component);
+        }    
+        
+        return caps;
+    }
+    
     
     private int obtain_DB_Handler()
     {
@@ -643,6 +676,13 @@ public class Parser_implement implements Parser
                     return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 } 
                 break;
+            case CHANGE_AUTH_PASSWORD:
+                if (this.parse_and_execute_CHANGE_AUTH_PASSWORD(e) == Parser.INDICATE_ARGUMENT_MISMATCH)
+                {
+                    this.set_ErrorMessage(Parser.LPM_ERRORS.CHANGE_AUTH_PASSWORD_ERROR_NUMBER_OF_ARGUMENTS_SHOULD_BE_2.toString());
+                    return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                } 
+                break;
             case HELP:
                 this.parse_and_execute_HELP(e);
                 break;
@@ -787,41 +827,7 @@ public class Parser_implement implements Parser
         
         return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
     }
-    
-    
-    private ArrayList<String>  prepare_EnforcerParameters (String pcid, String component)
-    {
-        if (pcid == null || pcid.isEmpty() || component == null || component.isEmpty()) return null;
-        
-        ArrayList<String> caps = this.get_CAPABILITIES_CLASS_CAPABILITIES(pcid.trim());
-        
-        String policies[] = null;
-        
-        /* by now we know that if get_CAPABILITIES_CLASS_CAPABILITIES() returns null 
-        - that means that no policies exist. That is because we already 
-        ensure that pcid parameter should not be null in the first place,
-        otherwise this method will terminate immediately. */
-        if (caps != null)
-        { 
-            /* obtain the policies in the 1st element */
-            policies = caps.get(0).trim().split(" "); 
-            
-            /* let's reuse the list */
-            caps.clear();
-            
-            for (int i = 0; i < policies.length; i++)
-                caps.add(policies[i].trim());
-                        
-            caps.add(component.trim()); //add the component entry last
-        } else /* no policies exist for the component */
-        {
-            caps = new ArrayList<String>();
-            caps.add(component);
-        }    
-        
-        return caps;
-    }
-    
+
     
     private Integer parse_and_execute_ADD_CAPABILITIES_CLASS_CAPABILITY(String e)
     {
@@ -1870,7 +1876,7 @@ public class Parser_implement implements Parser
     
     /**
      * Does all the work for change password command.
-     * Format: CHANGE_PASSWORD <old-password> <new-password>
+     * Format: CHANGE_AUTH_PASSWORD <old-password> <new-password>
      * @param e
      * @return 
      */
@@ -1878,10 +1884,13 @@ public class Parser_implement implements Parser
     {
         if (e == null || e.isEmpty()) return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
         
+        /*
+            moved the initialization of auth db connection here because such a 
+        command is infrequently used and the absence of auth db should not impact
+        the overall operation of the BL layer
+        */
+        if (this.obtain_AuthDB_Handler() != Parser.INDICATE_EXECUTION_SUCCESS) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
         if (this.authdb == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
-        
-        //cmdParam[1] = old-password
-        //cmdParam[2] = new-password
                         
         int num_tokens = this.tokenize_and_build_CommandParameters(e.trim());
         
@@ -1889,29 +1898,30 @@ public class Parser_implement implements Parser
         {    
             if (this.commandParameters != null)
             {
-                if (this.commandParameters.size() < 3) return Parser.INDICATE_ARGUMENT_MISMATCH;
+                if (this.commandParameters.size() < 2) return Parser.INDICATE_ARGUMENT_MISMATCH;
             
             } else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
          
             try 
             {
-                String old_password = this.commandParameters.get(1);
-                String actualPassword = this.authdb.getPasswordFromDB();
+                String old_password = this.commandParameters.get(0);
+                String actualPassword = this.authdb.getAuthPasswordFromDB();
 
                 /*
                     check if either of passwords is null
                 */
-                if (old_password == null && actualPassword == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                if (old_password == null || actualPassword == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 
                 if(!old_password.equals(actualPassword)) 
                 {
-                    this.set_ErrorMessage("Invalid Detail. Unable to perform command");
+                    this.set_ErrorMessage("Invalid Auth Details. Unable to perform command");
                     return Parser.INDICATE_INVALID_ARGUMENT_VALUE;
                 }
 
-                String new_password = this.commandParameters.get(2);
+                String new_password = this.commandParameters.get(1);
 
                 if (new_password == null) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
+                if (new_password.isEmpty()) return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;
                 
                 if (this.authdb.updateAuthPassword(new_password) == RecordDAO.INDICATE_EXECUTION_SUCCESS)
                 {    

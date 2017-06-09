@@ -34,9 +34,9 @@ public interface UserAuthDAO
     
     public int insert_defaultAuthCredentials() throws SQLException;
     
-    public String getUsernameFromDB() throws SQLException;
+    public String getAuthUsernameFromDB() throws SQLException;
     
-    public String getPasswordFromDB() throws SQLException;
+    public String getAuthPasswordFromDB() throws SQLException;
     
     public int updateAuthPassword(String newPassword) throws SQLException;
 }
