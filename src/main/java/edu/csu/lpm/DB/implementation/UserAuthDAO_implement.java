@@ -20,7 +20,6 @@ package edu.csu.lpm.DB.implementation;
 import static edu.csu.lpm.DB.DAO.RecordDAO.INDICATE_CONDITIONAL_EXIT_STATUS;
 import static edu.csu.lpm.DB.DAO.RecordDAO.INDICATE_EXECUTION_SUCCESS;
 import edu.csu.lpm.DB.DAO.UserAuthDAO;
-import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.interfaces.DB_Constants;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,20 +41,20 @@ public final class UserAuthDAO_implement implements UserAuthDAO
     private final String username = "lpm-admin";
     private final String password = "lpm-admin";
 
-    public UserAuthDAO_implement(Connection c) throws SQLException, RecordDAO_Exception 
+    public UserAuthDAO_implement(Connection c) throws SQLException
     {
         this.initConnection(c);
 
-        this.createTable_Authentication_DB();
+        this.createTable_AuthDB();
         
         if (this.checkTableExists() == false) 
         {
-           this.insert_default_Authentication_DB();
+           this.insert_defaultAuthCredentials();
         }
     }
 
     @Override
-    public int createTable_Authentication_DB() throws RecordDAO_Exception 
+    public int createTable_AuthDB() throws SQLException 
     {
         Statement state = null;
 
@@ -71,7 +70,7 @@ public final class UserAuthDAO_implement implements UserAuthDAO
 
         } catch (SQLException e) 
         {
-            throw new RecordDAO_Exception("Exception: " + e.getMessage(), e);
+            throw new SQLException("Exception: " + e.getMessage(), e);
         }
 
         return INDICATE_EXECUTION_SUCCESS;
@@ -83,7 +82,7 @@ public final class UserAuthDAO_implement implements UserAuthDAO
     }
 
     @Override
-    public int insert_default_Authentication_DB() throws RecordDAO_Exception 
+    public int insert_defaultAuthCredentials() throws SQLException 
     {
         if (this.conn == null) 
         {
@@ -107,7 +106,7 @@ public final class UserAuthDAO_implement implements UserAuthDAO
             this.conn.setAutoCommit(true);
 
         } catch (SQLException e) {
-            throw new RecordDAO_Exception("Exception: " + e.getMessage(), e);
+            throw new SQLException("Exception: " + e.getMessage(), e);
         }
 
         return INDICATE_EXECUTION_SUCCESS;
@@ -158,7 +157,7 @@ public final class UserAuthDAO_implement implements UserAuthDAO
     }
 
     @Override
-    public int updateNewPasswordInDB(String newPassword) throws SQLException 
+    public int updateAuthPassword(String newPassword) throws SQLException 
     {
         if (this.conn == null) 
         {

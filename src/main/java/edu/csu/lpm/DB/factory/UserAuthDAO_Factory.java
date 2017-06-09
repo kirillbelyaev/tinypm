@@ -17,8 +17,6 @@
 
 package edu.csu.lpm.DB.factory;
 
-import edu.csu.lpm.DB.DAO.UserAuthDAO;
-import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.implementation.UserAuthDAO_implement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,7 +29,7 @@ import java.sql.SQLException;
 public class UserAuthDAO_Factory 
 {
     
-    public UserAuthDAO create(Connection conn) throws SQLException, RecordDAO_Exception
+    public UserAuthDAO_implement create(Connection conn) throws SQLException
     {
             return new UserAuthDAO_implement(conn);
     }

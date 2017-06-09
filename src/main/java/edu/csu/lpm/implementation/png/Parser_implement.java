@@ -209,11 +209,8 @@ public class Parser_implement implements Parser
         {
             try 
             {
-                userdb = dd.dispatch_userDB_Access();
+                userdb = dd.dispatch_AuthDB_Access();
             } catch (SQLException ex) 
-            {
-                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RecordDAO_Exception ex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -234,11 +231,8 @@ public class Parser_implement implements Parser
         {
             try 
             {
-                userdb = dd.dispatch_userDB_Access();
+                userdb = dd.dispatch_AuthDB_Access();
             } catch (SQLException ex) 
-            {
-                Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RecordDAO_Exception ex) 
             {
                 Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, ex);
             }

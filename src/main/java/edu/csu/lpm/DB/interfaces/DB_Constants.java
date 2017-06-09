@@ -216,8 +216,11 @@ public interface DB_Constants
         auth db constants
         */
         
+        final String USER_AUTH_DB_SCHEMA  = " (" + UserAuthDAO.USERNAME + ","
+        + UserAuthDAO.PASSWORD + ") ";
+        
         final String create_USER_AUTH_DB_SQL = "create table if not exists " 
-        + UserAuthDAO.USER_AUTH_DB_TABLE_NAME + UserAuthDAO.USER_AUTH_DB_SCHEMA;
+        + UserAuthDAO.USER_AUTH_DB_TABLE_NAME + USER_AUTH_DB_SCHEMA;
         
         final String INSERT_INTO_USER_AUTH_DB_SQL = "insert into " 
         + UserAuthDAO.USER_AUTH_DB_TABLE_NAME + " values (?, ?) ";

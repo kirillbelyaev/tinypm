@@ -1680,7 +1680,7 @@ public class ParserExecute {
                 return INDICATE_INVALID_ARGUMENT_VALUE;
             }
             String new_password = cmdParam[2];
-            Parser_implement.userdb.updateNewPasswordInDB(new_password);
+            Parser_implement.userdb.updateAuthPassword(new_password);
             Parser_implement.set_ERROR_MESSAGE("Password changed successfully");
             //PM_Shell.out.writeUTF("Password changed successfully");
         } catch (SQLException ex) 

@@ -17,8 +17,6 @@
 
 package edu.csu.lpm.DB.implementation;
 
-import edu.csu.lpm.DB.DAO.UserAuthDAO;
-import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import edu.csu.lpm.DB.factory.RecordDAO_Factory;
 import edu.csu.lpm.DB.factory.UserAuthDAO_Factory;
 import java.sql.SQLException;
@@ -33,8 +31,9 @@ public class DB_Dispatcher
     private ConnManager cm = null;
     private RecordDAO_Factory factory = null;
     private RecordDAO_implement db = null;
-    private UserAuthDAO_Factory userFactory = null;
-    private UserAuthDAO userAuthDB = null;
+    
+    private UserAuthDAO_Factory AuthFactory = null;
+    private UserAuthDAO_implement AuthDB = null;
     
     public RecordDAO_implement dispatch_DB_Access() throws SQLException
     {
@@ -53,17 +52,17 @@ public class DB_Dispatcher
         } 
     }     
     
-    public UserAuthDAO dispatch_userDB_Access() throws SQLException, RecordDAO_Exception
+    public UserAuthDAO_implement dispatch_AuthDB_Access() throws SQLException
     {
         this.cm = new ConnManager();
-        this.userFactory = new UserAuthDAO_Factory();
+        this.AuthFactory = new UserAuthDAO_Factory();
         
-        if (this.cm == null && this.userFactory == null) return null;
+        if (this.cm == null && this.AuthFactory == null) return null;
         
         try 
         {
-                this.userAuthDB = this.userFactory.create(this.cm.obtainConnection());
-                return this.userAuthDB;
+                this.AuthDB = this.AuthFactory.create(this.cm.obtainConnection());
+                return this.AuthDB;
         } catch (SQLException e) 
         {
                 throw new SQLException("Exception: " + e.getMessage(), e);

@@ -21,6 +21,7 @@ to the user shell */
 package edu.csu.lpm.implementation;
 
 import edu.csu.lpm.DB.DAO.RecordDAO;
+import edu.csu.lpm.DB.DAO.UserAuthDAO;
 import edu.csu.lpm.DB.DTO.ComponentsTableRecord;
 import edu.csu.lpm.DB.DTO.CapabilitiesClassesTableRecord;
 import edu.csu.lpm.DB.DTO.CommunicativeClassesTableRecord;
@@ -52,6 +53,8 @@ public class Parser_implement implements Parser
     
     private DB_Dispatcher dd = null;
     private RecordDAO_implement db = null;
+    
+    private UserAuthDAO authdb = null;
     
     private ArrayList <String> ResultOutput = null;
     private int ResultSize = -1;
@@ -229,7 +232,7 @@ public class Parser_implement implements Parser
             {    
                 try 
                 {
-                        this.db = this.dd.dispatch_DB_Access();
+                    this.db = this.dd.dispatch_DB_Access();
                 } catch (SQLException sex) 
                 {
                     Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, sex);
@@ -241,6 +244,25 @@ public class Parser_implement implements Parser
         else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;   
     }        
     
+    private int obtain_AuthDB_Handler()
+    {
+        if (this.authdb == null) //minimize the number of calls - do it only once
+        {    
+            if (this.dd != null)
+            {    
+                try 
+                {
+                    this.authdb = this.dd.dispatch_AuthDB_Access();
+                } catch (SQLException sex) 
+                {
+                    Logger.getLogger(Parser_implement.class.getName()).log(Level.SEVERE, null, sex);
+                }
+            }
+        }
+        
+        if (this.authdb != null) return Parser.INDICATE_EXECUTION_SUCCESS;
+        else return Parser.INDICATE_CONDITIONAL_EXIT_STATUS;   
+    }        
     
 //    @Override
 //    public int parseInput(String e)

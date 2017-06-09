@@ -17,29 +17,26 @@
 
 package edu.csu.lpm.DB.DAO;
 
-import edu.csu.lpm.DB.exceptions.RecordDAO_Exception;
 import java.sql.SQLException;
 
 /**
- * This is responsible for checking and storing user authentication
+ * This is responsible for checking and storing user authentication credentials
  * @author maalv
  */
 
 public interface UserAuthDAO
 {
-    final String USER_AUTH_DB_TABLE_NAME = "userAuth_db";
+    final String USER_AUTH_DB_TABLE_NAME = "auth_db";
     String USERNAME = "username";
     String PASSWORD = "password";
     
-    final String USER_AUTH_DB_SCHEMA  = " ("+USERNAME+","+PASSWORD+") ";
+    public int createTable_AuthDB() throws SQLException;
     
-    public int createTable_Authentication_DB() throws RecordDAO_Exception;
-    
-    public int insert_default_Authentication_DB() throws RecordDAO_Exception;
+    public int insert_defaultAuthCredentials() throws SQLException;
     
     public String getUsernameFromDB() throws SQLException;
     
     public String getPasswordFromDB() throws SQLException;
     
-    public int updateNewPasswordInDB(String newPassword) throws SQLException;
+    public int updateAuthPassword(String newPassword) throws SQLException;
 }
