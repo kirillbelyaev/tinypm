@@ -154,7 +154,7 @@ public interface Parser
       + LPM_COMMANDS.ADD_COMMUNICATIVE_CLASS_COORDINATION_POLICY + " : add a COORDINATION POLICY to a COMMUNICATIVE class (required arguments: COMMUNICATIVE_class_ID (integer), component path ID, component path ID) \n"  
       + LPM_COMMANDS.REMOVE_COMMUNICATIVE_CLASS_COLLABORATION_POLICY + " : remove a COLLABORATION POLICY from a COMMUNICATIVE class  (required arguments: COMMUNICATIVE_class_ID (integer), component path ID, object path) \n"
       + LPM_COMMANDS.REMOVE_COMMUNICATIVE_CLASS_COORDINATION_POLICY + " : remove a COORDINATION POLICY from a COMMUNICATIVE class  (required arguments: COMMUNICATIVE_class_ID (integer), component path ID, component path ID) \n"
-      + LPM_COMMANDS.CHANGE_AUTH_PASSWORD + ": change the authentication password for system login {required arguments: OLD_PASSWORD, NEW_PASSWORD} \n"
+      + LPM_COMMANDS.CHANGE_AUTH_PASSWORD + " : change the authentication password for system login {required arguments: OLD_PASSWORD, NEW_PASSWORD} \n"
       ;
     
     /*

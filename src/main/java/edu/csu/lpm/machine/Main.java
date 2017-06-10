@@ -27,7 +27,7 @@ import java.io.File;
 public class Main 
 {
     
-public static void main(String[] args)  throws Exception 
+public static void main(String[] args) throws Exception 
 {
 
 File db = new File(DB_Constants.DB_NAME);
@@ -38,7 +38,7 @@ if (db.exists())
     sh.process_UserInput();
 } else
 {
-    System.out.println("PM Database " + DB_Constants.DB_NAME + " does not exist! Exiting.");
+    System.out.println("LPM Policy Store Database " + DB_Constants.DB_NAME + " does not exist! Exiting.");
 }    
 
 
