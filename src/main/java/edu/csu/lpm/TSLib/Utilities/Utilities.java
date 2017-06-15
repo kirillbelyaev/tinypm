@@ -1129,7 +1129,7 @@ public class Utilities
         if (object_path == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         if (object_path.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        final int chunkSize = 1024 * 1024; /* 1 MB */
+        //final int chunkSize = 1024 * 1024; /* 1 MB */
         FileChannel outputChannel = null;
         
         try 

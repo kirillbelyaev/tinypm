@@ -742,6 +742,96 @@ public class TSLib_UnitTests_PersistentTupleSpace
     }
     
     @Test
+    public void test_PersistentTupleSpace_appendEnhanced_ContentTuple()
+    {
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("started test_PersistentTupleSpace_appendEnhanced_ContentTuple ");
+        System.out.println("\n");
+        
+        if (this.CNT == null) this.CNT = new ContentTuple_implement();
+        
+        this.Body.append(this.FIELD_Payload);
+        
+        this.CNT.set_DestinationID_Field(this.FIELD_APP_PATH_VALID);
+        this.CNT.set_SequenceNumber_Field(this.SampleSequenceNumber);
+        this.CNT.set_Payload_Field(this.Body);
+        System.out.println("setting ContentTuple fields ");
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.ValidLocation);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        /* terminate with valid execution only */
+        if (this.TerminateNow == true)
+        {    
+            System.out.println("\n"); 
+            System.out.println("--------------------------------------");
+            System.out.println("finished test_PersistentTupleSpace_appendEnhanced_ContentTuple ");
+            System.out.println("\n");
+            return;
+        }
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, this.ValidLocation);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.InvalidLocation);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, this.InvalidLocation);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.EmptyString);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, this.EmptyString);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.RootDir);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, this.RootDir);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, null);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, null);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.ValidLocation);
+        System.out.println("executing append_ContentTuple() ");
+        System.out.println("method return value is: " + this.IntValue);
+        System.out.println("\n");
+        
+        System.out.println("\n"); 
+        System.out.println("--------------------------------------");
+        System.out.println("finished test_PersistentTupleSpace_appendEnhanced_ContentTuple ");
+        System.out.println("\n");
+    }
+    
+    
+    @Test
     public void test_PersistentTupleSpace_read_ContentTuple()
     {
         System.out.println("\n"); 
@@ -993,6 +1083,26 @@ public class TSLib_UnitTests_PersistentTupleSpace
         this.test_PersistentTupleSpace_count_Tuples();
         
         this.test_PersistentTupleSpace_count_ControlTuples();
+        
+        this.test_PersistentTupleSpace_count_ContentTuples();
+        
+        /*
+            test enhanced append operation
+        */
+        
+        this.test_PersistentTupleSpace_appendEnhanced_ContentTuple();
+        
+        this.test_PersistentTupleSpace_count_Tuples();
+        
+        this.test_PersistentTupleSpace_count_ContentTuples();
+        
+        this.test_PersistentTupleSpace_read_ContentTuple();
+        
+        
+        
+        this.test_PersistentTupleSpace_take_ContentTuple();
+        
+        this.test_PersistentTupleSpace_count_Tuples();
         
         this.test_PersistentTupleSpace_count_ContentTuples();
         

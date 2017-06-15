@@ -37,6 +37,8 @@ public interface TupleSpace
         final String ControlTupleName = "/control-tuple";
         final String ContentTupleName = "/content-tuple";
         
+        final String HiddenContentTupleName = "/.content-tuple";
+        
         /* we use macros to indicate the general method exit codes within the 
         tuple space implementation */
         public final int INDICATE_OPERATION_SUCCESS = 0;
@@ -48,5 +50,7 @@ public interface TupleSpace
         public final int INDICATE_TUPLE_IS_NULL_STATUS = -6;
         public final int INDICATE_CONTROL_TUPLE_EXISTS_STATUS = -7;
         public final int INDICATE_CONTENT_TUPLE_EXISTS_STATUS = -8;
+        
+        public final int INDICATE_HIDDEN_CONTENT_TUPLE_EXISTS_STATUS = -9;
         
 }
