@@ -44,6 +44,8 @@ public class Utilities
     /* keep the sequence number state here */
     private int CurrentSequenceNumber = -1;
     
+    final int chunkSize = 1024 * 1024; /* 1 MB */
+    final int bufferSize = 1024 * 1024; /* 1 MB */
     
     private boolean Debug = false;
     
@@ -381,8 +383,8 @@ public class Utilities
         /* make sure source and destination are not the same */
         if (object_path_in.compareTo(object_path_out) == 0 ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        final int chunkSize = 1024 * 1024; /* 1 MB */
-        final int bufferSize = 1024 * 1024; /* 1 MB */
+        //final int chunkSize = 1024 * 1024; /* 1 MB */
+        //final int bufferSize = 1024 * 1024; /* 1 MB */
         FileChannel sourceChannel = null;
         StringBuffer Payload = null; 
         
@@ -619,8 +621,8 @@ public class Utilities
         if (object_path == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         if (object_path.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        final int chunkSize = 1024 * 1024; /* 1 MB */
-        final int bufferSize = 1024 * 1024; /* 1 MB */
+        //final int chunkSize = 1024 * 1024; /* 1 MB */
+        //final int bufferSize = 1024 * 1024; /* 1 MB */
         FileChannel sourceChannel = null;
         StringBuffer Payload = null;
         
@@ -799,6 +801,262 @@ public class Utilities
                         {
                             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        
+                        /* now attempt to append the assembled content tuple */
+                        if (this.PTS.count_ContentTuples(ts_location) == 0)
+                        {    
+                            if (this.PTS.append_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
+                            {
+                                sourceChannel.close();
+                                sourceChannel = null;
+                                return TransactionManager.INDICATE_APPEND_CONTENT_TUPLE_FAILED_STATUS;
+                            }
+
+                        } else
+                        {
+                            sourceChannel.close();
+                            sourceChannel = null;
+                            return TransactionManager.INDICATE_APPEND_CONTENT_TUPLE_FAILED_STATUS;
+                        }
+                        
+                        EOF = null;
+                        
+                        break;
+                        
+                    /* if chunk size of bytes is written into payload of a content
+                    tuple, indicate the need for a new payload string buffer by setting it to null */    
+                    } else if (outputChunkBytesWritten == chunkSize)
+                    { 
+                      Payload = null;
+                    }
+                
+                } /* end of while loop */
+                    /* clear the buffer for the next iteration of the for loop */
+                    buffer.clear();
+            } /* end of for loop */
+            
+            sourceChannel.close();
+            sourceChannel = null;
+            
+        } catch (IOException ex) 
+        {
+            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+            
+            try 
+            {
+                sourceChannel.close();
+                sourceChannel = null;
+            } catch (IOException ex1) 
+            {
+                Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex1);
+                return TransactionManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+            }
+            
+            return TransactionManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+        }
+        
+        return TransactionManager.INDICATE_OPERATION_SUCCESS;
+    }
+    
+    /* This method is used in the collaborative transaction
+    by the TS Controller to deliver the object replica to the requesting
+    service component.
+    We can not afford reading whole file into memory especially if tens of 
+    such collaborative transactions are happening simulteneously. Therefore
+    we need to read a file chunk-size at a time and create a corresponding 
+    content tuple that has to be written into a corresponding TS. Only if such
+    a content tuple is consumed (taken) by the requesting application we should
+    advance to the next chunk of the file and prepare a subsequent content tuple.
+    
+    object_path - absolute path to the data object indicated in the control tuple request field.
+    ts_location - base directory where TS of the requester is located.
+    id - ID of the requester
+    */
+    public int fragmentEnhanced_ObjectReplica(String object_path, String ts_location, String id)
+    {
+        if (object_path == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        if (object_path.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        //final int chunkSize = 1024 * 1024; /* 1 MB */
+        //final int bufferSize = 1024 * 1024; /* 1 MB */
+        FileChannel sourceChannel = null;
+        StringBuffer Payload = null;
+        
+        try 
+        {
+            sourceChannel = new FileInputStream(object_path).getChannel();
+        } catch (FileNotFoundException ex) 
+        {
+            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+            return TransactionManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+        }
+        
+        ByteBuffer buffer = ByteBuffer.allocateDirect(bufferSize);
+        
+        long totalBytesRead = 0; // total bytes read from channel
+        long totalBytesWritten = 0; // total bytes written to output
+        
+        double numberOfChunks = 0;
+        
+        int outputChunkNumber = 0; // the split file / chunk number
+        long outputChunkBytesWritten = 0; // number of bytes written to chunk so far
+        
+        try 
+        {
+           numberOfChunks = Math.ceil(sourceChannel.size() / (double) chunkSize);
+        } catch (IOException ex) 
+        {
+            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+            return TransactionManager.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+        }
+        
+        try 
+        {
+            /* start reading file object chunk size at a time */
+            for (int bytesRead = sourceChannel.read(buffer); bytesRead != -1; bytesRead = sourceChannel.read(buffer))
+            {
+                totalBytesRead += bytesRead;
+                
+                buffer.flip(); /* convert the buffer from writing data to buffer from disk to reading data from buffer mode */
+                
+                int bytesWrittenFromBuffer = 0; /* number of bytes written from buffer */
+                
+                while (buffer.hasRemaining())
+                {
+                  
+                    if (Payload == null)
+                    {    
+                        Payload = new StringBuffer(); /* allocate storage space for a payload field */
+
+                        outputChunkNumber++; /* increment the chunk number */
+                        outputChunkBytesWritten = 0;
+                    }
+                    
+                    long chunkBytesFree = (chunkSize - outputChunkBytesWritten); // maxmimum free space in chunk
+                    int bytesToWrite = (int) Math.min(buffer.remaining(), chunkBytesFree); // maximum bytes that should be read from current byte buffer
+                   
+                    /* set limit in buffer up to where bytes can be read */
+                    buffer.limit(bytesWrittenFromBuffer + bytesToWrite);
+ 
+                    /* append the buffer object as a char buffer to payload */
+                    Payload.append(buffer.asCharBuffer());
+
+                    /* set the corresponding content tuple fields */
+                    if (this.CNT.set_DestinationID_Field(id) != Tuple.INDICATE_OPERATION_SUCCESS)
+                    {
+                        sourceChannel.close();
+                        sourceChannel = null;
+                        return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    }
+                    /* set the sequence number to (current - 1) since we prematurely
+                    incremented it already when allocated storage space for payload
+                    field */
+                    if (this.CNT.set_SequenceNumber_Field(outputChunkNumber-1) != Tuple.INDICATE_OPERATION_SUCCESS)
+                    {
+                        sourceChannel.close();
+                        sourceChannel = null;
+                        return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    }
+                        
+                    if (this.CNT.set_Payload_Field(Payload) != Tuple.INDICATE_OPERATION_SUCCESS)
+                    {
+                        sourceChannel.close();
+                        sourceChannel = null;
+                        return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                    }    
+                    
+                    /* SLEEP to allow the requester to consume the content tuple
+                    Note - we introduce the sleep interval for the controller
+                    but do not use it in the assemble_ObjectReplica() for the
+                    requester since we want to maximize the throughput for
+                    requester without introducing further delays in the 
+                    transactional flow */
+//                    try 
+//                    {
+//                        Thread.sleep(TransactionManager.SHORT_SLEEP_INTERVAL); /* 5 milliseconds */
+//                    } catch (InterruptedException ex) 
+//                    {
+//                        Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+                    
+                    /* now attempt to append the assembled content tuple */
+                    if (this.PTS.count_ContentTuples(ts_location) == 0)
+                    {    
+                        if (this.PTS.append_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
+                        {
+                            sourceChannel.close();
+                            sourceChannel = null;
+                            return TransactionManager.INDICATE_APPEND_CONTENT_TUPLE_FAILED_STATUS;
+                        }
+                        
+                    } else
+                    {
+                        sourceChannel.close();
+                        sourceChannel = null;
+                        return TransactionManager.INDICATE_APPEND_CONTENT_TUPLE_FAILED_STATUS;
+                    }
+                    
+                    byte tmp []; /* temporary buffer */
+                    tmp = new byte [bytesRead]; /* allocate the size of actual read bytes
+                    to avoid buffer underwriting exception */
+                    /* emulate the write operation using buffer get() to advance
+                    the remaining bytes to zero without a need to create the unnecessary
+                    output channel */
+                    buffer.get(tmp);
+                    
+                    tmp = null; /* set to null immediately */
+                    
+                    /* character buffer reports the length that is twice smaller then 
+                    byte buffer - therefore we have to multiply it by two since char takes two bytes */
+                    int bytesWritten = this.CNT.get_Payload_Field().capacity() * 2; 
+                     
+                    outputChunkBytesWritten += bytesWritten;
+                    bytesWrittenFromBuffer += bytesWritten;
+                    totalBytesWritten += bytesWritten;
+                    
+                    buffer.limit(bytesRead); /* reset limit */
+                    
+                    /* break out of a while loop if all bytes in the file object are written into corresponding
+                    chunks and its sum matches the original size of the file object */
+                    if (totalBytesWritten == sourceChannel.size())
+                    {   
+                        Payload = null;
+                        
+                        StringBuffer EOF = new StringBuffer();
+                        
+                        /* Now, since we have already written all the bytes into replica
+                        we have to append one extra content tuple with special meaning to 
+                        indicate the EOF (End of File) for the requester. 
+                        So let us set the sequence number to -1. 
+                        Since we can not set payload to null because the set method does not allow that
+                        we can set it to empty string at least to avoid excessive byte transfer */
+                        if (this.CNT.set_SequenceNumber_Field(-1) != Tuple.INDICATE_OPERATION_SUCCESS)
+                        {
+                            sourceChannel.close();
+                            sourceChannel = null;
+                            return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                        }
+
+                        if (this.CNT.set_Payload_Field(EOF) != Tuple.INDICATE_OPERATION_SUCCESS)
+                        {
+                            sourceChannel.close();
+                            sourceChannel = null;
+                            return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
+                        }    
+
+                        /* SLEEP to allow the requester to consume the content tuple
+                        Note - we introduce the sleep interval for the controller
+                        but do not use it in the assemble_ObjectReplica() for the
+                        requester since we want to maximize the throughput for
+                        requester without introducing further delays in the 
+                        transactional flow */
+//                        try 
+//                        {
+//                            Thread.sleep(TransactionManager.SHORT_SLEEP_INTERVAL); /* 5 milliseconds */
+//                        } catch (InterruptedException ex) 
+//                        {
+//                            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
                         
                         /* now attempt to append the assembled content tuple */
                         if (this.PTS.count_ContentTuples(ts_location) == 0)
@@ -1045,7 +1303,7 @@ public class Utilities
         if (object_path == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         if (object_path.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         
-        final int chunkSize = 1024 * 1024; /* 1 MB */
+        //final int chunkSize = 1024 * 1024; /* 1 MB */
         FileChannel outputChannel = null;
         
         try 
