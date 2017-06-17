@@ -685,7 +685,11 @@ public class ControllerTransactionManager_implement implements ControllerTransac
                         1 - object path obtained from control tuple appended by the requester
                         2 - location of requester's TS
                         3 - source ID of the requester obtained from the appended control tuple */
-                        if (this.UTS.fragment_ObjectReplica(clt.get_RequestMessage_Field(), 
+                        //if (this.UTS.fragment_ObjectReplica(clt.get_RequestMessage_Field(),
+                        /*
+                            let us use the enhanced version of fragmentation 
+                        */
+                        if (this.UTS.fragmentEnhanced_ObjectReplica(clt.get_RequestMessage_Field(),      
                            this.get_TupleSpaceLocation(clt.get_SourceID_Field()), 
                            clt.get_SourceID_Field()) == TransactionManager.INDICATE_OPERATION_SUCCESS)
                         {

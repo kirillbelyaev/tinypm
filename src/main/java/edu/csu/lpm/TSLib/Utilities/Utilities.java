@@ -971,18 +971,18 @@ public class Utilities
                     requester since we want to maximize the throughput for
                     requester without introducing further delays in the 
                     transactional flow */
-//                    try 
-//                    {
-//                        Thread.sleep(TransactionManager.SHORT_SLEEP_INTERVAL); /* 5 milliseconds */
-//                    } catch (InterruptedException ex) 
-//                    {
-//                        Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
+                    try 
+                    {
+                        Thread.sleep(TransactionManager.LONG_SLEEP_INTERVAL); /* 250 milliseconds */
+                    } catch (InterruptedException ex) 
+                    {
+                        Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     
                     /* now attempt to append the assembled content tuple */
                     if (this.PTS.count_ContentTuples(ts_location) == 0)
                     {    
-                        if (this.PTS.append_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
+                        if (this.PTS.appendEnhanced_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
                         {
                             sourceChannel.close();
                             sourceChannel = null;
@@ -1050,18 +1050,18 @@ public class Utilities
                         requester since we want to maximize the throughput for
                         requester without introducing further delays in the 
                         transactional flow */
-//                        try 
-//                        {
-//                            Thread.sleep(TransactionManager.SHORT_SLEEP_INTERVAL); /* 5 milliseconds */
-//                        } catch (InterruptedException ex) 
-//                        {
-//                            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
+                        try 
+                        {
+                            Thread.sleep(TransactionManager.LONG_SLEEP_INTERVAL); /* 250 milliseconds */
+                        } catch (InterruptedException ex) 
+                        {
+                            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         
                         /* now attempt to append the assembled content tuple */
                         if (this.PTS.count_ContentTuples(ts_location) == 0)
                         {    
-                            if (this.PTS.append_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
+                            if (this.PTS.appendEnhanced_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
                             {
                                 sourceChannel.close();
                                 sourceChannel = null;

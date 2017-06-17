@@ -25,7 +25,9 @@ public interface TransactionManager
 {
     /* we use macros to indicate the general method exit codes within the tuple
     implementation */
-    public final int SHORT_SLEEP_INTERVAL = 100; /* 5 milliseconds */
+    public final int ULTRASHORT_SLEEP_INTERVAL = 25;
+    public final int SHORT_SLEEP_INTERVAL = 100;
+    public final int LONG_SLEEP_INTERVAL = 250;
     public final int AGENT_SLEEP_INTERVAL = 10000; /* should be longer */
     public final int CONTROLLER_SLEEP_INTERVAL = 5000; /* should be shorter to allow shuttling */
     public final int INDICATE_CONDITIONAL_EXIT_STATUS = -1;
@@ -45,7 +47,7 @@ public interface TransactionManager
     public final int INDICATE_TAKE_CONTENT_TUPLE_FAILED_STATUS = -21;
     public final int INDICATE_CONTENT_TUPLE_NOT_PRESENT_STATUS = -22;
     
-    public final int INDICATE_REPLICA_FRAGMENTATION_FAILED_STATUS = 100;
-    public final int INDICATE_REPLICA_ASSEMBLY_FAILED_STATUS = 101;
+    public final int INDICATE_REPLICA_FRAGMENTATION_FAILED_STATUS = -100;
+    public final int INDICATE_REPLICA_ASSEMBLY_FAILED_STATUS = -101;
     
 }
