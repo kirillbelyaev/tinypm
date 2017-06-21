@@ -404,8 +404,11 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public int append_ControlTuple(ControlTuple_implement ct, String location) 
+    /*
+        now obsolete due to race conditions - renamed, changed to private access
+        and keep for accounting purposes
+    */
+    private int appendOld_ControlTuple(ControlTuple_implement ct, String location) 
     {
         if (ct == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
@@ -489,6 +492,121 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /*
+        rewrite using temporary hidden file before final tuple is exposed 
+        Avoids race conditions
+    */
+    @Override
+    public int append_ControlTuple(ControlTuple_implement ct, String location) 
+    {
+        if (ct == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (location == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+        
+        if (!location.isEmpty())
+        {
+            File base = new File (location);
+
+            if (base == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+            try 
+            {
+                if (base.isDirectory())
+                {
+                    File ts = new File (location + TupleSpace.TupleSpaceName);
+
+                    if (ts == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+
+                    if (!ts.exists()) /* could be a file or a directory with the same name */
+                    {
+                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                    } else {       
+                                if (ts.isDirectory())
+                                {
+                                    if (ts.list() == null)
+                                    {
+                                        return TupleSpace.INDICATE_TUPLE_SPACE_DOES_NOT_EXIST_STATUS;
+                                    }
+
+                                    /*
+                                        create hidden tuple for now
+                                    */                               
+                                    File c_th = new File (location + TupleSpace.TupleSpaceName + TupleSpace.HiddenControlTupleName);
+                                    
+                                    if (c_th.exists()) /* if control tuple already exists */
+                                    {
+                                        return TupleSpace.INDICATE_HIDDEN_CONTROL_TUPLE_EXISTS_STATUS;
+                                        
+                                    } else {
+                                                /* introduce serialization using internal Java facility,
+                                                instead of relying on external libraries */
+                                                /* usage of external library is problematic due to licensing issues */
+                                                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+                                                try 
+                                                {
+                                                    OutputStream control_tuple = new FileOutputStream(location + TupleSpace.TupleSpaceName + TupleSpace.HiddenControlTupleName);
+                                                    
+                                                    OutputStream buffer = new BufferedOutputStream(control_tuple);
+
+                                                    ObjectOutput oos = new ObjectOutputStream(buffer);
+                                                    /* serialize the POJO to file */
+                                                    oos.writeObject(ct);
+                                                    
+                                                    /* close streams */
+                                                    oos.close();
+                                                    buffer.close();
+                                                    control_tuple.close();
+                                                    
+                                                    /*
+                                                        now create final tuple
+                                                    */
+                                                    File c_t = new File (location + TupleSpace.TupleSpaceName + TupleSpace.ControlTupleName);
+                                                    
+                                                    if (c_t.exists()) /* if control tuple already exists */
+                                                    {
+                                                        /*
+                                                            delete hidden tuple on exit
+                                                        */
+                                                        c_th.delete();
+                                                        
+                                                        return TupleSpace.INDICATE_CONTROL_TUPLE_EXISTS_STATUS;
+                                                        
+                                                    } else {
+                                                               /*
+                                                                   rename hidden tuple to final tuple
+                                                               */ 
+                                                               c_th.renameTo(c_t);
+                                                               
+                                                               return PersistentTupleSpace.INDICATE_OPERATION_SUCCESS;
+                                                           }
+
+                                                } catch (IOException ex) 
+                                                {
+                                                    Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, ex);
+                                                    return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS;
+                                                }
+                                           }
+                                } else {
+                                           return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+                                       }                 
+                           }    
+                } else {
+                            return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;                  
+                       }
+            } catch (SecurityException se)
+            { 
+                //se.printStackTrace();
+                Logger.getLogger(PersistentTupleSpace_implement.class.getName()).log(Level.SEVERE, null, se);
+                return PersistentTupleSpace.INDICATE_EXCEPTION_OCCURRENCE_STATUS; 
+            }
+        }
+        
+        return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     @Override
     public ContentTuple_implement read_ContentTuple(String location) 
     {

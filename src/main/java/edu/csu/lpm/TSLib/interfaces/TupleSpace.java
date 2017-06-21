@@ -21,6 +21,7 @@ package edu.csu.lpm.TSLib.interfaces;
  *
  * @author kirill
  */
+
 public interface TupleSpace 
 {
         /* fixed name precludes the creation of the directory with the same
@@ -38,6 +39,7 @@ public interface TupleSpace
         final String ContentTupleName = "/content-tuple";
         
         final String HiddenContentTupleName = "/.content-tuple";
+        final String HiddenControlTupleName = "/.control-tuple";
         
         /* we use macros to indicate the general method exit codes within the 
         tuple space implementation */
@@ -52,5 +54,6 @@ public interface TupleSpace
         public final int INDICATE_CONTENT_TUPLE_EXISTS_STATUS = -8;
         
         public final int INDICATE_HIDDEN_CONTENT_TUPLE_EXISTS_STATUS = -9;
+        public final int INDICATE_HIDDEN_CONTROL_TUPLE_EXISTS_STATUS = -10;
         
 }
