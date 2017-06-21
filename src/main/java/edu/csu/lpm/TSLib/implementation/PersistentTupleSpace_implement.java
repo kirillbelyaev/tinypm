@@ -200,8 +200,11 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public int append_ContentTuple(ContentTuple_implement ct, String location) 
+    /*
+        now obsolete due to race conditions - renamed, changed to private access
+        and keep for accounting purposes
+    */
+    private int appendOld_ContentTuple(ContentTuple_implement ct, String location) 
     {
         if (ct == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         
@@ -288,8 +291,10 @@ public class PersistentTupleSpace_implement implements PersistentTupleSpace
     
     /*
         rewrite using temporary hidden file before final tuple is exposed 
+        Avoids race conditions
     */
-    public int appendEnhanced_ContentTuple(ContentTuple_implement ct, String location) 
+    @Override
+    public int append_ContentTuple(ContentTuple_implement ct, String location) 
     {
         if (ct == null) return PersistentTupleSpace.INDICATE_CONDITIONAL_EXIT_STATUS;
         

@@ -31,10 +31,10 @@ public class Controller_collaborate_Sequentially implements Runnable
     private final String BaseLocation = "/s/oranges/a/nobackup/kirill/containers";
     */
     
-    private final String DataObjectPath = "/s/oranges/a/nobackup/kirill/logs/secure.log";
-    private final String DataObjectReplicaPath = "/s/oranges/a/nobackup/kirill/logs/secure.log.replica";
-    private final String BASE_TS_LOCATION = "/s/oranges/a/nobackup/kirill/containers/tuple_spaces/";
-    private final String FIELD_COMP_PATH_A = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String DataObjectPath = "/s/apples/a/nobackup/kirill/logs/secure.log";
+    private final String DataObjectReplicaPath = "/s/apples/a/nobackup/kirill/logs/secure.log.replica";
+    private final String BASE_TS_LOCATION = "/s/apples/a/nobackup/kirill/containers/tuple_spaces/";
+    private final String FIELD_COMP_PATH_A = "/s/apples/a/nobackup/kirill/containers/container-1/bin/componentA";
     /* private final String FIELD_APP_PATH_A = ts_location + "/container-1/bin/applicationA"; */
     
     private final String Dot = ".";

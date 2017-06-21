@@ -72,9 +72,9 @@ public class DB_CommunicativeClassesTableRecord_UnitTests
         final String alpha = "abcd";
         final String alphanum = "100abcd";
          
-        String component_1_ID = "/s/missouri/a/nobackup/kirill/containers/container-1/bin/componentA";
-        String component_2_ID = "/s/missouri/a/nobackup/kirill/containers/container-2/bin/componentB";       
-        String object_path = "/s/missouri/a/nobackup/kirill/logs/secure.log";
+        String component_1_ID = "/s/apples/a/nobackup/kirill/containers/container-1/bin/componentA";
+        String component_2_ID = "/s/apples/a/nobackup/kirill/containers/container-2/bin/componentB";       
+        String object_path = "/s/apples/a/nobackup/kirill/logs/secure.log";
         
         String coord_record_1 = component_1_ID + separator + component_2_ID; 
         String coord_record_2 = component_2_ID + separator + component_1_ID; 

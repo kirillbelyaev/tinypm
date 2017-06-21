@@ -29,7 +29,7 @@ public class ComponentA_collaborate implements Runnable
     /*
     private final String BaseLocation = System.getProperty("user.home") + "/containers/";
     */
-    private final String BaseLocation = "/s/oranges/a/nobackup/kirill/containers";
+    private final String BaseLocation = "/s/apples/a/nobackup/kirill/containers";
     
     /* need absolute path without variable substitution with // */
     /*
@@ -37,8 +37,8 @@ public class ComponentA_collaborate implements Runnable
     private final String FIELD_APP_PATH_B = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
     */
     
-    private final String FIELD_COMP_PATH_A = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
-    private final String FIELD_COMP_PATH_B = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
+    private final String FIELD_COMP_PATH_A = "/s/apples/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String FIELD_COMP_PATH_B = "/s/apples/a/nobackup/kirill/containers/container-2/bin/componentB";
     
     /*
     private final String FIELD_APP_PATH_A = BaseLocation + "/container-1/bin/applicationA";
@@ -48,7 +48,7 @@ public class ComponentA_collaborate implements Runnable
     /*
     private final String FIELD_CollaborationMessage = System.getProperty("user.home") + "/waters/logs/secure.log";
     */
-    private final String FIELD_CollaborationMessage = "/s/oranges/a/nobackup/kirill/logs/secure.log";
+    private final String FIELD_CollaborationMessage = "/s/apples/a/nobackup/kirill/logs/secure.log";
 
     @Override
     public void run() 
@@ -82,7 +82,7 @@ public class ComponentA_collaborate implements Runnable
         /*
         String ReplicationLocation = System.getProperty("user.home") + "/waters/logs/secure.log.replica";
         */
-        String ReplicationDestinationLocation = "/s/oranges/a/nobackup/kirill/logs/secure.log.replica";
+        String ReplicationDestinationLocation = "/s/apples/a/nobackup/kirill/logs/secure.log.replica";
         
         System.out.println("component A: component A TS AbsolutePath is:" + AbsolutePathTSA);
         

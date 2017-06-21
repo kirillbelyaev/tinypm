@@ -616,7 +616,12 @@ public class Utilities
     ts_location - base directory where TS of the requester is located.
     id - ID of the requester
     */
-    public int fragment_ObjectReplica(String object_path, String ts_location, String id)
+    
+    /*
+        not much different from the new version except the Shorter sleep period
+        value.
+    */
+    private int fragmentOld_ObjectReplica(String object_path, String ts_location, String id)
     {
         if (object_path == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         if (object_path.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -872,7 +877,12 @@ public class Utilities
     ts_location - base directory where TS of the requester is located.
     id - ID of the requester
     */
-    public int fragmentEnhanced_ObjectReplica(String object_path, String ts_location, String id)
+    
+    /*
+        new version with a Longer sleep period that results in consistent replication
+        time
+    */
+    public int fragment_ObjectReplica(String object_path, String ts_location, String id)
     {
         if (object_path == null || ts_location == null || id == null) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
         if (object_path.isEmpty() || ts_location.isEmpty() || id.isEmpty() ) return TransactionManager.INDICATE_CONDITIONAL_EXIT_STATUS;
@@ -982,7 +992,7 @@ public class Utilities
                     /* now attempt to append the assembled content tuple */
                     if (this.PTS.count_ContentTuples(ts_location) == 0)
                     {    
-                        if (this.PTS.appendEnhanced_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
+                        if (this.PTS.append_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
                         {
                             sourceChannel.close();
                             sourceChannel = null;
@@ -1061,7 +1071,7 @@ public class Utilities
                         /* now attempt to append the assembled content tuple */
                         if (this.PTS.count_ContentTuples(ts_location) == 0)
                         {    
-                            if (this.PTS.appendEnhanced_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
+                            if (this.PTS.append_ContentTuple(this.CNT, ts_location) != PersistentTupleSpace.INDICATE_OPERATION_SUCCESS)
                             {
                                 sourceChannel.close();
                                 sourceChannel = null;

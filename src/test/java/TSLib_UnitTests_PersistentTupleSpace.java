@@ -759,7 +759,7 @@ public class TSLib_UnitTests_PersistentTupleSpace
         System.out.println("setting ContentTuple fields ");
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.ValidLocation);
+        this.IntValue = this.PTS.append_ContentTuple(this.CNT, this.ValidLocation);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
@@ -774,52 +774,52 @@ public class TSLib_UnitTests_PersistentTupleSpace
             return;
         }
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, this.ValidLocation);
+        this.IntValue = this.PTS.append_ContentTuple(null, this.ValidLocation);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.InvalidLocation);
+        this.IntValue = this.PTS.append_ContentTuple(this.CNT, this.InvalidLocation);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, this.InvalidLocation);
+        this.IntValue = this.PTS.append_ContentTuple(null, this.InvalidLocation);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.EmptyString);
+        this.IntValue = this.PTS.append_ContentTuple(this.CNT, this.EmptyString);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, this.EmptyString);
+        this.IntValue = this.PTS.append_ContentTuple(null, this.EmptyString);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.RootDir);
+        this.IntValue = this.PTS.append_ContentTuple(this.CNT, this.RootDir);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, this.RootDir);
+        this.IntValue = this.PTS.append_ContentTuple(null, this.RootDir);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, null);
+        this.IntValue = this.PTS.append_ContentTuple(this.CNT, null);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(null, null);
+        this.IntValue = this.PTS.append_ContentTuple(null, null);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");
         
-        this.IntValue = this.PTS.appendEnhanced_ContentTuple(this.CNT, this.ValidLocation);
+        this.IntValue = this.PTS.append_ContentTuple(this.CNT, this.ValidLocation);
         System.out.println("executing append_ContentTuple() ");
         System.out.println("method return value is: " + this.IntValue);
         System.out.println("\n");

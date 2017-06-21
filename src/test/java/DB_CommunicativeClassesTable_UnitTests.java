@@ -63,9 +63,9 @@ public class DB_CommunicativeClassesTable_UnitTests
     private final String COLUMN_POLICY_CLASS_NAME = "web caching service";
     
     private final String separator = " ";
-    private final String component_1_ID = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
-    private final String component_2_ID = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";       
-    private final String object_path = "/s/oranges/a/nobackup/kirill/logs/secure.log";
+    private final String component_1_ID = "/s/apples/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String component_2_ID = "/s/apples/a/nobackup/kirill/containers/container-2/bin/componentB";       
+    private final String object_path = "/s/apples/a/nobackup/kirill/logs/secure.log";
         
     private final String coord_record_1 = component_1_ID + separator + component_2_ID;  
     private final String coord_record_2 = component_2_ID + separator + component_1_ID;   

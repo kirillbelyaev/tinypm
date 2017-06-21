@@ -32,13 +32,13 @@ public class ComponentA_coordinate implements Runnable
     private final String FIELD_APP_PATH_B = "/s/chopin/b/grad/kirill/containers/container-2/bin/applicationB";
     */
     
-    private final String FIELD_COMP_PATH_A = "/s/oranges/a/nobackup/kirill/containers/container-1/bin/componentA";
-    private final String FIELD_COMP_PATH_B = "/s/oranges/a/nobackup/kirill/containers/container-2/bin/componentB";
+    private final String FIELD_COMP_PATH_A = "/s/apples/a/nobackup/kirill/containers/container-1/bin/componentA";
+    private final String FIELD_COMP_PATH_B = "/s/apples/a/nobackup/kirill/containers/container-2/bin/componentB";
     
     /*
     private final String BaseLocation = System.getProperty("user.home") + "/containers/";
     */
-    private final String BaseLocation = "/s/oranges/a/nobackup/kirill/containers";
+    private final String BaseLocation = "/s/apples/a/nobackup/kirill/containers";
     
     private final String FIELD_CoordinationMessage1 = "<wscoor:CoordinationContext>" +
     "<wsu:Expires>2012-04-22T00:00:00.0000000-07:00</wsu:Expires>\n" +
